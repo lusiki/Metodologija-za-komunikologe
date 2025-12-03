@@ -1,0 +1,228 @@
+---
+title: "Deskriptivna i inferencijalna statistika"
+subtitle: ""
+author: "Lux"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    theme: cosmo
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 12pt
+    number-sections: true
+lang: hr
+---
+
+## Mjere centralne tendencije {#sec-centralna-tendencija}
+
+Zamislimo da analiziramo podatke o dnevnoj gledanosti večernjeg Dnevnika HRT-a tijekom jednog mjeseca. Urednica programa pregledava brojke i vidi vrijednosti koje variraju od dana do dana – ponekad emisiju prati 320.000 gledatelja, ponekad 280.000, a vikendom brojka pada na oko 210.000. Pred njom je lista od trideset različitih brojki, i potreban joj je način da te podatke sažme u nešto razumljivo. Želi odgovoriti na prividno jednostavno pitanje: kolika je "tipična" gledanost Dnevnika? Međutim, što točno znači "tipična" u ovom kontekstu? Trebamo li gledati najčešću vrijednost, sredinu skupa podataka, ili nešto treće? Ovaj problem predstavlja srž onoga čime se bave **mjere centralne tendencije** – statistički alati koji nam omogućuju da iz mnoštva brojki izvučemo jednu reprezentativnu vrijednost koja najbolje opisuje "središte" naših podataka.
+
+Kada istraživač masovne komunikacije prikuplja podatke, bilo da se radi o gledanosti televizijskog programa, broju komentara na novinskom portalu ili trajanju videa na YouTube kanalu, gotovo uvijek se suočava s istim izazovom. Sirovi podaci sami po sebi rijetko govore jasnu priču. Nadalje, previše je informacija da bismo ih sve mogli držati u glavi odjednom, a njihovo jednostavno nabrajanje ne pomaže u razumijevanju onoga što nam podaci zapravo pokušavaju reći. Potreban nam je način da kondenziramo te podatke u nekoliko ključnih brojki koje će nam pružiti brz i informativan uvid u ono što promatramo. U većini situacija, prva stvar koju želimo izračunati jest upravo mjera centralne tendencije – broj koji nam govori nešto o "prosjeku" ili "sredini" naših podataka.
+
+Postoje tri glavne mjere centralne tendencije koje se redovito koriste u istraživanju medija: **aritmetička sredina**, **medijan** i **mod**. Svaka od njih odgovara na pitanje "koja je tipična vrijednost" na malo drugačiji način, a svaka ima svoje prednosti i nedostatke ovisno o vrsti podataka s kojima radimo i o tome što pokušavamo saznati. U nastavku ćemo detaljno razmotriti svaku od ovih mjera, objasniti kako se izračunavaju, kada ih je primjereno koristiti, i što nam njihove vrijednosti zapravo govore o komunikološkim fenomenima koje istražujemo.
+
+### Aritmetička sredina {#sec-aritmeticka-sredina}
+
+Urednica HRT-a koja pokušava razumjeti gledanost Dnevnika instinktivno zna što treba učiniti: zbrojiti sve vrijednosti i podijeliti ih s brojem dana. Ovaj postupak poznat je svima iz svakodnevnog života, no u statističkoj terminologiji govorimo o izračunu **aritmetičke sredine** ili **prosjeka**. Pretpostavimo da imamo podatke o gledanosti za prvi tjedan mjeseca: 315.000 gledatelja u ponedjeljak, 298.000 u utorak, 322.000 u srijedu, 305.000 u četvrtak, 288.000 u petak, 245.000 u subotu i 218.000 u nedjelju. Kada zbrojimo ove vrijednosti i podijelimo s brojem dana, dobivamo jednu brojku koja reprezentira "tipičnu" gledanost tog tjedna.
+
+Ovaj pristup ima intuitivnog smisla jer tretira sve dane podjednako – svaki dan jednako doprinosi konačnom rezultatu. Međutim, valja odmah uočiti i potencijalnu zamku: ako u našim podacima postoji jedan iznimno atipičan dan (npr. dan kada je emitiran poseban prilog o nekom vrlo popularnom događaju), ta vrijednost će značajno utjecati na prosjek. Nadalje, aritmetička sredina koristi sve informacije koje imamo – ne zanemaruje nijednu opservaciju – što može biti velika prednost kada radimo s manjim brojem podataka, ali istovremeno znači da smo osjetljivi na **outliere**, odnosno ekstremne vrijednosti koje možda ne reprezentiraju uobičajenu situaciju.
+
+Prije nego što prijeđemo na formalnu definiciju, potrebno je uvesti matematičku notaciju koju statističari koriste. Označimo broj opservacija (u našem slučaju broj dana) sa $N$. U našem primjeru gledanosti, $N = 7$ jer imamo podatke za sedam dana. Pojedina opažanja označavamo s $X_1, X_2, ..., X_N$, gdje indeks označava redni broj opservacije. Tako je $X_1 = 315.000$ (gledanost u ponedjeljak), $X_2 = 298.000$ (gledanost u utorak), i tako dalje do $X_7 = 218.000$ (gledanost u nedjelju). Općenito, $X_i$ označava $i$-to opažanje u našem skupu podataka.
+
+Koristeći ovu notaciju, možemo formalno definirati **aritmetičku sredinu**. Označavamo je simbolom $\bar{X}$ (čita se "iks bar"), a izračunava se prema sljedećoj formuli:
+
+$$\bar{X} = \frac{1}{N}\sum_{i=1}^{N}X_i = \frac{X_1 + X_2 + ... + X_N}{N}$$ {#eq-mean}
+
+Symbol $\sum$ (velika grčka slova sigma) označava sumaciju, odnosno zbrajanje. Izraz $\sum_{i=1}^{N}X_i$ doslovno znači "zbroji sve vrijednosti $X_i$ počevši od $i=1$ pa sve do $i=N$". Ova formula je samo formalan način zapisivanja onoga što smo već intuitivno razumjeli: zbroji sve opažene vrijednosti i podijeli ih s ukupnim brojem opažanja.
+
+Za naš primjer gledanosti HRT-a, izračun bi izgledao ovako:
+
+$$\bar{X} = \frac{315.000 + 298.000 + 322.000 + 305.000 + 288.000 + 245.000 + 218.000}{7}$$
+
+$$\bar{X} = \frac{1.991.000}{7} \approx 284.429$$
+
+::: {.callout-note}
+## Praktični primjer
+
+Prosječna gledanost Dnevnika tijekom analiziranog tjedna bila je približno 284.000 gledatelja. Ova brojka omogućuje brzu usporedbu s drugim tjednima ili konkurentskim programima.
+:::
+
+Posljedično tome, možemo zaključiti da je prosječna gledanost Dnevnika tijekom tog tjedna bila približno 284.000 gledatelja. Ova brojka istraživaču medija daje brzu informaciju o općoj razini uspješnosti programa, omogućujući usporedbu s drugim tjednima ili konkurentskim programima. Međutim, ona ne govori ništa o konzistentnosti gledanosti – ne znamo jesu li sve vrijednosti bile blizu prosjeka ili su neke bile iznimno visoke a druge iznimno niske. Osim toga, vidimo da razlika između vikendom (subota i nedjelja) i radnim danom značajno utječe na našu percepciju "tipične" gledanosti, što nas upozorava da ponekad trebamo biti oprezni s jednostavnim prosjekom.
+
+Valja istaknuti još jednu važnu karakteristiku aritmetičke sredine: ona predstavlja svojevrsno "težište" naših podataka. Ako bismo zamislili histogram naših podataka kao čvrst objekt, aritmetička sredina bi bila točka na kojoj bismo mogli balansirati taj objekt kao na ljuljački. U tom smislu, aritmetička sredina ima dublje matematičke značenje – to je vrijednost oko koje su naši podaci "centralizirani", odnosno vrijednost od koje su ukupna odstupanja prema dolje i ukupna odstupanja prema gore u ravnoteži.
+
+#### Izračun u R-u {#sec-mean-r}
+
+Izračun aritmetičke sredine u programskom jeziku R vrlo je jednostavan. Pretpostavimo da smo podatke o gledanosti HRT-a pohranili u vektor:
+
+```{r}
+#| label: fig-mean-calculation
+#| echo: true
+#| eval: false
+
+# Podaci o gledanosti Dnevnika HRT-a (u tisućama)
+gledanost_hrt <- c(315, 298, 322, 305, 288, 245, 218)
+
+# Izračun aritmetičke sredine
+prosjek <- mean(gledanost_hrt)
+print(paste("Prosječna gledanost:", prosjek, "tisuća gledatelja"))
+
+# Alternativno, možemo izračunati ručno
+prosjek_rucno <- sum(gledanost_hrt) / length(gledanost_hrt)
+print(paste("Prosječna gledanost (ručni izračun):", prosjek_rucno))
+```
+
+### Medijan {#sec-medijan}
+
+Vratimo se na našu urednicu HRT-a, ali sada zamislimo malo drugačiju situaciju. Zanima je gledanost različitih vrsta sadržaja na HRTPlayerU – streaming platformi HRT-a. Prikupila je podatke o broju pregleda za deset najpopularnijih emisija prošlog mjeseca. Većina emisija ima između 15.000 i 25.000 pregleda, ali jedna emisija – ekskluzivni intervju s vrlo popularnom javnom osobom – ima čak 180.000 pregleda. Ako bi izračunala aritmetičku sredinu, ta jedna ekstremna vrijednost bi značajno "povukla" prosjek prema gore, dajući iskrivljenu sliku o tome što je "tipično" za gledanost na platformi. U ovakvim situacijama gdje postoje ekstremne vrijednosti koje ne reprezentiraju uobičajenu situaciju, istraživači često posežu za drugom mjerom centralne tendencije: **medijanom**.
+
+Medijan je koncept koji je možda još intuitivniji od aritmetičke sredine. Jednostavno rečeno, medijan je **srednja vrijednost** kada sve naše podatke poredamo od najmanjeg prema najvećem. Zamislimo da imamo podatke o dnevnom broju objava na Facebook stranici Jutarnjeg lista tijekom jednog tjedna: 12, 8, 15, 10, 9, 14, 11 objava. Da bismo pronašli medijan, najprije moramo sortirati ove brojeve u rastući niz: 8, 9, 10, 11, 12, 14, 15. Sada je očito da je srednja vrijednost 11 objava, jer se ona nalazi točno u sredini – tri vrijednosti su manje od nje, a tri su veće. Ovaj broj predstavlja medijan našeg skupa podataka.
+
+Medijan ima jednu vrlo važnu karakteristiku koja ga razlikuje od aritmetičke sredine: nije osjetljiv na ekstremne vrijednosti. Nadalje, ova svojstva čini ga posebno korisnim u situacijama gdje podaci sadrže **outliere**. Da pojasnimo ovaj koncept, vratimo se primjeru s HRT Playerom. Recimo da deset emisija ima sljedeći broj pregleda (već sortirani): 14.000, 16.000, 18.000, 19.000, 22.000, 23.000, 24.000, 26.000, 28.000, 180.000. Aritmetička sredina ovih podataka bila bi $(370.000) / 10 = 37.000$ pregleda, što stvara dojam da je "tipična" emisija daleko popularnija nego što zapravo jest. Međutim, ako izračunamo medijan, situacija je drugačija.
+
+Kada imamo paran broj opservacija, medijan nije samo jedna vrijednost iz našeg skupa podataka, već **prosjek dviju srednjih vrijednosti**. U našem primjeru s deset emisija, srednje vrijednosti su peta i šesta emisija u sortiranom nizu: 22.000 i 23.000 pregleda. Stoga je medijan:
+
+$$\text{Medijan} = \frac{22.000 + 23.000}{2} = 22.500$$
+
+Ovaj rezultat od 22.500 pregleda daleko bolje odražava "tipičnu" gledanost na platformi nego što to čini aritmetička sredina od 37.000 pregleda. Razlog je jasan: medijan jednostavno "ignorira" činjenicu da postoji jedna emisija s 180.000 pregleda. On gleda samo poziciju vrijednosti u sortiranom nizu, a ne njihovu stvarnu veličinu. Posljedično tome, medijan nam govori koja je vrijednost takva da polovina naših opservacija pada ispod nje, a polovina iznad nje.
+
+Formalno gledano, za skup od $N$ opservacija sortiranih u rastući niz, medijan se definira na sljedeći način:
+
+$$\text{Medijan} = \begin{cases}
+X_{(N+1)/2} & \text{ako je } N \text{ neparan broj}\\
+\frac{X_{N/2} + X_{(N/2)+1}}{2} & \text{ako je } N \text{ paran broj}
+\end{cases}$$ {#eq-median}
+
+gdje $X_{(i)}$ označava $i$-tu vrijednost u sortiranom nizu. Ova formula samo formalizira ono što smo već intuitivno razumjeli: za neparan broj opservacija uzimamo vrijednost točno u sredini, a za paran broj opservacija uzimamo prosjek dviju središnjih vrijednosti.
+
+::: {.callout-tip}
+## Kada koristiti medijan?
+
+Medijan je posebno koristan kada:
+
+- Podaci sadrže ekstremne vrijednosti (outliere)
+- Distribucija podataka je asimetrična (skewed)
+- Želimo znati "tipičnu" vrijednost koja nije pod utjecajem ekstremnih slučajeva
+:::
+
+Za istraživača masovne komunikacije, izbor između aritmetičke sredine i medijana ovisi o prirodi podataka i o tome što želimo saznati. Ako nas zanima ukupna količina angažmana ili ukupni "teret" nekog fenomena, aritmetička sredina može biti prava mjera. Međutim, ako nas zanima što je "tipično" za većinu slučajeva, a posebno ako sumnjamo na prisutnost ekstremnih vrijednosti, medijan je često bolji izbor. U praksi, iskusni istraživači često izvještavaju obje mjere, jer svaka od njih otkriva drugačiji aspekt podataka.
+
+#### Izračun u R-u {#sec-median-r}
+
+```{r}
+#| label: fig-median-calculation
+#| echo: true
+#| eval: false
+
+# Podaci o broju pregleda emisija na HRT Playeru (u tisućama)
+pregledi_player <- c(14, 16, 18, 19, 22, 23, 24, 26, 28, 180)
+
+# Izračun medijana
+medijan <- median(pregledi_player)
+print(paste("Medijan pregleda:", medijan, "tisuća"))
+
+# Izračun aritmetičke sredine za usporedbu
+sredina <- mean(pregledi_player)
+print(paste("Aritmetička sredina:", sredina, "tisuća"))
+
+# Razlika pokazuje utjecaj outliera
+print(paste("Razlika (sredina - medijan):", sredina - medijan, "tisuća"))
+```
+
+### Mod {#sec-mod}
+
+Analizirajmo sada posve drugačiju vrstu komunikoloških podataka. Istraživač analizira duljinu video clipova na YouTube kanalu popularne hrvatske medijske kuće. Prikupio je podatke o trajanju stotinu najnovijih videa, i primjećuje nešto zanimljivo: iako postoji velika varijabilnost u trajanju videa (od 30 sekundi do 15 minuta), čini se da određene duljine prevladavaju. Veliki broj videa traje točno 2 minute, što je najvjerojatnije rezultat uređivačke politike koja preferira takvo trajanje za vijesti. U ovakvim situacijama, gdje nas zanima koja vrijednost se pojavljuje najčešće, koristimo treću mjeru centralne tendencije: **mod**.
+
+Mod je ujedno najjednostavnija mjera centralne tendencije za definirati: to je **vrijednost koja se pojavljuje najčešće** u našem skupu podataka. Za razliku od aritmetičke sredine i medijana koji zahtijevaju numeričke podatke i računanje, mod možemo primijeniti na bilo koju vrstu podataka, uključujući i kategorijske podatke. Stoga, mod je posebno koristan u istraživanjima masovne komunikacije gdje često radimo s nominalnim mjerilima.
+
+Razmotrimo konkretan primjer. Analitičar sadržaja istražuje dominantne teme u večernjim vijestima RTL-a tijekom mjeseca dana. Za svaku emisiju zabilježio je koja je tema dominirala taj dan. Podaci pokazuju sljedeću distribuciju: politika se pojavila kao dominantna tema 12 puta, gospodarstvo 5 puta, kriminal 8 puta, zdravstvo 3 puta, a sport 2 puta. U ovom slučaju, **mod** je "politika", jer se ta kategorija pojavljuje najčešće. Valja napomenuti da ovdje ne možemo izračunati aritmetičku sredinu niti medijan – pojmovi kao što je "prosjek" između politike i gospodarstva jednostavno nemaju smisla za nominalne podatke. Međutim, mod nam daje korisnu informaciju: najčešća tema u analiziranom periodu bila je politika.
+
+Mod je jednako koristan i za numeričke podatke, osobito u situacijama gdje nas zanima "najvjerojatnija" pojedinačna vrijednost. Vratimo se primjeru trajanja YouTube videa. Pretpostavimo da smo analizirali sto videa i dobili sljedeću distribuciju prema trajanju: 35 videa traje 2 minute, 20 videa traje 3 minute, 15 videa traje 1 minutu, 12 videa traje 5 minuta, 10 videa traje 4 minute, a ostalih 8 videa ima različita druga trajanja. U ovom slučaju, mod je 2 minute, jer se ta vrijednost pojavljuje u čak 35 od 100 slučajeva. Nadalje, ova informacija može biti vrlo vrijedna za razumijevanje uređivačke politike i strategije sadržaja – očito postoji jaka preferencija za videima koji traju točno 2 minute.
+
+Zanimljivo je primijetiti da, za razliku od aritmetičke sredine i medijana koje uvijek imaju samo jednu vrijednost, skup podataka može imati **više modova**. Ako se dvije ili više vrijednosti pojavljuju jednako često i češće od svih ostalih, tada govorimo o bimodalnoj (dva moda) ili multimodalnoj (više modova) distribuciji. Takve situacije mogu biti vrlo informativne. Na primjer, ako analiza duljine članaka na nekom portalu pokazuje da postoje dva moda – jedan oko 300 riječi i drugi oko 1200 riječi – to može ukazivati na postojanje dviju različitih vrsta sadržaja: kratkih vijesti i dugačkih analitičkih članaka. Ovakav uvid mogao bi promaknuti kada bismo gledali samo aritmetičku sredinu.
+
+Međutim, valja biti svjestan i ograničenja moda. Mod može biti vrlo nestabilan, osobito kada radimo s kontinuiranim podacima gdje se svaka vrijednost pojavljuje samo jednom ili nekoliko puta. Osim toga, mod nam ne govori ništa o "sredini" distribucije u širem smislu – samo nam govori koja je vrijednost najčešća. U nekim slučajevima, mod može biti prilično udaljen od onoga što bismo intuitivno smatrali "tipičnom" vrijednošću. Stoga, u praksi istraživanja medija, mod se često koristi u kombinaciji s drugim mjerama centralne tendencije kako bi se dobila potpunija slika o podacima.
+
+#### Izračun u R-u {#sec-mode-r}
+
+```{r}
+#| label: fig-mode-calculation
+#| echo: true
+#| eval: false
+
+# R nema ugrađenu funkciju za mod, ali možemo je kreirati
+calculate_mode <- function(x) {
+  unique_x <- unique(x)
+  unique_x[which.max(tabulate(match(x, unique_x)))]
+}
+
+# Primjer: Teme u vijestima RTL-a
+teme_rtl <- c("politika", "politika", "gospodarstvo", "kriminal", 
+              "politika", "zdravstvo", "kriminal", "politika",
+              "sport", "kriminal", "politika", "gospodarstvo")
+
+mod_tema <- calculate_mode(teme_rtl)
+print(paste("Najčešća tema:", mod_tema))
+
+# Frekvencijska tablica
+table(teme_rtl)
+```
+
+### Izbor odgovarajuće mjere {#sec-izbor-mjere}
+
+Istraživač masovne komunikacije koji stoji pred nizom podataka mora donijeti važnu odluku: koju mjeru centralne tendencije primijeniti? Ovaj izbor nije proizvoljan, već ovisi o tri ključna čimbenika: vrsti podataka koje imamo, distribuciji tih podataka, i istraživačkom pitanju na koje želimo odgovoriti. U nastavku ćemo sistematično razmotriti kako ovi čimbenici utječu na naš izbor.
+
+Vrsta podataka predstavlja prvi i najvažniji kriterij. Ako radimo s **nominalnim podacima** – kategorijama bez inherentnog redoslijeda kao što su vrsta medija (televizija, radio, novine, internet) ili žanr sadržaja (vijesti, zabava, sport, kultura) – jedino smislena mjera je mod. Pojmovi kao što su "prosjek" ili "sredina" nemaju značenje kada govorimo o kategorijama koje nemaju numeričku vrijednost. Nadalje, pokušaj pripisivanja numeričkih vrijednosti nominalnim kategorijama samo radi izračunavanja srednje vrijednosti bio bi metodološki neispravan i mogao bi voditi do potpuno besmislenih zaključaka.
+
+Kada imamo **ordinalne podatke** – kategorije koje imaju prirodni redoslijed ali ne i jednake intervale između njih – situacija je nešto kompleksnija. Primjer ordinalnih podataka u komunikološkom istraživanju bile bi ocjene na Likertovoj skali gdje ispitanici procjenjuju koliko često prate vijesti: "nikada" (1), "rijetko" (2), "ponekad" (3), "često" (4), "uvijek" (5). U ovakvim slučajevima, medijan je obično prikladnija mjera od aritmetičke sredine. Razlog je jednostavan: medijan koristi samo informaciju o redoslijedu vrijednosti, ne ovisi o točnim numeričkim vrijednostima koje smo možda proizvoljno dodijelili kategorijama. Međutim, valja priznati da u praksi istraživanja medija mnogi istraživači ipak izvještavaju aritmetičke sredine Likertovih skala, što je predmet kontinuirane metodološke debate.
+
+Za **intervalne i omjerne podatke** – podatke s numeričkim vrijednostima i smislenim intervalima ili omjerima – imamo najveću fleksibilnost. Ovdje su obje mjere, aritmetička sredina i medijan, u principu prihvatljive, a izbor ovisi o distribuciji podataka i istraživačkom cilju. Ako je distribucija podataka relativno simetrična i bez ekstremnih outliera, aritmetička sredina je često preferirana jer koristi sve informacije u podacima i ima bolja matematička svojstva. Međutim, ako distribucija pokazuje **asimetriju** ili sadrži ekstremne vrijednosti, medijan može pružiti vjerodostojniju sliku o "tipičnoj" vrijednosti.
+
+::: {.callout-warning}
+## Oprez s outierima!
+
+Ekstremne vrijednosti mogu značajno iskriviti aritmetičku sredinu. Uvijek provjerite distribuciju podataka prije odabira mjere centralne tendencije.
+:::
+
+Razmotrimo konkretni primjer koji ilustrira ovaj izbor. Analitičar istražuje učinkovitost društvenih mreža za promociju sadržaja portala Index.hr. Prikupio je podatke o broju klikova koje je generirala stotina Facebook objava tijekom mjeseca. Većina objava generirala je između 500 i 2000 klikova, što odražava uobičajenu razinu angažmana. Međutim, tri objave su postale viralane i generirale su 45.000, 52.000 i 68.000 klikova. Ako izračunamo aritmetičku sredinu, te tri viralane objave će značajno povećati prosjek, možda na 3500 klikova. Ova brojka stvara pogrešan dojam o tome što portal može "tipično" očekivati od Facebook promocije. S druge strane, medijan bi bio možda oko 1200 klikova, što bolje odražava uobičajeni scenarij. U ovoj situaciji, iskusni istraživač bi vjerojatno izvijestio obje vrijednosti, objašnjavajući da je medijan bolji pokazatelj "tipične" uspješnosti, dok aritmetička sredina odražava ukupni prosjek uključujući rijetke ali vrlo uspješne objave.
+
+#### Odlučna stablo za izbor mjere {#sec-decision-tree}
+
+```{r}
+#| label: fig-decision-tree
+#| echo: false
+#| eval: false
+#| fig-cap: "Shematski prikaz izbora odgovarajuće mjere centralne tendencije"
+
+# Ovo bi bila dijagram koji bi ilustrirao odlučno stablo
+# Za sada ostavljamo kao komentar jer zahtijeva dodatne pakete
+```
+
+| Vrsta podataka | Preporučena mjera | Alternativa | Napomena |
+|:---------------|:------------------|:------------|:---------|
+| Nominalni | Mod | - | Jedina smislena opcija |
+| Ordinalni | Medijan | Mod | Aritmetička sredina upitna |
+| Intervalni/Omjerni (simetrični) | Aritmetička sredina | Medijan | Obje prihvatljive |
+| Intervalni/Omjerni (asimetrični) | Medijan | Aritmetička sredina | Oprez s outierima |
+
+: Preporuke za izbor mjere centralne tendencije prema vrsti podataka {#tbl-mjere-preporuke}
+
+Posljedično tome, možemo zaključiti da ne postoji univerzalno "najbolja" mjera centralne tendencije. Umjesto toga, svaka mjera otkriva različite aspekte naših podataka, i izbor između njih zahtijeva promišljeno razmatranje prirode podataka i istraživačkog konteksta. U praksi kvalitetnog istraživanja masovne komunikacije, često je korisno izvijestiti više mjera centralne tendencije, jer svaka od njih pridonosi našem razumijevanju fenomena koji istražujemo. Osim toga, mjere centralne tendencije su samo dio priče – da bismo dobili potpunu sliku, potrebno je razmotriti i mjere disperzije, o čemu ćemo govoriti u sljedećoj sekciji.
+
+## Sažetak {.unnumbered}
+
+U ovoj sekciji razmotrili smo tri temeljne mjere centralne tendencije:
+
+- **Aritmetička sredina** ($\bar{X}$) – prosjek svih vrijednosti, osjetljiv na outliere, koristi sve podatke
+- **Medijan** – srednja vrijednost u sortiranom nizu, robustan na outliere, dijeli podatke na dva jednaka dijela
+- **Mod** – najčešća vrijednost, primjenjiv na sve vrste podataka, može biti nestabilan
+
+Izbor odgovarajuće mjere ovisi o vrsti podataka, distribuciji i istraživačkom cilju. U praksi je često korisno izvijestiti više mjera kako bi se dobila potpunija slika o podacima.
+
+## Reference {.unnumbered}
+
+::: {#ref
