@@ -1,5 +1,5 @@
 ---
-title: "Deskriptivna i inferencijalna statistika"
+title: "Deskriptivna i inferencijalna statistika 1"
 subtitle: ""
 author: "Lux"
 format:
