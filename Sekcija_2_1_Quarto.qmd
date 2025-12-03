@@ -1,7 +1,7 @@
 ---
-title: "Deskriptivna i inferencijalna statistika 1"
-subtitle: ""
-author: "Lux"
+title: "Mjere centralne tendencije"
+subtitle: "Poglavlje 2, Sekcija 2.1"
+author: "Metode istraživanja masovne komunikacije"
 format:
   html:
     toc: true
@@ -225,4 +225,5 @@ Izbor odgovarajuće mjere ovisi o vrsti podataka, distribuciji i istraživačkom
 
 ## Reference {.unnumbered}
 
-::: {#ref
+::: {#refs}
+:::

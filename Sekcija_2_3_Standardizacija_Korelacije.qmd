@@ -1,0 +1,325 @@
+---
+title: "Standardizirani rezultati i korelacije"
+subtitle: "Poglavlje 2, Sekcija 2.3"
+author: "Metode istraživanja masovne komunikacije"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    theme: cosmo
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 12pt
+    number-sections: true
+lang: hr
+---
+
+## Standardizirani rezultati i korelacije {#sec-standardizacija-korelacije}
+
+Dosad smo razmatrali kako opisati pojedinačne varijable – njihovu središnju vrijednost, disperziju i oblik distribucije. Međutim, u istraživanju masovne komunikacije rijetko nas zanima samo jedna izoliramna varijabla. Umjesto toga, gotovo uvijek želimo razumjeti **odnose** između varijabli. Je li veći angažman na društvenim mrežama povezan s većom lojalnošću brendu? Postoji li veza između duljine članka i broja komentara? Kako se gledanost različitih programa povezuje međusobno? Ova pitanja zahtijevaju da prijeđemo s univarijatne (jedne varijable) na bivarijatnu (dvije varijable) analizu. U ovoj sekciji razmatrat ćemo dva ključna koncepta koji čine temelj razumijevanja odnosa između varijabli: **standardizirane rezultate** (z-scores) i **korelacije**.
+
+### Standardizirani rezultati (z-scores) {#sec-z-scores}
+
+Zamislimo da istraživač razvija novi upitnik za mjerenje "sklonosti dijeljenju dezinformacija" na društvenim mrežama. Upitnik sadrži 40 pitanja, a sudionici odgovaraju na skali od 1 do 5 za svako pitanje, što znači da ukupan rezultat može varirati od 40 do 200. Nakon provedbe istraživanja na velikom uzorku (recimo, 10.000 korisnika društvenih mreža), istraživač otkriva da je prosječan rezultat 110, sa standardnom devijacijom od 15. Sada jedna osoba sudjeluje u istraživanju i dobije rezultat od 145. Kako bismo trebali interpretirati ovaj rezultat? Je li ova osoba "jako sklona dijeljenju dezinformacija" ili samo "malo iznad prosjeka"?
+
+Jedan pristup bio bi reći da je osoba postigla 145/200, odnosno 72.5% maksimalnog mogućeg rezultata. Međutim, ovaj pristup ima ozbiljan problem. Postoci maksimuma ovise o tome kako je upitnik konstruiran – da je istraživač formulirao pitanja malo drugačije, distribucija odgovora mogla bi se pomaknuti gore ili dolje. Nadalje, ovakva interpretacija ne uzima u obzir kako se zapravo ponašaju drugi ljudi. Možda većina ljudi postiže rezultate između 100 i 120, pa je rezultat od 145 zapravo izuzetno visok u kontekstu stvarne distribucije odgovora.
+
+Bolji pristup je usporediti osobu s distribucijom rezultata u populaciji. Moglo bi se ispostaviti da je među onih 10.000 ispitanika samo 150 ljudi postiglo rezultat jednak ili viši od 145, što bi značilo da je naša osoba u gornjih 1.5% populacije. Ova informacija je daleko korisnija – ona nam govori gdje osoba stoji **relativno u odnosu na druge ljude**, a ne samo relativno u odnosu na maksimalni mogući rezultat na proizvoljno konstruiranoj skali.
+
+Međutim, kada radimo s manjim uzorcima, pristup baziran na percentilima ima praktičnih problema. Ako je istraživač testirao samo 100 ljudi umjesto 10.000, vrlo je moguće da u tom uzorku nema nijedne osobe s rezultatom od 145 ili više, što otežava izračun preciznog percentilnog ranga. Nadalje, ovdje na scenu stupa koncept **standardiziranog rezultata** ili **z-vrijednosti** (z-score), koji elegantno rješava ove probleme.
+
+#### Definicija z-vrijednosti {#sec-z-definicija}
+
+**Standardizirani rezultat** (z-score) definira se kao broj standardnih devijacija za koji određena opservacija odstupa od prosjeka. Formula je elegantno jednostavna:
+
+$$z_i = \frac{X_i - \bar{X}}{\hat{\sigma}}$$ {#eq-z-score}
+
+gdje je $X_i$ sirova vrijednost za $i$-tu opservaciju, $\bar{X}$ je aritmetička sredina, a $\hat{\sigma}$ je standardna devijacija uzorka. Ova formula jednostavno govori: uzmi sirovi rezultat, oduzmi prosjek (što ti govori koliko si iznad ili ispod prosjeka), a zatim podijeli sa standardnom devijacijom (što standardizira mjerenje u jedinice koje su usporedive).
+
+Vratimo se našem primjeru s upitnikom sklonosti dijeljenju dezinformacija. Prosjek je bio 110, standardna devijacija 15, a osoba je dobila rezultat 145. Izračunajmo z-vrijednost:
+
+$$z = \frac{145 - 110}{15} = \frac{35}{15} = 2.33$$
+
+Ova osoba ima z-vrijednost od 2.33, što znači da je njen rezultat **2.33 standardne devijacije iznad prosjeka**. Sjetimo se empirijskog pravila iz prethodne sekcije: približno 95% podataka pada unutar dvije standardne devijacije od prosjeka, a 99.7% unutar tri standardne devijacije. Posljedično tome, z-vrijednost od 2.33 sugerira da je ova osoba u gornjih nekoliko postotaka populacije – zapravo, precizno u gornjih 1% (što možemo izračunati pomoću naprednijih metoda koje ćemo kasnije razmotriti).
+
+::: {.callout-note}
+## Interpretacija z-vrijednosti
+
+- **z = 0**: Točno na prosjeku
+- **z = 1**: Jedna standardna devijacija iznad prosjeka (~84. percentil)
+- **z = -1**: Jedna standardna devijacija ispod prosjeka (~16. percentil)
+- **z = 2**: Dvije standardne devijacije iznad prosjeka (~98. percentil)
+- **z > 3 ili z < -3**: Izuzetno ekstremne vrijednosti (izvan 99.7% distribucije)
+:::
+
+#### Svojstva z-vrijednosti {#sec-z-svojstva}
+
+Standardizirani rezultati imaju nekoliko matematičkih svojstava koja ih čine izuzetno korisnima. **Prvo**, distribucija z-vrijednosti uvijek ima prosjek od 0 i standardnu devijaciju od 1, bez obzira kakva je bila originalna distribucija. Ovo nije slučajnost – to je direktna posljedica formule za standardizaciju. Kada od svake vrijednosti oduzmemo prosjek, centriramo distribuciju oko nule. Kada zatim podijelimo sa standardnom devijacijom, skaliramo distribuciju tako da njena standardna devijacija postane 1.
+
+**Drugo**, i možda najvažnije, z-vrijednosti omogućuju usporedbu između varijabli koje su izvorno mjerene na potpuno različitim skalama. Razmotrimo komunikološki primjer. Istraživač analizira dva aspekta ponašanja na društvenim mrežama: broj dnevnih objava (koji varira od 0 do možda 20 objava) i vrijeme provedeno na platformi (koje varira od 0 do možda 300 minuta). Direktna usporedba sirovih rezultata nema smisla – ne možemo reći je li "10 objava" više ili manje od "120 minuta" jer mjerimo fundamentalno različite stvari na različitim skalama.
+
+Međutim, ako obje varijable standardiziramo, možemo ih smisleno usporediti. Pretpostavimo da osoba A ima z-vrijednost od 1.5 za broj objava i z-vrijednost od 0.8 za vrijeme provedeno na platformi. Osoba B ima z-vrijednost od 0.5 za broj objava i z-vrijednost od 2.0 za vrijeme provedeno. Sada možemo zaključiti da je osoba A "neuobičajenija" u broju objava (1.5 je dalje od prosjeka od 0.8), dok je osoba B "neuobičajenija" u vremenu provedenom na platformi (2.0 je dalje od prosjeka od 0.5). Nadalje, ova usporedba bi bila nemoguća sa sirovim rezultatima.
+
+#### Praktična primjena u komunikološkom istraživanju {#sec-z-primjena}
+
+U istraživanju masovne komunikacije, standardizirani rezultati imaju brojne praktične primjene. **Prvo**, koriste se za identifikaciju outliera. Ako neki članak na portalu ima z-vrijednost od 4.5 za broj komentara, to nas odmah upozorava da se radi o iznimnom slučaju koji zaslužuje posebnu pažnju. Možda je članak bio posebno kontroverzan, možda je bio promoviran na neobičan način, ili možda postoji tehnička greška u podacima.
+
+**Drugo**, z-vrijednosti omogućuju kreiranje kompozitnih indeksa. Zamislimo da želimo kreirati "indeks angažmana" koji kombinira broj lajkova, komentara i podijeljivanja. Problem je što su ove tri varijable na različitim skalama – prosječan post možda ima 100 lajkova, 10 komentara i 5 podijeljivanja. Ako bismo jednostavno zbrojili sirove brojke (100+10+5=115), lajkovi bi dominirale indeks samo zato što su na većoj skali. Međutim, ako najprije sve tri varijable standardiziramo, a zatim zbrojimo (ili usrednimo) njihove z-vrijednosti, dobivamo uravnoteženi indeks gdje svaka komponenta jednako doprinosi.
+
+**Treće**, standardizacija je ključna za naprednije statističke analize poput regresijske analize s više prediktora, gdje želimo usporediti relativnu važnost različitih varijabli. Valja napomenuti da će standardizirani regresijski koeficijenti (često označeni kao β koeficijenti) pokazati koja varijabla ima "jači" utjecaj na ishod, neovisno o mjernoj skali na kojoj je izvorno bila.
+
+#### Izračun u R-u {#sec-z-r}
+
+```{r}
+#| label: fig-z-scores
+#| echo: true
+#| eval: false
+
+# Primjer: Rezultati upitnika o sklonosti dijeljenju dezinformacija
+rezultati <- c(95, 105, 110, 112, 118, 120, 125, 145, 98, 108,
+               115, 122, 107, 130, 102, 119, 113, 127, 105, 140)
+
+# Ručni izračun z-vrijednosti
+prosjek <- mean(rezultati)
+st_dev <- sd(rezultati)
+z_vrijednosti <- (rezultati - prosjek) / st_dev
+
+print("Sirovi rezultati:")
+print(rezultati)
+print(paste("Prosjek:", round(prosjek, 2)))
+print(paste("St. devijacija:", round(st_dev, 2)))
+print("Z-vrijednosti:")
+print(round(z_vrijednosti, 2))
+
+# Lakši način koristeći scale() funkciju
+z_vrijednosti_2 <- as.numeric(scale(rezultati))
+print("Z-vrijednosti (koristeći scale):")
+print(round(z_vrijednosti_2, 2))
+
+# Provjera svojstava
+print(paste("Prosjek z-vrijednosti:", round(mean(z_vrijednosti), 10)))
+print(paste("St. dev. z-vrijednosti:", round(sd(z_vrijednosti), 10)))
+```
+
+::: {.callout-tip}
+## Kada koristiti standardizaciju?
+
+Standardizacija je korisna kada:
+
+- Želite usporediti vrijednosti na različitim skalama
+- Trebate identificirati outliere
+- Kreirate kompozitne indekse iz više varijabli
+- Provod ite regresijsku analizu s više prediktora
+- Želite komunicirati gdje osoba/opservacija stoji relativno u distribuciji
+:::
+
+### Korelacije {#sec-korelacije}
+
+Dosad smo govorili o opisivanju pojedinačnih varijabli i o standardizaciji rezultata unutar jedne varijable. Sada se okrećemo možda najvažnijem pitanju u deskriptivnoj statistici: kako opisati **odnos između dvije varijable**? Ovo pitanje je fundamentalno za gotovo svako istraživanje masovne komunikacije. Postoji li veza između vremena provedenog na društvenim mrežama i političke polarizacije? Je li gledanost televizijskih programa povezana s demografskim karakteristikama publike? Koliko je jaka veza između senzacionalizma naslova i broja klikova? Sve ovo pitanja o odnosima između varijabli, i odgovor na njih počinje s razumijevanjem **korelacije**.
+
+#### Scatterploti i vizualna procjena odnosa {#sec-scatterplot}
+
+Prije nego što uvedemo formalnu mjeru korelacije, važno je razumjeti kako vizualno procjenjujemo odnose između varijabli. **Dijagram raspršenja** (scatterplot) je osnovni alat za ovu svrhu. Na dijagramu raspršenja, svaka opservacija reprezentirana je jednom točkom, pri čemu x-koordinata točke odgovara vrijednosti prve varijable, a y-koordinata vrijednosti druge varijable.
+
+Zamislimo da analiziramo podatke portala Index.hr. Za sto članaka prikupili smo dvije varijable: duljinu članka (u riječima) i broj komentara koji su članci primili. Ako nacrtamo dijagram raspršenja s duljinom članka na x-osi i brojem komentara na y-osi, obrazac koji vidimo otkriva nam odnos između ove dvije varijable. Ako točke formiraju obrazac koji ide odozdo lijevo prema gore desno, to sugerira **pozitivan odnos**: duži članci tendiraju primiti više komentara. Ako točke idu od gore lijevo prema dolje desno, to ukazuje na **negativan odnos**: duži članci primaju manje komentara. Ako su točke nasumično raspršene bez jasnog obrasca, to sugerira da nema sistematičnog odnosa između varijabli.
+
+Osim smjera odnosa, dijagram raspršenja također otkriva **snagu odnosa**. Ako sve točke leže vrlo blizu zamišljene linije, odnos je jak – znanje o jednoj varijabli omogućuje nam precizno predviđanje druge varijable. Nadalje, ako su točke široko raspršene, odnos je slab – znanje o jednoj varijabli daje nam samo ograničenu informaciju o drugoj. Valja istaknuti da je vizualni pregled podataka uvijek prvi korak prije izračunavanja bilo kakvih numeričkih statistika. Scatterplot može otkriti nelinearne odnose, outliere ili subgrupe u podacima koje bi numerička statistika mogla prikriti.
+
+#### Pearsonov koeficijent korelacije {#sec-pearson-korelacija}
+
+Dok dijagrami raspršenja pružaju vizualni uvid, često trebamo i numeričku mjeru koja kvantificira snagu i smjer odnosa. **Pearsonov koeficijent korelacije**, označen sa $r$, je najčešće korištena mjera za ovu svrhu. Koeficijent korelacije varira od -1 do +1, gdje:
+
+- $r = +1$ indicira **savršenu pozitivnu korelaciju**: sve točke leže na pravoj liniji koja ide prema gore
+- $r = -1$ indicira **savršenu negativnu korelaciju**: sve točke leže na pravoj liniji koja ide prema dolje
+- $r = 0$ indicira **nikakvu linearnu korelaciju**: nema sistematičnog linearnog odnosa
+- Vrijednosti između ovih ekstrema indiciraju stupanj i smjer odnosa
+
+Da bismo razumjeli kako se korelacija izračunava, moramo najprije uvesti koncept **kovarijance**. Kovarijanca je mjera koja kvantificira koliko dvije varijable variraju zajedno. Formula za kovarijancu je:
+
+$$\text{Cov}(X,Y) = \frac{1}{N-1}\sum_{i=1}^{N}(X_i - \bar{X})(Y_i - \bar{Y})$$ {#eq-covariance}
+
+Ova formula ima intuitivnu interpretaciju. Za svaku opservaciju, gledamo koliko $X$ odstupa od svog prosjeka i koliko $Y$ odstupa od svog prosjeka, a zatim množimo ta odstupanja. Ako obje varijable tendiraju biti iznad prosjeka u isto vrijeme (ili obje ispod prosjeka u isto vrijeme), umnožci će biti pozitivni, što rezultira pozitivnom kovarijancom. Ako jedna varijabla tendira biti iznad prosjeka kada je druga ispod (i obrnuto), umnožci će biti negativni, što rezultira negativnom kovarijancom.
+
+Međutim, kovarijanca ima ozbiljan problem za praktičnu interpretaciju: njena veličina ovisi o jedinicama mjerenja varijabli. Ako mjerimo duljinu članka u riječima i broj komentara, kovarijanca je izražena u "riječi × komentari", što nema razumljivog značenja. Nadalje, nemoguće je reći je li kovarijanca od 500 "velika" ili "mala" bez poznavanja skala na kojima su varijable mjerene.
+
+**Pearsonov koeficijent korelacije** rješava ovaj problem standardizacijom kovarijance:
+
+$$r_{XY} = \frac{\text{Cov}(X,Y)}{\hat{\sigma}_X \hat{\sigma}_Y}$$ {#eq-pearson-correlation}
+
+Dijeleći kovarijancu s umnoškom standardnih devijacija dviju varijabli, dobivamo bezdimenzionalnu mjeru koja uvijek pada između -1 i +1. Ova standardizacija je analogna način na koji smo standardizirali sirove rezultate u z-vrijednosti – uklanjamo ovisnost o skali mjerenja i dobivamo mjeru na značajnoj, univerzalnoj skali.
+
+#### Interpretacija korelacije {#sec-interpretacija-korelacije}
+
+Iako koeficijent korelacije pada na preciznu numeričku skalu od -1 do +1, interpretacija konkretne vrijednosti (npr. $r = 0.45$) ovisi o kontekstu istraživanja. U nekim područjima, poput fizike ili inženjerstva, očekuju se vrlo visoke korelacije (>0.90), dok u društvenim znanostima, uključujući istraživanje medija, umjerene korelacije (oko 0.30-0.50) mogu biti vrlo značajne i teoretski važne.
+
+Za orijentaciju, možemo koristiti sljedeće opće smjernice (uz naglasak da su ovo samo smjernice, ne stroga pravila):
+
+| Apsolutna vrijednost $|r|$ | Interpretacija | Opis |
+|:----------------------|:---------------|:-----|
+| 0.00 - 0.19 | Vrlo slaba | Gotovo nikakva ili zanemariva veza |
+| 0.20 - 0.39 | Slaba | Niska ali definitivna veza |
+| 0.40 - 0.59 | Umjerena | Supstancijalna, jasno vidljiva veza |
+| 0.60 - 0.79 | Jaka | Jaka, snažna veza |
+| 0.80 - 1.00 | Vrlo jaka | Vrlo jaka do gotovo savršena veza |
+
+: Opće smjernice za interpretaciju Pearsonovog koeficijenta korelacije {#tbl-interpretacija-korelacije}
+
+Međutim, valja ponovno naglasiti važnost konteksta. U istraživanju masovne komunikacije, korelacija od $r = 0.35$ između izloženosti političkim vijestima i političkog znanja mogla bi biti vrlo značajna, dok u istraživanju pouzdanosti mjernog instrumenta, korelacija ispod 0.80 između dvije primjene istog testa mogla bi ukazivati na ozbiljan problem.
+
+::: {.callout-warning}
+## Korelacija nije uzročnost!
+
+Ovo je možda najvažnija lekcija u statistici: **korelacija ne implicira uzročnost**. Ako pronađemo da je vrijeme provedeno na Facebooku korelirano s političkom polarizacijom, to NE znači nužno da Facebook uzrokuje polarizaciju. Mogućnosti uključuju:
+
+1. Facebook možda uzrokuje polarizaciju (X → Y)
+2. Polarizacija možda uzrokuje veću upotrebu Facebooka (Y → X)
+3. Treća varijabla možda uzrokuje oboje (Z → X i Z → Y)
+4. Odnos je možda slučajan ili spuri ozan
+
+Za zaključke o uzročnosti potrebni su eksperimentalni dizajni ili napredne kauzalne metode!
+:::
+
+#### Primjer iz komunikološkog istraživanja {#sec-primjer-korelacija}
+
+Razmotrimo konkretan primjer. Istraživač analizira odnos između tri varijable vezane uz portal Večernji.hr: dnevni broj objavljenih članaka, prosjek no vrijeme čitanja po članku (u sekundama), i ukupan dnevni broj komentara. Prikupio je podatke za 50 dana.
+
+Najprije izračunava deskriptivne statistike:
+
+- Broj objavljenih članaka: $M = 25.4$, $SD = 4.2$, raspon: 18-35
+- Prosječno vrijeme čitanja: $M = 142$ sekundi, $SD = 28$ sekundi, raspon: 95-210
+- Ukupni komentari: $M = 450$, $SD = 120$, raspon: 210-720
+
+Zatim izračunava korelacijsku matricu između svih parova varijabli:
+
+|  | Broj članaka | Vrijeme čitanja | Ukupni komentari |
+|:-------------|:------------|:----------------|:----------------|
+| **Broj članaka** | 1.00 | -0.32 | 0.15 |
+| **Vrijeme čitanja** | -0.32 | 1.00 | 0.58 |
+| **Ukupni komentari** | 0.15 | 0.58 | 1.00 |
+
+: Korelacijska matrica za podatke Večernjeg lista {#tbl-korelacijska-matrica}
+
+Iz ove matrice možemo izvući nekoliko uvida:
+
+**Prvo**, postoji slaba negativna korelacija ($r = -0.32$) između broja objavljenih članaka i prosječnog vremena čitanja. Ovo bi moglo sugerirati da kada portal objavi više članaka u jednom danu, čitatelji provode manje vremena na svakom pojedinačnom članku – možda zato što je veća konkurencija za pažnju, ili možda zato što su neki od dodatnih članaka kraće vijesti.
+
+**Drugo**, postoji vrlo slaba pozitivna korelacija ($r = 0.15$) između broja objavljenih članaka i ukupnih komentara. Ova veza je toliko slaba da je gotovo zanemariva – broj objavljenih članaka ne predviđa koliko će ukupno komentara portal primiti tog dana.
+
+**Treće**, i najzanimljivije, postoji umjereno jaka pozitivna korelacija ($r = 0.58$) između prosječnog vremena čitanja i ukupnih komentara. Ovo sugerira da kada čitatelji provode više vremena čitajući članke (što možda indicira kvalitetniji ili angažiraniji sadržaj), portal prima više komentara. Ova korelacija je dovoljno jaka da bude praktično značajna za uredničke odluke – fokus na sadržaj koji angažira čitatelje na duže vrijeme može rezultirati većom interakcijom putem komentara.
+
+#### Izračun u R-u {#sec-korelacija-r}
+
+```{r}
+#| label: fig-correlation-example
+#| echo: true
+#| eval: false
+
+# Kreiranje primjera podataka za Večernji.hr
+set.seed(123)
+n <- 50
+
+broj_clanaka <- round(rnorm(n, mean = 25.4, sd = 4.2))
+vrijeme_citanja <- round(142 - 0.3 * (broj_clanaka - 25.4) + 
+                         rnorm(n, mean = 0, sd = 25))
+ukupni_komentari <- round(450 + 2.5 * vrijeme_citanja + 
+                          rnorm(n, mean = 0, sd = 80))
+
+# Kreiranje data frame-a
+vecernji_data <- data.frame(
+  broj_clanaka = broj_clanaka,
+  vrijeme_citanja = vrijeme_citanja,
+  ukupni_komentari = ukupni_komentari
+)
+
+# Deskriptivne statistike
+summary(vecernji_data)
+
+# Izračun pojedinačnih korelacija
+cor_1 <- cor(vecernji_data$broj_clanaka, vecernji_data$vrijeme_citanja)
+print(paste("Korelacija broj članaka - vrijeme čitanja:", round(cor_1, 2)))
+
+# Korelacijska matrica za sve varijable
+cor_matrica <- cor(vecernji_data)
+print("Korelacijska matrica:")
+print(round(cor_matrica, 2))
+
+# Vizualizacija - scatterplot
+par(mfrow = c(1, 2))
+
+# Prvi scatterplot: broj članaka vs vrijeme čitanja
+plot(vecernji_data$broj_clanaka, vecernji_data$vrijeme_citanja,
+     main = "Broj članaka vs. Vrijeme čitanja",
+     xlab = "Broj objavljenih članaka",
+     ylab = "Prosječno vrijeme čitanja (s)",
+     pch = 19, col = "blue")
+abline(lm(vrijeme_citanja ~ broj_clanaka, data = vecernji_data), 
+       col = "red", lwd = 2)
+
+# Drugi scatterplot: vrijeme čitanja vs komentari
+plot(vecernji_data$vrijeme_citanja, vecernji_data$ukupni_komentari,
+     main = "Vrijeme čitanja vs. Komentari",
+     xlab = "Prosječno vrijeme čitanja (s)",
+     ylab = "Ukupni komentari",
+     pch = 19, col = "darkgreen")
+abline(lm(ukupni_komentari ~ vrijeme_citanja, data = vecernji_data), 
+       col = "red", lwd = 2)
+```
+
+#### Ograničenja Pearsonove korelacije {#sec-ogranicenja-korelacije}
+
+Iako je Pearsonov koeficijent korelacije moćan alat, važno je razumjeti njegova ograničenja. **Prvo**, Pearsonova korelacija mjeri samo **linearne odnose**. Ako je odnos između dvije varijable krivolinijski (npr. obrnuta U krivulja), Pearsonova korelacija može biti blizu nule čak i kada postoji jaka, sistematična veza. Stoga, uvijek trebamo vizualno pregledati podatke prije oslanjanja na numeričke korelacije.
+
+**Drugo**, Pearsonova korelacija je osjetljiva na **outliere**. Jedna ekstremna točka može značajno utjecati na korelaciju, dajući ili umjetno visoku ili umjetno nisku vrijednost. U prisutnosti outliera, možda je prikladnija **Spearmanova korelacija rangova**, koja koristi rangove umjesto stvarnih vrijednosti i samim time je robustnija.
+
+**Treće**, kao što smo već naglasili, korelacija govori samo o **jačini i smjeru odnosa**, ne o **uzročnosti**. Visoka korelacija između dvije varijable može nastati iz mnoštva različitih uzročnih struktura, uključujući i one gdje nema direktne uzročne veze između varijabli već ih obje uzrokuje treći faktor.
+
+**Četvrto**, Pearsonova korelacija pretpostavlja da je odnos **homoskedastan** – tj. da je varijabilnost približno konstantna duž cijelog raspona vrijednosti. Ako ova pretpostavka nije ispunjena (npr. ako je varijabilnost komentara mnogo veća za popularne članke nego za manje popularne), interpretacija korelacije može biti problematična.
+
+::: {.callout-tip}
+## Najbolje prakse pri izvještavanju korelacija
+
+Kada izvještavate korelacije u publikacijama:
+
+1. **Uvijek priložite scatterplot** za ključne korelacije
+2. **Navedite veličinu uzorka** (N) uz svaku korelaciju
+3. **Interpretirajte u kontekstu** domene istraživanja
+4. **Opišite smjer i jačinu** kvalitativno, ne samo numerički
+5. **Testirajte pretpostavke** (linearnost, outlieri)
+6. **Nikad ne implicirajte uzročnost** bez odgovarajućeg dizajna
+:::
+
+### Povezivanje z-vrijednosti i korelacija {#sec-povezivanje}
+
+Sada kada razumijemo i standardizirane rezultate i korelacije, možemo uočiti elegantnu povezanost između ova dva koncepta. Zapravo, postoji alternativna formula za Pearsonovu korelaciju koja eksplicitno koristi z-vrijednosti:
+
+$$r_{XY} = \frac{1}{N-1}\sum_{i=1}^{N}z_{X_i} \cdot z_{Y_i}$$ {#eq-correlation-z-scores}
+
+gdje su $z_{X_i}$ i $z_{Y_i}$ standardizirane vrijednosti (z-scores) za varijable X i Y. Ova formula otkriva duboku vezu: korelacija je u biti **prosječan umnožak standardiziranih rezultata**. Kada osoba ima visoku z-vrijednost na obje varijable (ili nisku na obje), umnožak je pozitivan i doprinosi pozitivnoj korelaciji. Kada osoba ima visoku z-vrijednost na jednoj varijabli ali nisku na drugoj, umnožak je negativan i doprinosi negativnoj korelaciji.
+
+Ova povezanost objašnjava zašto je korelacija standardizirana mjera koja pada između -1 i +1. Standardizacijom obje varijable prije izračunavanja njihovog odnosa, automatski dobivamo mjeru koja je neovisna o izvornim jedinicama mjerenja. Nadalje, ovo pojašnjava zašto savršena korelacija ($r = \pm 1$) nastaje samo kada sve točke leže točno na pravoj liniji – u tom slučaju, z-vrijednosti na obje varijable su proporcionalne, i njihov umnožak je konstantan.
+
+Posljedično tome, razumijevanje standardiziranih rezultata nije samo korisno samo po sebi, već je i konceptualno fundamentalno za razumijevanje kako funkcioniraju korelacije. Obje koncepta dijele istu osnovnu ideju: uklanjanje arbitrarnih aspekata naših mjerenja (lokacije i skale) kako bismo otkrili fundamentalnije odnose u podacima.
+
+## Sažetak {.unnumbered}
+
+U ovoj sekciji razmotrili smo dva ključna koncepta za razumijevanje odnosa između varijabli:
+
+- **Standardizirani rezultati (z-scores)** – transformiraju sirove rezultate u broj standardnih devijacija od prosjeka, omogućujući usporedbe između različitih skala i identifikaciju neuobičajenih slučajeva
+  - Formula: $z_i = \frac{X_i - \bar{X}}{\hat{\sigma}}$
+  - Z-vrijednosti uvijek imaju $M = 0$ i $SD = 1$
+  - Omogućuju usporedbe između varijabli na različitim skalama
+
+- **Pearsonov koeficijent korelacije ($r$)** – kvantificira jačinu i smjer linearnog odnosa između dvije varijable
+  - Varira od -1 (savršena negativna) do +1 (savršena pozitivna)
+  - Formula: $r_{XY} = \frac{\text{Cov}(X,Y)}{\hat{\sigma}_X \hat{\sigma}_Y}$
+  - **Korelacija ≠ Uzročnost!**
+
+Ove mjere su fundamentalne za bivarijatnu analizu i čine temelj za naprednije statističke metode koje ćemo razmatrati u budućim poglavljima.
+
+## Reference {.unnumbered}
+
+::: {#refs}
+:::
