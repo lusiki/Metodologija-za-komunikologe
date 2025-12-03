@@ -1,0 +1,1112 @@
+---
+title: "Statistički testovi, regresija i interpretacija"
+subtitle: "Poglavlja 5, 6 i 7: Praktična primjena statističkih metoda"
+author: "Metode istraživanja masovne komunikacije"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: show
+    theme: cosmo
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 12pt
+    number-sections: true
+lang: hr
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r setup, include=FALSE}
+# Učitavanje potrebnih paketa
+if (!require("car")) install.packages("car", repos = "http://cran.rstudio.com/")
+library(car)
+
+# Postavljanje seed-a za reproducibilnost
+set.seed(123)
+```
+
+# Najčešći statistički testovi u društvenim znanostima {#sec-najcesci-testovi}
+
+U prethodnim poglavljima postavili smo teorijske temelje inferencijalne statistike. Sada je vrijeme da te principe primijenimo kroz najčešće korištene statističke testove u istraživanju masovne komunikacije. Svaki test dizajniran je za specifičnu vrstu istraživačkog pitanja i specifičnu vrstu podataka. T-test koristimo kada uspoređujemo prosjeke između grupa, ANOVA kada uspoređujemo više od dvije grupe, hi-kvadrat test za kategorijske varijable, a Pearsonovu korelaciju kada istražujemo snagu linearne povezanosti između dvije numeričke varijable.
+
+## T-test {#sec-t-test}
+
+T-test je vjerojatno najčešće korišteni statistički test u društvenim znanostima. Koristi se kada želimo usporediti prosjeke – bilo da
+
+ uspoređujemo jedan prosjek sa teorijskom vrijednošću, ili prosjeke između dvije grupe. Za razliku od z-testa koji smo spominjali ranije, t-test ne zahtijeva poznavanje populacijske standardne devijacije, što ga čini mnogo praktičnijim za stvarno istraživanje.
+
+### Jedan-uzorkovni t-test {#sec-jedan-uzorkovni-t}
+
+**Jedan-uzorkovni t-test** koristi se kada želimo testirati je li prosječna vrijednost u našem uzorku značajno različita od neke hipotetske vrijednosti. Na primjer, Nova TV tvrdi da njihov prosječni gledatelj provede 45 minuta dnevno gledajući njihov program. Istraživač prikupi podatke od 30 nasumično odabranih gledatelja i želi testirati ovu tvrdnju.
+
+**Primjer: Vrijeme gledanja Nova TV**
+
+Imamo uzorak od $N = 30$ gledatelja. Prosječno vrijeme gledanja u uzorku je $\bar{X} = 38.5$ minuta, sa standardnom devijacijom $s = 12.0$ minuta. Želimo testirati:
+
+$$H_0: \mu = 45 \text{ minuta}$$
+$$H_1: \mu \neq 45 \text{ minuta}$$
+
+Testna statistika za jedan-uzorkovni t-test je:
+
+$$t = \frac{\bar{X} - \mu_0}{s / \sqrt{N}}$$ {#eq-one-sample-t}
+
+gdje je $\mu_0$ hipotetska populacijska sredina (45 minuta), $s$ standardna devijacija uzorka, i $N$ veličina uzorka. Ključna razlika od z-testa je da koristimo procijenjenu standardnu pogrešku $s/\sqrt{N}$ umjesto prave $\sigma/\sqrt{N}$.
+
+```{r}
+#| label: fig-one-sample-t-test
+#| fig-cap: "Jedan-uzorkovni t-test za vrijeme gledanja"
+
+# Simulirani podaci: vrijeme gledanja u minutama
+set.seed(123)
+vrijeme_gledanja <- rnorm(30, mean = 38.5, sd = 12)
+
+# Deskriptivne statistike
+mean_vrijeme <- mean(vrijeme_gledanja)
+sd_vrijeme <- sd(vrijeme_gledanja)
+n <- length(vrijeme_gledanja)
+
+# T-test
+mu0 <- 45  # Nova TV tvrdnja
+t_test_rezultat <- t.test(vrijeme_gledanja, mu = mu0)
+
+# Prikaz rezultata
+cat("Prosječno vrijeme gledanja:", round(mean_vrijeme, 2), "minuta\n")
+cat("Standardna devijacija:", round(sd_vrijeme, 2), "minuta\n")
+cat("t-statistika:", round(t_test_rezultat$statistic, 3), "\n")
+cat("Stupnjevi slobode:", t_test_rezultat$parameter, "\n")
+cat("P-vrijednost:", format.pval(t_test_rezultat$p.value, digits = 3), "\n")
+cat("95% interval pouzdanosti:", 
+    round(t_test_rezultat$conf.int[1], 2), "do", 
+    round(t_test_rezultat$conf.int[2], 2), "minuta\n")
+
+# Vizualizacija
+hist(vrijeme_gledanja, breaks = 10, probability = TRUE,
+     main = "Distribucija vremena gledanja Nova TV",
+     xlab = "Vrijeme (minute)",
+     ylab = "Gustoća",
+     col = "lightblue", border = "white")
+
+# Dodavanje krivulje normalne distribucije
+x <- seq(min(vrijeme_gledanja) - 5, max(vrijeme_gledanja) + 5, length = 100)
+lines(x, dnorm(x, mean = mean_vrijeme, sd = sd_vrijeme), 
+      col = "darkblue", lwd = 2)
+
+# Oznaka za populacijsku tvrdnju
+abline(v = mu0, col = "red", lwd = 2, lty = 2)
+text(mu0 + 3, 0.025, 
+     "Nova TV tvrdnja\n(45 min)", col = "red", cex = 0.9)
+
+# Oznaka za opaženi prosjek
+abline(v = mean_vrijeme, col = "darkblue", lwd = 2)
+text(mean_vrijeme - 3, 0.02, 
+     paste("Opaženo\n(", round(mean_vrijeme, 1), " min)", sep = ""), 
+     col = "darkblue", cex = 0.9)
+```
+
+**Interpretacija:** Ako je $p < 0.05$, odbacujemo nultu hipotezu i zaključujemo da prosječno vrijeme gledanja značajno se razlikuje od 45 minuta koje tvrdi Nova TV.
+
+### Nezavisni t-test (usporedba dvije grupe) {#sec-nezavisni-t}
+
+**Nezavisni t-test** koristi se kada želimo usporediti prosjeke između dvije **nezavisne** grupe. Na primjer, uspoređujemo kredibilitet vijesti između HRT-a i komercijalne televizije, ili angažman s člancima između dvije različite vrste naslova.
+
+**Primjer: Usporedba angažmana - senzacionalni vs. informativni naslovi**
+
+Index.hr želi testirati dvije strategije naslova. Nasumično dodjeljuju 50 članaka senzacionalnim naslovima i 50 informativnim naslovima, te mjere broj klikova. Nulta hipoteza je da nema razlike u prosječnom broju klikova između dvije grupe:
+
+$$H_0: \mu_1 = \mu_2 \text{ (ili ekvivalentno: } \mu_1 - \mu_2 = 0)$$
+$$H_1: \mu_1 \neq \mu_2$$
+
+Postoje dvije verzije nezavisnog t-testa:
+
+**1. Studentov t-test** - pretpostavlja jednake varijance u obje grupe
+
+$$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{s_p^2(1/n_1 + 1/n_2)}}$$ {#eq-student-t}
+
+gdje je $s_p^2$ *združena* (pooled) varijanca:
+
+$$s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}$$
+
+**2. Welchov t-test** - ne pretpostavlja jednake varijance (robusniji)
+
+$$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{s_1^2/n_1 + s_2^2/n_2}}$$ {#eq-welch-t}
+
+```{r}
+#| label: fig-independent-t-test
+#| fig-cap: "Usporedba angažmana između vrsta naslova"
+
+set.seed(456)
+
+# Simulirani podaci
+n_per_group <- 50
+naslovi_senzacionalni <- rnorm(n_per_group, mean = 850, sd = 220)
+naslovi_informativni <- rnorm(n_per_group, mean = 650, sd = 180)
+
+# Kreiranje data frame-a
+data <- data.frame(
+  klikovi = c(naslovi_senzacionalni, naslovi_informativni),
+  tip = factor(rep(c("Senzacionalni", "Informativni"), each = n_per_group))
+)
+
+# T-test (Welch verzija - default u R-u)
+t_test_nezavisni <- t.test(klikovi ~ tip, data = data)
+
+# Deskriptivne statistike
+mean_senz <- mean(naslovi_senzacionalni)
+mean_info <- mean(naslovi_informativni)
+sd_senz <- sd(naslovi_senzacionalni)
+sd_info <- sd(naslovi_informativni)
+
+cat("Senzacionalni naslovi: M =", round(mean_senz, 1), ", SD =", round(sd_senz, 1), "\n")
+cat("Informativni naslovi: M =", round(mean_info, 1), ", SD =", round(sd_info, 1), "\n")
+cat("Razlika:", round(mean_senz - mean_info, 1), "klikova\n\n")
+cat("t-statistika:", round(t_test_nezavisni$statistic, 3), "\n")
+cat("Stupnjevi slobode:", round(t_test_nezavisni$parameter, 2), "\n")
+cat("P-vrijednost:", format.pval(t_test_nezavisni$p.value, digits = 3), "\n")
+
+# Box plot usporedba
+boxplot(klikovi ~ tip, data = data,
+        main = "Broj klikova po vrsti naslova",
+        xlab = "Tip naslova",
+        ylab = "Broj klikova",
+        col = c("salmon", "lightblue"),
+        border = c("darkred", "darkblue"))
+
+# Dodavanje prosjeka
+means <- tapply(data$klikovi, data$tip, mean)
+points(1:2, means, pch = 19, col = "black", cex = 1.5)
+legend("topright", legend = "Prosjek", pch = 19, col = "black")
+```
+
+**Veličina efekta - Cohenov d:**
+
+Za t-test, standardna mjera veličine efekta je Cohenov d:
+
+$$d = \frac{\bar{X}_1 - \bar{X}_2}{s_p}$$ {#eq-cohens-d}
+
+gdje je $s_p$ združena standardna devijacija. Interpretacija:
+- $|d| = 0.2$ → mali efekt
+- $|d| = 0.5$ → srednji efekt
+- $|d| = 0.8$ → veliki efekt
+
+```{r}
+# Izračun Cohenovog d
+sp <- sqrt(((n_per_group-1)*sd_senz^2 + (n_per_group-1)*sd_info^2) / 
+           (2*n_per_group - 2))
+cohens_d <- (mean_senz - mean_info) / sp
+cat("Cohenov d:", round(cohens_d, 3), "\n")
+```
+
+### Zavisni t-test (uparene mjere) {#sec-zavisni-t}
+
+**Zavisni t-test** (paired t-test) koristi se kada iste osobe mjere dva puta, ili kada imamo uparene opservacije. Na primjer, mjerimo stavove o medijskom izvještavanju prije i nakon medijske intervencije, ili uspoređujemo kredibilitet dvije vijesti kod istih ispitanika.
+
+**Primjer: Kredibilnost prije i nakon fact-checkinga**
+
+Portal Index.hr testira učinak fact-check oznaka. 40 ispitanika ocjenjuje kredibilitet vijesti (1-10 skala), prvo bez oznake, zatim s fact-check oznakom. 
+
+$$H_0: \mu_D = 0 \text{ (nema razlike)}$$
+$$H_1: \mu_D \neq 0$$
+
+gdje je $\mu_D$ populacijska sredina razlika između dva mjerenja.
+
+Testna statistika:
+
+$$t = \frac{\bar{D}}{s_D / \sqrt{N}}$$ {#eq-paired-t}
+
+gdje je $\bar{D}$ prosječna razlika, $s_D$ standardna devijacija razlika, i $N$ broj parova.
+
+```{r}
+#| label: fig-paired-t-test
+#| fig-cap: "Kredibilitet prije i nakon fact-check oznake"
+
+set.seed(789)
+n_ispitanika <- 40
+
+# Simulirani podaci
+kredibilitet_prije <- rnorm(n_ispitanika, mean = 5.2, sd = 1.5)
+# Fact-check povećava kredibilitet za ~1.2 boda u prosjeku
+kredibilitet_poslije <- kredibilitet_prije + rnorm(n_ispitanika, mean = 1.2, sd = 0.8)
+
+# Zavisni t-test
+t_test_zavisni <- t.test(kredibilitet_prije, kredibilitet_poslije, paired = TRUE)
+
+# Razlike
+razlike <- kredibilitet_poslije - kredibilitet_prije
+mean_diff <- mean(razlike)
+sd_diff <- sd(razlike)
+
+cat("Prije fact-checka: M =", round(mean(kredibilitet_prije), 2), "\n")
+cat("Nakon fact-checka: M =", round(mean(kredibilitet_poslije), 2), "\n")
+cat("Prosječna razlika:", round(mean_diff, 2), "bodova\n\n")
+cat("t-statistika:", round(t_test_zavisni$statistic, 3), "\n")
+cat("P-vrijednost:", format.pval(t_test_zavisni$p.value, digits = 3), "\n")
+
+# Vizualizacija - scatter plot s linijom identiteta
+plot(kredibilitet_prije, kredibilitet_poslije,
+     main = "Kredibilitet prije vs. nakon fact-check oznake",
+     xlab = "Kredibilitet PRIJE",
+     ylab = "Kredibilitet NAKON",
+     pch = 19, col = rgb(0, 0, 1, 0.5),
+     xlim = c(2, 10), ylim = c(2, 10))
+
+# Linija identiteta (ako nema promjene)
+abline(a = 0, b = 1, lty = 2, col = "gray")
+
+# Prosječne točke
+points(mean(kredibilitet_prije), mean(kredibilitet_poslije), 
+       pch = 19, col = "red", cex = 2)
+text(mean(kredibilitet_prije), mean(kredibilitet_poslije) + 0.5, 
+     "Prosjek", col = "red")
+
+# Histogram razlika
+par(mfrow = c(1, 2))
+plot(kredibilitet_prije, kredibilitet_poslije,
+     main = "Parovi mjerenja",
+     xlab = "Prije", ylab = "Nakon",
+     pch = 19, col = rgb(0, 0, 1, 0.5))
+abline(0, 1, lty = 2)
+
+hist(razlike, breaks = 15, probability = TRUE,
+     main = "Distribucija razlika",
+     xlab = "Razlika (Nakon - Prije)",
+     ylab = "Gustoća",
+     col = "lightgreen", border = "white")
+abline(v = 0, lty = 2, col = "red", lwd = 2)
+abline(v = mean_diff, lty = 1, col = "darkgreen", lwd = 2)
+```
+
+## ANOVA – Analiza varijance {#sec-anova}
+
+Kada želimo usporediti prosjeke između **tri ili više grupa**, t-test više nije prikladan. Mogli bismo provoditi multiple t-testove (uspoređujući sve parove grupa), ali to bi infliralo stopu pogreške tipa I. Umjesto toga, koristimo **analizu varijance** (ANOVA), koja testira postoji li **bilo kakva** razlika između grupa u jednom testu.
+
+### Logika ANOVA-e {#sec-logika-anova}
+
+ANOVA uspoređuje dvije vrste varijabilnosti:
+
+1. **Varijabilnost između grupa** (between-group variability) - koliko se grupni prosjeci razlikuju jedni od drugih
+2. **Varijabilnost unutar grupa** (within-group variability) - koliko pojedinačne opservacije variraju unutar svake grupe
+
+Ako grupni prosjeci variraju puno više nego što bi se očekivalo samo na temelju slučajne varijabilnosti unutar grupa, to sugerira da grupna pripadnost zaista utječe na ishod.
+
+**Primjer: Kredibilitet različitih izvora vijesti**
+
+Istraživač želi usporediti percipiranu kredibilnost vijesti iz četiri različita izvora: HRT, Nova TV, Index.hr, i Facebook. 80 ispitanika nasumično je dodijeljeno u jednu od četiri grupe (po 20 u svakoj), gdje čitaju istu vijest ali s različitom oznakom izvora, i ocjenjuju kredibilitet na skali 1-10.
+
+$$H_0: \mu_1 = \mu_2 = \mu_3 = \mu_4 \text{ (svi izvori jednako kredibilni)}$$
+$$H_1: \text{Barem jedan prosjek se razlikuje}$$
+
+Testna statistika za ANOVA-u je **F-omjer**:
+
+$$F = \frac{\text{MS}_{\text{between}}}{\text{MS}_{\text{within}}} = \frac{\text{Varijanca između grupa}}{\text{Varijanca unutar grupa}}$$ {#eq-f-statistic}
+
+gdje je:
+- $\text{MS}_{\text{between}}$ = prosječni kvadrat između grupa
+- $\text{MS}_{\text{within}}$ = prosječni kvadrat unutar grupa
+
+Ako nulta hipoteza je istinita (sve grupe imaju istu sredinu), očekujemo $F \approx 1$. Veliki F omjer (F >> 1) sugerira da su razlike između grupa veće nego što bi bile slučajno.
+
+```{r}
+#| label: fig-anova-example
+#| fig-cap: "ANOVA - usporedba kredibiliteta izvora"
+
+set.seed(101)
+
+# Simulirani podaci - četiri izvora
+n_per_izvor <- 20
+kredibilitet_HRT <- rnorm(n_per_izvor, mean = 7.5, sd = 1.2)
+kredibilitet_NovaTV <- rnorm(n_per_izvor, mean = 6.8, sd = 1.3)
+kredibilitet_Index <- rnorm(n_per_izvor, mean = 5.5, sd = 1.4)
+kredibilitet_Facebook <- rnorm(n_per_izvor, mean = 4.2, sd = 1.6)
+
+# Data frame
+anova_data <- data.frame(
+  kredibilitet = c(kredibilitet_HRT, kredibilitet_NovaTV, 
+                   kredibilitet_Index, kredibilitet_Facebook),
+  izvor = factor(rep(c("HRT", "Nova TV", "Index.hr", "Facebook"), 
+                     each = n_per_izvor),
+                 levels = c("HRT", "Nova TV", "Index.hr", "Facebook"))
+)
+
+# ANOVA
+anova_model <- aov(kredibilitet ~ izvor, data = anova_data)
+anova_summary <- summary(anova_model)
+
+cat("ANOVA Tablica:\n")
+print(anova_summary)
+
+# Deskriptivne statistike po grupi
+cat("\nDeskriptivne statistike po izvoru:\n")
+aggregate(kredibilitet ~ izvor, data = anova_data, 
+          FUN = function(x) c(M = mean(x), SD = sd(x), N = length(x)))
+
+# Vizualizacija
+boxplot(kredibilitet ~ izvor, data = anova_data,
+        main = "Kredibilitet vijesti po izvoru",
+        xlab = "Izvor vijesti",
+        ylab = "Kredibilitet (1-10)",
+        col = c("lightblue", "lightgreen", "lightyellow", "salmon"),
+        las = 2)  # Rotacija labela
+
+# Dodavanje prosjeka
+means <- tapply(anova_data$kredibilitet, anova_data$izvor, mean)
+points(1:4, means, pch = 19, col = "red", cex = 1.5)
+
+# Dodavanje grand mean (ukupni prosjek)
+grand_mean <- mean(anova_data$kredibilitet)
+abline(h = grand_mean, lty = 2, col = "darkgray", lwd = 2)
+text(0.7, grand_mean + 0.3, "Grand mean", col = "darkgray", cex = 0.8)
+```
+
+### Post-hoc testovi {#sec-post-hoc}
+
+Ako ANOVA pokaže značajan rezultat ($p < 0.05$), znamo da postoji **neka** razlika, ali ne znamo **koja** par grupa se razlikuje. Za to koristimo **post-hoc testove** (testove nakon ANOVA-e). Najčešći je **Tukeyjev HSD** (Honestly Significant Difference) test koji uspoređuje sve moguće parove grupa uz kontrolu za višestruko testiranje.
+
+```{r}
+#| label: fig-tukey-posthoc
+#| fig-cap: "Tukeyjev post-hoc test - parove usporedbe"
+
+# Tukeyjev HSD test
+tukey_rezultat <- TukeyHSD(anova_model)
+
+cat("Tukeyjev HSD test:\n")
+print(tukey_rezultat)
+
+# Vizualizacija
+plot(tukey_rezultat, las = 1, cex.axis = 0.7)
+abline(v = 0, lty = 2, col = "red")
+title(main = "Tukey HSD - 95% intervali pouzdanosti razlika")
+```
+
+**Interpretacija:** Ako 95% interval pouzdanosti razlike između dva prosjeka ne uključuje nulu, zaključujemo da se te dvije grupe značajno razlikuju.
+
+### Pretpostavke ANOVA-e {#sec-pretpostavke-anova}
+
+1. **Normalnost** - podaci unutar svake grupe trebaju biti približno normalno distribuirani
+2. **Homogenost varijanci** - standardne devijacije trebaju biti slične u svim grupama (Leveneov test)
+3. **Nezavisnost** - opservacije moraju biti međusobno nezavisne
+
+```{r}
+# Provjera homogenosti varijanci - Leveneov test
+levene_test <- leveneTest(kredibilitet ~ izvor, data = anova_data)
+cat("Leveneov test za homogenost varijanci:\n")
+print(levene_test)
+
+# Ako p > 0.05, varijance su homogene (dobro)
+```
+
+## Hi-kvadrat test {#sec-hi-kvadrat}
+
+Hi-kvadrat ($\chi^2$) test koristi se kada su **obje varijable kategorijske**. Ne uspoređujemo prosjeke, već frekvencije. Postoje dvije glavne verzije: test dobrote uklapanja (one variable) i test nezavisnosti (dvije varijable).
+
+### Test nezavisnosti {#sec-hi-kvadrat-nezavisnost}
+
+**Primjer: Platforma i tip sadržaja**
+
+Istražujemo jesu li tip sadržaja koji ljudi dijele i društvena mreža koju koriste nezavisni. Anketiramo 200 korisnika i kreiramo kontingencijsku tablicu:
+
+|  | **Facebook** | **Instagram** | **Twitter** | **Ukupno** |
+|:---|:---:|:---:|:---:|:---:|
+| **Vijesti** | 30 | 15 | 25 | 70 |
+| **Zabava** | 35 | 40 | 20 | 95 |
+| **Osobno** | 10 | 20 | 5 | 35 |
+| **Ukupno** | 75 | 75 | 50 | 200 |
+
+$$H_0: \text{Tip sadržaja i platforma su nezavisni}$$
+$$H_1: \text{Postoji povezanost}$$
+
+Testna statistika:
+
+$$\chi^2 = \sum \frac{(O - E)^2}{E}$$ {#eq-chi-square}
+
+gdje je $O$ opažena frekvencija i $E$ očekivana frekvencija (pod pretpostavkom nezavisnosti).
+
+Očekivana frekvencija za svaku ćeliju:
+
+$$E_{ij} = \frac{(\text{zbroj retka } i) \times (\text{zbroj stupca } j)}{\text{ukupni N}}$$
+
+```{r}
+#| label: fig-chi-square-test
+#| fig-cap: "Hi-kvadrat test nezavisnosti"
+
+# Kreiranje kontingencijske tablice
+platforme_tablica <- matrix(c(30, 15, 25,   # Vijesti
+                              35, 40, 20,   # Zabava
+                              10, 20, 5),   # Osobno
+                           nrow = 3, byrow = TRUE)
+
+rownames(platforme_tablica) <- c("Vijesti", "Zabava", "Osobno")
+colnames(platforme_tablica) <- c("Facebook", "Instagram", "Twitter")
+
+cat("Kontingencijska tablica:\n")
+print(platforme_tablica)
+cat("\n")
+
+# Hi-kvadrat test
+chi_test <- chisq.test(platforme_tablica)
+
+cat("Hi-kvadrat test rezultati:\n")
+cat("χ² =", round(chi_test$statistic, 3), "\n")
+cat("df =", chi_test$parameter, "\n")
+cat("p-vrijednost =", format.pval(chi_test$p.value, digits = 3), "\n\n")
+
+# Očekivane frekvencije
+cat("Očekivane frekvencije:\n")
+print(round(chi_test$expected, 2))
+
+# Reziduali (koliko se opaženo razlikuje od očekivanog)
+cat("\nStandardizirani reziduali:\n")
+print(round(chi_test$residuals, 2))
+
+# Vizualizacija - mozaik plot
+mosaicplot(platforme_tablica, 
+           main = "Tip sadržaja po platformi",
+           xlab = "Tip sadržaja",
+           ylab = "Platforma",
+           color = c("lightblue", "lightgreen", "salmon"))
+
+# Alternativno - grupiran bar plot
+barplot(platforme_tablica, beside = TRUE,
+        legend.text = rownames(platforme_tablica),
+        args.legend = list(x = "topright"),
+        main = "Distribucija tipa sadržaja po platformi",
+        xlab = "Platforma",
+        ylab = "Frekvencija",
+        col = c("lightblue", "lightgreen", "salmon"))
+```
+
+### Veličina efekta - Cramér's V {#sec-cramers-v}
+
+Za hi-kvadrat test, Cramér's V mjeri snagu povezanosti:
+
+$$V = \sqrt{\frac{\chi^2}{N \times (k-1)}}$$ {#eq-cramers-v}
+
+gdje je $k$ manji od broja redaka ili stupaca.
+
+Interpretacija:
+- $V = 0.1$ → slab efekt
+- $V = 0.3$ → srednji efekt
+- $V = 0.5$ → jak efekt
+
+```{r}
+# Izračun Cramér's V
+n_total <- sum(platforme_tablica)
+k <- min(nrow(platforme_tablica), ncol(platforme_tablica))
+cramers_v <- sqrt(chi_test$statistic / (n_total * (k - 1)))
+
+cat("Cramér's V:", round(cramers_v, 3), "\n")
+```
+
+## Korelacija – Pearsonov koeficijent {#sec-korelacija}
+
+**Pearsonova korelacija** (r) mjeri snagu i smjer **linearne** povezanosti između dvije numeričke varijable. Vrijednosti se kreću od -1 (savršena negativna korelacija) do +1 (savršena pozitivna korelacija), s 0 označavajući nikakvu linearnu povezanost.
+
+**Primjer: Broj pratitelja i angažman na Instagramu**
+
+Analiziramo 50 hrvatskih influencera i njihovu Instagram aktivnost. Mjere: broj pratitelja (u tisućama) i prosječan broj likova po objavi.
+
+$$H_0: \rho = 0 \text{ (nema linearne korelacije)}$$
+$$H_1: \rho \neq 0$$
+
+gdje je $\rho$ (rho) populacijska korelacija.
+
+Formula:
+
+$$r = \frac{\sum(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum(X_i - \bar{X})^2 \sum(Y_i - \bar{Y})^2}}$$ {#eq-pearson-r}
+
+```{r}
+#| label: fig-correlation-example
+#| fig-cap: "Korelacija između broja pratitelja i angažmana"
+
+set.seed(202)
+n_influencera <- 50
+
+# Simulirani podaci
+pratitelji <- rnorm(n_influencera, mean = 150, sd = 80)
+pratitelji[pratitelji < 10] <- 10  # minimum 10k pratitelja
+
+# Angažman pozitivno korelira s pratiteljima (r ~ 0.65)
+likovi <- 200 + 0.5 * pratitelji + rnorm(n_influencera, mean = 0, sd = 40)
+likovi[likovi < 50] <- 50
+
+# Korelacijski test
+cor_test <- cor.test(pratitelji, likovi)
+
+cat("Pearsonova korelacija:\n")
+cat("r =", round(cor_test$estimate, 3), "\n")
+cat("t =", round(cor_test$statistic, 3), "\n")
+cat("df =", cor_test$parameter, "\n")
+cat("p-vrijednost =", format.pval(cor_test$p.value, digits = 3), "\n")
+cat("95% CI: [", round(cor_test$conf.int[1], 3), ",", 
+    round(cor_test$conf.int[2], 3), "]\n")
+
+# Scatter plot
+plot(pratitelji, likovi,
+     main = paste("Korelacija: r =", round(cor_test$estimate, 2)),
+     xlab = "Broj pratitelja (tisuće)",
+     ylab = "Prosječan broj likova",
+     pch = 19,
+     col = rgb(0, 0, 1, 0.6))
+
+# Dodavanje linije regresije
+abline(lm(likovi ~ pratitelji), col = "red", lwd = 2)
+
+# Dodavanje linije smoother (loess)
+lines(lowess(pratitelji, likovi), col = "darkgreen", lwd = 2, lty = 2)
+
+legend("topleft",
+       legend = c("Linearna regresija", "Loess smoother"),
+       col = c("red", "darkgreen"),
+       lwd = 2,
+       lty = c(1, 2))
+```
+
+### Interpretacija Korelacije {#sec-interpretacija-korelacije}
+
+| **Raspon \|r\|** | **Interpretacija** |
+|:---|:---|
+| 0.00 - 0.19 | Vrlo slaba ili nikakva |
+| 0.20 - 0.39 | Slaba |
+| 0.40 - 0.59 | Umjerena |
+| 0.60 - 0.79 | Jaka |
+| 0.80 - 1.00 | Vrlo jaka |
+
+: Smjernice za interpretaciju korelacije {#tbl-correlation-interpretation}
+
+::: {.callout-warning}
+## Korelacija ≠ Uzročnost
+
+Visoka korelacija **ne implicira** uzročnost! Tri moguća objašnjenja za korelaciju između X i Y:
+
+1. X uzrokuje Y
+2. Y uzrokuje X
+3. Treća varijabla Z uzrokuje i X i Y (prividna korelacija)
+4. Slučajnost
+
+Primjer: Broj pratitelja i likovi koreliraju, ali to može biti zato što:
+- Više pratitelja → više likova (izloženost)
+- Bolji sadržaj → i više pratitelja i više likova po objavi
+:::
+
+# Regresijska analiza: Predviđanje i objašnjenje {#sec-regresija}
+
+Dok korelacija mjeri snagu povezanosti, **regresijska analiza** ide korak dalje: omogućuje nam da **predviđamo** vrijednosti jedne varijable na temelju druge, i kvantificiramo koliko dobro možemo to učiniti. Regresija je možda najmoćniji i najčešće korišteni alat u društvenim znanostima.
+
+## Jednostavna linearna regresija {#sec-jednostavna-regresija}
+
+**Jednostavna linearna regresija** modelira odnos između jedne prediktorne varijable (X) i jedne kriterijske varijable (Y) pomoću pravca:
+
+$$Y = b_0 + b_1 X + \epsilon$$ {#eq-simple-regression}
+
+gdje je:
+- $b_0$ = odsječak (intercept) - predviđena vrijednost Y kada je X = 0
+- $b_1$ = nagib (slope) - za koliko se Y mijenja kada se X poveća za 1 jedinicu
+- $\epsilon$ = pogreška (reziduali) - razlika između opaženih i predviđenih vrijednosti
+
+**Primjer: Predviđanje angažmana na temelju duljine članka**
+
+Index.hr želi znati može li duljina članka (u riječima) predvidjeti broj komentara. Analiziramo 100 članaka.
+
+```{r}
+#| label: fig-simple-regression
+#| fig-cap: "Jednostavna linearna regresija - duljina vs. komentari"
+
+set.seed(303)
+n_clanaka <- 100
+
+# Simulirani podaci
+duljina_rijeci <- rnorm(n_clanaka, mean = 500, sd = 200)
+duljina_rijeci[duljina_rijeci < 100] <- 100
+
+# Broj komentara ovisi o duljini (ali nije savršena veza)
+broj_komentara <- 10 + 0.05 * duljina_rijeci + rnorm(n_clanaka, mean = 0, sd = 15)
+broj_komentara[broj_komentara < 0] <- 0
+
+# Regresijski model
+reg_model <- lm(broj_komentara ~ duljina_rijeci)
+reg_summary <- summary(reg_model)
+
+cat("Jednostavna linearna regresija:\n")
+cat("Y = Broj komentara, X = Duljina članka (riječi)\n\n")
+print(reg_summary)
+
+# Izvlačenje koeficijenata
+b0 <- coef(reg_model)[1]
+b1 <- coef(reg_model)[2]
+
+cat("\nRegresijska jednadžba:\n")
+cat("Broj komentara =", round(b0, 2), "+", round(b1, 4), "× Duljina\n\n")
+
+# Interpretacija
+cat("Interpretacija:\n")
+cat("- Odsječak (b0):", round(b0, 2), "→ predviđeni komentari za članak duljine 0 (besmisleno)\n")
+cat("- Nagib (b1):", round(b1, 4), "→ za svaku dodatnu riječ, očekujemo", 
+    round(b1, 4), "više komentara\n")
+cat("  (ili, za 100 riječi duži članak:", round(b1 * 100, 2), "više komentara)\n")
+
+# Scatter plot s regresijskom linijom
+plot(duljina_rijeci, broj_komentara,
+     main = "Duljina članka vs. Broj komentara",
+     xlab = "Duljina članka (riječi)",
+     ylab = "Broj komentara",
+     pch = 19,
+     col = rgb(0, 0, 1, 0.5))
+
+# Regresijska linija
+abline(reg_model, col = "red", lwd = 2)
+
+# Dodavanje nekoliko primjera predviđanja
+example_lengths <- c(300, 500, 700)
+predictions <- predict(reg_model, newdata = data.frame(duljina_rijeci = example_lengths))
+
+for (i in 1:length(example_lengths)) {
+  segments(example_lengths[i], 0, example_lengths[i], predictions[i], 
+           lty = 3, col = "darkgreen")
+  segments(0, predictions[i], example_lengths[i], predictions[i], 
+           lty = 3, col = "darkgreen")
+  text(example_lengths[i], predictions[i] + 5, 
+       paste(round(predictions[i], 1)), col = "darkgreen", cex = 0.8)
+}
+
+# Prikaz reziduala
+residuali <- resid(reg_model)
+segments(duljina_rijeci, broj_komentara, 
+         duljina_rijeci, broj_komentara - residuali,
+         col = rgb(1, 0, 0, 0.3), lwd = 0.5)
+```
+
+### Testiranje značajnosti koeficijenata {#sec-testiranje-koeficijenata}
+
+Za svaki koeficijent testiramo:
+
+$$H_0: \beta_1 = 0 \text{ (nema učinka)}$$
+$$H_1: \beta_1 \neq 0$$
+
+Testna statistika:
+
+$$t = \frac{b_1}{SE(b_1)}$$
+
+gdje je $SE(b_1)$ standardna pogreška koeficijenta.
+
+```{r}
+# Detaljnije o koeficijentima
+coef_summary <- summary(reg_model)$coefficients
+
+cat("Tablica koeficijenata:\n")
+cat(sprintf("%-12s %10s %10s %10s %12s\n", 
+            "Parametar", "Procjena", "Std.Greška", "t-vrijednost", "p-vrijednost"))
+cat(sprintf("%-12s %10.4f %10.4f %10.3f %12s\n",
+            "Odsječak", coef_summary[1,1], coef_summary[1,2], 
+            coef_summary[1,3], format.pval(coef_summary[1,4], digits = 3)))
+cat(sprintf("%-12s %10.4f %10.4f %10.3f %12s\n",
+            "Duljina", coef_summary[2,1], coef_summary[2,2], 
+            coef_summary[2,3], format.pval(coef_summary[2,4], digits = 3)))
+```
+
+## Višestruka regresija {#sec-visestruka-regresija}
+
+**Višestruka regresija** proširuje jednostavnu regresiju na više prediktora:
+
+$$Y = b_0 + b_1 X_1 + b_2 X_2 + ... + b_k X_k + \epsilon$$ {#eq-multiple-regression}
+
+**Primjer: Predviđanje gledanosti vijesti**
+
+HRT želi predvidjeti gledanost večernjih vijesti na temelju više faktora:
+- Duljina emisije (minute)
+- Broj breaking news tema
+- Je li vikend (da/ne)
+
+```{r}
+#| label: fig-multiple-regression
+#| fig-cap: "Višestruka regresija - predviđanje gledanosti"
+
+set.seed(404)
+n_emisija <- 150
+
+# Simulirani podaci
+duljina_emisije <- rnorm(n_emisija, mean = 25, sd = 5)
+broj_breaking <- rpois(n_emisija, lambda = 2.5)
+vikend <- rbinom(n_emisija, 1, prob = 0.29)  # ~2/7 dana su vikend
+
+# Gledanost ovisi o svim faktorima
+gledanost <- 200 +  # bazna gledanost
+             3 * duljina_emisije +  # dulje emisije = više gledatelja
+             15 * broj_breaking +    # breaking news privlači
+             -50 * vikend +          # vikendom manje gledaju vijesti
+             rnorm(n_emisija, mean = 0, sd = 25)
+
+gledanost[gledanost < 50] <- 50  # minimum
+
+# Data frame
+gledanost_data <- data.frame(
+  gledanost = gledanost,
+  duljina = duljina_emisije,
+  breaking = broj_breaking,
+  vikend = factor(vikend, labels = c("Radni dan", "Vikend"))
+)
+
+# Višestruka regresija
+multi_reg <- lm(gledanost ~ duljina + breaking + vikend, data = gledanost_data)
+multi_summary <- summary(multi_reg)
+
+cat("Višestruka regresija:\n")
+print(multi_summary)
+
+cat("\nRegresijska jednadžba:\n")
+cat("Gledanost =", round(coef(multi_reg)[1], 2), "\n")
+cat("           +", round(coef(multi_reg)[2], 2), "× Duljina\n")
+cat("           +", round(coef(multi_reg)[3], 2), "× Breaking News\n")
+cat("           +", round(coef(multi_reg)[4], 2), "× VikendDA\n\n")
+
+# Interpretacija
+cat("Interpretacija (sve ostalo jednako):\n")
+cat("- Svaka dodatna minuta emisije → +", round(coef(multi_reg)[2], 2), "tisuća gledatelja\n")
+cat("- Svaka dodatna breaking news tema → +", round(coef(multi_reg)[3], 2), "tisuća gledatelja\n")
+cat("- Vikend vs. radni dan → ", round(coef(multi_reg)[4], 2), "tisuća gledatelja\n")
+
+# Vizualizacija - parovi prediktora i ishoda
+par(mfrow = c(2, 2))
+
+# 1. Duljina vs. Gledanost
+plot(gledanost_data$duljina, gledanost_data$gledanost,
+     xlab = "Duljina emisije (min)", ylab = "Gledanost (tisuće)",
+     main = "Duljina emisije", pch = 19, col = rgb(0,0,1,0.5))
+abline(lm(gledanost ~ duljina, data = gledanost_data), col = "red", lwd = 2)
+
+# 2. Breaking news vs. Gledanost
+plot(gledanost_data$breaking, gledanost_data$gledanost,
+     xlab = "Broj breaking news", ylab = "Gledanost (tisuće)",
+     main = "Breaking News", pch = 19, col = rgb(0,0,1,0.5))
+abline(lm(gledanost ~ breaking, data = gledanost_data), col = "red", lwd = 2)
+
+# 3. Vikend vs. Gledanost
+boxplot(gledanost ~ vikend, data = gledanost_data,
+        main = "Radni dan vs. Vikend",
+        xlab = "", ylab = "Gledanost (tisuće)",
+        col = c("lightblue", "salmon"))
+
+# 4. Prediviđeno vs. Opaženo
+plot(fitted(multi_reg), gledanost_data$gledanost,
+     xlab = "Predviđena gledanost", ylab = "Opažena gledanost",
+     main = "Model fit", pch = 19, col = rgb(0,0,1,0.5))
+abline(a = 0, b = 1, col = "red", lwd = 2, lty = 2)
+```
+
+### Multikolinearnost {#sec-multikolinearnost}
+
+Kada su prediktori visoko međusobno korelirani, to stvara problem **multikolinearnosti**. Provjeravamo pomoću **VIF** (Variance Inflation Factor):
+
+- VIF < 5: nema problema
+- VIF 5-10: umjerena multikolinearnost
+- VIF > 10: ozbiljna multikolinearnost
+
+```{r}
+# Provjera VIF
+library(car)
+vif_values <- vif(multi_reg)
+cat("VIF vrijednosti:\n")
+print(vif_values)
+```
+
+## Koeficijent determinacije R² {#sec-r-squared}
+
+**R²** (R-kvadrat) mjeri koliki postotak varijabilnosti u Y varijabli možemo objasniti našim modelom:
+
+$$R^2 = 1 - \frac{SS_{\text{residual}}}{SS_{\text{total}}} = \frac{SS_{\text{regression}}}{SS_{\text{total}}}$$ {#eq-r-squared}
+
+gdje je:
+- $SS_{\text{total}}$ = ukupna varijabilnost u Y
+- $SS_{\text{residual}}$ = neobjašnjena varijabilnost (pogreška modela)
+- $SS_{\text{regression}}$ = objašnjena varijabilnost (što model hvata)
+
+**Interpretacija:**
+- $R^2 = 0.25$ → Model objašnjava 25% varijabilnosti
+- $R^2 = 0.60$ → Model objašnjava 60% varijabilnosti
+- $R^2 = 0.90$ → Model objašnjava 90% varijabilnosti
+
+Za višestruku regresiju, koristimo **prilagođeni R²** (adjusted R²) koji kažnjava dodavanje nepotrebnih prediktora:
+
+$$R^2_{\text{adj}} = 1 - \frac{(1-R^2)(n-1)}{n-k-1}$$ {#eq-adjusted-r-squared}
+
+gdje je $n$ veličina uzorka i $k$ broj prediktora.
+
+```{r}
+#| label: fig-r-squared-viz
+#| fig-cap: "Vizualizacija R² - objašnjena vs. neobjašnjena varijabilnost"
+
+# Izdvajanje R² informacija
+r_squared <- summary(multi_reg)$r.squared
+adj_r_squared <- summary(multi_reg)$adj.r.squared
+
+cat("R² =", round(r_squared, 4), 
+    "→ Model objašnjava", round(r_squared * 100, 2), "% varijabilnosti\n")
+cat("Prilagođeni R² =", round(adj_r_squared, 4), "\n\n")
+
+# Dekompozicija varijabilnosti
+ss_total <- sum((gledanost_data$gledanost - mean(gledanost_data$gledanost))^2)
+ss_residual <- sum(resid(multi_reg)^2)
+ss_regression <- ss_total - ss_residual
+
+cat("Suma kvadrata:\n")
+cat("SS_total =", round(ss_total, 2), "(ukupna varijabilnost)\n")
+cat("SS_regression =", round(ss_regression, 2), 
+    sprintf("(objašnjeno = %.1f%%)\n", (ss_regression/ss_total)*100))
+cat("SS_residual =", round(ss_residual, 2), 
+    sprintf("(neobjašnjeno = %.1f%%)\n", (ss_residual/ss_total)*100))
+
+# Pie chart dekompozicije
+pie_values <- c(ss_regression, ss_residual)
+pie_labels <- c(paste("Objašnjeno\n", round(r_squared*100, 1), "%"),
+                paste("Neobjašnjeno\n", round((1-r_squared)*100, 1), "%"))
+pie_colors <- c("lightblue", "salmon")
+
+pie(pie_values, labels = pie_labels, col = pie_colors,
+    main = "Dekompozicija varijabilnosti (R²)")
+
+# Residual plot
+par(mfrow = c(1, 2))
+plot(fitted(multi_reg), resid(multi_reg),
+     xlab = "Predviđene vrijednosti",
+     ylab = "Reziduali",
+     main = "Reziduali vs. Predviđeno",
+     pch = 19, col = rgb(0,0,1,0.5))
+abline(h = 0, col = "red", lwd = 2, lty = 2)
+
+# Q-Q plot za normalnost reziduala
+qqnorm(resid(multi_reg), main = "Q-Q Plot reziduala",
+       pch = 19, col = rgb(0,0,1,0.5))
+qqline(resid(multi_reg), col = "red", lwd = 2)
+```
+
+### Usporedba modela {#sec-usporedba-modela}
+
+Možemo usporediti modele s različitim setovima prediktora:
+
+```{r}
+# Model 1: Samo duljina
+model1 <- lm(gledanost ~ duljina, data = gledanost_data)
+
+# Model 2: Duljina + Breaking
+model2 <- lm(gledanost ~ duljina + breaking, data = gledanost_data)
+
+# Model 3: Svi prediktori (već imamo kao multi_reg)
+model3 <- multi_reg
+
+# Usporedba
+cat("Usporedba modela:\n\n")
+cat(sprintf("%-20s %10s %15s\n", "Model", "R²", "Prilagođeni R²"))
+cat(sprintf("%-20s %10.4f %15.4f\n", "1: Samo duljina", 
+            summary(model1)$r.squared, summary(model1)$adj.r.squared))
+cat(sprintf("%-20s %10.4f %15.4f\n", "2: Duljina + Breaking", 
+            summary(model2)$r.squared, summary(model2)$adj.r.squared))
+cat(sprintf("%-20s %10.4f %15.4f\n", "3: Svi prediktori", 
+            summary(model3)$r.squared, summary(model3)$adj.r.squared))
+
+# F-test za usporedbu ugniježđenih modela
+anova_usporedba <- anova(model1, model2, model3)
+cat("\nANOVA usporedba modela:\n")
+print(anova_usporedba)
+```
+
+# Interpretacija i izvještavanje {#sec-interpretacija-izvjestavanj}
+
+## Statistička vs. praktična značajnost {#sec-statisticka-prakticna-znacajnost}
+
+Završavamo s možda najvažnijom lekcijom u cijeloj knjizi: razlika između **statističke značajnosti** i **praktične značajnosti**. Ovo razumijevanje je ključno za odgovorno korištenje i interpretaciju statistike.
+
+### Problem sa p < 0.05 kao jedinom metrikom {#sec-problem-p-vrijednost}
+
+Zamislimo dva scenarija:
+
+**Scenarij A:** Istraživač testira novi format naslova na 50,000 članakaIndex.hr-a. Otkriva da senzacionalni naslovi povećavaju klikove za 0.8% u prosjeku ($p < 0.001$). Statistički visoko značajno!
+
+**Scenarij B:** Drugi istraživač testira isti format na 100 članaka. Otkriva povećanje od 45% ($p = 0.08$). Nije statistički značajno.
+
+Koji rezultat je važniji? **Očito Scenarij B**, ali statistička značajnost sugerira suprotno. Što se dogodilo?
+
+```{r}
+#| label: fig-stat-vs-pract
+#| fig-cap: "Statistička vs. praktična značajnost"
+
+# Scenarij A: Veliki N, mali efekt
+set.seed(505)
+n_A <- 50000
+clicks_control_A <- rpois(n_A/2, lambda = 100)
+clicks_treatment_A <- rpois(n_A/2, lambda = 100.8)  # 0.8% povećanje
+
+# Scenarij B: Mali N, veliki efekt
+n_B <- 100
+clicks_control_B <- rpois(n_B/2, lambda = 100)
+clicks_treatment_B <- rpois(n_B/2, lambda = 145)  # 45% povećanje
+
+# Testovi
+test_A <- t.test(clicks_treatment_A, clicks_control_A)
+test_B <- t.test(clicks_treatment_B, clicks_control_B)
+
+# Prikaz rezultata
+cat("SCENARIJ A: Veliki uzorak (N = 50,000), mali efekt\n")
+cat("Kontrola: M =", round(mean(clicks_control_A), 2), "\n")
+cat("Tretman: M =", round(mean(clicks_treatment_A), 2), "\n")
+cat("Razlika:", round(mean(clicks_treatment_A) - mean(clicks_control_A), 2), 
+    sprintf("(%.1f%%)\n", 100*(mean(clicks_treatment_A)/mean(clicks_control_A) - 1)))
+cat("p-vrijednost:", format.pval(test_A$p.value, digits = 3), "\n")
+cat("ZAKLJUČAK: Statistički značajno, ali praktično beznačajno\n\n")
+
+cat("SCENARIJ B: Mali uzorak (N = 100), veliki efekt\n")
+cat("Kontrola: M =", round(mean(clicks_control_B), 2), "\n")
+cat("Tretman: M =", round(mean(clicks_treatment_B), 2), "\n")
+cat("Razlika:", round(mean(clicks_treatment_B) - mean(clicks_control_B), 2), 
+    sprintf("(%.1f%%)\n", 100*(mean(clicks_treatment_B)/mean(clicks_control_B) - 1)))
+cat("p-vrijednost:", format.pval(test_B$p.value, digits = 3), "\n")
+cat("ZAKLJUČAK: Nije statistički značajno, ali praktično vrlo važno\n\n")
+
+# Vizualizacija
+par(mfrow = c(1, 2))
+
+# Scenarij A
+boxplot(clicks_control_A, clicks_treatment_A,
+        names = c("Kontrola", "Senzacionalni"),
+        main = "Scenarij A: N=50,000",
+        ylab = "Broj klikova",
+        col = c("lightblue", "salmon"),
+        ylim = c(90, 110))
+text(1.5, 105, paste("p <", 0.001), col = "darkgreen", cex = 1.2, font = 2)
+text(1.5, 103, "Ali samo 0.8% razlike!", cex = 0.9)
+
+# Scenarij B
+boxplot(clicks_control_B, clicks_treatment_B,
+        names = c("Kontrola", "Senzacionalni"),
+        main = "Scenarij B: N=100",
+        ylab = "Broj klikova",
+        col = c("lightblue", "salmon"),
+        ylim = c(80, 160))
+text(1.5, 150, paste("p =", round(test_B$p.value, 3)), col = "darkred", cex = 1.2, font = 2)
+text(1.5, 145, "Ali 45% razlike!", cex = 0.9)
+```
+
+### Ključ: Uvijek izvještavajte veličinu efekta {#sec-izvjestavajte-efekt}
+
+**Kompletno izvještavanje** uključuje:
+
+1. **P-vrijednost** - govori o statističkoj značajnosti
+2. **Veličina efekta** - govori o praktičnoj značajnosti
+3. **Interval pouzdanosti** - govori o preciznosti procjene
+4. **Kontekst** - što brojke znače u stvarnom svijetu
+
+::: {.callout-important}
+## Zlatno pravilo izvještavanja
+
+**Nikad ne izvještavajte samo p-vrijednost!**
+
+Minimalni standard:
+- Deskriptivne statistike (M, SD, N za svaku grupu)
+- Testna statistika (t, F, χ², r)
+- P-vrijednost
+- Veličina efekta (d, η², V, r)
+- Intervali pouzdanosti gdje primjereno
+
+Primjer lošeg izvještavanja:
+> "Razlika je bila značajna, $p < 0.05$."
+
+Primjer dobrog izvještavanja:
+> "Senzacionalni naslovi ($M = 850$, $SD = 220$) generirali su značajno više klikova od informativnih naslova ($M = 650$, $SD = 180$), $t(98) = 4.82$, $p < 0.001$, $d = 0.98$, 95% CI [118, 282]. Ova razlika od približno 200 klikova predstavlja 31% povećanje i ima snažne praktične implikacije za uredničku strategiju portala."
+:::
+
+### Praktična značajnost u različitim kontekstima {#sec-kontekst-vaznosti}
+
+Što čini efekt "praktično značajnim" ovisi o kontekstu:
+
+**Kontekst 1: Index.hr headline engagement**
+- Povećanje od 0.5% u klikovima = 1000+ dodatnih klikova dnevno
+- Cohenov d = 0.1, ali praktično vrlo značajno zbog volumena
+
+**Kontekst 2: HRT kredibilitet**
+- Povećanje od 0.3 boda na skali 1-10
+- Cohenov d = 0.8 (velik efekt), ali praktično beznačajno
+- Ljudi ne primjećuju tako malu razliku u kredibilitetu
+
+**Kontekst 3: Vrijeme gledanja vijesti**
+- Povećanje od 2 minute gledanja
+- d = 0.4, i praktično značajno jer 2 minute = cijela dodatna vijest
+
+```{r}
+#| label: fig-practical-significance
+#| fig-cap: "Matricai statistička vs. praktična značajnost"
+
+# Kreiranje matrice scenarija
+scenariji <- data.frame(
+  Ime = c("Mali N,\nMali Efekt", "Mali N,\nVelik Efekt", 
+          "Veliki N,\nMali Efekt", "Veliki N,\nVelik Efekt"),
+  Statisticka = c("Nije\nznačajno", "Nije\nznačajno", 
+                  "Značajno", "Značajno"),
+  Prakticna = c("Nije\nznačajno", "Značajno", 
+                "Nije\nznačajno", "Značajno"),
+  x = c(1, 1, 2, 2),
+  y = c(1, 2, 1, 2),
+  boja = c("gray", "yellow", "lightblue", "lightgreen")
+)
+
+plot(scenariji$x, scenariji$y, 
+     pch = 22, cex = 15, bg = scenariji$boja,
+     xlim = c(0.5, 2.5), ylim = c(0.5, 2.5),
+     xlab = "", ylab = "", xaxt = "n", yaxt = "n",
+     main = "Statistička vs. Praktična značajnost")
+
+# Labele
+text(scenariji$x, scenariji$y + 0.3, scenariji$Ime, cex = 0.9, font = 2)
+text(scenariji$x, scenariji$y, 
+     paste("Stat:", scenariji$Statisticka, "\nPrakt:", scenariji$Prakticna), 
+     cex = 0.7)
+
+# Osi labele
+axis(1, at = c(1, 2), labels = c("Mali N", "Veliki N"), tick = FALSE)
+axis(2, at = c(1, 2), labels = c("Mali Efekt", "Velik Efekt"), tick = FALSE, las = 1)
+
+# Najbolji scenarij
+arrows(2, 2, 2.3, 2.3, lwd = 3, col = "darkgreen", length = 0.15)
+text(2.35, 2.35, "IDEALNO", col = "darkgreen", font = 2, cex = 0.9)
+
+# Najgori scenarij
+arrows(1, 1, 0.7, 0.7, lwd = 3, col = "darkred", length = 0.15)
+text(0.65, 0.65, "PROBLEM", col = "darkred", font = 2, cex = 0.9)
+```
+
+## Sažetak {.unnumbered}
+
+U ovim poglavljima prošli smo kroz:
+
+**Poglavlje 5 - Statistički testovi:**
+- **T-test** - usporedba prosjeka (jedan-uzorkovni, nezavisni, zavisni)
+- **ANOVA** - usporedba više grupa
+- **Hi-kvadrat** - test za kategorijske varijable
+- **Pearsonova korelacija** - snaga linearne povezanosti
+
+**Poglavlje 6 - Regresija:**
+- **Jednostavna regresija** - predviđanje Y iz X
+- **Višestruka regresija** - predviđanje Y iz više prediktora
+- **R²** - postotak objašnjene varijabilnosti
+
+**Poglavlje 7 - Interpretacija:**
+- **Statistička vs. praktična značajnost** - ključna razlika
+- **Kompletno izvještavanje** - p-vrijednost + veličina efekta + kontekst
+- **Kontekstualna važnost** - što brojke znače u stvarnom svijetu
+
+::: {.callout-tip}
+## Konačne smjernice za istraživača
+
+1. **Uvijek** planirajte analizu prije prikupljanja podataka
+2. **Provjerite** pretpostavke testova prije interpretacije
+3. **Izvještavajte** kompletno: deskriptive + test + efekt + CI
+4. **Interpretirajte** u kontekstu: što brojke znače u praksi?
+5. **Budite** transparentni: navedite sve provedene analize
+6. **Nemojte** "loviti" značajnost ili skrivati neznačajne rezultate
+:::
+
+## Reference {.unnumbered}
+
+::: {#refs}
+:::
