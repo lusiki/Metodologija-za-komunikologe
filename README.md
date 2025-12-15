@@ -93,7 +93,43 @@ Praktična primjena statističkih testova s detaljnim primjerima i interpretacij
   - R² i interpretacija koeficijenata
   - Statistička vs. praktična značajnost
 
+
 ---
+### [📄 Poglavlje 5: Računalna analiza teksta](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Racunalna%20analiza%20teksta.html)
+**~14,000 riječi**
+Sveobuhvatni pregled računalne analize teksta u istraživanju masovne komunikacije.
+- **Priprema podataka**
+  - Tokenizacija i strategije raščlambe
+  - Stemizacija vs. lematizacija
+  - Izazovi hrvatskog jezika (morfologija, slobodan redoslijed)
+- **Reprezentacija teksta**
+  - Bag-of-Words i matrica dokument-termin
+  - TF-IDF (formule i interpretacija)
+  - Matrica supojavljivanja
+- **Pristupi analizi**
+  - Nadzirano učenje (Accuracy, Precision, Recall, F1)
+  - Tematsko modeliranje LDA (Dirichlet distribucije)
+  - Analiza sentimenta i ekstrakcija entiteta NER
+- **Diskurzivna analiza**
+  - N-grami i kolokacije (PMI, t-score)
+  - Analiza okvira (Entmanova definicija framinga)
+  - Mreže riječi (betweenness centrality)
+---
+
+
+
+
+
+
+
+
+---
+
+
+
+
+
+
 
 ## 🎯 Buduća poglavlja
 
