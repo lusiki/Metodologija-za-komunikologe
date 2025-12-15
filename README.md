@@ -14,7 +14,7 @@ Ovo je kompletan hrvatski udžbenik statistike dizajniran specifično za student
 
 ## 📚 Sadržaj
 
-### [📄 Poglavlje 2: Deskriptivna statistika](./Deskriptivna_statistika.qmd)
+### [📄 Poglavlje 2: Deskriptivna statistika](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Deskriptivna%20statistika.html)
 **~6,750 riječi**
 
 Temeljno poglavlje koje pokriva sve ključne koncepte deskriptivne statistike kroz primjere iz hrvatskih medija.
@@ -41,7 +41,7 @@ Temeljno poglavlje koje pokriva sve ključne koncepte deskriptivne statistike kr
 
 ---
 
-### [📄 Poglavlje 3: Osnove statističkog zaključivanja](./Osnove_statistickog_zakljucivanja.qmd)
+### [📄 Poglavlje 3: Osnove statističkog zaključivanja](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Osnove%20statisti%C4%8Dkog%20zaklju%C4%8Divanja.html)
 **~5,700 riječi**
 
 Poglavlje koje gradi most između uzorka i populacije – temelj inferencijalne statistike.
@@ -68,7 +68,7 @@ Poglavlje koje gradi most između uzorka i populacije – temelj inferencijalne 
 
 ---
 
-### [📄 Poglavlje 4: Statistički testovi u praksi](./Statisticki_testovi_u_praksi.qmd)
+### [📄 Poglavlje 4: Statistički testovi u praksi](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Statisticki%20testovi.html)
 **~6,500 riječi**
 
 Praktična primjena statističkih testova s detaljnim primjerima i interpretacijama.
@@ -129,62 +129,6 @@ Kod je skriven u izlaznim dokumentima (`echo: false`) za čitljivost
 - Formalna proza bez bullet pointa u glavnom tekstu
 - LaTeX formule za sve statističke koncepte
 - Tablice s konvencijama interpretacije
-
----
-
-## 🚀 Kako koristiti
-
-### Preduvjeti
-
-```r
-# Instalacija potrebnih paketa
-install.packages(c("ggplot2", "dplyr", "scales"))
-```
-
-### Renderiranje poglavlja
-
-```bash
-# Renderiranje svih formata (HTML + PDF + DOCX)
-quarto render Deskriptivna_statistika.qmd
-
-# Samo HTML
-quarto render Deskriptivna_statistika.qmd --to html
-
-# Samo PDF
-quarto render Deskriptivna_statistika.qmd --to pdf
-```
-
-### Napomena za PDF
-
-PDF format koristi `babel-lang: english` zbog kompatibilnosti s TinyTeX. Hrvatski tekst renderira se ispravno.
-
----
-
-## 📊 Statistika projekta
-
-| Metrika | Vrijednost |
-|:--------|:-----------|
-| **Ukupno riječi** | ~19,000 |
-| **Broj poglavlja** | 3 (u razvoju) |
-| **Grafova** | 20+ |
-| **Formule (LaTeX)** | 30+ |
-| **Primjeri iz hrvatskih medija** | 40+ |
-
----
-
-## 📁 Struktura datoteka
-
-```
-📦 Metodologija-za-komunikologe/
-│
-├── 📄 Deskriptivna_statistika.qmd           (~6,750 riječi)
-├── 📄 Osnove_statistickog_zakljucivanja.qmd (~5,700 riječi)
-├── 📄 Statisticki_testovi_u_praksi.qmd      (~6,500 riječi)
-│
-├── 📘 README.md                             (ovaj dokument)
-│
-└── 📁 [buduća poglavlja...]
-```
 
 ---
 
