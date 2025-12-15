@@ -6,151 +6,117 @@
 
 ## 📖 O projektu
 
-Ovo je kompletan hrvatski udžbenik statistike dizajniran specifično za studente masovne komunikacije, novinarstva i medijskih studija. Knjiga koristi **realne primjere iz hrvatskog medijskog prostora** (HRT, Nova TV, Index.hr, Instagram, Facebook) kako bi apstraktne statističke koncepte učinila pristupačnima i relevantnima.
+Ovo je kompletan hrvatski udžbenik statistike dizajniran specifično za studente masovne komunikacije, novinarstva i medijskih studija. Knjiga koristi **realne primjere iz hrvatskog medijskog prostora** (HRT, Nova TV, Index.hr, Večernji.hr, Instagram, Facebook) kako bi apstraktne statističke koncepte učinila pristupačnima i relevantnima.
 
-**Ukupno:** ~61,500 riječi | 7 poglavlja | 100+ izvršivih R primjera | Svi grafovi vidljivi
+**Trenutno:** ~19,000 riječi | 3 poglavlja | Quarto format s R vizualizacijama
 
 ---
 
 ## 📚 Sadržaj
 
-### [📄 Poglavlje 2: Deskriptivna statistika](./Sekcija_2_1_Quarto.qmd) 
-**~24,000 riječi | 4 sekcije**
+### [📄 Poglavlje 2: Deskriptivna statistika](./Deskriptivna_statistika.qmd)
+**~6,750 riječi**
 
-- **2.1 Mjere centralne tendencije** (~6,500 riječi)
+Temeljno poglavlje koje pokriva sve ključne koncepte deskriptivne statistike kroz primjere iz hrvatskih medija.
+
+- **Mjere centralne tendencije**
   - Aritmetička sredina, medijana, modus
-  - HRT gledanost, Index.hr čitanost
+  - HRT Dnevnik gledanost, Index.hr komentari
   - Kada koristiti koju mjeru
 
-- **2.2 Mjere disperzije** (~8,000 riječi)
+- **Mjere disperzije**
   - Raspon, interkvartilni raspon, varijanca, standardna devijacija
-  - Instagram angažman, RTL vijesti
-  - Visualizacija varijabilnosti
+  - HRT Player outlier analiza, RTL teme
+  - Vizualizacija varijabilnosti (box plotovi)
 
-- **2.3 Standardizacija i korelacije** (~7,500 riječi)
-  - Z-rezultati, standardni rezultati
-  - Kovarijanca i korelacija
-  - Nova TV prime time analiza
+- **Standardizacija i Z-rezultati**
+  - Empirijsko pravilo (68-95-99.7)
+  - Usporedba različitih mjernih skala
+  - Detekcija outliera
 
-- **2.4 Vizualizacija podataka** (~2,000 riječi)
-  - Histogrami, box plotovi, scatter plotovi
-  - Najbolje prakse za medijske podatke
-
----
-
-### [📄 Poglavlje 3: Od uzorka do populacije](./Poglavlje_3_Statisticko_Zakljucivanje.qmd)
-**~9,000 riječi | 4 sekcije**
-
-- **3.1 Normalna distribucija** (~2,200 riječi)
-  - Karakteristike normalne distribucije
-  - 68-95-99.7 pravilo
-  - Index.hr vrijeme čitanja
-
-- **3.2 Centralni granični teorem** (~2,500 riječi)
-  - Uzorkovna distribucija prosjeka
-  - Simulacija s 10,000 replikacija
-  - HRT zadovoljstvo gledalaca
-
-- **3.3 Standardna pogreška** (~2,000 riječi)
-  - Razlika SD vs. SE
-  - Intervali pouzdanosti
-  - HRT serije gledanost
-
-- **3.4 Testiranje hipoteza** (~2,300 riječi)
-  - Nulta vs. alternativna hipoteza
-  - P-vrijednost i značajnost
-  - Pogreške tipa I i II
-
----
-
-### [📄 Poglavlje 4: Inferencijalna statistika](./Poglavlje_4_Inferencijalna_Statistika.qmd)
-**~8,500 riječi | 3 sekcije**
-
-- **4.1 Logika nulte hipoteze** (~3,000 riječi)
-  - Analogija sa suđenjem
-  - Kritična regija i testna statistika
-  - Index.hr komentari
-
-- **4.2 P-vrijednost i statistička značajnost** (~3,000 riječi)
-  - Što p-vrijednost JEST i što NIJE
-  - Konvencije izvještavanja (*, **, ***)
-  - Statistička vs. praktična značajnost
-
-- **4.3 Vrste pogrešaka** (~2,500 riječi)
-  - Pogreška tipa I (α) - lažno pozitivna
-  - Pogreška tipa II (β) - lažno negativna
-  - Moć testa (1-β)
-  - Power analiza s R
-
----
-
-### [📄 Poglavlja 5, 6, 7: Statistički testovi i regresija](./Poglavlja_5_6_7_Statisticki_Testovi.qmd) ⭐ **NOVO**
-**~20,000 riječi | 11 sekcija**
-
-#### **Poglavlje 5: Najčešći statistički testovi** (~8,000 riječi)
-
-- **5.1 T-test**
-  - Jedan-uzorkovni t-test (Nova TV vrijeme gledanja)
-  - Nezavisni t-test (Index.hr senzacionalni vs. informativni naslovi)
-  - Zavisni t-test (fact-check kredibilitet)
-  - Cohenov d veličina efekta
-
-- **5.2 ANOVA - Analiza varijance**
-  - Logika between vs. within varijabilnosti
-  - F-omjer i testiranje
-  - HRT/Nova TV/Index.hr/Facebook kredibilitet
-  - Tukeyjev post-hoc test
-  - Leveneov test homogenosti
-
-- **5.3 Hi-kvadrat test**
-  - Test nezavisnosti
-  - Kontingencijske tablice
-  - Društvene mreže vs. tip sadržaja
-  - Cramér's V veličina efekta
-
-- **5.4 Korelacija - Pearsonov koeficijent**
-  - Snaga i smjer linearne povezanosti
-  - Instagram influenceri (pratitelji vs. angažman)
+- **Korelacije**
+  - Pearsonov koeficijent korelacije
+  - Primjeri pozitivne, negativne i nulte korelacije
   - Korelacija ≠ uzročnost
 
-#### **Poglavlje 6: Regresijska analiza** (~7,000 riječi)
+---
 
-- **6.1 Jednostavna linearna regresija**
-  - Y = b₀ + b₁X + ε
-  - Index.hr duljina članka → broj komentara
-  - Interpretacija koeficijenata
-  - Testiranje značajnosti
+### [📄 Poglavlje 3: Osnove statističkog zaključivanja](./Osnove_statistickog_zakljucivanja.qmd)
+**~5,700 riječi**
 
-- **6.2 Višestruka regresija**
-  - Multiple prediktori
-  - HRT gledanost (duljina + breaking news + vikend)
-  - Multikolinearnost i VIF
-  - Model usporedba
+Poglavlje koje gradi most između uzorka i populacije – temelj inferencijalne statistike.
 
-- **6.3 Koeficijent determinacije R²**
-  - Objašnjena vs. neobjašnjena varijabilnost
-  - Prilagođeni R² za multiple prediktore
-  - Residual dijagnostika
-  - Q-Q plotovi
+- **Od uzorka do populacije**
+  - Normalna distribucija i njene karakteristike
+  - Empirijsko pravilo za normalnu distribuciju
+  - Index.hr vrijeme čitanja
 
-#### **Poglavlje 7: Interpretacija i izvještavanje** (~5,000 riječi)
+- **Centralni granični teorem**
+  - Uzorkovna distribucija prosjeka
+  - Tri ključna rezultata CGT-a
+  - HRT satisfakcija gledatelja
 
-- **7.1 Statistička vs. praktična značajnost**
-  - Problem sa p < 0.05 kao jedinom metrikom
-  - Dva scenarija: veliki N/mali efekt vs. mali N/veliki efekt
-  - Zlatno pravilo izvještavanja
-  - Kontekstualna važnost
-  - Matrica statističke i praktične značajnosti
+- **Standardna pogreška**
+  - Razlika između SD i SE
+  - Intervali pouzdanosti (95% CI)
+  - Večernji.hr broj komentara
+
+- **Uvod u testiranje hipoteza**
+  - Nulta vs. alternativna hipoteza
+  - Logika statističkog testa
+  - P-vrijednost i razina značajnosti
+
+---
+
+### [📄 Poglavlje 4: Statistički testovi u praksi](./Statisticki_testovi_u_praksi.qmd)
+**~6,500 riječi**
+
+Praktična primjena statističkih testova s detaljnim primjerima i interpretacijama.
+
+- **T-test i ANOVA**
+  - Jedan-uzorkovni t-test (Nova TV vrijeme gledanja)
+  - Nezavisni t-test (senzacionalni vs. informativni naslovi)
+  - Zavisni t-test (fact-check kredibilitet)
+  - ANOVA za usporedbu više grupa (HRT/Nova TV/Index.hr/Facebook)
+  - Post-hoc testovi (Tukey HSD)
+  - Cohenov d i η² veličine efekta
+
+- **Hi-kvadrat i korelacije**
+  - Hi-kvadrat test nezavisnosti
+  - Kontingencijske tablice (platforma × tip sadržaja)
+  - Cramér's V veličina efekta
+  - Pearsonova korelacija (Instagram influenceri)
+
+- **Regresija i interpretacija**
+  - Jednostavna linearna regresija
+  - Višestruka regresija (HRT gledanost)
+  - R² i interpretacija koeficijenata
+  - Statistička vs. praktična značajnost
+
+---
+
+## 🎯 Buduća poglavlja
+
+Knjiga je u aktivnom razvoju. Planirana su sljedeća poglavlja:
+
+- [ ] **Poglavlje 5:** Napredna regresija i moderacija
+- [ ] **Poglavlje 6:** Logistička regresija za binarne ishode
+- [ ] **Poglavlje 7:** Analiza vremenskih serija
+- [ ] **Poglavlje 8:** Faktorska analiza
+- [ ] **Poglavlje 9:** Uvod u Bayesian statistiku
 
 ---
 
 ## 🎨 Ključne značajke
 
-### ✅ **Svi grafovi vidljivi**
-Svaki kod chunk postavljen je na `echo: true` - studenti vide i kod i rezultat
+### ✅ **Quarto format**
+Sva poglavlja u .qmd formatu s podrškom za HTML, PDF i DOCX izlaz
 
-### ✅ **100% izvršiv kod**
-Sav R kod testiran i funkcionalan - kopirajte i pokrenite odmah
+### ✅ **Crno-bijeli grafovi**
+Profesionalni grafovi optimizirani za ispis i akademske publikacije
+
+### ✅ **Skriven R kod**
+Kod je skriven u izlaznim dokumentima (`echo: false`) za čitljivost
 
 ### ✅ **Hrvatski primjeri**
 - 📺 HRT Dnevnik gledanost
@@ -160,17 +126,9 @@ Sav R kod testiran i funkcionalan - kopirajte i pokrenite odmah
 - 💬 Facebook dijeljenje sadržaja
 
 ### ✅ **Akademski stil**
-- Nema bullet points u glavnom tekstu
-- Prirodna proza s prijelaznim frazama
-- Proper LaTeX formule s labelama
-- Cross-reference sistem
-
-### ✅ **Quarto format**
-```yaml
-format:
-  html: Interaktivni web format
-  pdf: Profesionalni print format
-```
+- Formalna proza bez bullet pointa u glavnom tekstu
+- LaTeX formule za sve statističke koncepte
+- Tablice s konvencijama interpretacije
 
 ---
 
@@ -180,25 +138,25 @@ format:
 
 ```r
 # Instalacija potrebnih paketa
-install.packages(c("car", "ggplot2"))
+install.packages(c("ggplot2", "dplyr", "scales"))
 ```
 
-### Renderiranje pojedinačnog poglavlja
+### Renderiranje poglavlja
 
 ```bash
-# HTML format
-quarto render Poglavlja_5_6_7_Statisticki_Testovi.qmd
+# Renderiranje svih formata (HTML + PDF + DOCX)
+quarto render Deskriptivna_statistika.qmd
 
-# PDF format
-quarto render Poglavlja_5_6_7_Statisticki_Testovi.qmd --to pdf
+# Samo HTML
+quarto render Deskriptivna_statistika.qmd --to html
+
+# Samo PDF
+quarto render Deskriptivna_statistika.qmd --to pdf
 ```
 
-### Renderiranje cijele knjige
+### Napomena za PDF
 
-```bash
-# Ako imate _quarto.yml konfiguraciju
-quarto render
-```
+PDF format koristi `babel-lang: english` zbog kompatibilnosti s TinyTeX. Hrvatski tekst renderira se ispravno.
 
 ---
 
@@ -206,113 +164,47 @@ quarto render
 
 | Metrika | Vrijednost |
 |:--------|:-----------|
-| **Ukupno riječi** | ~61,500 |
-| **Broj poglavlja** | 7 |
-| **Broj sekcija** | 18 |
-| **R kod primjera** | 100+ |
-| **Grafova** | 50+ |
-| **Formule (LaTeX)** | 80+ |
-| **Primjeri iz hrvatskih medija** | 100+ |
+| **Ukupno riječi** | ~19,000 |
+| **Broj poglavlja** | 3 (u razvoju) |
+| **Grafova** | 20+ |
+| **Formule (LaTeX)** | 30+ |
+| **Primjeri iz hrvatskih medija** | 40+ |
 
 ---
 
-## 🎯 Pedagoški pristup
+## 📁 Struktura datoteka
 
-Svaka sekcija slijedi **4-koračnu strukturu**:
-
-1. **📖 Priča** - Realni medijski scenarij
-2. **💡 Intuicija** - Zašto nam treba ovaj alat?
-3. **🔬 Formalizacija** - Matematika i formule
-4. **✨ Interpretacija** - Što brojke znače u praksi?
+```
+📦 Metodologija-za-komunikologe/
+│
+├── 📄 Deskriptivna_statistika.qmd           (~6,750 riječi)
+├── 📄 Osnove_statistickog_zakljucivanja.qmd (~5,700 riječi)
+├── 📄 Statisticki_testovi_u_praksi.qmd      (~6,500 riječi)
+│
+├── 📘 README.md                             (ovaj dokument)
+│
+└── 📁 [buduća poglavlja...]
+```
 
 ---
 
 ## 🎓 Za koga je ova knjiga?
 
-- **Studenti** - Masovne komunikacije, novinarstvo, PR
-- **Istraživači** - Medijska analiza, audience research
-- **Praktičari** - Data-driven novinarstvo, media analytics
-- **Nastavnici** - Kompletan nastavni materijal
+- **Studenti** – Masovne komunikacije, novinarstvo, PR, medijski studiji
+- **Istraživači** – Medijska analiza, audience research
+- **Praktičari** – Data-driven novinarstvo, media analytics
+- **Nastavnici** – Kompletan nastavni materijal
 
 ---
 
-## 📝 Tehnički detalji
+## 🎯 Pedagoški pristup
 
-### Struktura datoteka
+Svaka sekcija slijedi strukturu:
 
-```
-📦 Metode_istrazivanja_masovne_komunikacije/
-│
-├── 📄 Sekcija_2_1_Quarto.qmd              (6,500 riječi)
-├── 📄 Sekcija_2_2_Mjere_Disperzije.qmd    (8,000 riječi)
-├── 📄 Sekcija_2_3_Standardizacija.qmd     (7,500 riječi)
-├── 📄 Sekcija_2_4_Vizualizacija.qmd       (2,000 riječi)
-│
-├── 📄 Poglavlje_3_Statisticko_Zakljucivanje.qmd  (9,000 riječi)
-├── 📄 Poglavlje_4_Inferencijalna_Statistika.qmd  (8,500 riječi)
-├── 📄 Poglavlja_5_6_7_Statisticki_Testovi.qmd    (20,000 riječi) ⭐
-│
-├── 📘 README.md                           (ovaj dokument)
-└── 📋 Uputstvo_za_Pisanje_Knjige.md      (smjernice)
-```
-
-### Formule - primjer
-
-Svi statistički koncepti imaju proper LaTeX formule:
-
-**Pearsonova korelacija:**
-```latex
-$$r = \frac{\sum(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum(X_i - \bar{X})^2 \sum(Y_i - \bar{Y})^2}}$$ {#eq-pearson-r}
-```
-
-**Cross-reference:**
-```markdown
-Kao što smo vidjeli u formuli @eq-pearson-r...
-```
-
----
-
-## 🔧 Poznati problemi i rješenja
-
-### Problem: "object not found"
-**Rješenje:** Provjerite da li su svi seed-ovi postavljeni i paketi učitani
-
-### Problem: "figure margins too large"  
-**Rješenje:** Resetirajte grafičke parametre s `par(mfrow=c(1,1))`
-
-### Problem: LaTeX simboli ne renderiraju
-**Rješenje:** Koristite `$$..$$` za display mode, `$...$` za inline
-
----
-
-## 📚 Literaturne reference
-
-Knjiga je bazirana na:
-- **Navarro, D. J. (2015).** *Learning Statistics with R*
-- **Field, A. (2013).** *Discovering Statistics Using R*
-- **Cohen, J. (1988).** *Statistical Power Analysis*
-
-S primjerima prilagođenim hrvatskom medijskom kontekstu.
-
----
-
-## 🤝 Doprinos i feedback
-
-Ova knjiga je dio obrazovnog projekta. Prijedlozi za poboljšanje su dobrodošli!
-
-### Što dodati u budućim verzijama:
-
-- [ ] Poglavlje 8: Kategorijski prediktori i moderacija
-- [ ] Poglavlje 9: Logistička regresija za binarne ishode
-- [ ] Poglavlje 10: Bayesian pristup statistici
-- [ ] Poglavlje 11: Analiza vremenskih serija (engagement over time)
-- [ ] Više case studies s realnim medijskim datasetima
-
----
-
-## 📄 Licenca
-
-Ovaj materijal je namijenjen obrazovnim svrhama.
+1. **📖 Motivacija** – Zašto nam treba ovaj koncept?
+2. **🔬 Formalizacija** – Matematička definicija i formula
+3. **📊 Primjer** – Primjena na hrvatskim medijskim podacima
+4. **✨ Interpretacija** – Što brojke znače u praksi?
 
 ---
 
@@ -325,19 +217,43 @@ Ovaj materijal je namijenjen obrazovnim svrhama.
 > - Testnu statistiku i p-vrijednost
 > - Veličinu efekta (d, η², V, r)
 > - Intervale pouzdanosti
-> - **Kontekst** - što brojke znače u stvarnom svijetu
+> - **Kontekst** – što brojke znače u stvarnom svijetu
 
 ---
 
-## 📞 Kontakt
+## 📝 YAML konfiguracija za poglavlja
 
-Za pitanja o materijalima ili korištenju u nastavi, kontaktirajte autora.
+Sva poglavlja koriste standardiziranu konfiguraciju:
+
+```yaml
+---
+title: "Naslov poglavlja"
+format:
+  html:
+    toc: true
+    format-links: [pdf, docx]
+  pdf:
+    babel-lang: english
+    geometry: margin=2.5cm
+  docx:
+    toc: true
+lang: hr
+execute:
+  echo: false
+---
+```
+
+---
+
+## 📄 Licenca
+
+Ovaj materijal je namijenjen obrazovnim svrhama.
 
 ---
 
 **Zadnje ažurirano:** Prosinac 2024  
-**Verzija:** 1.0  
-**Status:** ✅ Kompletno - Sva poglavlja gotova
+**Verzija:** 2.0  
+**Status:** 🚧 U aktivnom razvoju
 
 ---
 
@@ -349,6 +265,3 @@ Za pitanja o materijalima ili korištenju u nastavi, kontaktirajte autora.
 — John Tukey
 
 </div>
-# Metodologija-za-komunikologe
-
-

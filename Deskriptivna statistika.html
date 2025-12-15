@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Deskriptivna statistika</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Deskriptivna statistika_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Deskriptivna statistika_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Deskriptivna statistika_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Deskriptivna statistika_files/libs/quarto-html/popper.min.js"></script>
+<script src="Deskriptivna statistika_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Deskriptivna statistika_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Deskriptivna statistika_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Deskriptivna statistika_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Deskriptivna statistika_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Deskriptivna statistika_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Deskriptivna statistika_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#deskriptivna-statistika" id="toc-deskriptivna-statistika" class="nav-link active" data-scroll-target="#deskriptivna-statistika">Deskriptivna statistika</a>
+  <ul class="collapse">
+  <li><a href="#mjere-centralne-tendencije" id="toc-mjere-centralne-tendencije" class="nav-link" data-scroll-target="#mjere-centralne-tendencije">Mjere centralne tendencije</a></li>
+  <li><a href="#mjere-disperzije" id="toc-mjere-disperzije" class="nav-link" data-scroll-target="#mjere-disperzije">Mjere disperzije</a></li>
+  <li><a href="#standardizirani-rezultati-i-korelacije" id="toc-standardizirani-rezultati-i-korelacije" class="nav-link" data-scroll-target="#standardizirani-rezultati-i-korelacije">Standardizirani rezultati i korelacije</a></li>
+  <li><a href="#vizualizacija-podataka" id="toc-vizualizacija-podataka" class="nav-link" data-scroll-target="#vizualizacija-podataka">Vizualizacija podataka</a></li>
+  <li><a href="#sažetak-poglavlja" id="toc-sažetak-poglavlja" class="nav-link" data-scroll-target="#sažetak-poglavlja">Sažetak poglavlja</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Deskriptivna-statistika.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="Deskriptivna statistika.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Deskriptivna statistika</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="deskriptivna-statistika" class="level1">
+<h1>Deskriptivna statistika</h1>
+<p>Prikupljanje podataka kvantitativnim metodama istraživanja, bilo da se radi o anketnim istraživanjima ili o analizi sadržaja medijskih objava, rezultira velikim brojem numeričkih vrijednosti koje je potrebno sažeti i interpretirati. Istraživač masovne komunikacije koji prikupi podatke o dnevnoj gledanosti televizijskog programa, broju komentara na novinskom portalu ili trajanju videa na YouTube kanalu, suočava se s izazovom pretvaranja tih sirovih podataka u smislene zaključke. Lista od stotinu ili tisuću brojki sama po sebi ne govori mnogo – potrebni su nam alati koji će tu masu informacija pretvoriti u razumljive uvide. Upravo je to zadaća deskriptivne statistike – skupa statističkih tehnika kojima se prikupljeni podaci sažimaju, organiziraju i prezentiraju na način koji omogućuje njihovo razumijevanje i interpretaciju.</p>
+<p>Deskriptivna statistika razlikuje se od inferencijalne statistike po tome što ne pokušava donositi zaključke o široj populaciji na temelju uzorka, već jednostavno opisuje podatke koje imamo pred sobom. Dok inferencijalna statistika koristi uzorak da bi procijenila karakteristike populacije i testirala hipoteze, deskriptivna statistika fokusira se na pitanja poput: koja je prosječna vrijednost u našim podacima? Koliko su podaci raspršeni? Postoje li neuobičajene vrijednosti? Kakav je odnos između dviju varijabli? Odgovori na ova pitanja čine temelj svake statističke analize i nužni su preduvjet za bilo kakve naprednije analize.</p>
+<p>Deskriptivna statistika obuhvaća dvije temeljne skupine mjera. Prva skupina su <strong>mjere centralne tendencije</strong> koje odgovaraju na pitanje koja je “tipična” ili “središnja” vrijednost u skupu podataka. Druga skupina su <strong>mjere disperzije</strong> ili varijabilnosti koje kvantificiraju koliko su podaci raspršeni oko te središnje vrijednosti. Ove dvije vrste mjera komplementarne su i gotovo se uvijek koriste zajedno – sama informacija o prosječnoj vrijednosti bez podatka o varijabilnosti pruža nepotpunu sliku o podacima. Primjerice, tvrdnja da je prosječna gledanost programa 500.000 gledatelja ima potpuno različito značenje ako je standardna devijacija 10.000 (konzistentna gledanost) nasuprot 200.000 (visoko varijabilna gledanost).</p>
+<p>Osim toga, deskriptivna statistika uključuje tehnike za ispitivanje odnosa između varijabli, među kojima su najvažnije standardizacija rezultata i korelacijska analiza. Standardizirani rezultati omogućuju usporedbu vrijednosti mjerenih na različitim skalama, dok korelacije kvantificiraju jačinu i smjer linearnog odnosa između dviju varijabli. Konačno, vizualizacija podataka predstavlja ključnu komponentu deskriptivne statistike – grafički prikazi omogućuju intuitivnije razumijevanje distribucija i obrazaca u podacima nego što to omogućuju same numeričke statistike, a ponekad otkrivaju obrasce koji bi inače ostali skriveni.</p>
+<p>U kontekstu istraživanja masovne komunikacije, deskriptivna statistika ima posebnu važnost. Analiza gledanosti televizijskih programa, posjećenosti internetskih portala, angažmana na društvenim mrežama ili distribucije tema u medijskom sadržaju – sve ove aktivnosti zahtijevaju solidno poznavanje deskriptivne statistike. Istraživač koji ne razumije razliku između aritmetičke sredine i medijana može donijeti pogrešne zaključke o “tipičnoj” gledanosti programa. Analitičar koji ignorira standardnu devijaciju može propustiti uvid da je publika jednog portala konzistentna dok je publika drugog visoko varijabilna. Netko tko ne vizualizira podatke prije izračunavanja korelacije može propustiti nelinearni odnos koji Pearsonov koeficijent ne detektira. Stoga je ovladavanje tehnikama deskriptivne statistike nužan preduvjet za kompetentno istraživanje u području masovne komunikacije.</p>
+<section id="mjere-centralne-tendencije" class="level2">
+<h2 class="anchored" data-anchor-id="mjere-centralne-tendencije">Mjere centralne tendencije</h2>
+<p>Mjere centralne tendencije statistički su pokazatelji koji iz mnoštva brojki izvlače jednu reprezentativnu vrijednost koja najbolje opisuje “središte” podataka. Zamislimo da analiziramo podatke o dnevnoj gledanosti večernjeg Dnevnika HRT-a tijekom jednog mjeseca. Urednica programa pregledava brojke i vidi vrijednosti koje variraju od dana do dana – ponekad emisiju prati 320.000 gledatelja, ponekad 280.000, a vikendom brojka pada na oko 210.000. Pred njom je lista od trideset različitih brojki, i potreban joj je način da te podatke sažme u nešto razumljivo. Želi odgovoriti na prividno jednostavno pitanje: kolika je “tipična” gledanost Dnevnika? Međutim, što točno znači “tipična” u ovom kontekstu? Trebamo li gledati najčešću vrijednost, sredinu skupa podataka, ili nešto treće?</p>
+<p>Ovaj problem predstavlja srž onoga čime se bave mjere centralne tendencije. Kada istraživač masovne komunikacije prikuplja podatke, bilo da se radi o gledanosti televizijskog programa, broju komentara na novinskom portalu ili trajanju videa na YouTube kanalu, gotovo uvijek se suočava s istim izazovom. Sirovi podaci sami po sebi rijetko govore jasnu priču – previše je informacija da bismo ih sve mogli držati u glavi odjednom, a njihovo jednostavno nabrajanje ne pomaže u razumijevanju onoga što nam podaci pokušavaju reći. Potreban nam je način da kondenziramo te podatke u nekoliko ključnih brojki koje će pružiti brz i informativan uvid.</p>
+<p>Postoje tri glavne mjere centralne tendencije koje se koriste u istraživanju medija: aritmetička sredina, medijan i mod. Svaka od njih odgovara na pitanje “koja je tipična vrijednost” na različit način, a svaka ima svoje prednosti i nedostatke ovisno o vrsti podataka s kojima radimo i o tome što pokušavamo saznati.</p>
+<section id="aritmetička-sredina" class="level3">
+<h3 class="anchored" data-anchor-id="aritmetička-sredina">Aritmetička sredina</h3>
+<p><strong>Aritmetička sredina</strong> najpoznatija je mjera centralne tendencije, poznata i kao “prosjek”. Izračunava se zbrajanjem svih vrijednosti i dijeljenjem s brojem opservacija. Označava se simbolom <span class="math inline">\(\bar{X}\)</span> (čita se “iks bar”) i formalno se definira kao:</p>
+<p><span class="math display">\[\bar{X} = \frac{1}{N}\sum_{i=1}^{N}X_i = \frac{X_1 + X_2 + ... + X_N}{N}\]</span></p>
+<p>gdje je <span class="math inline">\(N\)</span> broj opservacija, a <span class="math inline">\(X_i\)</span> označava pojedina opažanja u skupu podataka. Simbol <span class="math inline">\(\sum\)</span> (velika grčka slova sigma) označava sumaciju, odnosno zbrajanje. Izraz <span class="math inline">\(\sum_{i=1}^{N}X_i\)</span> doslovno znači “zbroji sve vrijednosti <span class="math inline">\(X_i\)</span> počevši od <span class="math inline">\(i=1\)</span> pa sve do <span class="math inline">\(i=N\)</span>”. Ova formula samo je formalan način zapisivanja onoga što intuitivno razumijemo: zbroji sve opažene vrijednosti i podijeli ih s ukupnim brojem opažanja.</p>
+<p>Za primjer, pretpostavimo da imamo podatke o gledanosti Dnevnika HRT-a za jedan tjedan: 315.000 gledatelja u ponedjeljak, 298.000 u utorak, 322.000 u srijedu, 305.000 u četvrtak, 288.000 u petak, 245.000 u subotu i 218.000 u nedjelju. Prosječna gledanost iznosi:</p>
+<p><span class="math display">\[\bar{X} = \frac{315.000 + 298.000 + 322.000 + 305.000 + 288.000 + 245.000 + 218.000}{7} = \frac{1.991.000}{7} \approx 284.429\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-mean-hrt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mean-hrt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-mean-hrt-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mean-hrt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Dnevna gledanost Dnevnika HRT-a s označenim prosjekom
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Prosječna gledanost Dnevnika tijekom analiziranog tjedna bila je približno 284.000 gledatelja. Ova brojka istraživaču medija daje brzu informaciju o općoj razini uspješnosti programa, omogućujući usporedbu s drugim tjednima ili konkurentskim programima. Međutim, ona ne govori ništa o konzistentnosti gledanosti – ne znamo jesu li sve vrijednosti bile blizu prosjeka ili su neke bile iznimno visoke a druge iznimno niske. Vidimo da značajna razlika između vikenda (subota i nedjelja) i radnih dana utječe na našu percepciju “tipične” gledanosti.</p>
+<p>Aritmetička sredina ima važno svojstvo – predstavlja svojevrsno “težište” podataka. Ako bismo zamislili histogram naših podataka kao čvrst objekt, aritmetička sredina bila bi točka na kojoj bismo mogli balansirati taj objekt. U tom smislu, aritmetička sredina ima dublje matematičko značenje – to je vrijednost oko koje su podaci “centralizirani”, vrijednost od koje su ukupna odstupanja prema dolje i ukupna odstupanja prema gore u ravnoteži.</p>
+<p>Međutim, upravo ovo svojstvo čini je osjetljivom na <strong>ekstremne vrijednosti (outliere)</strong>. Ako u podacima postoji jedan iznimno atipičan dan (npr. dan kada je emitiran poseban prilog o nekom vrlo popularnom događaju), ta vrijednost će značajno utjecati na prosjek. Aritmetička sredina koristi sve informacije koje imamo – ne zanemaruje nijednu opservaciju – što može biti velika prednost kada radimo s manjim brojem podataka, ali istovremeno znači da smo osjetljivi na ekstremne vrijednosti koje možda ne reprezentiraju uobičajenu situaciju.</p>
+</section>
+<section id="medijan" class="level3">
+<h3 class="anchored" data-anchor-id="medijan">Medijan</h3>
+<p><strong>Medijan</strong> je mjera centralne tendencije koja predstavlja srednju vrijednost kada sve podatke poredamo od najmanjeg prema najvećem. Koncept medijana možda je još intuitivniji od aritmetičke sredine. Zamislimo da imamo podatke o dnevnom broju objava na Facebook stranici Jutarnjeg lista tijekom jednog tjedna: 12, 8, 15, 10, 9, 14, 11 objava. Da bismo pronašli medijan, najprije moramo sortirati ove brojeve u rastući niz: 8, 9, 10, 11, 12, 14, 15. Sada je očito da je srednja vrijednost 11 objava, jer se ona nalazi točno u sredini – tri vrijednosti su manje od nje, a tri su veće.</p>
+<p>Za razliku od aritmetičke sredine, medijan nije osjetljiv na ekstremne vrijednosti jer koristi samo informaciju o poziciji vrijednosti u sortiranom nizu, ne njihovu stvarnu veličinu. Medijan jednostavno “ignorira” koliko su ekstremne krajnje vrijednosti – on gleda samo koja vrijednost dijeli podatke na dva jednaka dijela.</p>
+<p>Formalno, za skup od <span class="math inline">\(N\)</span> opservacija sortiranih u rastući niz, medijan se definira kao:</p>
+<p><span class="math display">\[\text{Medijan} = \begin{cases}
+X_{(N+1)/2} &amp; \text{ako je } N \text{ neparan broj}\\
+\frac{X_{N/2} + X_{(N/2)+1}}{2} &amp; \text{ako je } N \text{ paran broj}
+\end{cases}\]</span></p>
+<p>Kada imamo paran broj opservacija, medijan nije samo jedna vrijednost iz našeg skupa podataka, već prosjek dviju srednjih vrijednosti.</p>
+<p>Razmotrimo primjer s HRT Playerom gdje analiziramo broj pregleda za deset najpopularnijih emisija prošlog mjeseca. Većina emisija ima između 15.000 i 25.000 pregleda, ali jedna emisija – ekskluzivni intervju s vrlo popularnom javnom osobom – ima čak 180.000 pregleda. Podaci sortirani od najmanjeg prema najvećem: 14.000, 16.000, 18.000, 19.000, 22.000, 23.000, 24.000, 26.000, 28.000 i 180.000.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-median-outlier" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-median-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-median-outlier-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-median-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Usporedba aritmetičke sredine i medijana u prisutnosti outliera
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ako izračunamo aritmetičku sredinu, dobivamo: <span class="math inline">\((14.000 + 16.000 + 18.000 + 19.000 + 22.000 + 23.000 + 24.000 + 26.000 + 28.000 + 180.000) / 10 = 37.000\)</span> pregleda. Ova brojka stvara dojam da je “tipična” emisija daleko popularnija nego što zapravo jest.</p>
+<p>Medijan se izračunava kao prosjek pete i šeste vrijednosti (jer imamo paran broj opservacija): <span class="math inline">\((22.000 + 23.000) / 2 = 22.500\)</span> pregleda. Ovaj rezultat daleko bolje odražava tipičnu gledanost na platformi jer potpuno ignorira činjenicu da postoji jedna emisija s 180.000 pregleda. Medijan nam govori da polovina emisija ima manje od 22.500 pregleda, a polovina više.</p>
+<p>Medijan je stoga posebno koristan kada: podaci sadrže ekstremne vrijednosti (outliere), distribucija podataka je asimetrična, želimo znati “tipičnu” vrijednost koja nije pod utjecajem ekstremnih slučajeva, ili kada koristimo ordinalne podatke gdje numeričke vrijednosti možda nisu smislene za izračunavanje prosjeka.</p>
+<p>Za istraživača masovne komunikacije, izbor između aritmetičke sredine i medijana ovisi o prirodi podataka i o tome što želimo saznati. Ako nas zanima ukupna količina angažmana ili ukupni “teret” nekog fenomena, aritmetička sredina može biti prava mjera. Međutim, ako nas zanima što je “tipično” za većinu slučajeva, a posebno ako sumnjamo na prisutnost ekstremnih vrijednosti, medijan je često bolji izbor. U praksi, iskusni istraživači često izvještavaju obje mjere jer svaka otkriva drugačiji aspekt podataka.</p>
+</section>
+<section id="mod" class="level3">
+<h3 class="anchored" data-anchor-id="mod">Mod</h3>
+<p><strong>Mod</strong> je najjednostavnija mjera centralne tendencije za definirati – to je vrijednost koja se pojavljuje najčešće u skupu podataka. Za razliku od aritmetičke sredine i medijana koji zahtijevaju numeričke podatke i računanje, mod se može primijeniti na bilo koju vrstu podataka, uključujući i kategorijske (nominalne) podatke. Ova karakteristika čini mod posebno korisnim u istraživanjima masovne komunikacije gdje često radimo s nominalnim mjerilima.</p>
+<p>Razmotrimo konkretan primjer. Analitičar sadržaja istražuje dominantne teme u večernjim vijestima RTL-a tijekom mjeseca dana. Za svaku emisiju zabilježio je koja je tema dominirala taj dan. Podaci pokazuju sljedeću distribuciju: politika se pojavila kao dominantna tema 12 puta, gospodarstvo 5 puta, kriminal 8 puta, zdravstvo 3 puta, a sport 2 puta. U ovom slučaju, mod je “politika”, jer se ta kategorija pojavljuje najčešće. Valja napomenuti da ovdje ne možemo izračunati aritmetičku sredinu niti medijan – pojmovi kao što je “prosjek” između politike i gospodarstva jednostavno nemaju smisla za nominalne podatke. Međutim, mod nam daje korisnu informaciju: najčešća tema u analiziranom periodu bila je politika.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-mode-rtl" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mode-rtl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-mode-rtl-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mode-rtl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Distribucija dominantnih tema u večernjim vijestima RTL-a
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Mod je jednako koristan i za numeričke podatke, osobito u situacijama gdje nas zanima “najvjerojatnija” pojedinačna vrijednost. Zamislimo da analiziramo trajanje video clipova na YouTube kanalu popularne hrvatske medijske kuće. Iako postoji velika varijabilnost u trajanju videa (od 30 sekundi do 15 minuta), primjećujemo da određene duljine prevladavaju. Pretpostavimo da smo analizirali sto videa i dobili sljedeću distribuciju: 35 videa traje 2 minute, 20 videa traje 3 minute, 15 videa traje 1 minutu, 12 videa traje 5 minuta, 10 videa traje 4 minute, a ostalih 8 videa ima različita druga trajanja. U ovom slučaju, mod je 2 minute, jer se ta vrijednost pojavljuje u čak 35 od 100 slučajeva. Ova informacija može biti vrijedna za razumijevanje uređivačke politike – očito postoji jaka preferencija za videima koji traju točno 2 minute.</p>
+<p>Zanimljivo je primijetiti da, za razliku od aritmetičke sredine i medijana koje uvijek imaju samo jednu vrijednost, skup podataka može imati <strong>više modova</strong>. Ako se dvije ili više vrijednosti pojavljuju jednako često i češće od svih ostalih, tada govorimo o bimodalnoj (dva moda) ili multimodalnoj (više modova) distribuciji. Takve situacije mogu biti vrlo informativne. Na primjer, ako analiza duljine članaka na nekom portalu pokazuje da postoje dva moda – jedan oko 300 riječi i drugi oko 1200 riječi – to može ukazivati na postojanje dviju različitih vrsta sadržaja: kratkih vijesti i dugačkih analitičkih članaka. Ovakav uvid mogao bi promaknuti kada bismo gledali samo aritmetičku sredinu.</p>
+<p>Međutim, valja biti svjestan i ograničenja moda. Mod može biti vrlo nestabilan, osobito kada radimo s kontinuiranim podacima gdje se svaka vrijednost pojavljuje samo jednom ili nekoliko puta. Osim toga, mod nam ne govori ništa o “sredini” distribucije u širem smislu – samo nam govori koja je vrijednost najčešća. U nekim slučajevima, mod može biti prilično udaljen od onoga što bismo intuitivno smatrali “tipičnom” vrijednošću. Stoga se mod u praksi istraživanja medija često koristi u kombinaciji s drugim mjerama centralne tendencije.</p>
+</section>
+<section id="izbor-odgovarajuće-mjere" class="level3">
+<h3 class="anchored" data-anchor-id="izbor-odgovarajuće-mjere">Izbor odgovarajuće mjere</h3>
+<p><strong>Izbor odgovarajuće mjere</strong> centralne tendencije ovisi o tri ključna čimbenika: vrsti podataka, distribuciji tih podataka i istraživačkom pitanju na koje želimo odgovoriti.</p>
+<p>Vrsta podataka predstavlja prvi i najvažniji kriterij. Za <strong>nominalne podatke</strong> – kategorije bez inherentnog redoslijeda kao što su vrsta medija (televizija, radio, novine, internet) ili žanr sadržaja (vijesti, zabava, sport, kultura) – jedino je mod smislena opcija. Pojmovi kao što su “prosjek” ili “sredina” nemaju značenje kada govorimo o kategorijama koje nemaju numeričku vrijednost.</p>
+<p>Za <strong>ordinalne podatke</strong> – kategorije koje imaju prirodni redoslijed ali ne i jednake intervale između njih – preferira se medijan. Primjer ordinalnih podataka u komunikološkom istraživanju bile bi ocjene na Likertovoj skali gdje ispitanici procjenjuju koliko često prate vijesti: “nikada” (1), “rijetko” (2), “ponekad” (3), “često” (4), “uvijek” (5). Medijan koristi samo informaciju o redoslijedu vrijednosti, što ga čini prikladnim za ordinalne podatke. Međutim, u praksi istraživanja medija mnogi istraživači ipak izvještavaju aritmetičke sredine Likertovih skala, što je predmet kontinuirane metodološke debate.</p>
+<p>Za <strong>intervalne i omjerne podatke</strong> – podatke s numeričkim vrijednostima i smislenim intervalima ili omjerima – imamo najveću fleksibilnost. Ako je distribucija podataka relativno simetrična i bez ekstremnih outliera, preferira se aritmetička sredina jer koristi sve informacije u podacima i ima bolja matematička svojstva. Međutim, ako distribucija pokazuje asimetriju ili sadrži ekstremne vrijednosti, medijan može pružiti vjerodostojniju sliku o “tipičnoj” vrijednosti.</p>
+<p>Razmotrimo konkretni primjer koji ilustrira ovaj izbor. Analitičar istražuje učinkovitost društvenih mreža za promociju sadržaja portala Index.hr. Prikupio je podatke o broju klikova koje je generirala stotina Facebook objava tijekom mjeseca. Većina objava generirala je između 500 i 2000 klikova, što odražava uobičajenu razinu angažmana. Međutim, tri objave su postale viralne i generirale su 45.000, 52.000 i 68.000 klikova. Ako izračunamo aritmetičku sredinu, te tri viralane objave značajno povećavaju prosjek, možda na 3500 klikova. Ova brojka stvara pogrešan dojam o tome što portal može “tipično” očekivati od Facebook promocije. S druge strane, medijan bi bio možda oko 1200 klikova, što bolje odražava uobičajeni scenarij. U ovoj situaciji, iskusni istraživač bi vjerojatno izvijestio obje vrijednosti, objašnjavajući da je medijan bolji pokazatelj “tipične” uspješnosti, dok aritmetička sredina odražava ukupni prosjek uključujući rijetke ali vrlo uspješne objave.</p>
+<p>U praksi kvalitetnog istraživanja masovne komunikacije, često je korisno izvijestiti više mjera centralne tendencije jer svaka otkriva različite aspekte podataka. Ne postoji univerzalno “najbolja” mjera – izbor zahtijeva promišljeno razmatranje prirode podataka i istraživačkog konteksta.</p>
+<div id="tbl-izbor-mjere" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-izbor-mjere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Preporuke za izbor mjere centralne tendencije
+</figcaption>
+<div aria-describedby="tbl-izbor-mjere-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 32%">
+<col style="width: 22%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Vrsta podataka</th>
+<th style="text-align: left;">Preporučena mjera</th>
+<th style="text-align: left;">Alternativa</th>
+<th style="text-align: left;">Napomena</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Nominalni</td>
+<td style="text-align: left;">Mod</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">Jedina smislena opcija</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ordinalni</td>
+<td style="text-align: left;">Medijan</td>
+<td style="text-align: left;">Mod</td>
+<td style="text-align: left;">Aritmetička sredina upitna</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Intervalni/Omjerni (simetrični)</td>
+<td style="text-align: left;">Aritmetička sredina</td>
+<td style="text-align: left;">Medijan</td>
+<td style="text-align: left;">Obje prihvatljive</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Intervalni/Omjerni (asimetrični)</td>
+<td style="text-align: left;">Medijan</td>
+<td style="text-align: left;">Aritmetička sredina</td>
+<td style="text-align: left;">Oprez s outlierima</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="mjere-disperzije" class="level2">
+<h2 class="anchored" data-anchor-id="mjere-disperzije">Mjere disperzije</h2>
+<p>Mjere centralne tendencije govore samo dio priče o podacima – one pokazuju “sredinu” podataka, ali ne govore ništa o tome koliko su ti podaci raspršeni oko te sredine. Analitičar portala Index.hr koji pregledava podatke o dnevnom broju posjeta stranici tijekom mjeseca primjećuje da je prosječna dnevna posjećenost bila 850.000 korisnika. Ova informacija zvuči korisno, ali kad malo dublje promisli, shvaća da mu nedostaje ključni dio slagalice. Je li portal svaki dan imao približno 850.000 posjeta, što bi ukazivalo na izuzetno stabilnu i predvidivu publiku? Ili možda većinu dana imaju oko 600.000 posjeta, ali ponekad dosegnu i 1.500.000 kada objave posebno atraktivnu priču? Ova dva scenarija imaju potpuno različite implikacije za razumijevanje publike i planiranje sadržaja, iako oba imaju identičan prosjek.</p>
+<p>Upravo u ovom trenutku postaju neophodne <strong>mjere disperzije</strong> ili <strong>mjere varijabilnosti</strong>. Ove statističke mjere kvantificiraju koliko su podaci “rasprostranjeni”, odnosno koliko tipično odstupaju od središnje vrijednosti. Za istraživača masovne komunikacije, ova informacija može biti jednako važna, ako ne i važnija, od samog prosjeka. Postoje četiri glavne mjere disperzije: raspon, međukvartilni raspon, varijanca i standardna devijacija.</p>
+<section id="raspon" class="level3">
+<h3 class="anchored" data-anchor-id="raspon">Raspon</h3>
+<p><strong>Raspon</strong> je najjednostavnija mjera disperzije – razlika između maksimalne i minimalne vrijednosti u skupu podataka. Ako analitičar istražuje trajanje televizijskih reklama na HRT-u i utvrdi da najkraća reklama traje 10 sekundi, a najdulja 90 sekundi, raspon iznosi <span class="math inline">\(90 - 10 = 80\)</span> sekundi. Ova brojka odmah daje osjećaj koliko velika je disperzija u trajanju reklama.</p>
+<p>Privlačnost raspona leži u njegovoj jednostavnosti – ne može biti lakše za izračunati, a interpretacija je potpuno jasna. Međutim, upravo ta jednostavnost krije ozbiljan nedostatak. Pretpostavimo da analiziramo sto reklama i da devedeset i devet njih traje između 25 i 35 sekundi, što ukazuje na izuzetno konzistentno trajanje. Međutim, postoji jedna iznimna reklama – možda poseban promotivni spot – koja traje 90 sekundi. Raspon cijelog skupa podataka i dalje će biti 80 sekundi, što stvara dojam velike varijabilnosti, iako je 99% reklama u vrlo uskom rasponu.</p>
+<p>Ovaj primjer ilustrira ključni problem s rasponom: on je potpuno nerobusna mjera koja je izuzetno osjetljiva na outliere. Potrebna je samo jedna ekstremna vrijednost da bi raspon dao potpuno iskrivljenu sliku o disperziji podataka. Osim toga, raspon koristi samo dvije vrijednosti iz cijelog skupa podataka – najveću i najmanju – potpuno ignorirajući sve ostale informacije.</p>
+</section>
+<section id="međukvartilni-raspon-iqr" class="level3">
+<h3 class="anchored" data-anchor-id="međukvartilni-raspon-iqr">Međukvartilni raspon (IQR)</h3>
+<p><strong>Međukvartilni raspon (IQR)</strong> elegantno rješava problem osjetljivosti na outliere. Umjesto da gleda razliku između apsolutnih ekstrema, IQR gleda razliku između vrijednosti koje su “prilično visoke” i “prilično niske” – konkretno, između trećeg i prvog kvartila.</p>
+<p>Kvartili dijele sortiran skup podataka na četiri jednaka dijela. <strong>Prvi kvartil</strong> (<span class="math inline">\(Q_1\)</span> ili 25. percentil) je vrijednost takva da se 25% podataka nalazi ispod nje, a 75% iznad nje. <strong>Treći kvartil</strong> (<span class="math inline">\(Q_3\)</span> ili 75. percentil) je vrijednost takva da se 75% podataka nalazi ispod nje, a 25% iznad nje. Medijan je zapravo drugi kvartil (<span class="math inline">\(Q_2\)</span> ili 50. percentil). Međukvartilni raspon definira se kao:</p>
+<p><span class="math display">\[IQR = Q_3 - Q_1\]</span></p>
+<p>Vratimo se primjeru s Index.hr portalom. Pretpostavimo da analitičar istražuje broj komentara na člancima objavljenim tijekom mjeseca. Prikupio je podatke za dvadeset članaka i sortirao ih: 5, 8, 12, 15, 18, 22, 25, 28, 32, 35, 38, 42, 45, 50, 55, 62, 68, 75, 82, 450. Primjećujemo da posljednji članak ima neobično velik broj komentara (450) – očito se radi o kontroverznoj temi koja je potakla veliku raspravu.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot-komentari" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-komentari-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-boxplot-komentari-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-komentari-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Box plot broja komentara na člancima Index.hr
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ako bismo izračunali raspon, dobili bismo <span class="math inline">\(450 - 5 = 445\)</span> komentara, što daje iskrivljenu sliku jer većina članaka ima daleko manje komentara. Međukvartilni raspon pristupa problemu drugačije. Prvi kvartil <span class="math inline">\(Q_1\)</span> je oko 20 komentara, treći kvartil <span class="math inline">\(Q_3\)</span> je oko 60 komentara. <span class="math inline">\(IQR = 60 - 20 = 40\)</span> komentara. Ova brojka nam govori da “srednja polovica” članaka varira za oko 40 komentara. Mjera je potpuno ignorirala članak s 450 komentara, dajući realističniju sliku o varijabilnosti “tipičnih” članaka.</p>
+<p>IQR je stoga idealan izbor kada radimo s podacima koji sadrže outliere – što je česta situacija u analizi medijskih podataka gdje nailazimo na viralane objave, iznimno popularne članke ili druge ekstremne slučajeve.</p>
+</section>
+<section id="varijanca-i-standardna-devijacija" class="level3">
+<h3 class="anchored" data-anchor-id="varijanca-i-standardna-devijacija">Varijanca i standardna devijacija</h3>
+<p><strong>Varijanca</strong> pristupa mjerenju disperzije na fundamentalno drugačiji način – uzima u obzir sve opservacije i mjeri koliko svaka od njih odstupa od prosjeka. Razmotrimo sljedeći scenarij. Analitičar istražuje gledanost pet epizoda televizijske serije na HRT-u: 180.000, 165.000, 195.000, 170.000 i 190.000 gledatelja.</p>
+<p>Prvi korak je izračunati aritmetičku sredinu: <span class="math inline">\(\bar{X} = 180.000\)</span> gledatelja. Zatim za svaku epizodu izračunavamo koliko odstupa od prosjeka i to odstupanje kvadriramo (kako bi se eliminirali negativni predznaci):</p>
+<div id="tbl-varijanca" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-varijanca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: Izračun varijance za gledanost TV serije
+</figcaption>
+<div aria-describedby="tbl-varijanca-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Epizoda</th>
+<th style="text-align: left;">Gledatelji</th>
+<th style="text-align: left;">Odstupanje</th>
+<th style="text-align: left;">Kvadrirano odstupanje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">180.000</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">165.000</td>
+<td style="text-align: left;">-15.000</td>
+<td style="text-align: left;">225.000.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">195.000</td>
+<td style="text-align: left;">15.000</td>
+<td style="text-align: left;">225.000.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">170.000</td>
+<td style="text-align: left;">-10.000</td>
+<td style="text-align: left;">100.000.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">190.000</td>
+<td style="text-align: left;">10.000</td>
+<td style="text-align: left;">100.000.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Varijanca je tada prosjek ovih kvadriranih odstupanja:</p>
+<p><span class="math display">\[s^2 = \frac{1}{N-1}\sum_{i=1}^{N}(X_i - \bar{X})^2\]</span></p>
+<p>Dijeljenje s <span class="math inline">\(N-1\)</span> umjesto <span class="math inline">\(N\)</span> koristi se jer se u istraživanjima obično radi s uzorkom koji reprezentira veću populaciju, a ova korekcija (tzv. Besselova korekcija) osigurava nepristrani procjenitelj populacijske varijance.</p>
+<p>Za naš primjer: <span class="math inline">\(s^2 = (0 + 225.000.000 + 225.000.000 + 100.000.000 + 100.000.000) / 4 = 162.500.000\)</span>. Varijanca gledanosti je 162,5 milijuna. Ali 162,5 milijuna čega? Ovdje nailazimo na fundamentalni problem s varijancom: izražena je u <strong>kvadratnim jedinicama</strong> izvorne varijable. Ako mjerimo gledatelje, varijanca je u “gledatelji na kvadrat”, što nema nikakvo realno značenje i čini varijancu gotovo nemogućom za izravnu interpretaciju.</p>
+<p>Unatoč ovom problemu, varijanca je matematički fundamentalna i ima izvrsna svojstva koja je čine temeljem gotovo svih naprednih statističkih metoda. Ona je aditivna (varijance nezavisnih varijabli se mogu zbrajati), diferencijabilna, i elegantno se ponaša u teorijskim razmatranjima.</p>
+<p><strong>Standardna devijacija</strong> rješava problem neinterpretabilnosti varijance uzimanjem kvadratnog korijena varijance:</p>
+<p><span class="math display">\[s = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N}(X_i - \bar{X})^2}\]</span></p>
+<p>Za naš primjer gledanosti serije: <span class="math inline">\(s = \sqrt{162.500.000} \approx 12.748\)</span> gledatelja. Sada imamo broj koji možemo razumjeti i komunikirati: standardna devijacija gledanosti je približno 12.750 gledatelja. Ovo je mjera “tipičnog” odstupanja od prosječne gledanosti.</p>
+<p>Za interpretaciju standardne devijacije koristi se <strong>empirijsko pravilo</strong> (pravilo 68-95-99.7) koje vrijedi za približno simetrične, zvonoliko oblikovane distribucije:</p>
+<ul>
+<li>Približno <strong>68%</strong> podataka pada u raspon <span class="math inline">\(\bar{X} \pm 1s\)</span> (sredina ± 1 standardna devijacija)</li>
+<li>Približno <strong>95%</strong> podataka pada u raspon <span class="math inline">\(\bar{X} \pm 2s\)</span> (sredina ± 2 standardne devijacije)</li>
+<li>Približno <strong>99.7%</strong> podataka pada u raspon <span class="math inline">\(\bar{X} \pm 3s\)</span> (sredina ± 3 standardne devijacije)</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-empirical-rule" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-empirical-rule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-empirical-rule-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-empirical-rule-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Demonstracija empirijskog pravila na primjeru gledanosti TV serije
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Primijenimo ovo pravilo na naš primjer s gledanošću serije. Prosječna gledanost bila je 180.000, a standardna devijacija 12.750 gledatelja. Prema empirijskom pravilu, očekujemo da oko 68% epizoda ima gledanost između <span class="math inline">\(180.000 - 12.750 = 167.250\)</span> i <span class="math inline">\(180.000 + 12.750 = 192.750\)</span> gledatelja. Gotovo sve epizode (99.7%) trebale bi imati gledanost između <span class="math inline">\(180.000 - 3 \times 12.750 = 141.750\)</span> i <span class="math inline">\(180.000 + 3 \times 12.750 = 218.250\)</span> gledatelja. Epizoda s gledanošću izvan ovog raspona predstavljala bi statistički neuobičajan slučaj.</p>
+<p>Standardna devijacija ima posebnu vrijednost za usporedbe. Zamislimo da uspoređujemo dva portala. Portal A ima prosječno 50.000 posjeta dnevno sa standardnom devijacijom od 5.000, dok portal B također ima prosječno 50.000 posjeta, ali sa standardnom devijacijom od 25.000. Iako oba portala imaju isti prosjek, portal A pokazuje daleko konzistentniju posjećenost – većina dana posjete su u relativno uskom rasponu. Portal B pokazuje veliku varijabilnost – neki dani su vrlo slabi, drugi izuzetno jaki. Ova razlika u konzistentnosti može imati važne implikacije za poslovne odluke i razumijevanje publike.</p>
+</section>
+<section id="usporedba-mjera-disperzije" class="level3">
+<h3 class="anchored" data-anchor-id="usporedba-mjera-disperzije">Usporedba mjera disperzije</h3>
+<p><strong>Usporedba mjera disperzije</strong> pokazuje da svaka ima svoje prednosti i nedostatke. Robusnost na outliere najvažnija je razlika: raspon i varijanca/standardna devijacija osjetljive su na ekstremne vrijednosti, dok je IQR vrlo robustan. Raspon i IQR koriste samo nekoliko vrijednosti iz skupa podataka, dok varijanca i standardna devijacija koriste sve opservacije. Standardna devijacija ima najbolju kombinaciju interpretabilnosti i matematičkih svojstava.</p>
+<div id="tbl-usporedba-disperzije" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-usporedba-disperzije-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: Usporedba mjera disperzije
+</figcaption>
+<div aria-describedby="tbl-usporedba-disperzije-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 27%">
+<col style="width: 24%">
+<col style="width: 22%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Mjera</th>
+<th style="text-align: left;">Robusnost na outliere</th>
+<th style="text-align: left;">Koristi sve podatke</th>
+<th style="text-align: left;">Interpretabilnost</th>
+<th style="text-align: left;">Koristi se za</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Raspon</td>
+<td style="text-align: left;">Vrlo slaba</td>
+<td style="text-align: left;">Ne (samo 2 vrijednosti)</td>
+<td style="text-align: left;">Visoka</td>
+<td style="text-align: left;">Brzi uvid u ekstreme</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IQR</td>
+<td style="text-align: left;">Vrlo jaka</td>
+<td style="text-align: left;">Ne (samo kvartili)</td>
+<td style="text-align: left;">Visoka</td>
+<td style="text-align: left;">Podaci s outlierima</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Varijanca</td>
+<td style="text-align: left;">Slaba</td>
+<td style="text-align: left;">Da</td>
+<td style="text-align: left;">Niska (kvadratne jedinice)</td>
+<td style="text-align: left;">Teorijske analize</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Standardna devijacija</td>
+<td style="text-align: left;">Slaba</td>
+<td style="text-align: left;">Da</td>
+<td style="text-align: left;">Visoka</td>
+<td style="text-align: left;">Univerzalna mjera</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><strong>Parovanje mjera</strong> centralne tendencije i disperzije prirodno slijedi njihova svojstva. Aritmetička sredina uvijek se izvještava zajedno sa standardnom devijacijom jer obje koriste sve podatke i obje su osjetljive na outliere. Medijan se izvještava s međukvartilnim rasponom jer obje mjere koriste informacije o poziciji vrijednosti i obje su robusne na outliere.</p>
+<p>Primjer ispravnog izvještavanja: “Prosječan broj objava na dan bio je <span class="math inline">\(M = 12.5\)</span> (<span class="math inline">\(SD = 3.2\)</span>)” ili “Medijan broja komentara bio je <span class="math inline">\(Mdn = 45\)</span> (<span class="math inline">\(IQR = 23\)</span>)”. U društvenim znanostima općenito je dovoljno izvijestiti rezultate na dvije decimale. Brojke se uvijek trebaju kontekstualizirati – primjerice: “Prosječna dnevna posjećenost portala bila je 850.000 korisnika (<span class="math inline">\(SD = 120.000\)</span>), što ukazuje na relativno konzistentnu publiku s varijacijom od približno 14% oko prosjeka.”</p>
+</section>
+</section>
+<section id="standardizirani-rezultati-i-korelacije" class="level2">
+<h2 class="anchored" data-anchor-id="standardizirani-rezultati-i-korelacije">Standardizirani rezultati i korelacije</h2>
+<p>Dosad razmatrane mjere opisuju pojedinačne varijable – njihovu središnju vrijednost i disperziju. Međutim, u istraživanju masovne komunikacije rijetko nas zanima samo jedna izolirana varijabla. Umjesto toga, gotovo uvijek želimo razumjeti <strong>odnose</strong> između varijabli. Je li veći angažman na društvenim mrežama povezan s većom lojalnošću brendu? Postoji li veza između duljine članka i broja komentara? Kako se gledanost različitih programa povezuje međusobno? Ova pitanja zahtijevaju da prijeđemo s univarijatne (jedne varijable) na bivarijatnu (dvije varijable) analizu.</p>
+<section id="z-vrijednosti" class="level3">
+<h3 class="anchored" data-anchor-id="z-vrijednosti">Z-vrijednosti</h3>
+<p><strong>Standardizirani rezultat (z-vrijednost)</strong> definira se kao broj standardnih devijacija za koji određena opservacija odstupa od prosjeka. Zamislimo da istraživač razvija novi upitnik za mjerenje “sklonosti dijeljenju dezinformacija” na društvenim mrežama. Upitnik sadrži 40 pitanja, a sudionici odgovaraju na skali od 1 do 5 za svako pitanje, što znači da ukupan rezultat može varirati od 40 do 200. Nakon provedbe istraživanja na uzorku od 10.000 korisnika, prosječan rezultat je 110 sa standardnom devijacijom od 15. Osoba koja dobije rezultat od 145 – kako bismo trebali interpretirati taj rezultat?</p>
+<p>Jedan pristup bio bi reći da je osoba postigla 72.5% maksimalnog mogućeg rezultata (145/200). Međutim, ovaj pristup ne uzima u obzir kako se zapravo ponašaju drugi ljudi. Bolji pristup je usporediti osobu s distribucijom rezultata u populaciji, što nam omogućuje formula za z-vrijednost:</p>
+<p><span class="math display">\[z_i = \frac{X_i - \bar{X}}{s}\]</span></p>
+<p>gdje je <span class="math inline">\(X_i\)</span> sirova vrijednost, <span class="math inline">\(\bar{X}\)</span> aritmetička sredina, a <span class="math inline">\(s\)</span> standardna devijacija. Za našu osobu: <span class="math inline">\(z = (145 - 110) / 15 = 2.33\)</span>. Ova osoba je 2.33 standardne devijacije iznad prosjeka, što prema empirijskom pravilu znači da je u gornjih približno 1% populacije.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-z-scores" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-z-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-z-scores-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-z-scores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Distribucija z-vrijednosti rezultata upitnika
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Z-vrijednosti imaju dva ključna svojstva. <strong>Prvo</strong>, distribucija z-vrijednosti uvijek ima prosjek 0 i standardnu devijaciju 1, bez obzira kakva je bila originalna distribucija. Kada od svake vrijednosti oduzmemo prosjek, centriramo distribuciju oko nule; kada podijelimo sa standardnom devijacijom, skaliramo je tako da standardna devijacija postane 1.</p>
+<p><strong>Drugo</strong>, z-vrijednosti omogućuju usporedbu između varijabli mjerenih na potpuno različitim skalama. Broj dnevnih objava na društvenim mrežama (koji varira od 0 do 20) ne može se direktno usporediti s vremenom provedenim na platformi (koje varira od 0 do 300 minuta). Međutim, ako obje varijable standardiziramo, možemo usporediti relativne pozicije. Osoba A s z-vrijednošću od 1.5 za broj objava i 0.8 za vrijeme provedeno je “neuobičajenija” u broju objava. Osoba B s z-vrijednostima 0.5 i 2.0 je “neuobičajenija” u vremenu provedenom. Ova usporedba bila bi nemoguća sa sirovim rezultatima.</p>
+<p>U komunikološkom istraživanju, standardizirani rezultati koriste se za: identifikaciju outliera (članak s z-vrijednošću od 4.5 za broj komentara zaslužuje posebnu pažnju), kreiranje kompozitnih indeksa (kombiniranje broja lajkova, komentara i dijeljenja u uravnoteženi “indeks angažmana” – ako bismo jednostavno zbrojili sirove brojke, lajkovi bi dominirali indeks samo zato što su na većoj skali), te u naprednim statističkim analizama poput višestruke regresije.</p>
+</section>
+<section id="pearsonov-koeficijent-korelacije" class="level3">
+<h3 class="anchored" data-anchor-id="pearsonov-koeficijent-korelacije">Pearsonov koeficijent korelacije</h3>
+<p><strong>Pearsonov koeficijent korelacije</strong> (<span class="math inline">\(r\)</span>) kvantificira jačinu i smjer linearnog odnosa između dvije varijable. Prije uvođenja formalne mjere, važno je razumjeti kako vizualno procjenjujemo odnose. <strong>Dijagram raspršenja</strong> (scatterplot) je osnovni alat – svaka opservacija reprezentirana je kao točka gdje x-koordinata odgovara vrijednosti prve varijable, a y-koordinata vrijednosti druge. Ako točke formiraju obrazac koji ide odozdo lijevo prema gore desno, to sugerira <strong>pozitivan odnos</strong>: porast jedne varijable tendira biti praćen porastom druge. Ako točke idu od gore lijevo prema dolje desno, to ukazuje na <strong>negativan odnos</strong>. Ako su točke nasumično raspršene bez jasnog obrasca, to sugerira da nema sistematičnog odnosa.</p>
+<p>Koeficijent korelacije varira od -1 do +1, gdje: <span class="math inline">\(r = +1\)</span> indicira savršenu pozitivnu korelaciju (sve točke leže na pravoj liniji koja raste), <span class="math inline">\(r = -1\)</span> indicira savršenu negativnu korelaciju (sve točke leže na pravoj liniji koja pada), <span class="math inline">\(r = 0\)</span> indicira nikakvu linearnu korelaciju.</p>
+<p>Da bismo razumjeli kako se korelacija izračunava, moramo uvesti koncept <strong>kovarijance</strong> – mjere koja kvantificira koliko dvije varijable variraju zajedno:</p>
+<p><span class="math display">\[\text{Cov}(X,Y) = \frac{1}{N-1}\sum_{i=1}^{N}(X_i - \bar{X})(Y_i - \bar{Y})\]</span></p>
+<p>Za svaku opservaciju gledamo koliko <span class="math inline">\(X\)</span> odstupa od svog prosjeka i koliko <span class="math inline">\(Y\)</span> odstupa od svog prosjeka, a zatim množimo ta odstupanja. Ako obje varijable tendiraju biti iznad prosjeka u isto vrijeme (ili obje ispod), umnožci su pozitivni, što rezultira pozitivnom kovarijancom. Ako jedna tendira biti iznad prosjeka kada je druga ispod, umnožci su negativni.</p>
+<p>Međutim, kovarijanca ima problem: njena veličina ovisi o jedinicama mjerenja. Ako mjerimo duljinu članka u riječima i broj komentara, kovarijanca je u “riječi × komentari”, što nema razumljivog značenja. <strong>Pearsonov koeficijent korelacije</strong> rješava ovaj problem standardizacijom:</p>
+<p><span class="math display">\[r_{XY} = \frac{\text{Cov}(X,Y)}{s_X \cdot s_Y}\]</span></p>
+<p>Dijeleći kovarijancu s umnoškom standardnih devijacija, dobivamo bezdimenzionalnu mjeru koja uvijek pada između -1 i +1. Postoji elegantna alternativna formula koja eksplicitno povezuje korelaciju sa z-vrijednostima:</p>
+<p><span class="math display">\[r_{XY} = \frac{1}{N-1}\sum_{i=1}^{N}z_{X_i} \cdot z_{Y_i}\]</span></p>
+<p>Korelacija je zapravo prosječan umnožak standardiziranih rezultata. Ova povezanost objašnjava zašto je korelacija standardizirana mjera neovisna o izvornim jedinicama mjerenja.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-correlation-examples" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correlation-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-correlation-examples-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Primjeri različitih korelacija
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Za interpretaciju korelacije koriste se opće smjernice:</p>
+<div id="tbl-korelacija" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-korelacija-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Smjernice za interpretaciju korelacije
+</figcaption>
+<div aria-describedby="tbl-korelacija-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Apsolutna vrijednost <span class="math inline">\(|r|\)</span></th>
+<th style="text-align: left;">Interpretacija</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0.00 - 0.19</td>
+<td style="text-align: left;">Vrlo slaba ili zanemariva</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.20 - 0.39</td>
+<td style="text-align: left;">Slaba</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.40 - 0.59</td>
+<td style="text-align: left;">Umjerena</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.60 - 0.79</td>
+<td style="text-align: left;">Jaka</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.80 - 1.00</td>
+<td style="text-align: left;">Vrlo jaka</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Valja naglasiti da konkretna interpretacija ovisi o kontekstu istraživanja. U istraživanju masovne komunikacije, korelacija od <span class="math inline">\(r = 0.35\)</span> između izloženosti političkim vijestima i političkog znanja mogla bi biti vrlo značajna, dok u istraživanju pouzdanosti mjernog instrumenta, korelacija ispod 0.80 mogla bi ukazivati na ozbiljan problem.</p>
+<p><strong>Ograničenja Pearsonove korelacije</strong> moraju se razumjeti za pravilnu interpretaciju. <strong>Prvo</strong>, mjeri samo linearne odnose – ako je odnos između varijabli krivolinijski (npr. obrnuta U krivulja), korelacija može biti blizu nule čak i kada postoji jaka sistematična veza. <strong>Drugo</strong>, korelacija je osjetljiva na outliere – jedna ekstremna točka može značajno utjecati na vrijednost koeficijenta. <strong>Treće</strong>, i najvažnije: <strong>korelacija ne implicira uzročnost</strong>. Ako pronađemo da je vrijeme provedeno na Facebooku korelirano s političkom polarizacijom, to ne znači nužno da Facebook uzrokuje polarizaciju. Moguće je da: Facebook uzrokuje polarizaciju (X → Y), polarizacija uzrokuje veću upotrebu Facebooka (Y → X), treća varijabla uzrokuje oboje (Z → X i Z → Y), ili je odnos slučajan. Za zaključke o uzročnosti potrebni su eksperimentalni dizajni ili napredne kauzalne metode.</p>
+<p>Razmotrimo primjer iz komunikološkog istraživanja. Analitičar istražuje odnos između tri varijable vezane uz portal Večernji.hr: dnevni broj objavljenih članaka (<span class="math inline">\(M = 25.4\)</span>, <span class="math inline">\(SD = 4.2\)</span>), prosječno vrijeme čitanja po članku (<span class="math inline">\(M = 142\)</span> sekundi, <span class="math inline">\(SD = 28\)</span>) i ukupan dnevni broj komentara (<span class="math inline">\(M = 450\)</span>, <span class="math inline">\(SD = 120\)</span>). Korelacijska matrica pokazuje:</p>
+<div id="tbl-korelacijska-matrica" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-korelacijska-matrica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Korelacijska matrica za podatke portala Večernji.hr
+</figcaption>
+<div aria-describedby="tbl-korelacijska-matrica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Broj članaka</th>
+<th style="text-align: left;">Vrijeme čitanja</th>
+<th style="text-align: left;">Ukupni komentari</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Broj članaka</strong></td>
+<td style="text-align: left;">1.00</td>
+<td style="text-align: left;">-0.32</td>
+<td style="text-align: left;">0.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Vrijeme čitanja</strong></td>
+<td style="text-align: left;">-0.32</td>
+<td style="text-align: left;">1.00</td>
+<td style="text-align: left;">0.58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ukupni komentari</strong></td>
+<td style="text-align: left;">0.15</td>
+<td style="text-align: left;">0.58</td>
+<td style="text-align: left;">1.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Interpretacija: slaba negativna korelacija (<span class="math inline">\(r = -0.32\)</span>) između broja članaka i vremena čitanja sugerira da kada portal objavi više članaka, čitatelji provode manje vremena na svakom pojedinačnom. Vrlo slaba korelacija (<span class="math inline">\(r = 0.15\)</span>) između broja članaka i komentara indicira da broj objava ne predviđa ukupne komentare. Umjereno jaka pozitivna korelacija (<span class="math inline">\(r = 0.58\)</span>) između vremena čitanja i komentara sugerira da angažiraniji sadržaj koji zadržava čitatelje rezultira većom interakcijom – nalaz koji može imati praktične implikacije za uredničke odluke.</p>
+</section>
+</section>
+<section id="vizualizacija-podataka" class="level2">
+<h2 class="anchored" data-anchor-id="vizualizacija-podataka">Vizualizacija podataka</h2>
+<p>Brojke same po sebi rijetko govore dovoljno jasnu priču. Prosječna gledanost od 285.000 gledatelja sa standardnom devijacijom od 42.000 pruža određeni uvid, ali taj uvid postaje daleko moćniji kada ga vizualiziramo. Grafički prikazi mogu otkriti obrasce koje numeričke statistike propuštaju: bimodalne distribucije, outliere, nelinearne odnose ili subgrupe u podacima. Edward Tufte, utjecajni teoretičar vizualizacije, sažeo je ovu ideju jednostavno: “Iznad svega, pokažite podatke.” Četiri temeljne vrste grafova pokrivaju većinu potreba u istraživanju masovne komunikacije.</p>
+<section id="histogram" class="level3">
+<h3 class="anchored" data-anchor-id="histogram">Histogram</h3>
+<p><strong>Histogram</strong> prikazuje distribuciju pojedinačne numeričke varijable dijeleći raspon vrijednosti na intervale (binove) i prikazujući koliko opservacija pada u svaki interval. Na x-osi nalaze se intervali vrijednosti, a na y-osi frekvencije. Za istraživača masovne komunikacije, histogram je nezamjenjiv alat za razumijevanje kako su podaci distribuirani.</p>
+<p>Zamislimo da analiziramo trajanje 200 video clipova na YouTube kanalu RTL-a. Histogram odmah otkriva: jesu li većina videa sličnog trajanja (uska distribucija) ili variraju široko (široka distribucija); postoje li jasne modalne vrijednosti (npr. klaster oko 2 minute za vijesti, drugi oko 15 minuta za reportaže); ima li outliera koji zahtijevaju posebnu pažnju; je li distribucija simetrična ili asimetrična. Histogram koji pokazuje dva jasna vrha (bimodalna distribucija) može otkriti da portal proizvodi dvije distinktivne vrste sadržaja – kratke vijesti i duže reportaže – što je uvid koji bi se izgubio kada bismo gledali samo prosjek i standardnu devijaciju.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-histogram-bimodal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-histogram-bimodal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-histogram-bimodal-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogram-bimodal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Bimodalna distribucija trajanja YouTube videa
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ključ dobrog histograma leži u izboru broja intervala. Premalo intervala stvara grub prikaz koji skriva detalje distribucije, dok previše intervala stvara isprekidan prikaz gdje svaki bin sadrži samo nekoliko opservacija. Preporuka je eksperimentirati s različitim brojevima binova dok se ne pronađe prikaz koji najbolje komunicira oblik distribucije. Kao opće pravilo, za uzorke od 50-100 opservacija obično je prikladno 7-10 intervala, dok veći uzorci mogu koristiti više intervala.</p>
+</section>
+<section id="box-plot" class="level3">
+<h3 class="anchored" data-anchor-id="box-plot">Box plot</h3>
+<p><strong>Box plot (dijagram pravokutnika)</strong> elegantno sažima distribuciju kroz pet ključnih statistika: minimum, prvi kvartil (Q1), medijan, treći kvartil (Q3) i maksimum. Pravokutnik obuhvaća međukvartilni raspon (od Q1 do Q3) s linijom označenom na medijanu, dok se “brkovi” protežu prema najnižim i najvišim vrijednostima koje nisu outlieri. Točke izvan brkova – vrijednosti udaljene više od 1.5×IQR od rubova pravokutnika – označavaju outliere.</p>
+<p>Box plot je idealan za usporedbe između grupa. Usporedimo li gledanost emisija na HRT-u, Nova TV i RTL-u pomoću tri paralelna box plota, odmah vidimo ne samo razlike u medijanima (koja televizija ima veću “tipičnu” gledanost), već i razlike u varijabilnosti (koja televizija pokazuje konzistentniju gledanost) i prisutnost eventualnih ekstremnih vrijednosti (koje emisije su bile izuzetno uspješne ili neuspješne).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot-tv" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-tv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-boxplot-tv-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-tv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Usporedba gledanosti između televizijskih kuća
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Box plot je posebno vrijedan jer je robustan na outliere – njegova struktura čini outliere vidljivima kao zasebne točke, ali oni ne iskrivljuju glavni prikaz distribucije. Također omogućuje brzu vizualnu procjenu asimetrije: ako medijan nije u sredini pravokutnika, distribucija je asimetrična. Medijan bliži donjem rubu sugerira pozitivno asimetričnu distribuciju (rep prema višim vrijednostima), dok medijan bliži gornjem rubu sugerira negativno asimetričnu distribuciju.</p>
+</section>
+<section id="dijagram-raspršenja" class="level3">
+<h3 class="anchored" data-anchor-id="dijagram-raspršenja">Dijagram raspršenja</h3>
+<p><strong>Dijagram raspršenja (scatterplot)</strong> prikazuje odnos između dvije numeričke varijable tako što svaku opservaciju reprezentira kao točku u dvodimenzionalnom prostoru. Na x-osi je jedna varijabla, na y-osi druga, a svaka točka predstavlja jednu opservaciju. Dijagram raspršenja je fundamentalan alat za istraživanje korelacija.</p>
+<p>Zamislimo da istražujemo odnos između duljine članka na Index.hr-u (x-os) i broja komentara koje članak primi (y-os). Dijagram raspršenja odmah otkriva: smjer odnosa (pozitivan ako točke idu od dolje lijevo prema gore desno, negativan ako idu od gore lijevo prema dolje desno, nikakav ako su točke nasumično raspršene); jačinu odnosa (koliko su točke grupirane oko zamišljene linije – što su bliže liniji, odnos je jači); linearnost odnosa (leže li točke približno na pravoj liniji ili tvore zakrivljeni obrazac – Pearsonova korelacija pretpostavlja linearnost); prisutnost outliera (točke koje dramatično odstupaju od općeg obrasca).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-scatterplot-index" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scatterplot-index-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-scatterplot-index-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scatterplot-index-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Odnos između duljine članka i broja komentara
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Korelacija nikad ne bi trebala biti izvještena bez vizualnog pregleda putem dijagrama raspršenja. <strong>Anscombeov kvartet</strong> je poznati primjer koji demonstrira da četiri potpuno različita skupa podataka mogu imati identične korelacijske koeficijente, identične prosjeke i identične standardne devijacije, a ipak pokazivati fundamentalno različite obrasce kada se vizualiziraju. Jedan skup može pokazivati linearni odnos, drugi krivolinijski, treći može imati jedan utjecajan outlier, a četvrti može imati potpuno drugačiju strukturu. Samo dijagram raspršenja otkriva ove razlike.</p>
+</section>
+<section id="stupčasti-grafikon" class="level3">
+<h3 class="anchored" data-anchor-id="stupčasti-grafikon">Stupčasti grafikon</h3>
+<p><strong>Stupčasti grafikon (bar plot)</strong> prikazuje frekvencije ili prosjeke za kategorijske varijable. Za analizu sadržaja medija, stupčasti grafikoni su prirodan izbor za prikaz distribucija tema, žanrova ili drugih nominalnih varijabli. Ako analiziramo dominantne teme u glavnim vijestima HRT-a tijekom mjeseca (politika: 45, gospodarstvo: 28, kriminal: 22, zdravstvo: 18, sport: 15, kultura: 12, ostalo: 10), stupčasti grafikon jasno komunicira koje teme dominiraju medijskim prostorom.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-barplot-teme" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-barplot-teme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Deskriptivna-statistika_files/figure-html/fig-barplot-teme-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-barplot-teme-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Distribucija tema u glavnim vijestima HRT-a
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Osim jednostavnih frekvencija, stupčasti grafikoni mogu prikazivati grupiranu usporedbu (npr. distribuciju tema na HRT-u, Nova TV i RTL-u usporedno kao grupirane stupce) ili usporedbu prosjeka između grupa (npr. prosječan broj komentara po vrsti sadržaja). Pri kreiranju stupčastih grafikona za nominalne varijable bez inherentnog redoslijeda, korisno je sortirati stupce od najviše do najniže vrijednosti jer to olakšava usporedbe i čini graf informativnijim.</p>
+</section>
+<section id="principi-učinkovite-vizualizacije" class="level3">
+<h3 class="anchored" data-anchor-id="principi-učinkovite-vizualizacije">Principi učinkovite vizualizacije</h3>
+<p><strong>Principi učinkovite vizualizacije</strong> osiguravaju da grafovi komuniciraju jasno i točno. Neovisno o vrsti grafa, nekoliko načela treba poštivati:</p>
+<p><strong>Samoobjasnljivost</strong>: Graf mora biti razumljiv bez čitanja okolnog teksta. Naslov treba jasno opisati što graf prikazuje. Oznake osi moraju uključivati jedinice mjerenja. Legenda mora biti prisutna kada graf prikazuje više grupa ili varijabli.</p>
+<p><strong>Minimalna dekoracija</strong>: Treba izbjegavati 3D efekte, nepotrebne boje i dekorativne elemente koji ometaju čitanje podataka. Tufte je ovo nazvao “chart junk” – vizualni elementi koji ne prenose informaciju već samo zauzimaju prostor i odvlače pažnju od podataka. Cilj je maksimizirati omjer podataka prema “tinti” – što više informacije s što manje vizualnog opterećenja.</p>
+<p><strong>Pažljiv odabir skala</strong>: Prekinute y-osi mogu preuveličati razlike (stupac od 100 nasuprot stupcu od 110 izgleda dramatično različit ako y-os počinje od 95), dok neprimjereno široke skale mogu prikriti stvarne razlike. Y-os stupčastih grafikona trebala bi uvijek počinjati od nule kako bi se izbjegle vizualne distorzije.</p>
+<p><strong>Jasno razlikovanje grupa</strong>: Kada se prikazuje više grupa ili varijabli, potrebno je koristiti jasne, razlikovne oznake i uvijek uključiti legendu.</p>
+<p><strong>Praktične smjernice za izvještavanje</strong> deskriptivne statistike u komunikološkom istraživanju uključuju nekoliko konvencija. U tekstu se navode ključne vrijednosti s mjerama disperzije, primjerice: “Gledanost je u prosjeku bila 285.000 (<span class="math inline">\(SD = 42.000\)</span>)”. U tablicama se prikazuju sve relevantne mjere: <span class="math inline">\(N\)</span>, <span class="math inline">\(M\)</span>, <span class="math inline">\(SD\)</span>, <span class="math inline">\(Mdn\)</span>, <span class="math inline">\(IQR\)</span>, minimum i maksimum gdje je primjenjivo. Brojke se obično zaokružuju na dvije decimale – izvještavanje većeg broja decimala stvara lažan dojam preciznosti koji nije opravdan prirodom mjerenja u društvenim znanostima.</p>
+<p>Rezultati se uvijek trebaju kontekstualizirati – brojke same po sebi rijetko govore potpunu priču. Treba objasniti što brojke znače u kontekstu istraživačkog pitanja i jesu li razlike ili varijacije praktično značajne, ne samo statistički. Primjerice: “Prosječna dnevna posjećenost portala bila je 850.000 korisnika (<span class="math inline">\(SD = 120.000\)</span>), što ukazuje na relativno konzistentnu publiku s varijacijom od približno 14% oko prosjeka. Ova konzistentnost sugerira stabilnu bazu čitatelja, dok povremeni skokovi (vidljivi kao outlieri u box plotu) odražavaju viralane članke.”</p>
+<p>Vizualizacije se koriste kao dopuna numeričkim statistikama, ne kao zamjena. Box plotovi su idealni za usporedbe distribucija između grupa, histogrami za prikaz oblika distribucije pojedine varijable, dijagrami raspršenja za odnose između varijabli. Dobro odabrana vizualizacija često komunicira jasnije od dugačkih tekstualnih opisa i može otkriti obrasce koje bi iz samih brojki bilo teško uočiti.</p>
+<hr>
+</section>
+</section>
+<section id="sažetak-poglavlja" class="level2">
+<h2 class="anchored" data-anchor-id="sažetak-poglavlja">Sažetak poglavlja</h2>
+<p>Deskriptivna statistika pruža temeljne alate za sažimanje i opisivanje kvantitativnih podataka prikupljenih u istraživanju masovne komunikacije. Ovladavanje ovim tehnikama nužan je preduvjet za kompetentnu analizu i interpretaciju rezultata istraživanja.</p>
+<p><strong>Mjere centralne tendencije</strong> odgovaraju na pitanje koja je tipična vrijednost u podacima:</p>
+<ul>
+<li><p><strong>Aritmetička sredina</strong> (<span class="math inline">\(\bar{X}\)</span>) izračunava se zbrajanjem svih vrijednosti i dijeljenjem s brojem opservacija. Koristi sve podatke i ima izvrsna matematička svojstva, ali je osjetljiva na ekstremne vrijednosti. Preferira se za intervalne i omjerne podatke sa simetričnom distribucijom.</p></li>
+<li><p><strong>Medijan</strong> je srednja vrijednost u sortiranom nizu podataka. Robustan je na outliere jer koristi samo informaciju o poziciji, ne o veličini vrijednosti. Preferira se za ordinalne podatke ili kada distribucija sadrži ekstremne vrijednosti.</p></li>
+<li><p><strong>Mod</strong> je vrijednost koja se pojavljuje najčešće. Jedina je smislena mjera za nominalne podatke i može ukazati na postojanje više subgrupa u podacima (bimodalna ili multimodalna distribucija).</p></li>
+</ul>
+<p><strong>Mjere disperzije</strong> kvantificiraju koliko su podaci raspršeni oko središnje vrijednosti:</p>
+<ul>
+<li><p><strong>Raspon</strong> je razlika između maksimuma i minimuma – jednostavan ali potpuno osjetljiv na outliere.</p></li>
+<li><p><strong>Međukvartilni raspon (IQR)</strong> je razlika između trećeg i prvog kvartila – robustan na outliere jer mjeri varijabilnost “srednje polovice” podataka.</p></li>
+<li><p><strong>Varijanca</strong> (<span class="math inline">\(s^2\)</span>) je prosječno kvadrirano odstupanje od prosjeka – matematički fundamentalna ali teško interpretabilna zbog kvadratnih jedinica.</p></li>
+<li><p><strong>Standardna devijacija</strong> (<span class="math inline">\(s\)</span>) je kvadratni korijen varijance – izražena u izvornim jedinicama i interpretira se pomoću empirijskog pravila (68-95-99.7).</p></li>
+</ul>
+<p><strong>Standardizirani rezultati (z-vrijednosti)</strong> transformiraju sirove rezultate u broj standardnih devijacija od prosjeka, omogućujući usporedbe između različitih skala. Formula <span class="math inline">\(z = (X - \bar{X})/s\)</span> centrira distribuciju oko nule i skalira je tako da standardna devijacija postane 1.</p>
+<p><strong>Pearsonov koeficijent korelacije</strong> (<span class="math inline">\(r\)</span>) mjeri jačinu i smjer linearnog odnosa između dvije varijable, varirajući od -1 (savršena negativna) do +1 (savršena pozitivna). Ključna napomena: korelacija ne implicira uzročnost – za kauzalne zaključke potrebni su eksperimentalni dizajni.</p>
+<p><strong>Vizualizacija podataka</strong> omogućuje intuitivnije razumijevanje distribucija i obrazaca:</p>
+<ul>
+<li><strong>Histogram</strong> prikazuje oblik distribucije numeričke varijable.</li>
+<li><strong>Box plot</strong> sažima distribuciju kroz kvartile i identificira outliere.</li>
+<li><strong>Dijagram raspršenja</strong> prikazuje odnos između dvije numeričke varijable.</li>
+<li><strong>Stupčasti grafikon</strong> prikazuje frekvencije kategorijskih varijabli.</li>
+</ul>
+<p>Pri izvještavanju rezultata, aritmetička sredina uvijek se navodi zajedno sa standardnom devijacijom (<span class="math inline">\(M\)</span>, <span class="math inline">\(SD\)</span>), dok se medijan navodi s međukvartilnim rasponom (<span class="math inline">\(Mdn\)</span>, <span class="math inline">\(IQR\)</span>). Brojke se zaokružuju na dvije decimale i uvijek se kontekstualiziraju – treba objasniti što znače u kontekstu istraživačkog pitanja. Vizualizacije služe kao dopuna numeričkim statistikama, a ne kao njihova zamjena, i mogu otkriti obrasce koje same brojke ne pokazuju.</p>
+<p>Valjano provođenje deskriptivne analize čini temelj svake naprednije statističke obrade. Prije nego što se pristupi testiranju hipoteza, regresijskoj analizi ili bilo kojoj drugoj inferencijalnoj tehnici, nužno je temeljito upoznati podatke kroz deskriptivnu statistiku. Ova faza analize omogućuje otkrivanje potencijalnih problema u podacima (poput outliera ili neočekivanih distribucija), informira odluke o prikladnim statističkim metodama, i pruža kontekst za interpretaciju naprednih analiza. Deskriptivna statistika nije samo “uvodni korak” – ona je integralni dio svakog kvalitetnog istraživanja koji omogućuje dublje razumijevanje fenomena koji se istražuje.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Statistički testovi</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Statisticki testovi_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Statisticki testovi_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Statisticki testovi_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Statisticki testovi_files/libs/quarto-html/popper.min.js"></script>
+<script src="Statisticki testovi_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Statisticki testovi_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Statisticki testovi_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Statisticki testovi_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Statisticki testovi_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Statisticki testovi_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Statisticki testovi_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#statistički-testovi-u-praksi" id="toc-statistički-testovi-u-praksi" class="nav-link active" data-scroll-target="#statistički-testovi-u-praksi">Statistički testovi u praksi</a>
+  <ul class="collapse">
+  <li><a href="#t-test-i-anova" id="toc-t-test-i-anova" class="nav-link" data-scroll-target="#t-test-i-anova">T-test i ANOVA</a></li>
+  <li><a href="#hi-kvadrat-i-korelacije" id="toc-hi-kvadrat-i-korelacije" class="nav-link" data-scroll-target="#hi-kvadrat-i-korelacije">Hi-kvadrat i korelacije</a></li>
+  <li><a href="#regresija-i-interpretacija" id="toc-regresija-i-interpretacija" class="nav-link" data-scroll-target="#regresija-i-interpretacija">Regresija i interpretacija</a></li>
+  <li><a href="#sažetak-poglavlja" id="toc-sažetak-poglavlja" class="nav-link" data-scroll-target="#sažetak-poglavlja">Sažetak poglavlja</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Statisticki-testovi.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="Statisticki testovi.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Statistički testovi</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="statistički-testovi-u-praksi" class="level1">
+<h1>Statistički testovi u praksi</h1>
+<p>U prethodnim poglavljima postavili smo teorijske temelje inferencijalne statistike – razumjeli smo logiku testiranja hipoteza, ulogu p-vrijednosti i vrste pogrešaka koje možemo napraviti. Sada je vrijeme da te principe primijenimo kroz najčešće korištene statističke testove u istraživanju masovne komunikacije. Svaki test dizajniran je za specifičnu vrstu istraživačkog pitanja i specifičnu vrstu podataka.</p>
+<p>Istraživač masovne komunikacije svakodnevno se suočava s pitanjima koja zahtijevaju statističko testiranje. Je li nova strategija naslova na portalu dovela do statistički značajnog povećanja broja klikova? Razlikuje li se percipirana kredibilnost vijesti između tradicionalnih medija i društvenih mreža? Postoji li povezanost između vremena provedenog na društvenim mrežama i političke polarizacije? Može li duljina članka predvidjeti broj komentara koje će članak generirati? Odgovori na ova pitanja zahtijevaju primjenu odgovarajućih statističkih testova.</p>
+<p>Izbor pravog testa ovisi o nekoliko faktora: vrsti istraživačkog pitanja (usporedba, povezanost, predviđanje), vrsti varijabli (numeričke ili kategorijske), broju grupa koje uspoređujemo i prirodi podataka (nezavisni ili upareni). U ovom poglavlju sustavno ćemo proći kroz najvažnije testove, počevši od t-testa za usporedbu prosjeka, preko ANOVA-e za usporedbu više grupa, hi-kvadrat testa za kategorijske varijable, do korelacije i regresijske analize za ispitivanje odnosa između varijabli.</p>
+<section id="t-test-i-anova" class="level2">
+<h2 class="anchored" data-anchor-id="t-test-i-anova">T-test i ANOVA</h2>
+<section id="t-test-usporedba-prosjeka" class="level3">
+<h3 class="anchored" data-anchor-id="t-test-usporedba-prosjeka">T-test: usporedba prosjeka</h3>
+<p>T-test je vjerojatno najčešće korišteni statistički test u društvenim znanostima. Koristi se kada želimo usporediti prosjeke – bilo da uspoređujemo jedan prosjek s teorijskom vrijednošću, ili prosjeke između dvije grupe. Za razliku od z-testa koji zahtijeva poznavanje populacijske standardne devijacije, t-test koristi procjenu iz uzorka, što ga čini praktičnijim za stvarno istraživanje.</p>
+<p>Postoje tri varijante t-testa, svaka za različitu situaciju: jedan-uzorkovni t-test (usporedba prosjeka uzorka s poznatom vrijednošću), nezavisni t-test (usporedba prosjeka između dvije nezavisne grupe) i zavisni t-test (usporedba prosjeka za iste ispitanike u dva uvjeta).</p>
+<section id="jedan-uzorkovni-t-test" class="level4">
+<h4 class="anchored" data-anchor-id="jedan-uzorkovni-t-test">Jedan-uzorkovni t-test</h4>
+<p><strong>Jedan-uzorkovni t-test</strong> koristi se kada želimo testirati je li prosječna vrijednost u našem uzorku značajno različita od neke hipotetske vrijednosti. Na primjer, Nova TV tvrdi da njihov prosječni gledatelj provede 45 minuta dnevno gledajući njihov program. Istraživač prikupi podatke od 30 nasumično odabranih gledatelja i želi testirati ovu tvrdnju.</p>
+<p>Imamo uzorak od <span class="math inline">\(N = 30\)</span> gledatelja. Prosječno vrijeme gledanja u uzorku je <span class="math inline">\(\bar{X} = 38.5\)</span> minuta, sa standardnom devijacijom <span class="math inline">\(s = 12.0\)</span> minuta. Postavljamo hipoteze:</p>
+<p><span class="math display">\[H_0: \mu = 45 \text{ minuta}\]</span> <span class="math display">\[H_1: \mu \neq 45 \text{ minuta}\]</span></p>
+<p>Testna statistika za jedan-uzorkovni t-test je:</p>
+<p><span class="math display">\[t = \frac{\bar{X} - \mu_0}{s / \sqrt{N}}\]</span></p>
+<p>gdje je <span class="math inline">\(\mu_0\)</span> hipotetska populacijska sredina (45 minuta), <span class="math inline">\(s\)</span> standardna devijacija uzorka, i <span class="math inline">\(N\)</span> veličina uzorka. Ključna razlika od z-testa je da koristimo procijenjenu standardnu pogrešku <span class="math inline">\(s/\sqrt{N}\)</span> umjesto prave <span class="math inline">\(\sigma/\sqrt{N}\)</span>, što uvodi dodatnu nesigurnost koju kompenziramo korištenjem t-distribucije umjesto normalne.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-one-sample-t" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-one-sample-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-one-sample-t-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-one-sample-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Jedan-uzorkovni t-test: vrijeme gledanja Nova TV
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Za naš primjer, <span class="math inline">\(t = (38.5 - 45) / (12/\sqrt{30}) = -2.97\)</span>. S 29 stupnjeva slobode, p-vrijednost iznosi približno 0.006. Budući da je <span class="math inline">\(p &lt; 0.05\)</span>, odbacujemo nultu hipotezu i zaključujemo da prosječno vrijeme gledanja značajno se razlikuje od 45 minuta koje tvrdi Nova TV. Gledatelji u našem uzorku provode značajno manje vremena gledajući program nego što televizija tvrdi.</p>
+</section>
+<section id="nezavisni-t-test" class="level4">
+<h4 class="anchored" data-anchor-id="nezavisni-t-test">Nezavisni t-test</h4>
+<p><strong>Nezavisni t-test</strong> (independent samples t-test) koristi se kada želimo usporediti prosjeke između dvije <strong>nezavisne</strong> grupe. Na primjer, uspoređujemo angažman s člancima između dvije različite vrste naslova, ili kredibilitet vijesti između HRT-a i komercijalne televizije.</p>
+<p>Index.hr želi testirati dvije strategije naslova. Nasumično dodjeljuju 50 članaka senzacionalnim naslovima i 50 informativnim naslovima, te mjere broj klikova. Nulta hipoteza je da nema razlike u prosječnom broju klikova između dvije grupe:</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2\]</span> <span class="math display">\[H_1: \mu_1 \neq \mu_2\]</span></p>
+<p>Postoje dvije verzije nezavisnog t-testa. <strong>Studentov t-test</strong> pretpostavlja jednake varijance u obje grupe i koristi združenu (pooled) varijancu. <strong>Welchov t-test</strong> ne pretpostavlja jednake varijance i općenito je robusniji izbor. U R-u, funkcija <code>t.test()</code> defaultno koristi Welchovu verziju.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-independent-t" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-independent-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-independent-t-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-independent-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Nezavisni t-test: senzacionalni vs.&nbsp;informativni naslovi
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rezultati pokazuju značajnu razliku: senzacionalni naslovi (<span class="math inline">\(M = 850\)</span>, <span class="math inline">\(SD = 220\)</span>) generiraju značajno više klikova od informativnih naslova (<span class="math inline">\(M = 650\)</span>, <span class="math inline">\(SD = 180\)</span>), <span class="math inline">\(t(94) = 4.97\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>. Cohenov d od 0.99 ukazuje na veliki efekt – razlika od približno 200 klikova praktično je vrlo značajna za uredničku strategiju portala.</p>
+<p><strong>Veličina efekta – Cohenov d</strong> standardna je mjera za t-test:</p>
+<p><span class="math display">\[d = \frac{\bar{X}_1 - \bar{X}_2}{s_p}\]</span></p>
+<p>gdje je <span class="math inline">\(s_p\)</span> združena standardna devijacija. Konvencionalna interpretacija: <span class="math inline">\(|d| = 0.2\)</span> (mali efekt), <span class="math inline">\(|d| = 0.5\)</span> (srednji efekt), <span class="math inline">\(|d| = 0.8\)</span> (veliki efekt).</p>
+</section>
+<section id="zavisni-t-test" class="level4">
+<h4 class="anchored" data-anchor-id="zavisni-t-test">Zavisni t-test</h4>
+<p><strong>Zavisni t-test</strong> (paired t-test) koristi se kada iste osobe mjerimo dva puta, ili kada imamo uparene opservacije. Na primjer, mjerimo stavove o medijskom izvještavanju prije i nakon medijske intervencije, ili uspoređujemo kredibilitet dvije vijesti kod istih ispitanika.</p>
+<p>Portal Index.hr testira učinak fact-check oznaka. 40 ispitanika ocjenjuje kredibilitet vijesti (1-10 skala), prvo bez oznake, zatim s fact-check oznakom. Ključna prednost zavisnog t-testa je što kontrolira za individualne razlike – uspoređujemo promjenu unutar svake osobe, ne razlike između osoba.</p>
+<p><span class="math display">\[H_0: \mu_D = 0 \text{ (nema razlike)}\]</span> <span class="math display">\[H_1: \mu_D \neq 0\]</span></p>
+<p>gdje je <span class="math inline">\(\mu_D\)</span> populacijska sredina razlika između dva mjerenja. Testna statistika je:</p>
+<p><span class="math display">\[t = \frac{\bar{D}}{s_D / \sqrt{N}}\]</span></p>
+<p>gdje je <span class="math inline">\(\bar{D}\)</span> prosječna razlika i <span class="math inline">\(s_D\)</span> standardna devijacija razlika.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-paired-t" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-paired-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-paired-t-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-paired-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Zavisni t-test: kredibilitet prije i nakon fact-check oznake
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rezultati pokazuju da fact-check oznake značajno povećavaju percipiranu kredibilnost vijesti. Prosječna razlika od 1.2 boda na skali 1-10 statistički je značajna (<span class="math inline">\(t(39) = 9.49\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>). Činjenica da gotovo sve točke leže iznad dijagonale (linije bez promjene) vizualno potvrđuje konzistentan pozitivan učinak fact-checkinga.</p>
+</section>
+</section>
+<section id="anova-usporedba-više-grupa" class="level3">
+<h3 class="anchored" data-anchor-id="anova-usporedba-više-grupa">ANOVA: usporedba više grupa</h3>
+<p>Kada želimo usporediti prosjeke između <strong>tri ili više grupa</strong>, t-test više nije prikladan. Mogli bismo provoditi multiple t-testove (uspoređujući sve parove grupa), ali to bi infliralo stopu pogreške tipa I. Ako uspoređujemo 4 grupe, imamo 6 mogućih parova. S <span class="math inline">\(\alpha = 0.05\)</span> za svaki test, ukupna vjerojatnost barem jedne pogreške tipa I raste na približno 26%. Umjesto toga, koristimo <strong>analizu varijance</strong> (ANOVA), koja testira postoji li <strong>bilo kakva</strong> razlika između grupa u jednom testu.</p>
+<section id="logika-anova-e" class="level4">
+<h4 class="anchored" data-anchor-id="logika-anova-e">Logika ANOVA-e</h4>
+<p>ANOVA uspoređuje dvije vrste varijabilnosti: <strong>varijabilnost između grupa</strong> (between-group variability) – koliko se grupni prosjeci razlikuju jedni od drugih, i <strong>varijabilnost unutar grupa</strong> (within-group variability) – koliko pojedinačne opservacije variraju unutar svake grupe. Ako grupni prosjeci variraju puno više nego što bi se očekivalo samo na temelju slučajne varijabilnosti unutar grupa, to sugerira da grupna pripadnost zaista utječe na ishod.</p>
+<p>Testna statistika za ANOVA-u je <strong>F-omjer</strong>:</p>
+<p><span class="math display">\[F = \frac{\text{MS}_{\text{between}}}{\text{MS}_{\text{within}}} = \frac{\text{Varijanca između grupa}}{\text{Varijanca unutar grupa}}\]</span></p>
+<p>Ako nulta hipoteza je istinita (sve grupe imaju istu sredinu), očekujemo <span class="math inline">\(F \approx 1\)</span>. Veliki F omjer (F &gt;&gt; 1) sugerira da su razlike između grupa veće nego što bi bile slučajno.</p>
+<p>Istraživač želi usporediti percipiranu kredibilnost vijesti iz četiri različita izvora: HRT, Nova TV, Index.hr i Facebook. 80 ispitanika nasumično je dodijeljeno u jednu od četiri grupe (po 20 u svakoj), gdje čitaju istu vijest ali s različitom oznakom izvora, i ocjenjuju kredibilitet na skali 1-10.</p>
+<p><span class="math display">\[H_0: \mu_1 = \mu_2 = \mu_3 = \mu_4\]</span> <span class="math display">\[H_1: \text{Barem jedan prosjek se razlikuje}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-anova" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-anova-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: ANOVA: kredibilitet vijesti po izvoru
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rezultati ANOVA-e pokazuju značajnu razliku u kredibilitetu između izvora, <span class="math inline">\(F(3, 76) = 28.4\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>. Veličina efekta <span class="math inline">\(\eta^2 = 0.53\)</span> ukazuje da izvor vijesti objašnjava 53% varijabilnosti u percipiranom kredibilitetu – što je vrlo velik efekt. Vizualno je jasno da HRT uživa najveći kredibilitet, dok Facebook ima najniži.</p>
+</section>
+<section id="post-hoc-testovi" class="level4">
+<h4 class="anchored" data-anchor-id="post-hoc-testovi">Post-hoc testovi</h4>
+<p>Ako ANOVA pokaže značajan rezultat, znamo da postoji <strong>neka</strong> razlika, ali ne znamo <strong>koji</strong> parovi grupa se razlikuju. Za to koristimo <strong>post-hoc testove</strong> koji uspoređuju sve moguće parove grupa uz kontrolu za višestruko testiranje. Najčešći je <strong>Tukeyjev HSD</strong> (Honestly Significant Difference) test.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-tukey" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-tukey-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tukey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Tukeyjev post-hoc test: parovi usporedbe
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretacija: intervali pouzdanosti koji ne uključuju nulu označavaju značajne razlike. Rezultati pokazuju da se HRT značajno razlikuje od svih ostalih izvora, Nova TV se razlikuje od Index.hr i Facebooka, a Index.hr se razlikuje od Facebooka. Sve razlike slijede očekivani obrazac – tradicionalni mediji imaju veći kredibilitet od digitalnih izvora.</p>
+</section>
+<section id="pretpostavke-anova-e" class="level4">
+<h4 class="anchored" data-anchor-id="pretpostavke-anova-e">Pretpostavke ANOVA-e</h4>
+<p>ANOVA pretpostavlja: <strong>normalnost</strong> (podaci unutar svake grupe približno normalno distribuirani), <strong>homogenost varijanci</strong> (standardne devijacije slične u svim grupama) i <strong>nezavisnost</strong> (opservacije međusobno nezavisne). Homogenost varijanci provjerava se Leveneovim testom. Ako je p-vrijednost Leveneovog testa manja od 0.05, varijance nisu homogene i možda je potrebna alternativna metoda poput Welchove ANOVA-e.</p>
+</section>
+</section>
+</section>
+<section id="hi-kvadrat-i-korelacije" class="level2">
+<h2 class="anchored" data-anchor-id="hi-kvadrat-i-korelacije">Hi-kvadrat i korelacije</h2>
+<section id="hi-kvadrat-test" class="level3">
+<h3 class="anchored" data-anchor-id="hi-kvadrat-test">Hi-kvadrat test</h3>
+<p>Hi-kvadrat (<span class="math inline">\(\chi^2\)</span>) test koristi se kada su <strong>obje varijable kategorijske</strong>. Ne uspoređujemo prosjeke, već frekvencije. Postoje dvije glavne verzije: test dobrote uklapanja (jedna varijabla) i test nezavisnosti (dvije varijable). U istraživanju masovne komunikacije, najčešće koristimo test nezavisnosti za ispitivanje povezanosti između kategorijskih varijabli.</p>
+<section id="test-nezavisnosti" class="level4">
+<h4 class="anchored" data-anchor-id="test-nezavisnosti">Test nezavisnosti</h4>
+<p>Istražujemo jesu li tip sadržaja koji ljudi dijele i društvena mreža koju koriste nezavisni. Anketiramo 200 korisnika i kreiramo kontingencijsku tablicu koja prikazuje frekvencije kombinacija kategorija.</p>
+<p><span class="math display">\[H_0: \text{Tip sadržaja i platforma su nezavisni}\]</span> <span class="math display">\[H_1: \text{Postoji povezanost}\]</span></p>
+<p>Testna statistika je:</p>
+<p><span class="math display">\[\chi^2 = \sum \frac{(O - E)^2}{E}\]</span></p>
+<p>gdje je <span class="math inline">\(O\)</span> opažena frekvencija i <span class="math inline">\(E\)</span> očekivana frekvencija pod pretpostavkom nezavisnosti. Očekivana frekvencija za svaku ćeliju računa se kao:</p>
+<p><span class="math display">\[E_{ij} = \frac{(\text{zbroj retka } i) \times (\text{zbroj stupca } j)}{\text{ukupni N}}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chi-square" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chi-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-chi-square-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chi-square-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Hi-kvadrat test: tip sadržaja po platformi
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rezultati pokazuju značajnu povezanost između tipa sadržaja i platforme, <span class="math inline">\(\chi^2(4) = 16.8\)</span>, <span class="math inline">\(p = 0.002\)</span>. Cramér’s V od 0.20 ukazuje na slab do umjeren efekt. Vizualno možemo vidjeti da Facebook dominira za vijesti, Instagram za zabavni sadržaj, dok osobni sadržaj ima ujednačeniju distribuciju.</p>
+</section>
+<section id="veličina-efekta-cramérs-v" class="level4">
+<h4 class="anchored" data-anchor-id="veličina-efekta-cramérs-v">Veličina efekta – Cramér’s V</h4>
+<p>Za hi-kvadrat test, <strong>Cramér’s V</strong> mjeri snagu povezanosti:</p>
+<p><span class="math display">\[V = \sqrt{\frac{\chi^2}{N \times (k-1)}}\]</span></p>
+<p>gdje je <span class="math inline">\(k\)</span> manji od broja redaka ili stupaca. Interpretacija: <span class="math inline">\(V = 0.1\)</span> (slab efekt), <span class="math inline">\(V = 0.3\)</span> (srednji efekt), <span class="math inline">\(V = 0.5\)</span> (jak efekt). Za tablice 2×2, Cramér’s V je ekvivalentan phi (<span class="math inline">\(\phi\)</span>) koeficijentu.</p>
+</section>
+</section>
+<section id="pearsonova-korelacija" class="level3">
+<h3 class="anchored" data-anchor-id="pearsonova-korelacija">Pearsonova korelacija</h3>
+<p><strong>Pearsonova korelacija</strong> (<span class="math inline">\(r\)</span>) mjeri snagu i smjer <strong>linearne</strong> povezanosti između dvije numeričke varijable. Vrijednosti se kreću od -1 (savršena negativna korelacija) do +1 (savršena pozitivna korelacija), s 0 označavajući nikakvu linearnu povezanost.</p>
+<p>Analiziramo 50 hrvatskih influencera i njihovu Instagram aktivnost. Mjere su broj pratitelja (u tisućama) i prosječan broj lajkova po objavi. Želimo testirati postoji li povezanost između veličine publike i angažmana.</p>
+<p><span class="math display">\[H_0: \rho = 0 \text{ (nema linearne korelacije)}\]</span> <span class="math display">\[H_1: \rho \neq 0\]</span></p>
+<p>gdje je <span class="math inline">\(\rho\)</span> (rho) populacijska korelacija.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-correlation-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Korelacija: broj pratitelja i angažman na Instagramu
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rezultati pokazuju značajnu pozitivnu korelaciju između broja pratitelja i angažmana, <span class="math inline">\(r = 0.65\)</span>, <span class="math inline">\(t(48) = 5.96\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>. Prema konvencionalnoj interpretaciji, ovo je jaka korelacija. Interval pouzdanosti [0.44, 0.79] sugerira da je prava populacijska korelacija vjerojatno u tom rasponu.</p>
+<section id="interpretacija-korelacije" class="level4">
+<h4 class="anchored" data-anchor-id="interpretacija-korelacije">Interpretacija korelacije</h4>
+<div id="tbl-correlation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Smjernice za interpretaciju korelacije
+</figcaption>
+<div aria-describedby="tbl-correlation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Raspon <span class="math inline">\(|r|\)</span></th>
+<th style="text-align: left;">Interpretacija</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0.00 - 0.19</td>
+<td style="text-align: left;">Vrlo slaba ili nikakva</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.20 - 0.39</td>
+<td style="text-align: left;">Slaba</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.40 - 0.59</td>
+<td style="text-align: left;">Umjerena</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.60 - 0.79</td>
+<td style="text-align: left;">Jaka</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.80 - 1.00</td>
+<td style="text-align: left;">Vrlo jaka</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Važno upozorenje: <strong>korelacija ne implicira uzročnost</strong>. Visoka korelacija između broja pratitelja i lajkova može značiti: više pratitelja → više lajkova (izloženost), bolji sadržaj → i više pratitelja i više lajkova (zajednički uzrok), ili čak obrnuto – više lajkova povećava vidljivost → više pratitelja. Za kauzalne zaključke potrebni su eksperimentalni dizajni ili napredne kauzalne metode.</p>
+</section>
+</section>
+</section>
+<section id="regresija-i-interpretacija" class="level2">
+<h2 class="anchored" data-anchor-id="regresija-i-interpretacija">Regresija i interpretacija</h2>
+<section id="jednostavna-linearna-regresija" class="level3">
+<h3 class="anchored" data-anchor-id="jednostavna-linearna-regresija">Jednostavna linearna regresija</h3>
+<p>Dok korelacija mjeri snagu povezanosti, <strong>regresijska analiza</strong> ide korak dalje: omogućuje nam da <strong>predviđamo</strong> vrijednosti jedne varijable na temelju druge i kvantificiramo koliko dobro možemo to učiniti. Regresija je možda najmoćniji i najčešće korišteni alat u društvenim znanostima.</p>
+<p><strong>Jednostavna linearna regresija</strong> modelira odnos između jedne prediktorne varijable (X) i jedne kriterijske varijable (Y) pomoću pravca:</p>
+<p><span class="math display">\[Y = b_0 + b_1 X + \epsilon\]</span></p>
+<p>gdje je <span class="math inline">\(b_0\)</span> odsječak (intercept) – predviđena vrijednost Y kada je X = 0, <span class="math inline">\(b_1\)</span> nagib (slope) – za koliko se Y mijenja kada se X poveća za 1 jedinicu, i <span class="math inline">\(\epsilon\)</span> pogreška (reziduali) – razlika između opaženih i predviđenih vrijednosti.</p>
+<p>Index.hr želi znati može li duljina članka (u riječima) predvidjeti broj komentara. Analiziramo 100 članaka.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-simple-regression" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-simple-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-simple-regression-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simple-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Jednostavna regresija: duljina članka vs.&nbsp;broj komentara
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Regresijska jednadžba: Broj komentara = 10.2 + 0.05 × Duljina. Interpretacija nagiba: za svaku dodatnu riječ, očekujemo 0.05 više komentara, ili ekvivalentno, za svakih 100 riječi duži članak očekujemo 5 dodatnih komentara. <span class="math inline">\(R^2 = 0.35\)</span> znači da duljina članka objašnjava 35% varijabilnosti u broju komentara.</p>
+</section>
+<section id="višestruka-regresija" class="level3">
+<h3 class="anchored" data-anchor-id="višestruka-regresija">Višestruka regresija</h3>
+<p><strong>Višestruka regresija</strong> proširuje jednostavnu regresiju na više prediktora:</p>
+<p><span class="math display">\[Y = b_0 + b_1 X_1 + b_2 X_2 + ... + b_k X_k + \epsilon\]</span></p>
+<p>HRT želi predvidjeti gledanost večernjih vijesti na temelju više faktora: duljine emisije (minute), broja breaking news tema i je li vikend.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-multiple-regression" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multiple-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Statisticki-testovi_files/figure-html/fig-multiple-regression-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multiple-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Višestruka regresija: predviđanje gledanosti
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Regresijska jednadžba: Gledanost = 198 + 3.1 × Duljina + 14.8 × Breaking - 48.5 × Vikend. Interpretacija (sve ostalo jednako): svaka dodatna minuta emisije → +3.100 gledatelja, svaka dodatna breaking news tema → +14.800 gledatelja, vikend vs.&nbsp;radni dan → -48.500 gledatelja. <span class="math inline">\(R^2 = 0.58\)</span> znači da model objašnjava 58% varijabilnosti u gledanosti.</p>
+</section>
+<section id="statistička-vs.-praktična-značajnost" class="level3">
+<h3 class="anchored" data-anchor-id="statistička-vs.-praktična-značajnost">Statistička vs.&nbsp;praktična značajnost</h3>
+<p>Završavamo s najvažnijom lekcijom: razlika između <strong>statističke značajnosti</strong> i <strong>praktične značajnosti</strong>. P-vrijednost govori o statističkoj značajnosti, ali ne o praktičnoj važnosti.</p>
+<p>S dovoljno velikim uzorkom, čak i trivijalni efekti postaju statistički značajni. Istraživač koji testira novi format naslova na 50,000 članaka može otkriti da senzacionalni naslovi povećavaju klikove za 0.8% (<span class="math inline">\(p &lt; 0.001\)</span>). Statistički visoko značajno! Ali praktično beznačajno za uredničku strategiju.</p>
+<p>S druge strane, istraživač koji testira isti format na 100 članaka može otkriti povećanje od 45% (<span class="math inline">\(p = 0.08\)</span>). Nije statistički značajno prema konvencionalnom pragu, ali praktično vrlo važno i zaslužuje daljnje istraživanje.</p>
+<p><strong>Kompletno izvještavanje</strong> uvijek uključuje: p-vrijednost (statistička značajnost), veličinu efekta (praktična značajnost), interval pouzdanosti (preciznost procjene) i kontekst (što brojke znače u stvarnom svijetu).</p>
+<p>Primjer lošeg izvještavanja: “Razlika je bila značajna, <span class="math inline">\(p &lt; 0.05\)</span>.”</p>
+<p>Primjer dobrog izvještavanja: “Senzacionalni naslovi (<span class="math inline">\(M = 850\)</span>, <span class="math inline">\(SD = 220\)</span>) generirali su značajno više klikova od informativnih naslova (<span class="math inline">\(M = 650\)</span>, <span class="math inline">\(SD = 180\)</span>), <span class="math inline">\(t(98) = 4.82\)</span>, <span class="math inline">\(p &lt; 0.001\)</span>, <span class="math inline">\(d = 0.98\)</span>, 95% CI [118, 282]. Ova razlika od približno 200 klikova predstavlja 31% povećanje i ima snažne praktične implikacije za uredničku strategiju portala.”</p>
+<hr>
+</section>
+</section>
+<section id="sažetak-poglavlja" class="level2">
+<h2 class="anchored" data-anchor-id="sažetak-poglavlja">Sažetak poglavlja</h2>
+<p>U ovom poglavlju prošli smo kroz najčešće korištene statističke testove u istraživanju masovne komunikacije. Svaki test ima specifičnu primjenu ovisno o vrsti istraživačkog pitanja i vrsti podataka.</p>
+<p><strong>T-test</strong> koristi se za usporedbu prosjeka:</p>
+<ul>
+<li><strong>Jedan-uzorkovni t-test</strong>: usporedba prosjeka uzorka s poznatom vrijednošću (<span class="math inline">\(t = (\bar{X} - \mu_0) / (s/\sqrt{N})\)</span>)</li>
+<li><strong>Nezavisni t-test</strong>: usporedba prosjeka između dvije nezavisne grupe (Welchova verzija robusnija)</li>
+<li><strong>Zavisni t-test</strong>: usporedba prosjeka za uparene mjere (iste osobe u dva uvjeta)</li>
+<li>Veličina efekta: Cohenov d (mali = 0.2, srednji = 0.5, veliki = 0.8)</li>
+</ul>
+<p><strong>ANOVA</strong> koristi se za usporedbu prosjeka između tri ili više grupa:</p>
+<ul>
+<li>F-omjer uspoređuje varijabilnost između i unutar grupa</li>
+<li>Značajan rezultat indicira da postoji neka razlika, ali ne koja</li>
+<li>Post-hoc testovi (npr. Tukey HSD) identificiraju koji se parovi razlikuju</li>
+<li>Veličina efekta: <span class="math inline">\(\eta^2\)</span> (postotak objašnjene varijance)</li>
+</ul>
+<p><strong>Hi-kvadrat test</strong> koristi se za kategorijske varijable:</p>
+<ul>
+<li>Test nezavisnosti ispituje povezanost između dvije kategorijske varijable</li>
+<li>Uspoređuje opažene i očekivane frekvencije: <span class="math inline">\(\chi^2 = \sum (O-E)^2/E\)</span></li>
+<li>Veličina efekta: Cramér’s V (mali = 0.1, srednji = 0.3, veliki = 0.5)</li>
+</ul>
+<p><strong>Pearsonova korelacija</strong> mjeri snagu linearne povezanosti:</p>
+<ul>
+<li>Vrijednosti od -1 do +1</li>
+<li>Testira se protiv nulte hipoteze <span class="math inline">\(\rho = 0\)</span></li>
+<li>Korelacija ne implicira uzročnost!</li>
+<li>Interpretacija: slaba (&lt;0.4), umjerena (0.4-0.6), jaka (&gt;0.6)</li>
+</ul>
+<p><strong>Regresija</strong> omogućuje predviđanje i objašnjenje:</p>
+<ul>
+<li>Jednostavna regresija: <span class="math inline">\(Y = b_0 + b_1X + \epsilon\)</span></li>
+<li>Višestruka regresija: više prediktora istovremeno</li>
+<li><span class="math inline">\(R^2\)</span> kvantificira postotak objašnjene varijabilnosti</li>
+<li>Koeficijenti (<span class="math inline">\(b\)</span>) interpretiraju se kao promjena u Y za jediničnu promjenu u X</li>
+</ul>
+<p><strong>Izvještavanje rezultata</strong> treba biti kompletno:</p>
+<ul>
+<li>Uvijek navodite deskriptivne statistike (M, SD, N)</li>
+<li>Testna statistika (t, F, <span class="math inline">\(\chi^2\)</span>, r)</li>
+<li>P-vrijednost i veličina efekta</li>
+<li>Intervali pouzdanosti gdje primjereno</li>
+<li>Kontekstualna interpretacija praktične važnosti</li>
+</ul>
+<p>Statistička značajnost (<span class="math inline">\(p &lt; 0.05\)</span>) nije isto što i praktična značajnost. S velikim uzorcima trivijalni efekti postaju “značajni”, dok s malim uzorcima važni efekti mogu ostati “neznačajni”. Uvijek interpretirajte rezultate u kontekstu veličine efekta i praktičnih implikacija za istraživačko područje.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
