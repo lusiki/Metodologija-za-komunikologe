@@ -1,0 +1,168 @@
+---
+title: "Postupak pripreme podataka"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    fig-width: 8
+    fig-height: 5
+    format-links:
+      - pdf
+      - docx
+  pdf:
+    documentclass: article
+    geometry: margin=2.5cm
+    fontsize: 11pt
+    fig-width: 6
+    fig-height: 4
+    keep-tex: false
+    babel-lang: croatian
+  docx:
+    toc: true
+    toc-depth: 2
+    fig-width: 6
+    fig-height: 4
+lang: hr
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+library(dplyr)
+theme_bw_custom <- theme_bw(base_size = 12) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 13),
+    plot.subtitle = element_text(hjust = 0.5, size = 10, color = "gray30"),
+    axis.title = element_text(size = 11),
+    legend.position = "bottom"
+  )
+theme_set(theme_bw_custom)
+set.seed(42)
+```
+
+# Uvod u pripremu podataka
+
+Zamislimo situaciju u kojoj istraživač masovne komunikacije želi analizirati više od pedeset tisuća komentara čitatelja objavljenih ispod članaka vodećih hrvatskih informativnih portala tijekom jedne izborne kampanje. Sirovi tekst koji prikuplja iz digitalnog okruženja predstavlja kaotičan niz znakova, interpunkcijskih oznaka, pogrešno napisanih riječi, emotikona i raznovrsnih tipografskih varijacija. Takav materijal u svom izvornom obliku nije pogodan za sustavnu analizu jer analitičke metode zahtijevaju određenu razinu strukturiranosti i konzistentnosti podataka. **Priprema podataka** stoga predstavlja temeljni korak koji prethodi svakoj računalno potpomognutoj analizi teksta, a njezina kvaliteta izravno određuje valjanost i pouzdanost konačnih rezultata istraživanja.
+
+Proces pripreme podataka obuhvaća niz postupaka kojima se nestrukturirani tekst transformira u oblik prikladan za kvantitativnu obradu. Može se reći da ovaj postupak predstavlja svojevrsni most između sirovog jezičnog materijala i njegova numeričkog prikaza koji omogućuje primjenu statističkih i računalnih metoda. Valja napomenuti da odluke donesene u ovoj fazi imaju dalekosežne posljedice jer svako pojednostavljenje teksta nužno uključuje određeni gubitak informacija. Istraživač stoga mora pažljivo balansirati između potrebe za redukcijom složenosti i očuvanja semantički relevantnih svojstava teksta.
+
+Nadalje, priprema podataka nije neutralan tehnički postupak već epistemološki čin koji odražava teorijske pretpostavke istraživača o prirodi jezika i komunikacije. Kada odlučujemo koje elemente teksta zadržati, a koje odbaciti, implicitno definiramo što smatramo značajnim za naše istraživačko pitanje. Upravo zato je od iznimne važnosti da istraživač razumije logiku svakoga koraka u procesu pripreme te da svoje odluke može argumentirano obrazložiti.
+
+
+## Tokenizacija
+
+Prva i najtemeljnija operacija u pripremi tekstualnih podataka jest **tokenizacija**, postupak raščlanjivanja kontinuiranog niza teksta na diskretne jedinice koje nazivamo **tokenima**. Token predstavlja najmanju jedinicu analize, a ovisno o istraživačkom pitanju može predstavljati pojedinačnu riječ, n-gram, rečenicu ili čak odlomak. U kontekstu istraživanja masovne komunikacije najčešće se kao token koristi pojedinačna riječ budući da riječi predstavljaju temeljne nositelje značenja u jeziku.
+
+Intuitivno se može činiti da je razdvajanje teksta na riječi trivijalan zadatak koji se svodi na prepoznavanje razmaka između riječi. Međutim, stvarna situacija znatno je složenija. Kada istraživač analizira komentare s društvenih mreža, susreće se s izrazima poput "ne-mogu-vjerovati" pisanima spojeno crticama, kraticama poput "dr." ili "tj." koje završavaju točkom koja nije kraj rečenice, emoticijama izraženima interpunkcijom poput ":)" ili "!!!" te nizom drugih graničnih slučajeva koji zahtijevaju jasna pravila razgraničenja.
+
+Formalno gledano, tokenizacija se može definirati kao funkcija koja preslikava niz znakova $S$ u uređenu listu tokena $T = (t_1, t_2, \ldots, t_n)$, pri čemu su tokeni najčešće razgraničeni razmacima i interpunkcijskim znakovima. Proces obično uključuje i dodatne transformacije poput pretvaranja svih znakova u mala slova čime se osigurava da riječi "Politika", "politika" i "POLITIKA" budu prepoznate kao ista jedinica analize. Ova odluka o izjednačavanju velikih i malih slova može imati značajne posljedice za istraživanje jer se u hrvatskom jeziku velika početna slova koriste za označavanje vlastitih imena, početaka rečenica te u pojedinim stilskim konvencijama naslova.
+
+S druge strane, vrsta tokena koju odabiremo izravno utječe na razinu analize i vrstu uvida koje možemo dobiti. Kada analiziramo tekst na razini pojedinačnih riječi, zadržavamo visoku rezoluciju ali gubimo informacije o odnosima između riječi. Upravo zato se u praksi često koriste **n-grami**, odnosno sekvence od $n$ uzastopnih tokena. **Bigram** čini par susjednih riječi, dok **trigram** obuhvaća tri uzastopne riječi. Primjerice, iz rečenice "Vlada najavljuje nove mjere" možemo ekstrahirati bigrame "Vlada najavljuje", "najavljuje nove" i "nove mjere". Takav pristup omogućuje hvatanje kolokacija i frazema koji nose značenje različito od zbroja značenja pojedinačnih riječi, što je osobito važno u analizi političkog diskursa gdje izrazi poput "nacionalni interes", "javni dug" ili "socijalna pravda" funkcioniraju kao stabilne semantičke jedinice.
+
+Za istraživače usmjerene na analizu uokvirivanja ili narativnih struktura može biti korisno provesti tokenizaciju na razini rečenica ili odlomaka. Takva makro-tokenizacija omogućuje analizu teksta na diskursnoj razini te olakšava praćenje razvoja argumentacije ili promjena tema unutar pojedinog dokumenta. Odluka o razini tokenizacije stoga nije tehnička već teorijska jer implicira određeno razumijevanje toga gdje u tekstu treba tražiti značenje.
+
+Tablica 1 ilustrira rezultat tokenizacije kratkog ulomka iz hipotetskog novinarskog teksta.
+
+| Redni broj | Token | Vrsta |
+|:----------:|:------|:------|
+| 1 | predsjednik | imenica |
+| 2 | vlade | imenica |
+| 3 | najavio | glagol |
+| 4 | je | pomoćni glagol |
+| 5 | nove | pridjev |
+| 6 | gospodarske | pridjev |
+| 7 | mjere | imenica |
+
+: Primjer tokenizacije novinarskog teksta
+
+Vidimo da tokenizacija razlaže kontinuirani tekst na diskretne jedinice koje potom možemo brojiti, uspoređivati i statistički obrađivati. Ovaj postupak predstavlja konceptualni temelj za sve daljnje korake u pripremi podataka jer svaka naknadna transformacija operira nad tokenima kao temeljnim jedinicama analize.
+
+
+## Uklanjanje stop-riječi
+
+Nakon što je tekst raščlanjen na tokene, uobičajeni sljedeći korak predstavlja **filtriranje stop-riječi**. Pod stop-riječima podrazumijevamo najčešće riječi u jeziku koje imaju pretežno gramatičku funkciju, a nose malo semantičkog sadržaja relevantnog za većinu analitičkih zadataka. U hrvatskom jeziku to uključuje riječi poput "i", "je", "u", "da", "se", "na", "za", "biti" te brojne druge veznice, prijedloge, zamjenice i pomoćne glagole.
+
+Intuicija koja stoji iza uklanjanja stop-riječi proizlazi iz jednostavne opservacije da su takve riječi ravnomjerno raspoređene kroz sve tekstove neovisno o njihovoj temi ili sadržaju. Kada istraživač želi identificirati ključne teme u korpusu novinskih članaka, činjenica da se riječ "je" pojavljuje stotine puta u svakom članku ne nosi nikakvu diskriminacijsku vrijednost. Naprotiv, takve visokofrekventne riječi mogu zamagliti obrasce koji su stvarno relevantni za razumijevanje sadržaja. Uklanjanje stop-riječi stoga služi povećanju omjera signala i šuma u podacima.
+
+Postupak filtriranja stop-riječi konceptualno je jednostavan te uključuje usporedbu svakoga tokena sa zadanom listom stop-riječi i zadržavanje samo onih tokena koji se na listi ne nalaze. Međutim, odluka o tome koje riječi uključiti u listu stop-riječi daleko je od jednoznačne. Različite preddefinirane liste sadrže različit broj i izbor riječi, a za hrvatski jezik situacija je dodatno komplicirana relativnom oskudnošću standardiziranih resursa. Istraživači često kombiniraju dostupne liste s prilagođenim dodacima specifičnima za kontekst istraživanja.
+
+Valja posebno istaknuti da je odluka o uklanjanju stop-riječi izrazito ovisna o kontekstu istraživanja. Postoje situacije u kojima gramatičke riječi nose značajnu informaciju. Primjerice, u analizi političkog diskursa uporaba zamjenica "mi" nasuprot "oni" može biti ključan indikator konstrukcije grupnog identiteta i retorike podjela. Slično tome, u analizi emocionalnog tona teksta negacije poput "ne" ili "nije" fundamentalno mijenjaju značenje rečenice i njihovo uklanjanje bi rezultiralo potpuno pogrešnom interpretacijom sentimenata. Upravo zato se preporučuje da istraživač pomno razmotri implikacije uklanjanja stop-riječi s obzirom na specifičnosti svoga istraživačkog pitanja.
+
+Posljedično tome, mnogi istraživači pristupaju izradi **prilagođenih lista stop-riječi** koje odgovaraju specifičnostima njihova korpusa i analitičkih ciljeva. Postupak obično započinje preliminarnom analizom frekvencije riječi u korpusu kako bi se identificirale visokofrekventne riječi bez diskriminacijske vrijednosti. Te se riječi potom kritički evaluiraju u kontekstu istraživačkog pitanja te se donosi odluka o njihovu uključivanju u listu. Takav iterativni pristup omogućuje finiju kalibraciju između redukcije šuma i očuvanja relevantnih informacija.
+
+
+## Lematizacija i stemizacija
+
+Flektivna priroda hrvatskog jezika znači da ista riječ može poprimiti brojne oblike ovisno o gramatičkoj kategoriji u kojoj se javlja. Imenica "politika" tako se pojavljuje u oblicima "politike", "politici", "politiku", "politikom", dok glagol "vladati" varira kroz oblike "vlada", "vladaju", "vladao", "vladala", "vladali" i tako dalje. Za računalnu analizu ova morfološka raznolikost predstavlja izazov jer sustav bez dodatne obrade tretira svaki oblik kao zasebnu jedinicu, čime se umjetno povećava dimenzionalnost podataka i smanjuje mogućnost prepoznavanja obrazaca.
+
+**Stemizacija** i **lematizacija** dva su komplementarna pristupa rješavanju ovog problema, pri čemu oba teže svođenju različitih morfoloških varijanti riječi na zajednički korijen. Njihova temeljna logika je intuitivno jasna jer ako znamo da oblici "ekonomija", "ekonomije", "ekonomski" i "ekonomista" dijele zajedničku semantičku jezgru, ima smisla tretirati ih kao manifestacije iste temeljne konceptualne jedinice prilikom analize sadržaja.
+
+**Stemizacija** predstavlja heuristički pristup koji koristi skup pravila za uklanjanje sufiksa i prefiksa s riječi kako bi se dobio korijen ili **stem**. Algoritmi za stemizaciju operiraju isključivo nad oblikom riječi bez obzira na njezino značenje ili gramatičku funkciju u rečenici. Za engleski jezik najpoznatiji je Porterov algoritam koji primjenjuje slijed pravila poput uklanjanja nastavaka "-ing", "-ed", "-ness" i sličnih. Rezultat stemizacije nije nužno valjana riječ u jeziku već apstraktni korijen koji služi kao oznaka klase morfološki srodnih riječi.
+
+S druge strane, **lematizacija** predstavlja lingvistički sofisticiraniji pristup koji svodi riječi na njihov **kanonski oblik** ili **lemu**, odnosno oblik koji bi se pronašao kao natuknica u rječniku. Za imenice to je nominativ jednine, za glagole infinitiv, za pridjeve nominativ jednine muškog roda i tako dalje. Za razliku od stemizacije, lematizacija uzima u obzir kontekst u kojem se riječ javlja i njezinu gramatičku funkciju. Tako će riječ "bolje" biti ispravno svedena na lemu "dobar" kao komparativ pridjeva, dok bi stemizacija vjerojatno proizvela nevaljani korijen poput "bolj".
+
+Razliku između ova dva pristupa možemo ilustrirati konkretnim primjerom. Uzmimo rečenicu "Gospodarski stručnjaci procijenili su gospodarske pokazatelje." Stemizacija bi vjerojatno proizvela korijene "gospodar", "stručnjak", "procijen", "gospodar", "pokazatelj", pri čemu vidimo da su riječi "gospodarski" i "gospodarskim" svedene na isti stem iako predstavljaju različite oblike istog pridjeva. Lematizacija bi pak proizvela leme "gospodarski", "stručnjak", "procijeniti", "gospodarski", "pokazatelj", zadržavajući semantičku preciznost i proizvodeći isključivo valjane riječi hrvatskog jezika.
+
+Odluka između stemizacije i lematizacije ovisi o specifičnostima istraživačkog pitanja i dostupnim resursima. Stemizacija je računalno učinkovitija i ne zahtijeva opsežne lingvističke resurse, što je čini praktičnom za brzu obradu velikih korpusa. Međutim, njezina agresivnost može rezultirati gubitkom semantičkih distinkcija ili, suprotno, neuspjehom u prepoznavanju morfološki nepravilnih oblika. Lematizacija pruža veću preciznost i zadržava semantičku koherentnost, ali zahtijeva sofisticirane lingvističke alate uključujući leksičke baze podataka i sustave za označavanje vrsta riječi. Za hrvatski jezik dostupnost takvih resursa predstavlja značajno ograničenje o čemu će biti riječi u nastavku.
+
+
+## Izazovi hrvatskog jezika
+
+Primjena metoda računalne analize teksta na hrvatski jezik suočava se s nizom specifičnih izazova koji proizlaze iz lingvističkih karakteristika hrvatskog i relativne oskudnosti dostupnih jezičnih resursa. Dok su alati i metode razvijene pretežno za engleski jezik dostigli visoku razinu sofisticiranosti, njihova prilagodba morfološki bogatijim i resursno siromašnijim jezicima poput hrvatskog ostaje aktivan istraživački problem.
+
+**Morfološka složenost** hrvatskog jezika predstavlja fundamentalni izazov. Hrvatski pripada skupini slavenskih jezika s bogatom flektivnom morfologijom, što znači da imenice, pridjevi i zamjenice poznaju sedam padeža u jednini i množini, dok glagoli variraju prema licu, broju, vremenu, načinu i vidu. Posljedica toga je izrazito visok broj različitih oblika koje ista leksička jedinica može poprimiti. Procjenjuje se da prosječna hrvatska imenica ima četrnaest različitih morfoloških realizacija, dok glagoli mogu imati i preko stotinu oblika kada se uključe svi aspekti konjugacije. Ova morfološka raznolikost drastično povećava dimenzionalnost podataka i otežava prepoznavanje obrazaca.
+
+Nadalje, relativno **slobodan redoslijed riječi** u hrvatskom predstavlja dodatnu komplikaciju za metode koje se oslanjaju na sekvencijalne obrasce poput analize n-grama. Dok u engleskom jeziku pozicija riječi unutar rečenice ima snažnu gramatičku funkciju, u hrvatskom se ista informacija kodira morfološkim nastavcima, a redoslijed riječi služi pretežno pragmatičkim i stilskim funkcijama. To znači da ista propozicija može biti izražena na više sintaktički različitih načina, što komplicira usporedbu tekstova i identifikaciju obrazaca.
+
+**Nedostatak lingvističkih resursa** za hrvatski jezik predstavlja praktičnu prepreku implementaciji sofisticiranih metoda analize. Dok za engleski jezik postoje opsežne leksičke baze poput WordNeta, validirani rječnici sentimenata s desecima tisuća označenih riječi te napredni sustavi za morfološku analizu, za hrvatski su takvi resursi znatno oskudniji. Hrvatski WordNet postoji, ali je manjeg opsega od engleskog originala. Rječnici sentimenata za hrvatski razvijaju se u akademskim projektima, no njihova pokrivenost i validacija variraju. Sustavi za lematizaciju hrvatskog teksta postoje, ali njihova preciznost ne doseže razinu dostupnu za engleski.
+
+Problem **višeznačnosti** dodatno komplicira analizu hrvatskog teksta. Mnoge hrvatske riječi imaju višestruka značenja koja ovise o kontekstu, a razlikovanje tih značenja zahtijeva sofisticirane metode dezambiguacije. Primjerice, riječ "vlast" može se odnositi na političku vlast, vlast kao moć ili pak kao dio složenica poput "sudska vlast". Slično tome, riječ "list" može označavati dio biljke, novine ili pak list papira. Bez kontekstualnog razumijevanja automatski sustavi često pogrešno interpretiraju takve riječi.
+
+Specifičnosti **digitalnog registra** hrvatskog jezika dodatno usložnjavaju analizu tekstova s društvenih mreža i komentara na portalima. Korisnici često koriste nestandardne oblike pisanja uključujući ispuštanje dijakritičkih znakova, uporabu engleskih riječi i fraza, regionalizme i žargonizme te razne oblike kreativnog pravopisa. Tekst poput "neznam sta bi reko, bas mi je bed" uključuje više odstupanja od standardnog jezika koja algoritmi pripremljeni za standardni hrvatski neće ispravno obraditi.
+
+Usprkos ovim izazovima, razvoj resursa za hrvatski jezik napreduje. Akademski projekti razvijaju i validiraju nove resurse, a napredak u metodama prijenosa učenja s bogatijih jezika otvara nove mogućnosti. Za istraživača masovne komunikacije ključno je da bude svjestan ovih ograničenja te da ih uzme u obzir prilikom interpretacije rezultata i procjene pouzdanosti svojih zaključaka.
+
+
+## Čišćenje i normalizacija
+
+Sirovi tekst prikupljen iz digitalnih izvora gotovo uvijek sadrži elemente koji nisu relevantni za sadržajnu analizu, a mogu ometati rad analitičkih alata ili iskriviti rezultate. **Čišćenje teksta** obuhvaća skup postupaka kojima se uklanjaju takvi neželjeni elementi i standardizira format podataka. Premda se može činiti tehničkim i rutinskim, ovaj korak zahtijeva pažljivo razmatranje jer svaka odluka o uklanjanju ili transformaciji utječe na konačnu analizu.
+
+**Uklanjanje interpunkcije** jedan je od najčešćih koraka čišćenja. Točke, zarezi, upitnici i drugi interpunkcijski znakovi obično ne nose semantičku informaciju relevantnu za analizu sadržaja te se rutinski uklanjaju. Međutim, postoje konteksti u kojima interpunkcija može biti značajna, primjerice u analizi emocionalnog intenziteta gdje višestruki uskličnici ili upitnici mogu signalizirati pojačanu emocionalnu angažiranost autora. Slično tome, u analizi stila pisanja interpunkcija može biti relevantan indikator. Istraživač stoga mora procijeniti relevantnost interpunkcije za svoje specifično istraživačko pitanje.
+
+**Uklanjanje brojeva** još je jedan uobičajeni postupak čišćenja. Numeričke vrijednosti rijetko su relevantne za tematsku analizu teksta i njihovo zadržavanje može komplicirati daljnju obradu. S druge strane, u određenim kontekstima brojevi mogu nositi značajnu informaciju. U analizi ekonomskog diskursa reference na postotke, iznose ili datume mogu biti ključne za razumijevanje argumentacije. Ponovno, odluka ovisi o specifičnostima istraživanja.
+
+**Normalizacija razmaka** podrazumijeva ujednačavanje razmaka između riječi, uklanjanje višestrukih uzastopnih razmaka te standardizaciju drugih oblika praznog prostora poput tabulatora ili prijeloma redaka. Ovaj korak osigurava konzistentnost formata i olakšava naknadnu obradu.
+
+Tekstovi prikupljeni s interneta često sadrže **HTML oznake, URL adrese i posebne znakove** koji su relevantni za prikaz teksta u pregledniku, ali nemaju sadržajnu vrijednost. Uklanjanje takvih elemenata dio je standardnog protokola čišćenja. Posebnu pažnju zahtijevaju **emotikoni i emojiji** koji su sve prisutniji u tekstovima digitalnih medija. Iako nemaju leksičko značenje u tradicionalnom smislu, emojiji često nose značajnu emocionalnu informaciju i mogu biti relevantni za određene tipove analize poput analize sentimenata.
+
+**Normalizacija kodiranja znakova** tehnički je aspekt koji može uzrokovati značajne probleme ako se previdi. Tekstovi prikupljeni iz različitih izvora mogu koristiti različite standarde kodiranja znakova, što može rezultirati pogrešnim prikazom dijakritičkih znakova tipičnih za hrvatski jezik poput č, ć, đ, š i ž. Ujednačavanje kodiranja na standardni UTF-8 format osigurava ispravnu obradu svih znakova.
+
+**Normalizacija dijakritika** specifičan je izazov za hrvatski jezik. Korisnici digitalnih medija često ispuštaju dijakritičke znakove pišući "zasto" umjesto "zašto" ili "covjek" umjesto "čovjek". Istraživač može odlučiti normalizirati takve oblike na standardnu ortografiju ili pak zadržati nestandardne oblike kao indikator registra ili sociolingvističkih karakteristika autora. Prva opcija pojednostavljuje analizu dok druga zadržava potencijalno relevantnu informaciju.
+
+Postupak čišćenja obično se primjenjuje **prije tokenizacije** kako bi se osiguralo da neželjeni elementi ne utječu na raščlambu teksta na tokene. Međutim, redoslijed koraka može varirati ovisno o specifičnim zahtjevima analize. Ključno je da istraživač dokumentira sve korake čišćenja i normalizacije koje je primijenio kako bi osigurao transparentnost i ponovljivost istraživanja.
+
+Uzevši sve navedeno u obzir, postupak pripreme podataka može se konceptualizirati kao serija transformacija koje sirovi tekst prevode u strukturirani oblik spreman za analizu. Svaki korak uključuje implicitne i eksplicitne odluke o tome što je relevantno za istraživanje, a što predstavlja šum koji treba ukloniti. Kvaliteta pripreme podataka izravno utječe na valjanost rezultata, a transparentnost u dokumentiranju primijenjenih postupaka nužan je preduvjet znanstvene ponovljivosti.
+
+Tablica 2 prikazuje pregled koraka pripreme podataka i njihovih implikacija za analizu.
+
+| Korak | Svrha | Potencijalni gubitak informacija |
+|:------|:------|:---------------------------------|
+| Tokenizacija | Raščlamba teksta na analitičke jedinice | Gubitak informacija o sekvencijalnim odnosima |
+| Uklanjanje stop-riječi | Redukcija šuma i dimenzionalnosti | Gubitak gramatičkih i pragmatičkih signala |
+| Lematizacija/stemizacija | Svođenje na korijenske oblike | Gubitak morfoloških distinkcija |
+| Čišćenje i normalizacija | Standardizacija formata | Gubitak stilističkih i registarskih signala |
+
+: Pregled koraka pripreme podataka i njihovih implikacija
+
+
+## Zaključna razmatranja
+
+Valja zaključiti da je priprema podataka istovremeno tehnički i interpretativni postupak. Tehnička dimenzija odnosi se na praktičnu primjenu algoritama i procedura transformacije teksta, dok se interpretativna dimenzija ogleda u nizu odluka koje istraživač donosi o tome što zadržati, a što ukloniti. Te odluke trebaju biti teorijski utemeljene i dosljedno primijenjene na cijeli korpus, a njihova dokumentacija sastavni je dio metodološke transparentnosti svakog ozbiljnog istraživanja digitalnih medija.

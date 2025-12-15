@@ -1,0 +1,246 @@
+---
+title: "Vrste pristupa analizi teksta"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    fig-width: 8
+    fig-height: 5
+    format-links:
+      - pdf
+      - docx
+  pdf:
+    documentclass: article
+    geometry: margin=2.5cm
+    fontsize: 11pt
+    fig-width: 6
+    fig-height: 4
+    keep-tex: false
+    babel-lang: croatian
+  docx:
+    toc: true
+    toc-depth: 2
+    fig-width: 6
+    fig-height: 4
+lang: hr
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+library(dplyr)
+theme_bw_custom <- theme_bw(base_size = 12) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 13),
+    plot.subtitle = element_text(hjust = 0.5, size = 10, color = "gray30"),
+    axis.title = element_text(size = 11),
+    legend.position = "bottom"
+  )
+theme_set(theme_bw_custom)
+set.seed(42)
+```
+
+# Vrste pristupa analizi teksta
+
+Nakon što smo razmotrili postupke pripreme podataka i metode reprezentacije teksta, dolazimo do ključnog pitanja: kako iz pripremljenih tekstualnih podataka izvući smislene zaključke koji će odgovoriti na naša istraživačka pitanja? Odgovor ovisi o prirodi problema koji želimo riješiti i o vrsti znanja koje želimo generirati. Istraživač masovne komunikacije može biti zainteresiran za automatsku klasifikaciju velikog broja članaka prema temama, za otkrivanje skrivenih tematskih struktura u korpusu, za mjerenje emocionalnog tona medijskog izvještavanja ili za identificiranje ključnih aktera u javnom diskursu. Svaki od ovih zadataka zahtijeva drugačiji analitički pristup, a izbor metode ima dalekosežne implikacije za vrstu uvida koje možemo dobiti.
+
+U ovom poglavlju predstavljamo četiri temeljne vrste pristupa analizi teksta koje se razlikuju prema logici zaključivanja, potrebnim resursima i vrstama pitanja na koja mogu odgovoriti. **Nadzirano strojno učenje** koristi unaprijed označene primjere za treniranje modela koji će klasificirati nove tekstove u poznate kategorije. **Nenadzirano strojno učenje** otkriva latentne strukture u podacima bez prethodnog definiranja kategorija. **Rječnički pristupi** oslanjaju se na unaprijed definirane popise riječi s pridruženim vrijednostima za mjerenje specifičnih dimenzija teksta poput sentimenta. Konačno, **ekstrakcija entiteta** identificira i klasificira imenice koje označavaju konkretne objekte iz stvarnog svijeta poput osoba, organizacija i lokacija.
+
+Svaki od ovih pristupa ima svoje prednosti i ograničenja, a izbor odgovarajuće metode ovisi o specifičnostima istraživačkog pitanja, dostupnim resursima i karakteristikama korpusa. Nije neuobičajeno kombinirati više pristupa u jednoj studiji, primjerice koristiti tematsko modeliranje za eksplorativnu analizu korpusa, a zatim primijeniti nadzirano učenje za preciznu klasifikaciju dokumenata u identificirane kategorije. Također, rezultati jednog pristupa mogu služiti kao ulaz za drugi: ekstrakcija entiteta može identificirati aktere čija se medijska prezentacija zatim analizira pomoću analize sentimenta.
+
+Prije detaljnog razmatranja pojedinačnih pristupa, korisno je razumjeti temeljnu razliku između **konfirmatornih** i **eksploratornih** analiza. Konfirmatorni pristupi polaze od unaprijed definiranih kategorija ili hipoteza i testiraju koliko dobro podaci odgovaraju tim kategorijama. Nadzirano učenje i rječnički pristupi tipično pripadaju ovoj skupini. Eksploratorni pristupi, s druge strane, dopuštaju da strukture proizađu iz samih podataka, bez stroge apriorističke specifikacije. Nenadzirano učenje paradigmatski je primjer eksploratornog pristupa. U praksi, mnoga istraživanja kombiniraju obje perspektive, započinjući eksploracijom kako bi se identificirale relevantne kategorije, a zatim prelaze na konfirmatornu fazu za validaciju i sistematsku analizu.
+
+
+## Nadzirano strojno učenje (klasifikacija)
+
+Zamislimo istraživača koji analizira tisuće komentara objavljenih na društvenim mrežama tijekom predizborne kampanje. Cilj je kategorizirati svaki komentar prema tome podržava li određenog kandidata, kritizira ga ili je neutralan. Ručno kodiranje tolikog broja komentara zahtijevalo bi mjesece rada i značajne financijske resurse. **Nadzirano strojno učenje** nudi alternativu: istraživač ručno kodira relativno mali uzorak komentara, a zatim koristi te označene primjere za treniranje algoritma koji će automatski klasificirati preostale komentare. Na taj način kombiniraju se prednosti ljudske prosudbe s računalnom učinkovitošću.
+
+Termin "nadzirano" odnosi se na činjenicu da algoritam uči iz primjera za koje je poznata točna oznaka ili kategorija. Proces se može konceptualizirati kao učenje iz iskustva uz povratnu informaciju. Algoritam promatra obilježja teksta (primjerice frekvencije riječi, TF-IDF vrijednosti ili druge reprezentacije) zajedno s njihovim kategorijama te pokušava naučiti pravila ili obrasce koji povezuju obilježja s kategorijama. Kada nauči ta pravila, može ih primijeniti na nove, neoznačene tekstove. Analogija s ljudskim učenjem je očigledna: učenik koji vidi mnogo primjera pravilno riješenih matematičkih zadataka nauči prepoznati obrasce i primijeniti ih na nove zadatke.
+
+Formalno, zadatak klasifikacije možemo definirati na sljedeći način. Imamo skup označenih primjera $\{(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)\}$ gdje $x_i$ predstavlja vektorsku reprezentaciju dokumenta (primjerice vektor TF-IDF vrijednosti), a $y_i$ njegovu kategoriju. Cilj je naučiti funkciju $f: X \rightarrow Y$ koja što točnije preslikava dokumente u kategorije. Ova funkcija, koju nazivamo **modelom** ili **klasifikatorom**, zatim se primjenjuje na nove dokumente čija kategorija nije poznata. Kvaliteta modela mjeri se njegovom sposobnošću da točno predvidi kategorije dokumenata koje nije vidio tijekom treniranja.
+
+Ključna distinkcija u nadziranom učenju jest razlika između **klasifikacije** i **regresije**. Kod klasifikacije, ciljna varijabla je kategorička, odnosno želimo predvidjeti pripadnost jednoj od unaprijed definiranih klasa. Primjeri uključuju kategorizaciju članaka prema temama (politika, sport, kultura), određivanje je li recenzija filma pozitivna ili negativna, ili prepoznavanje lažnih vijesti. Kod regresije, ciljna varijabla je kontinuirana numerička vrijednost. Primjerice, možemo pokušati predvidjeti ocjenu kvalitete članka na skali od 1 do 10, procijeniti godinu objave teksta na temelju jezičnih obilježja, ili predvidjeti broj dijeljenja članka na društvenim mrežama. Oba pristupa koriste istu temeljnu logiku učenja iz označenih primjera, ali se razlikuju u prirodi izlazne varijable i metrikama evaluacije.
+
+U praksi analize masovne komunikacije najčešće susrećemo nekoliko tipičnih klasifikacijskih zadataka. **Binarna klasifikacija** dijeli tekstove u dvije kategorije, primjerice relevantno/irelevantno, pozitivno/negativno ili autentično/lažno. Ovaj je tip klasifikacije konceptualno najjednostavniji i često predstavlja polazište za složenije analize. **Višeklasna klasifikacija** razvrstava tekstove u više međusobno isključivih kategorija, poput tematske klasifikacije vijesti u kategorije politike, gospodarstva, sporta, kulture i zabave. Ovdje je svaki dokument dodijeljen točno jednoj kategoriji, a kategorije su međusobno isključive. **Višeoznačna klasifikacija** dopušta da jedan tekst pripada više kategorija istovremeno, što je korisno kada članak može istovremeno pokrivati političku i ekonomsku tematiku, ili kada vijest govori o sportu i o nacionalnom identitetu. Ovaj tip klasifikacije zahtijeva modificirane algoritme i metrike evaluacije.
+
+Postoji niz algoritama koji se koriste za klasifikaciju teksta, a svaki ima svoje karakteristike i područja primjene. **Naivni Bayesov klasifikator** temelji se na Bayesovom teoremu i pretpostavci o nezavisnosti obilježja. Izračunava vjerojatnost da dokument pripada određenoj klasi s obzirom na riječi koje sadrži, primjenjujući formulu uvjetne vjerojatnosti. Unatoč tome što je pretpostavka o nezavisnosti riječi očito pogrešna u prirodnom jeziku (riječi se pojavljuju u značenjskim vezama, a ne nasumično), ovaj algoritam često daje iznenađujuće dobre rezultate za klasifikaciju teksta, posebno kada je dostupan manji broj označenih primjera. Njegova je prednost i računalna učinkovitost te otpornost na prekomjerno prilagođavanje.
+
+**Logistička regresija** modelira vjerojatnost pripadnosti kategoriji kao logističku funkciju linearne kombinacije obilježja. Svaka riječ (obilježje) dobiva težinski koeficijent koji određuje njen doprinos klasifikacijskoj odluci. Prednost logističke regresije je interpretabilnost jer omogućuje uvid u to koje riječi snažnije utječu na klasifikacijsku odluku i u kojem smjeru. Istraživač može pregledati koeficijente i ustanoviti, primjerice, da prisutnost riječi "korupcija" snažno povećava vjerojatnost klasifikacije u kategoriju negativnog izvještavanja o vlasti.
+
+**Strojevi s potpornim vektorima** (Support Vector Machines, SVM) traže optimalnu hiperravninu koja razdvaja klase u višedimenzionalnom prostoru obilježja. Cilj je pronaći granicu odlučivanja koja maksimizira marginu između najbližih točaka različitih klasa, takozvanih potpornih vektora. SVM algoritmi pokazali su se posebno učinkovitima za tekstualne podatke visoke dimenzionalnosti jer dobro generaliziraju čak i kada broj obilježja (riječi) premašuje broj dokumenata. Linearni SVM-ovi često postižu izvrsne rezultate bez potrebe za kompleksnim podešavanjem hiperparametara.
+
+**Regularizirana linearna regresija** dodaje kazneni član koji sprječava prekomjerno prilagođavanje modela podacima za treniranje. Dvije najčešće vrste regularizacije su L1 (lasso) koja potiče rijetke modele gdje mnogi koeficijenti postaju točno nula, i L2 (ridge) koja smanjuje magnitude svih koeficijenata. Za tekstualne podatke, L1 regularizacija je posebno korisna jer automatski vrši selekciju obilježja, identificirajući podskup riječi koje su najinformativnije za klasifikaciju. To je ključno kod tekstualnih podataka gdje broj obilježja (riječi) često premašuje broj dokumenata.
+
+Evaluacija klasifikacijskih modela zahtijeva pažljivu metodologiju. Temeljni princip jest da model moramo evaluirati na podacima koje nije vidio tijekom treniranja. Ovo je ključno jer nas zanima koliko dobro model generalizira na nove primjere, a ne koliko dobro pamti primjere za treniranje. Zato se dostupni označeni podaci dijele na **skup za treniranje** i **testni skup**. Model se trenira isključivo na skupu za treniranje, a njegova se uspješnost mjeri na testnom skupu. Tipična podjela je 80% za treniranje i 20% za testiranje, iako se omjer može prilagoditi ovisno o količini dostupnih podataka.
+
+Za robusniju procjenu koristi se **unakrsna validacija** (cross-validation) gdje se podaci višestruko dijele na različite kombinacije skupova za treniranje i testiranje. Najčešći pristup je k-struka unakrsna validacija gdje se podaci dijele na k jednakih dijelova. Model se trenira k puta, svaki put koristeći k-1 dijelova za treniranje i preostali dio za testiranje. Konačna procjena uspješnosti je prosjek rezultata preko svih k iteracija. Ovaj pristup pruža stabilniju procjenu jer smanjuje ovisnost o konkretnoj podjeli podataka.
+
+Standardne mjere uspješnosti klasifikacije uključuju **točnost** (accuracy) koja mjeri udio ispravno klasificiranih primjera u ukupnom broju primjera. Međutim, točnost može biti varljiva kod neuravnoteženih klasa. Zato se koristi **preciznost** (precision) koja mjeri udio stvarno pozitivnih primjera među onima koje je model proglasio pozitivnima, te **odziv** (recall) koji mjeri udio ispravno identificiranih pozitivnih primjera među svim stvarno pozitivnim primjerima. **F1 mjera** predstavlja harmonijsku sredinu preciznosti i odziva, pružajući balansiranu ocjenu uspješnosti. Izbor odgovarajuće mjere ovisi o specifičnostima problema i relativnim troškovima različitih vrsta pogrešaka.
+
+Za rijetke kategorije, poput detekcije govora mržnje koji čini mali postotak ukupnog sadržaja, sama točnost može biti varljiva jer bi model koji sve klasificira kao "nije govor mržnje" imao visoku točnost (primjerice 98% ako govor mržnje čini samo 2% sadržaja), ali bi bio potpuno beskoristan za stvarnu primjenu. U takvim situacijama odziv postaje kritična metrika jer nas zanima koliko primjera govora mržnje uspijemo identificirati. S druge strane, ako su posljedice lažno pozitivne klasifikacije ozbiljne (primjerice nepravedno označavanje legitimnog sadržaja kao problematičnog), preciznost dobiva na važnosti.
+
+| Mjera | Formula | Interpretacija |
+|:------|:--------|:---------------|
+| Točnost | $(TP + TN) / (TP + TN + FP + FN)$ | Udio svih ispravnih predikcija |
+| Preciznost | $TP / (TP + FP)$ | Pouzdanost pozitivnih predikcija |
+| Odziv | $TP / (TP + FN)$ | Obuhvat stvarno pozitivnih primjera |
+| F1 mjera | $2 \times (Preciznost \times Odziv) / (Preciznost + Odziv)$ | Balans preciznosti i odziva |
+
+: Standardne mjere evaluacije klasifikacijskih modela (TP = istinito pozitivni, TN = istinito negativni, FP = lažno pozitivni, FN = lažno negativni)
+
+Za istraživača masovne komunikacije nadzirano strojno učenje predstavlja moćan alat za skaliranje analiza na korpuse koji bi bili preveliki za ručno kodiranje. Tipičan radni tijek uključuje pažljivo definiranje kategorija, izradu jasnih smjernica za kodiranje, ručno označavanje reprezentativnog uzorka (obično nekoliko stotina do nekoliko tisuća primjera), treniranje i evaluaciju modela, te konačnu primjenu na cjelokupni korpus. Međutim, valja imati na umu da kvaliteta modela izravno ovisi o kvaliteti označenih podataka. Nepouzdano ili nekonzistentno ručno kodiranje rezultirat će modelom koji reproducira te pogreške. Preporučuje se angažirati više kodera i mjeriti međukodersku pouzdanost prije treniranja modela.
+
+Također, model može naučiti obrasce specifične za korpus na kojem je treniran, što ograničava njegovu primjenjivost na tekstove iz drugih izvora ili vremenskih razdoblja. Primjerice, model treniran na člancima iz 2015. godine možda neće dobro funkcionirati na člancima iz 2023. godine jer se jezični obrasci, aktualne teme i stilovi izvještavanja mijenjaju. Ovo se naziva **temporalnom degradacijom** modela i zahtijeva periodičko ponovno treniranje ili barem evaluaciju na novijim podacima.
+
+
+## Nenadzirano strojno učenje (tematsko modeliranje)
+
+Pretpostavimo da je istraživač prikupio opsežan korpus javnih govora hrvatskih političara iz posljednjih dvadeset godina. Za razliku od prethodnog scenarija, ovdje nema unaprijed definiranih kategorija u koje bi trebalo razvrstati govore. Umjesto toga, istraživač želi otkriti koje teme dominiraju političkim diskursom, kako se te teme mijenjaju kroz vrijeme i postoje li razlike u tematskim prioritetima između različitih političkih opcija. Za ovakve eksplorativne analize koristi se **nenadzirano strojno učenje**.
+
+Termin "nenadzirano" označava da algoritam nema pristup unaprijed označenim primjerima iz kojih bi učio. Umjesto toga, algoritam sam otkriva strukture i obrasce u podacima. Možemo to zamisliti kao automatsko grupiranje sličnih dokumenata ili identificiranje skupina riječi koje se često pojavljuju zajedno. Rezultat nije unaprijed određen, već proizlazi iz statističkih pravilnosti u samim podacima. To čini nenadzirano učenje idealnim za eksplorativne analize gdje istraživač želi pustiti da podaci "govore sami za sebe", bez nametanja apriorističkih kategorija.
+
+**Tematsko modeliranje** predstavlja najvažniju tehniku nenadziranog učenja za analizu teksta. Cilj je otkriti latentne teme koje prožimaju korpus dokumenata. Svaka tema konceptualizira se kao distribucija vjerojatnosti nad riječima, dok se svaki dokument konceptualizira kao mješavina tema. Primjerice, u korpusu novinskih članaka jedna tema mogla bi biti definirana visokim vjerojatnostima riječi poput "utakmica", "gol", "prvak", "reprezentacija", što bi sugeriralo sportsku tematiku. Druga tema mogla bi biti karakterizirana riječima "proračun", "deficit", "porez", "reforma", ukazujući na ekonomsku tematiku. Treća tema mogla bi uključivati "film", "redatelj", "glumac", "festival", sugerirajući kulturnu tematiku.
+
+Najpoznatiji algoritam za tematsko modeliranje jest **Latentna Dirichletova alokacija** (LDA), koju su 2003. godine predstavili David Blei, Andrew Ng i Michael Jordan. LDA je generativni probabilistički model koji pretpostavlja sljedeći proces nastanka dokumenata. Za svaku temu u korpusu postoji distribucija vjerojatnosti nad svim riječima u vokabularu, koju označavamo s $\phi_k$ za temu $k$. Za svaki dokument postoji distribucija vjerojatnosti nad temama, označena s $\theta_d$ za dokument $d$, odnosno omjer u kojem dokument "sadrži" pojedine teme. Prilikom "generiranja" svake riječi u dokumentu, prvo se odabire tema prema distribuciji tema za taj dokument, a zatim se iz te teme odabire konkretna riječ prema distribuciji riječi za tu temu.
+
+Naravno, u praksi mi ne generiramo dokumente nego ih analiziramo. Algoritam LDA radi obrnutim putem: na temelju opaženih dokumenata zaključuje o latentnim temama i distribucijama. Ovo se naziva **inverzni problem** ili **statistička inferencija**. Koriste se tehnike poput Gibbsovog uzorkovanja ili varijacijske Bayesove aproksimacije za procjenu parametara modela. Ove tehnike iterativno prilagođavaju procjene distribucija kako bi maksimalno povećale vjerojatnost opaženih podataka. Rezultat analize su dvije ključne strukture: **matrica tema-riječi** ($\Phi$) koja za svaku temu pokazuje vjerojatnosti pojedinih riječi, i **matrica dokument-tema** ($\Theta$) koja za svaki dokument pokazuje proporcije pojedinih tema.
+
+Matematički, LDA pretpostavlja da su distribucije $\theta_d$ generirane iz Dirichletove distribucije s parametrom $\alpha$, a distribucije $\phi_k$ iz Dirichletove distribucije s parametrom $\beta$. Dirichletova distribucija je distribucija nad distribucijama, odnosno generira vektore koji se zbrajaju u 1 i mogu se interpretirati kao vjerojatnosti. Parametri $\alpha$ i $\beta$ kontroliraju "koncentraciju" distribucija: niže vrijednosti potiču rjeđe distribucije gdje dominiraju samo neke teme ili riječi, dok više vrijednosti vode ravnomjernijim distribucijama.
+
+Interpretacija rezultata tematskog modeliranja zahtijeva kvalitativnu ekspertizu istraživača. Algoritam producira skupine riječi, ali ne daje imena temama. Istraživač mora pregledati najvjerojatnije riječi za svaku temu i, oslanjajući se na poznavanje domene, dodijeliti interpretativne oznake. Primjerice, ako tema ima visoke vjerojatnosti za riječi "europska", "unija", "pristupanje", "kriteriji", "pregovori", istraživač bi je mogao nazvati "Europske integracije". Ova interpretativna dimenzija unosi element subjektivnosti u inače statistički postupak. Preporučuje se uključiti više analitičara u proces interpretacije i provjeriti međusobno slaganje oko značenja tema.
+
+Važan metodološki izazov predstavlja određivanje broja tema. Za razliku od klasifikacije gdje je broj kategorija unaprijed zadan, kod tematskog modeliranja istraživač mora odrediti parametar $k$ koji specificira koliko tema algoritam treba otkriti. Premalen broj tema rezultira preširokim, heterogenim skupinama koje miješaju konceptualno različite sadržaje. Prevelik broj proizvodi fragmentirane, teško interpretabilne teme koje razbijaju koherentne koncepte na proizvoljne dijelove. Postoje statističke mjere poput **koherentnosti tema** (topic coherence) koje kvantificiraju koliko su riječi unutar teme semantički povezane, te **perpleksnost** (perplexity) koja mjeri koliko dobro model predviđa nove dokumente. Međutim, statistički optimalna rješenja ne moraju uvijek biti interpretativno najsmislenija, pa konačna odluka često uključuje kvalitativnu procjenu interpretabilnosti rezultata.
+
+U praksi se preporučuje isprobati više vrijednosti $k$ (primjerice 5, 10, 15, 20, 30) i za svaku verziju pregledati rezultirajuće teme. Dobra praksa je izraditi vizualizacije najvjerojatnijih riječi za svaku temu i primjere dokumenata s visokim proporcijama za pojedine teme. Na temelju toga istraživač može procijeniti koja verzija nudi najinterpretabilnije i najkorisnije teme za istraživačke ciljeve.
+
+U kontekstu istraživanja masovne komunikacije tematsko modeliranje omogućuje niz analitičkih pristupa. **Longitudinalna analiza** može pratiti kako se prominentnost pojedinih tema mijenja kroz vrijeme, primjerice kako ekonomska tematika dobiva na važnosti tijekom recesije ili kako sigurnosne teme rastu nakon terorističkih napada. Graf koji prikazuje udio pojedinih tema kroz vrijeme može otkriti ciklične obrasce ili strukturne pomake u medijskoj agendi. **Komparativna analiza** može uspoređivati tematske profile različitih medija, otkrivajući koji mediji posvećuju više prostora određenim temama. Primjerice, analiza može pokazati da komercijalni mediji više naglašavaju kriminalnu kroniku dok javni mediji više pokrivaju političke procese. **Analiza agenda-settinga** može korelirati tematsku strukturu medijskih sadržaja s javnomnijenjskim istraživanjima, testirajući hipoteze o utjecaju medija na percepciju važnosti pojedinih tema.
+
+Tablica 1 prikazuje hipotetski primjer rezultata LDA analize za korpus političkih govora s pet tema.
+
+| Tema | Najvjerojatnije riječi | Interpretacija |
+|:-----|:-----------------------|:---------------|
+| Tema 1 | radna, mjesta, zapošljavanje, poticaji, gospodarstvo, tvrtke, investicije, plaće | Ekonomija i zapošljavanje |
+| Tema 2 | škole, obrazovanje, studenti, nastavnici, reforma, kvaliteta, kurikulum, diploma | Obrazovna politika |
+| Tema 3 | europska, unija, fondovi, projekti, suradnja, partnerstvo, bruxelles, integracija | EU integracije |
+| Tema 4 | sigurnost, obrana, vojska, granice, NATO, zaštita, prijetnje, stabilnost | Nacionalna sigurnost |
+| Tema 5 | zdravstvo, bolnice, liječnici, pacijenti, lijekovi, skrb, osiguranje, prevencija | Zdravstvena politika |
+
+: Hipotetski rezultat LDA analize političkih govora s pet tema
+
+Valja napomenuti da tematsko modeliranje ima i svoja ograničenja koja istraživač mora uzeti u obzir. Model pretpostavlja da se teme mogu razdvojiti na temelju supojavljivanja riječi, što ne mora uvijek odgovarati konceptualnim kategorijama koje bi ljudski analitičar prepoznao. Primjerice, LDA može spojiti teme koje su konceptualno različite ali dijele vokabular, ili razdvojiti jednu koherentnu temu na više fragmenata. Kratki tekstovi poput tvitova često ne sadrže dovoljno riječi za pouzdanu procjenu tematske distribucije, što motivira razvoj modificiranih algoritama poput Biterm Topic Modela. Također, standardni LDA ne uzima u obzir redoslijed riječi niti sintaktičke odnose, tretirajući dokument kao vreću riječi. Naprednije varijante poput Structural Topic Modela (STM) omogućuju uključivanje metapodataka kao kovarijata koje utječu na tematsku strukturu.
+
+
+## Rječnički pristupi (analiza sentimenta)
+
+Pretpostavimo da istraživač želi izmjeriti kako se emocionalni ton medijskog izvještavanja o određenoj temi mijenjao tijekom vremena. Je li izvještavanje o pristupanju Europskoj uniji bilo optimističnije u godinama neposredno prije ulaska nego danas? Pokazuju li tabloidni mediji negativniji ton u političkom izvještavanju od ozbiljnih dnevnika? Razlikuje li se emocionalni naboj komentara čitatelja ovisno o temi članka? Za odgovore na ovakva pitanja koriste se **rječnički pristupi**, koji se oslanjaju na unaprijed definirane popise riječi s pridruženim vrijednostima.
+
+Osnovna logika rječničkih pristupa je jednostavna i intuitivna. Polazimo od pretpostavke da određene riječi nose inherentno pozitivnu ili negativnu konotaciju. Riječi poput "uspjeh", "napredak", "poboljšanje", "pobjeda" tipično se percipiraju kao pozitivne, dok riječi poput "kriza", "pad", "neuspjeh", "katastrofa" nose negativne konotacije. Ako prebrojimo koliko pozitivnih i negativnih riječi sadrži tekst, možemo izračunati njegov ukupni sentiment kao razliku ili omjer. Ovaj pristup ima dugu tradiciju u psihologiji i lingvistici, a s razvojem računalne obrade teksta postao je primjenjiv na velike korpuse.
+
+**Sentimentni rječnici** ili leksikoni predstavljaju ključni resurs za ovaj pristup. Radi se o popisima riječi kojima su pridružene vrijednosti sentimenta. Različiti leksikoni koriste različite načine kodiranja. Neki koriste binarnu klasifikaciju gdje je svaka riječ označena kao pozitivna ili negativna bez dodatnih nijansi. Drugi koriste numeričke skale, primjerice od -5 za izrazito negativne riječi do +5 za izrazito pozitivne, omogućujući razlikovanje intenziteta. Postoje i leksikoni koji kodiraju specifične emocije poput ljutnje, straha, radosti i tuge, pružajući bogatiju sliku emocionalnog sadržaja teksta.
+
+Među najpoznatije engleske sentimentne leksikone ubrajaju se sljedeći. **AFINN** leksikon sadrži oko 2.500 riječi kojima su pridružene vrijednosti na skali od -5 do +5, pri čemu negativne vrijednosti označavaju negativan sentiment, a pozitivne pozitivan. Primjerice, riječ "outstanding" ima vrijednost +5, "good" ima +3, "neutral" ima 0, "bad" ima -3, dok "terrible" ima vrijednost -4. Ovaj leksikon razvio je Finn Årup Nielsen i posebno je koristan za analizu tekstova s društvenih mreža.
+
+**Bing** leksikon, nazvan po Bing Liu koji ga je razvio, kategorizira oko 6.800 riječi u dvije klase: pozitivne i negativne, bez numeričkih vrijednosti intenziteta. Ovaj leksikon je jednostavniji za primjenu i interpretaciju, ali ne razlikuje nijanse intenziteta. Primjerice, "excellent" i "good" obje su označene samo kao pozitivne, bez razlikovanja stupnja.
+
+**NRC** leksikon (National Research Council Canada) osim pozitivnog i negativnog sentimenta kodira osam dodatnih emocija: ljutnju (anger), iščekivanje (anticipation), gađenje (disgust), strah (fear), radost (joy), tugu (sadness), iznenađenje (surprise) i povjerenje (trust). Svaka riječ može biti označena za više emocija istovremeno. Primjerice, riječ "death" može biti označena kao negativna, tužna i strah-izazivajuća. Ovaj leksikon omogućuje finije analize emocionalnog sadržaja teksta.
+
+Postupak analize sentimenta korištenjem rječnika sastoji se od nekoliko koraka. Prvo se tekst tokenizira u pojedinačne riječi, primjenjujući postupke pripreme opisane u ranijim poglavljima. Zatim se svaka riječ uspoređuje s rječnikom i, ako se nalazi u rječniku, preuzima se njezina sentimentna vrijednost. Riječi koje nisu u rječniku (a to je većina riječi u tipičnom tekstu) tretiraju se kao neutralne i ne doprinose ukupnom sentimentu. Konačno, agregiraju se vrijednosti za sve riječi u dokumentu kako bi se dobila ukupna mjera sentimenta. Agregacija može biti jednostavan zbroj, prosjek ili omjer pozitivnih i negativnih riječi.
+
+Formalno, ako dokument $d$ sadrži $n$ riječi i koristimo leksikon koji svakoj riječi $w$ pridružuje vrijednost $s(w)$, ukupni sentiment dokumenta može se izračunati kao:
+
+$$Sentiment(d) = \sum_{w \in d} s(w)$$
+
+ili kao normalizirana vrijednost koja uzima u obzir duljinu dokumenta:
+
+$$Sentiment_{norm}(d) = \frac{\sum_{w \in d} s(w)}{|d|}$$
+
+gdje $|d|$ označava broj riječi u dokumentu. Normalizacija je važna kada uspoređujemo dokumente različitih duljina, jer duži dokumenti prirodno sadrže više sentimentnih riječi.
+
+Alternativno, možemo izračunati sentiment kao razliku proporcija:
+
+$$Sentiment_{prop}(d) = \frac{N_{poz} - N_{neg}}{N_{poz} + N_{neg}}$$
+
+gdje $N_{poz}$ i $N_{neg}$ označavaju broj pozitivnih odnosno negativnih riječi u dokumentu. Ova mjera kreće se od -1 (sav sentiment je negativan) do +1 (sav sentiment je pozitivan).
+
+Rječnički pristupi imaju nekoliko važnih prednosti. Prije svega, **transparentni su i interpretabilni**. Istraživač točno zna koje riječi doprinose izračunatom sentimentu i može provjeriti ima li to smisla u kontekstu. Ako rezultat izgleda čudno, može se pregledati koje su konkretne riječi označene kao pozitivne ili negativne i procijeniti je li to opravdano. Drugo, **ne zahtijevaju označene podatke za treniranje**, što ih čini primjenjivima i kada nisu dostupni resursi za ručno kodiranje. Treće, **rezultati su konzistentni i reproducibilni** jer isti tekst uvijek dobiva istu vrijednost sentimenta kada se koristi isti rječnik.
+
+Međutim, postoje i značajna ograničenja koja istraživač mora uzeti u obzir. **Kontekstualna ovisnost značenja** predstavlja temeljni problem. Riječ "jeftin" ima pozitivnu konotaciju kada opisuje cijene ("jeftino putovanje"), ali negativnu kada opisuje kvalitetu ("jeftina taktika"). Riječ "agresivan" je negativna u kontekstu međuljudskih odnosa ("agresivno ponašanje"), ali može biti pozitivna u kontekstu poslovne strategije ("agresivan marketing"). Riječ "kritičan" može značiti "vrlo važan" (pozitivno) ili "sklon kritiziranju" (neutralno do negativno). Rječnici ne mogu uhvatiti ove nijanse jer pridružuju fiksne vrijednosti riječima bez obzira na kontekst.
+
+**Negacije** predstavljaju drugi značajan izazov. Fraza "nije loše" ima pozitivno značenje premda sadrži negativnu riječ "loše". "Nikad nisam bio sretniji" izražava intenzivnu pozitivnu emociju unatoč prisutnosti negacije. Jednostavni rječnički pristup koji broji riječi ne može prepoznati da negacija invertira sentiment. Sofisticiraniji pristupi pokušavaju detektirati negacije i modificirati sentiment susjednih riječi (primjerice invertirati predznak za nekoliko riječi nakon negacije), ali to značajno povećava složenost analize i ne funkcionira savršeno.
+
+**Sarkazam i ironija** predstavljaju posebno težak problem. Rečenica "Baš sjajan dan, kiša pada, tramvaj kasni, šef viče" koristi pozitivnu riječ "sjajan" u izrazito negativnom kontekstu. Rječnički pristup označit će "sjajan" kao pozitivan, potpuno promašujući stvarni sentiment. Prepoznavanje sarkazma zahtijeva razumijevanje konteksta, očekivanja i nepodudarnosti između izrečenog i očekivanog, što je izvan mogućnosti jednostavnih rječničkih pristupa.
+
+**Problem domenske specifičnosti** odnosi se na činjenicu da sentimentna konotacija riječi ovisi o kontekstu domene. U financijskom izvještavanju riječ "volatilnost" tipično ima negativnu konotaciju jer sugerira nestabilnost i rizik. U glazbenoj kritici "glasan" može biti pozitivno ili negativno ovisno o žanru. U medicinskim tekstovima "agresivan" često ima pozitivnu konotaciju kada opisuje liječenje tumora. Rječnici razvijeni za opći jezik možda neće adekvatno funkcionirati u specifičnim domenama, što motivira razvoj domenski specifičnih leksikona za financije, zdravstvo, politiku i druge domene.
+
+Za hrvatski jezik situacija je dodatno kompliciranija zbog oskudice resursa. Dok za engleski postoje višestruki validirani sentimentni leksikoni s desetinama tisuća riječi, za hrvatski je dostupnost znatno manja. Istraživači često pribjegavaju prevođenju engleskih leksikona, što unosi dodatne izvore pogreške jer se sentimentne konotacije ne prevode uvijek izravno. Primjerice, engleski "blue" ima negativnu konotaciju (osjećati se blue = tužno), dok hrvatski "plav" nema tu konotaciju. Morfološko bogatstvo hrvatskog jezika također zahtijeva da leksikon sadrži sve oblike riječi (svih sedam padeža za pridjeve, sve glagolske oblike) ili da se tekstovi prethodno lematiziraju kako bi se sveli na osnovne oblike.
+
+| Leksikon | Broj riječi | Tip kodiranja | Primjer |
+|:---------|:------------|:--------------|:--------|
+| AFINN | ~2.500 | Numerička skala (-5 do +5) | "outstanding" = +5, "terrible" = -4 |
+| Bing | ~6.800 | Binarna klasifikacija | "excellent" = pozitivno, "awful" = negativno |
+| NRC | ~14.000 | Emocije + polaritet | "death" = negativno, strah, tuga |
+
+: Usporedba najčešće korištenih engleskih sentimentnih leksikona
+
+Unatoč ograničenjima, rječnički pristupi ostaju vrijedan alat za eksplorativnu analizu velikih korpusa i za generiranje grubih mjera sentimenta koje mogu poslužiti kao polazište za dublje kvalitativne analize. Posebno su korisni za longitudinalne analize gdje nas zanima opći trend kroz vrijeme, a ne precizna procjena sentimenta pojedinog dokumenta. Agregacijom preko velikog broja dokumenata, nasumične pogreške na razini pojedinačnih tekstova tendiraju se međusobno poništiti.
+
+
+## Ekstrakcija entiteta (NER)
+
+U analizi medijskog sadržaja često nas zanima ne samo što mediji govore, nego i o kome govore. Koji se politički akteri najčešće spominju? Koje organizacije dominiraju ekonomskim vijestima? Koje lokacije su u fokusu međunarodnog izvještavanja? Koji se datumi i događaji ističu? **Prepoznavanje imenovanih entiteta** (engl. *Named Entity Recognition*, skraćeno NER) predstavlja tehniku koja automatski identificira i klasificira imenice koje označavaju konkretne objekte iz stvarnog svijeta.
+
+Imenovani entiteti obuhvaćaju riječi ili fraze koje se odnose na jedinstvene objekte koji imaju vlastita imena. Filozofski gledano, radi se o "rigidnim designatorima" kako ih je definirao Saul Kripke - izrazima koji označavaju isti objekt u svim mogućim svjetovima. Tipične kategorije uključuju **osobe** (imena pojedinaca poput "Andrej Plenković", "Angela Merkel" ili "Luka Modrić"), **organizacije** (poput "Vlada Republike Hrvatske", "Europska unija", "Zagrebački holding" ili "HNK Hajduk"), **lokacije** (geografske lokacije poput "Zagreb", "Jadransko more", "Bruxelles" ili "Bliski istok"), **vremenske oznake** (poput "siječanj 2024.", "prošli tjedan" ili "Drugi svjetski rat") te **novčane vrijednosti** (poput "5 milijuna eura" ili "100 kuna"). Različiti sustavi koriste različite skupove kategorija ovisno o domeni primjene; primjerice, biomedicinski NER sustavi prepoznaju nazive lijekova, bolesti i gena.
+
+Proces prepoznavanja entiteta konceptualno se sastoji od dvije faze. **Detekcija entiteta** identificira dijelove teksta koji predstavljaju imenice, razlikujući ih od općih imenica i drugih vrsta riječi. Ključan je izazov prepoznati granice entiteta, primjerice utvrditi da "Republika Hrvatska" čini jedan entitet, a ne dva odvojena. **Klasifikacija entiteta** zatim svakom detektiranom entitetu pridružuje kategoriju iz unaprijed definiranog skupa. U praksi ove se faze često izvode istovremeno pomoću sekvencijalnih modela koji svakom tokenu u tekstu pridružuju oznaku.
+
+Za označavanje entiteta koriste se standardizirane sheme poput **BIO notacije** (Begin-Inside-Outside). U ovoj notaciji svaki token dobiva oznaku koja kombinira poziciju u entitetu i kategoriju entiteta. Token koji započinje entitet osobe označava se s "B-PER", tokeni koji nastavljaju taj entitet označavaju se s "I-PER", dok tokeni koji nisu dio nijednog entiteta dobivaju oznaku "O". Postoji i proširena **BIOES notacija** koja dodatno razlikuje tokene koji sami čine cijeli entitet (S - Single) i tokene koji završavaju entitet (E - End), što može poboljšati preciznost za neke algoritme.
+
+Primjerice, u rečenici "Predsjednik Zoran Milanović posjetio je Zagreb", tokeni bi bili označeni kao: "Predsjednik" (O), "Zoran" (B-PER), "Milanović" (I-PER), "posjetio" (O), "je" (O), "Zagreb" (B-LOC). Kompleksniji primjer: "Ministarstvo vanjskih i europskih poslova Republike Hrvatske" bio bi označen kao: "Ministarstvo" (B-ORG), "vanjskih" (I-ORG), "i" (I-ORG), "europskih" (I-ORG), "poslova" (I-ORG), "Republike" (I-ORG), "Hrvatske" (I-ORG).
+
+Tehnike prepoznavanja entiteta razvijale su se kroz nekoliko generacija. **Pristupi temeljeni na pravilima** koriste ručno definirane obrasce i gramatička pravila za identifikaciju entiteta. Primjerice, pravilo može specificirati da riječ koja počinje velikim slovom nakon titule poput "gospodin", "predsjednik" ili "ministrica" vjerojatno predstavlja ime osobe. Drugi primjer: slijed od dva do tri riječi koje počinju velikim slovom, gdje prva može biti uobičajeno ime (iz liste imena), vjerojatno je ime osobe. Ovakvi pristupi postižu visoku preciznost za jasno definirane obrasce, ali imaju ograničen odziv jer ne mogu pokriti sve načine na koje se entiteti pojavljuju u tekstu. Također zahtijevaju značajan ekspertni rad za izradu pravila.
+
+**Statistički pristupi** koriste algoritme strojnog učenja trenirane na označenim podacima. Modeli poput uvjetnih nasumičnih polja (Conditional Random Fields, CRF) pokazali su se posebno učinkovitima jer mogu modelirati zavisnosti između susjednih oznaka. Primjerice, ako je prethodni token označen kao početak imena osobe (B-PER), vjerojatnost da sljedeći token nastavlja to ime (I-PER) je veća nego da započinje novi entitet. CRF modeli koriste razna obilježja tokena: sam token, njegova mala/velika slova, sufiks, je li u rječniku imena, obilježja susjednih tokena itd.
+
+Suvremeni sustavi za prepoznavanje entiteta uglavnom se temelje na **dubokom učenju** i neuronskim mrežama. Posebno su uspješne arhitekture temeljene na **transformerima** i prethodno trenirani jezični modeli poput BERT-a, koji postižu iznimne rezultate jer mogu uhvatiti složene kontekstualne ovisnosti. Ovi modeli mogu naučiti da "Apple" u kontekstu "Apple je objavio nove iPhone uređaje" označava organizaciju, dok u kontekstu "Pojeo sam jabuku" (eng. "I ate an apple") označava voće. Prethodno treniranje na velikim korpusima teksta omogućuje modelu da nauči opće jezične obrasce, a fino podešavanje na označenim NER podacima specijalizira ga za prepoznavanje entiteta.
+
+Za istraživanje masovne komunikacije ekstrakcija entiteta otvara brojne analitičke mogućnosti. **Analiza vidljivosti aktera** može kvantificirati koliko često se pojedini političari, stranke ili institucije spominju u medijima i kako se ta vidljivost mijenja kroz vrijeme. Istraživač može pratiti rast ili pad medijske prisutnosti pojedinog političara, uspoređivati vidljivost vladajućih i oporbenih aktera, ili analizirati koje institucije dominiraju u izvještavanju o određenim temama. **Analiza geografskog fokusa** može mapirati koje lokacije dominiraju u izvještavanju pojedinih medija, otkrivajući primjerice metropolitansku pristranost (dominacija Zagreba), regionalnu specijalizaciju ili fokus na određene zemlje u međunarodnom izvještavanju.
+
+**Mrežna analiza** može rekonstruirati odnose između entiteta na temelju njihova supojavljivanja u tekstu. Ako se dva političara često spominju u istim člancima, to sugerira da ih mediji percipiraju kao povezane, bilo kroz suradnju ili sukob. Vizualizacija mreže supojavljivanja može otkriti klastere aktera, centralne figure i mostove između grupa. **Praćenje događaja** može koristiti ekstrakciju vremenskih oznaka i lokacija za mapiranje izvještavanja o događajima kroz vrijeme i prostor.
+
+Tablica 2 prikazuje primjer ekstrakcije entiteta iz hipotetskog novinskog naslova i prvog paragrafa vijesti.
+
+| Tekst | Entitet | Kategorija |
+|:------|:--------|:-----------|
+| Premijer Plenković | Plenković | OSOBA |
+| u Bruxellesu | Bruxelles | LOKACIJA |
+| s čelnicima EU | EU | ORGANIZACIJA |
+| o 7 milijardi eura | 7 milijardi eura | NOVČANA VRIJEDNOST |
+| u petak | petak | VRIJEME |
+| Europska komisija | Europska komisija | ORGANIZACIJA |
+
+: Primjer ekstrakcije entiteta iz naslova "Premijer Plenković u Bruxellesu razgovarao s čelnicima EU o 7 milijardi eura"
+
+Ekstrakcija entiteta suočava se s nekoliko izazova koje istraživač mora uzeti u obzir. **Višeznačnost** je čest problem jer ista riječ može označavati entitete različitih kategorija ovisno o kontekstu. "Washington" može biti grad (Washington D.C.), savezna država (Washington State), prezime osobe (George Washington) ili metonimija za američku administraciju. "IRA" može označavati Irsku republikansku armiju ili Individual Retirement Account. Kontekstualna analiza nužna je za ispravnu klasifikaciju, a čak i sofisticirani sustavi ponekad griješe.
+
+**Varijabilnost imenovanja** odnosi se na činjenicu da se isti entitet može pojavljivati pod različitim imenima. Ista osoba može biti navedena kao "Zoran Milanović", "predsjednik Milanović", "Milanović", "Z. Milanović" ili samo "predsjednik". Ista organizacija može se pojaviti kao "HRT", "Hrvatska radiotelevizija", "javna televizija" ili "Prisavlje". Za neke analize potrebno je razriješiti ove varijante i povezati ih s jedinstvenim entitetom, što se naziva **povezivanje entiteta** (entity linking) ili **razrješenje koreferencije** (coreference resolution). Ovo je posebno važno za mrežnu analizu gdje želimo pravilno prebrojati sve spominjanja istog entiteta.
+
+Za hrvatski jezik prepoznavanje entiteta dodatno je otežano morfološkim bogatstvom. Ime "Plenković" pojavljuje se u različitim padežima kao "Plenkovića" (genitiv, akuzativ), "Plenkoviću" (dativ, lokativ), "Plenkoviću" (vokativ) itd. Naziv "Republika Hrvatska" mijenja se kroz padeže: "Republike Hrvatske", "Republici Hrvatskoj", "Republiku Hrvatsku". Sustavi trenirani na engleskom ne mogu se izravno primijeniti jer engleski ima minimalne flektivne promjene. Resursi specifični za hrvatski, premda postoje (primjerice modeli u sklopu projekata hr500k ili reldi), manje su opsežni i testirani nego za engleski.
+
+| Pristup | Prednosti | Ograničenja | Tipična primjena |
+|:--------|:----------|:------------|:-----------------|
+| Nadzirano učenje | Visoka preciznost za definirane kategorije | Zahtijeva označene podatke | Klasifikacija vijesti, detekcija lažnih vijesti |
+| Nenadzirano učenje | Otkriva nepoznate strukture | Zahtijeva interpretaciju | Eksploracija korpusa, praćenje tema |
+| Rječnički pristupi | Transparentnost, bez potrebe za treniranjem | Kontekstualna neosjetljivost | Analiza sentimenta, longitudinalne studije |
+| Ekstrakcija entiteta | Identificira konkretne aktere | Višeznačnost, varijabilnost | Analiza vidljivosti, mrežna analiza |
+
+: Usporedni pregled pristupa analizi teksta
+
+Zaključno, svaki od predstavljenih pristupa nudi jedinstvenu perspektivu na tekstualne podatke i odgovara na različite vrste istraživačkih pitanja. Nadzirano učenje omogućuje preciznu klasifikaciju prema unaprijed definiranim kategorijama kada imamo jasnu konceptualnu shemu i resurse za označavanje primjera. Nenadzirano učenje otkriva latentne tematske strukture i posebno je korisno u eksplorativnoj fazi istraživanja kada još ne znamo koje kategorije su relevantne. Rječnički pristupi kvantificiraju sentiment i emocije na transparentan i reproducibilan način, idealni za longitudinalne usporedbe. Ekstrakcija entiteta identificira ključne aktere i omogućuje analize vidljivosti i relacija. Vješt istraživač kombinira ove pristupe kako bi iz tekstualnih podataka izvukao bogat spektar uvida o medijskom diskursu i komunikacijskim praksama, birajući metode koje najbolje odgovaraju specifičnim istraživačkim pitanjima i dostupnim resursima.

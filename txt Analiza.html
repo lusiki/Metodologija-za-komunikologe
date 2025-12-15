@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Vrste pristupa analizi teksta</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="txt Analiza_files/libs/clipboard/clipboard.min.js"></script>
+<script src="txt Analiza_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="txt Analiza_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="txt Analiza_files/libs/quarto-html/popper.min.js"></script>
+<script src="txt Analiza_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="txt Analiza_files/libs/quarto-html/anchor.min.js"></script>
+<link href="txt Analiza_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="txt Analiza_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="txt Analiza_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="txt Analiza_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="txt Analiza_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#vrste-pristupa-analizi-teksta" id="toc-vrste-pristupa-analizi-teksta" class="nav-link active" data-scroll-target="#vrste-pristupa-analizi-teksta">Vrste pristupa analizi teksta</a>
+  <ul class="collapse">
+  <li><a href="#nadzirano-strojno-učenje-klasifikacija" id="toc-nadzirano-strojno-učenje-klasifikacija" class="nav-link" data-scroll-target="#nadzirano-strojno-učenje-klasifikacija">Nadzirano strojno učenje (klasifikacija)</a></li>
+  <li><a href="#nenadzirano-strojno-učenje-tematsko-modeliranje" id="toc-nenadzirano-strojno-učenje-tematsko-modeliranje" class="nav-link" data-scroll-target="#nenadzirano-strojno-učenje-tematsko-modeliranje">Nenadzirano strojno učenje (tematsko modeliranje)</a></li>
+  <li><a href="#rječnički-pristupi-analiza-sentimenta" id="toc-rječnički-pristupi-analiza-sentimenta" class="nav-link" data-scroll-target="#rječnički-pristupi-analiza-sentimenta">Rječnički pristupi (analiza sentimenta)</a></li>
+  <li><a href="#ekstrakcija-entiteta-ner" id="toc-ekstrakcija-entiteta-ner" class="nav-link" data-scroll-target="#ekstrakcija-entiteta-ner">Ekstrakcija entiteta (NER)</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="txt-Analiza.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="txt Analiza.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Vrste pristupa analizi teksta</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="vrste-pristupa-analizi-teksta" class="level1">
+<h1>Vrste pristupa analizi teksta</h1>
+<p>Nakon što smo razmotrili postupke pripreme podataka i metode reprezentacije teksta, dolazimo do ključnog pitanja: kako iz pripremljenih tekstualnih podataka izvući smislene zaključke koji će odgovoriti na naša istraživačka pitanja? Odgovor ovisi o prirodi problema koji želimo riješiti i o vrsti znanja koje želimo generirati. Istraživač masovne komunikacije može biti zainteresiran za automatsku klasifikaciju velikog broja članaka prema temama, za otkrivanje skrivenih tematskih struktura u korpusu, za mjerenje emocionalnog tona medijskog izvještavanja ili za identificiranje ključnih aktera u javnom diskursu. Svaki od ovih zadataka zahtijeva drugačiji analitički pristup, a izbor metode ima dalekosežne implikacije za vrstu uvida koje možemo dobiti.</p>
+<p>U ovom poglavlju predstavljamo četiri temeljne vrste pristupa analizi teksta koje se razlikuju prema logici zaključivanja, potrebnim resursima i vrstama pitanja na koja mogu odgovoriti. <strong>Nadzirano strojno učenje</strong> koristi unaprijed označene primjere za treniranje modela koji će klasificirati nove tekstove u poznate kategorije. <strong>Nenadzirano strojno učenje</strong> otkriva latentne strukture u podacima bez prethodnog definiranja kategorija. <strong>Rječnički pristupi</strong> oslanjaju se na unaprijed definirane popise riječi s pridruženim vrijednostima za mjerenje specifičnih dimenzija teksta poput sentimenta. Konačno, <strong>ekstrakcija entiteta</strong> identificira i klasificira imenice koje označavaju konkretne objekte iz stvarnog svijeta poput osoba, organizacija i lokacija.</p>
+<p>Svaki od ovih pristupa ima svoje prednosti i ograničenja, a izbor odgovarajuće metode ovisi o specifičnostima istraživačkog pitanja, dostupnim resursima i karakteristikama korpusa. Nije neuobičajeno kombinirati više pristupa u jednoj studiji, primjerice koristiti tematsko modeliranje za eksplorativnu analizu korpusa, a zatim primijeniti nadzirano učenje za preciznu klasifikaciju dokumenata u identificirane kategorije. Također, rezultati jednog pristupa mogu služiti kao ulaz za drugi: ekstrakcija entiteta može identificirati aktere čija se medijska prezentacija zatim analizira pomoću analize sentimenta.</p>
+<p>Prije detaljnog razmatranja pojedinačnih pristupa, korisno je razumjeti temeljnu razliku između <strong>konfirmatornih</strong> i <strong>eksploratornih</strong> analiza. Konfirmatorni pristupi polaze od unaprijed definiranih kategorija ili hipoteza i testiraju koliko dobro podaci odgovaraju tim kategorijama. Nadzirano učenje i rječnički pristupi tipično pripadaju ovoj skupini. Eksploratorni pristupi, s druge strane, dopuštaju da strukture proizađu iz samih podataka, bez stroge apriorističke specifikacije. Nenadzirano učenje paradigmatski je primjer eksploratornog pristupa. U praksi, mnoga istraživanja kombiniraju obje perspektive, započinjući eksploracijom kako bi se identificirale relevantne kategorije, a zatim prelaze na konfirmatornu fazu za validaciju i sistematsku analizu.</p>
+<section id="nadzirano-strojno-učenje-klasifikacija" class="level2">
+<h2 class="anchored" data-anchor-id="nadzirano-strojno-učenje-klasifikacija">Nadzirano strojno učenje (klasifikacija)</h2>
+<p>Zamislimo istraživača koji analizira tisuće komentara objavljenih na društvenim mrežama tijekom predizborne kampanje. Cilj je kategorizirati svaki komentar prema tome podržava li određenog kandidata, kritizira ga ili je neutralan. Ručno kodiranje tolikog broja komentara zahtijevalo bi mjesece rada i značajne financijske resurse. <strong>Nadzirano strojno učenje</strong> nudi alternativu: istraživač ručno kodira relativno mali uzorak komentara, a zatim koristi te označene primjere za treniranje algoritma koji će automatski klasificirati preostale komentare. Na taj način kombiniraju se prednosti ljudske prosudbe s računalnom učinkovitošću.</p>
+<p>Termin “nadzirano” odnosi se na činjenicu da algoritam uči iz primjera za koje je poznata točna oznaka ili kategorija. Proces se može konceptualizirati kao učenje iz iskustva uz povratnu informaciju. Algoritam promatra obilježja teksta (primjerice frekvencije riječi, TF-IDF vrijednosti ili druge reprezentacije) zajedno s njihovim kategorijama te pokušava naučiti pravila ili obrasce koji povezuju obilježja s kategorijama. Kada nauči ta pravila, može ih primijeniti na nove, neoznačene tekstove. Analogija s ljudskim učenjem je očigledna: učenik koji vidi mnogo primjera pravilno riješenih matematičkih zadataka nauči prepoznati obrasce i primijeniti ih na nove zadatke.</p>
+<p>Formalno, zadatak klasifikacije možemo definirati na sljedeći način. Imamo skup označenih primjera <span class="math inline">\(\{(x_1, y_1), (x_2, y_2), ..., (x_n, y_n)\}\)</span> gdje <span class="math inline">\(x_i\)</span> predstavlja vektorsku reprezentaciju dokumenta (primjerice vektor TF-IDF vrijednosti), a <span class="math inline">\(y_i\)</span> njegovu kategoriju. Cilj je naučiti funkciju <span class="math inline">\(f: X \rightarrow Y\)</span> koja što točnije preslikava dokumente u kategorije. Ova funkcija, koju nazivamo <strong>modelom</strong> ili <strong>klasifikatorom</strong>, zatim se primjenjuje na nove dokumente čija kategorija nije poznata. Kvaliteta modela mjeri se njegovom sposobnošću da točno predvidi kategorije dokumenata koje nije vidio tijekom treniranja.</p>
+<p>Ključna distinkcija u nadziranom učenju jest razlika između <strong>klasifikacije</strong> i <strong>regresije</strong>. Kod klasifikacije, ciljna varijabla je kategorička, odnosno želimo predvidjeti pripadnost jednoj od unaprijed definiranih klasa. Primjeri uključuju kategorizaciju članaka prema temama (politika, sport, kultura), određivanje je li recenzija filma pozitivna ili negativna, ili prepoznavanje lažnih vijesti. Kod regresije, ciljna varijabla je kontinuirana numerička vrijednost. Primjerice, možemo pokušati predvidjeti ocjenu kvalitete članka na skali od 1 do 10, procijeniti godinu objave teksta na temelju jezičnih obilježja, ili predvidjeti broj dijeljenja članka na društvenim mrežama. Oba pristupa koriste istu temeljnu logiku učenja iz označenih primjera, ali se razlikuju u prirodi izlazne varijable i metrikama evaluacije.</p>
+<p>U praksi analize masovne komunikacije najčešće susrećemo nekoliko tipičnih klasifikacijskih zadataka. <strong>Binarna klasifikacija</strong> dijeli tekstove u dvije kategorije, primjerice relevantno/irelevantno, pozitivno/negativno ili autentično/lažno. Ovaj je tip klasifikacije konceptualno najjednostavniji i često predstavlja polazište za složenije analize. <strong>Višeklasna klasifikacija</strong> razvrstava tekstove u više međusobno isključivih kategorija, poput tematske klasifikacije vijesti u kategorije politike, gospodarstva, sporta, kulture i zabave. Ovdje je svaki dokument dodijeljen točno jednoj kategoriji, a kategorije su međusobno isključive. <strong>Višeoznačna klasifikacija</strong> dopušta da jedan tekst pripada više kategorija istovremeno, što je korisno kada članak može istovremeno pokrivati političku i ekonomsku tematiku, ili kada vijest govori o sportu i o nacionalnom identitetu. Ovaj tip klasifikacije zahtijeva modificirane algoritme i metrike evaluacije.</p>
+<p>Postoji niz algoritama koji se koriste za klasifikaciju teksta, a svaki ima svoje karakteristike i područja primjene. <strong>Naivni Bayesov klasifikator</strong> temelji se na Bayesovom teoremu i pretpostavci o nezavisnosti obilježja. Izračunava vjerojatnost da dokument pripada određenoj klasi s obzirom na riječi koje sadrži, primjenjujući formulu uvjetne vjerojatnosti. Unatoč tome što je pretpostavka o nezavisnosti riječi očito pogrešna u prirodnom jeziku (riječi se pojavljuju u značenjskim vezama, a ne nasumično), ovaj algoritam često daje iznenađujuće dobre rezultate za klasifikaciju teksta, posebno kada je dostupan manji broj označenih primjera. Njegova je prednost i računalna učinkovitost te otpornost na prekomjerno prilagođavanje.</p>
+<p><strong>Logistička regresija</strong> modelira vjerojatnost pripadnosti kategoriji kao logističku funkciju linearne kombinacije obilježja. Svaka riječ (obilježje) dobiva težinski koeficijent koji određuje njen doprinos klasifikacijskoj odluci. Prednost logističke regresije je interpretabilnost jer omogućuje uvid u to koje riječi snažnije utječu na klasifikacijsku odluku i u kojem smjeru. Istraživač može pregledati koeficijente i ustanoviti, primjerice, da prisutnost riječi “korupcija” snažno povećava vjerojatnost klasifikacije u kategoriju negativnog izvještavanja o vlasti.</p>
+<p><strong>Strojevi s potpornim vektorima</strong> (Support Vector Machines, SVM) traže optimalnu hiperravninu koja razdvaja klase u višedimenzionalnom prostoru obilježja. Cilj je pronaći granicu odlučivanja koja maksimizira marginu između najbližih točaka različitih klasa, takozvanih potpornih vektora. SVM algoritmi pokazali su se posebno učinkovitima za tekstualne podatke visoke dimenzionalnosti jer dobro generaliziraju čak i kada broj obilježja (riječi) premašuje broj dokumenata. Linearni SVM-ovi često postižu izvrsne rezultate bez potrebe za kompleksnim podešavanjem hiperparametara.</p>
+<p><strong>Regularizirana linearna regresija</strong> dodaje kazneni član koji sprječava prekomjerno prilagođavanje modela podacima za treniranje. Dvije najčešće vrste regularizacije su L1 (lasso) koja potiče rijetke modele gdje mnogi koeficijenti postaju točno nula, i L2 (ridge) koja smanjuje magnitude svih koeficijenata. Za tekstualne podatke, L1 regularizacija je posebno korisna jer automatski vrši selekciju obilježja, identificirajući podskup riječi koje su najinformativnije za klasifikaciju. To je ključno kod tekstualnih podataka gdje broj obilježja (riječi) često premašuje broj dokumenata.</p>
+<p>Evaluacija klasifikacijskih modela zahtijeva pažljivu metodologiju. Temeljni princip jest da model moramo evaluirati na podacima koje nije vidio tijekom treniranja. Ovo je ključno jer nas zanima koliko dobro model generalizira na nove primjere, a ne koliko dobro pamti primjere za treniranje. Zato se dostupni označeni podaci dijele na <strong>skup za treniranje</strong> i <strong>testni skup</strong>. Model se trenira isključivo na skupu za treniranje, a njegova se uspješnost mjeri na testnom skupu. Tipična podjela je 80% za treniranje i 20% za testiranje, iako se omjer može prilagoditi ovisno o količini dostupnih podataka.</p>
+<p>Za robusniju procjenu koristi se <strong>unakrsna validacija</strong> (cross-validation) gdje se podaci višestruko dijele na različite kombinacije skupova za treniranje i testiranje. Najčešći pristup je k-struka unakrsna validacija gdje se podaci dijele na k jednakih dijelova. Model se trenira k puta, svaki put koristeći k-1 dijelova za treniranje i preostali dio za testiranje. Konačna procjena uspješnosti je prosjek rezultata preko svih k iteracija. Ovaj pristup pruža stabilniju procjenu jer smanjuje ovisnost o konkretnoj podjeli podataka.</p>
+<p>Standardne mjere uspješnosti klasifikacije uključuju <strong>točnost</strong> (accuracy) koja mjeri udio ispravno klasificiranih primjera u ukupnom broju primjera. Međutim, točnost može biti varljiva kod neuravnoteženih klasa. Zato se koristi <strong>preciznost</strong> (precision) koja mjeri udio stvarno pozitivnih primjera među onima koje je model proglasio pozitivnima, te <strong>odziv</strong> (recall) koji mjeri udio ispravno identificiranih pozitivnih primjera među svim stvarno pozitivnim primjerima. <strong>F1 mjera</strong> predstavlja harmonijsku sredinu preciznosti i odziva, pružajući balansiranu ocjenu uspješnosti. Izbor odgovarajuće mjere ovisi o specifičnostima problema i relativnim troškovima različitih vrsta pogrešaka.</p>
+<p>Za rijetke kategorije, poput detekcije govora mržnje koji čini mali postotak ukupnog sadržaja, sama točnost može biti varljiva jer bi model koji sve klasificira kao “nije govor mržnje” imao visoku točnost (primjerice 98% ako govor mržnje čini samo 2% sadržaja), ali bi bio potpuno beskoristan za stvarnu primjenu. U takvim situacijama odziv postaje kritična metrika jer nas zanima koliko primjera govora mržnje uspijemo identificirati. S druge strane, ako su posljedice lažno pozitivne klasifikacije ozbiljne (primjerice nepravedno označavanje legitimnog sadržaja kao problematičnog), preciznost dobiva na važnosti.</p>
+<table class="caption-top table">
+<caption>Standardne mjere evaluacije klasifikacijskih modela (TP = istinito pozitivni, TN = istinito negativni, FP = lažno pozitivni, FN = lažno negativni)</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Mjera</th>
+<th style="text-align: left;">Formula</th>
+<th style="text-align: left;">Interpretacija</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Točnost</td>
+<td style="text-align: left;"><span class="math inline">\((TP + TN) / (TP + TN + FP + FN)\)</span></td>
+<td style="text-align: left;">Udio svih ispravnih predikcija</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Preciznost</td>
+<td style="text-align: left;"><span class="math inline">\(TP / (TP + FP)\)</span></td>
+<td style="text-align: left;">Pouzdanost pozitivnih predikcija</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Odziv</td>
+<td style="text-align: left;"><span class="math inline">\(TP / (TP + FN)\)</span></td>
+<td style="text-align: left;">Obuhvat stvarno pozitivnih primjera</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F1 mjera</td>
+<td style="text-align: left;"><span class="math inline">\(2 \times (Preciznost \times Odziv) / (Preciznost + Odziv)\)</span></td>
+<td style="text-align: left;">Balans preciznosti i odziva</td>
+</tr>
+</tbody>
+</table>
+<p>Za istraživača masovne komunikacije nadzirano strojno učenje predstavlja moćan alat za skaliranje analiza na korpuse koji bi bili preveliki za ručno kodiranje. Tipičan radni tijek uključuje pažljivo definiranje kategorija, izradu jasnih smjernica za kodiranje, ručno označavanje reprezentativnog uzorka (obično nekoliko stotina do nekoliko tisuća primjera), treniranje i evaluaciju modela, te konačnu primjenu na cjelokupni korpus. Međutim, valja imati na umu da kvaliteta modela izravno ovisi o kvaliteti označenih podataka. Nepouzdano ili nekonzistentno ručno kodiranje rezultirat će modelom koji reproducira te pogreške. Preporučuje se angažirati više kodera i mjeriti međukodersku pouzdanost prije treniranja modela.</p>
+<p>Također, model može naučiti obrasce specifične za korpus na kojem je treniran, što ograničava njegovu primjenjivost na tekstove iz drugih izvora ili vremenskih razdoblja. Primjerice, model treniran na člancima iz 2015. godine možda neće dobro funkcionirati na člancima iz 2023. godine jer se jezični obrasci, aktualne teme i stilovi izvještavanja mijenjaju. Ovo se naziva <strong>temporalnom degradacijom</strong> modela i zahtijeva periodičko ponovno treniranje ili barem evaluaciju na novijim podacima.</p>
+</section>
+<section id="nenadzirano-strojno-učenje-tematsko-modeliranje" class="level2">
+<h2 class="anchored" data-anchor-id="nenadzirano-strojno-učenje-tematsko-modeliranje">Nenadzirano strojno učenje (tematsko modeliranje)</h2>
+<p>Pretpostavimo da je istraživač prikupio opsežan korpus javnih govora hrvatskih političara iz posljednjih dvadeset godina. Za razliku od prethodnog scenarija, ovdje nema unaprijed definiranih kategorija u koje bi trebalo razvrstati govore. Umjesto toga, istraživač želi otkriti koje teme dominiraju političkim diskursom, kako se te teme mijenjaju kroz vrijeme i postoje li razlike u tematskim prioritetima između različitih političkih opcija. Za ovakve eksplorativne analize koristi se <strong>nenadzirano strojno učenje</strong>.</p>
+<p>Termin “nenadzirano” označava da algoritam nema pristup unaprijed označenim primjerima iz kojih bi učio. Umjesto toga, algoritam sam otkriva strukture i obrasce u podacima. Možemo to zamisliti kao automatsko grupiranje sličnih dokumenata ili identificiranje skupina riječi koje se često pojavljuju zajedno. Rezultat nije unaprijed određen, već proizlazi iz statističkih pravilnosti u samim podacima. To čini nenadzirano učenje idealnim za eksplorativne analize gdje istraživač želi pustiti da podaci “govore sami za sebe”, bez nametanja apriorističkih kategorija.</p>
+<p><strong>Tematsko modeliranje</strong> predstavlja najvažniju tehniku nenadziranog učenja za analizu teksta. Cilj je otkriti latentne teme koje prožimaju korpus dokumenata. Svaka tema konceptualizira se kao distribucija vjerojatnosti nad riječima, dok se svaki dokument konceptualizira kao mješavina tema. Primjerice, u korpusu novinskih članaka jedna tema mogla bi biti definirana visokim vjerojatnostima riječi poput “utakmica”, “gol”, “prvak”, “reprezentacija”, što bi sugeriralo sportsku tematiku. Druga tema mogla bi biti karakterizirana riječima “proračun”, “deficit”, “porez”, “reforma”, ukazujući na ekonomsku tematiku. Treća tema mogla bi uključivati “film”, “redatelj”, “glumac”, “festival”, sugerirajući kulturnu tematiku.</p>
+<p>Najpoznatiji algoritam za tematsko modeliranje jest <strong>Latentna Dirichletova alokacija</strong> (LDA), koju su 2003. godine predstavili David Blei, Andrew Ng i Michael Jordan. LDA je generativni probabilistički model koji pretpostavlja sljedeći proces nastanka dokumenata. Za svaku temu u korpusu postoji distribucija vjerojatnosti nad svim riječima u vokabularu, koju označavamo s <span class="math inline">\(\phi_k\)</span> za temu <span class="math inline">\(k\)</span>. Za svaki dokument postoji distribucija vjerojatnosti nad temama, označena s <span class="math inline">\(\theta_d\)</span> za dokument <span class="math inline">\(d\)</span>, odnosno omjer u kojem dokument “sadrži” pojedine teme. Prilikom “generiranja” svake riječi u dokumentu, prvo se odabire tema prema distribuciji tema za taj dokument, a zatim se iz te teme odabire konkretna riječ prema distribuciji riječi za tu temu.</p>
+<p>Naravno, u praksi mi ne generiramo dokumente nego ih analiziramo. Algoritam LDA radi obrnutim putem: na temelju opaženih dokumenata zaključuje o latentnim temama i distribucijama. Ovo se naziva <strong>inverzni problem</strong> ili <strong>statistička inferencija</strong>. Koriste se tehnike poput Gibbsovog uzorkovanja ili varijacijske Bayesove aproksimacije za procjenu parametara modela. Ove tehnike iterativno prilagođavaju procjene distribucija kako bi maksimalno povećale vjerojatnost opaženih podataka. Rezultat analize su dvije ključne strukture: <strong>matrica tema-riječi</strong> (<span class="math inline">\(\Phi\)</span>) koja za svaku temu pokazuje vjerojatnosti pojedinih riječi, i <strong>matrica dokument-tema</strong> (<span class="math inline">\(\Theta\)</span>) koja za svaki dokument pokazuje proporcije pojedinih tema.</p>
+<p>Matematički, LDA pretpostavlja da su distribucije <span class="math inline">\(\theta_d\)</span> generirane iz Dirichletove distribucije s parametrom <span class="math inline">\(\alpha\)</span>, a distribucije <span class="math inline">\(\phi_k\)</span> iz Dirichletove distribucije s parametrom <span class="math inline">\(\beta\)</span>. Dirichletova distribucija je distribucija nad distribucijama, odnosno generira vektore koji se zbrajaju u 1 i mogu se interpretirati kao vjerojatnosti. Parametri <span class="math inline">\(\alpha\)</span> i <span class="math inline">\(\beta\)</span> kontroliraju “koncentraciju” distribucija: niže vrijednosti potiču rjeđe distribucije gdje dominiraju samo neke teme ili riječi, dok više vrijednosti vode ravnomjernijim distribucijama.</p>
+<p>Interpretacija rezultata tematskog modeliranja zahtijeva kvalitativnu ekspertizu istraživača. Algoritam producira skupine riječi, ali ne daje imena temama. Istraživač mora pregledati najvjerojatnije riječi za svaku temu i, oslanjajući se na poznavanje domene, dodijeliti interpretativne oznake. Primjerice, ako tema ima visoke vjerojatnosti za riječi “europska”, “unija”, “pristupanje”, “kriteriji”, “pregovori”, istraživač bi je mogao nazvati “Europske integracije”. Ova interpretativna dimenzija unosi element subjektivnosti u inače statistički postupak. Preporučuje se uključiti više analitičara u proces interpretacije i provjeriti međusobno slaganje oko značenja tema.</p>
+<p>Važan metodološki izazov predstavlja određivanje broja tema. Za razliku od klasifikacije gdje je broj kategorija unaprijed zadan, kod tematskog modeliranja istraživač mora odrediti parametar <span class="math inline">\(k\)</span> koji specificira koliko tema algoritam treba otkriti. Premalen broj tema rezultira preširokim, heterogenim skupinama koje miješaju konceptualno različite sadržaje. Prevelik broj proizvodi fragmentirane, teško interpretabilne teme koje razbijaju koherentne koncepte na proizvoljne dijelove. Postoje statističke mjere poput <strong>koherentnosti tema</strong> (topic coherence) koje kvantificiraju koliko su riječi unutar teme semantički povezane, te <strong>perpleksnost</strong> (perplexity) koja mjeri koliko dobro model predviđa nove dokumente. Međutim, statistički optimalna rješenja ne moraju uvijek biti interpretativno najsmislenija, pa konačna odluka često uključuje kvalitativnu procjenu interpretabilnosti rezultata.</p>
+<p>U praksi se preporučuje isprobati više vrijednosti <span class="math inline">\(k\)</span> (primjerice 5, 10, 15, 20, 30) i za svaku verziju pregledati rezultirajuće teme. Dobra praksa je izraditi vizualizacije najvjerojatnijih riječi za svaku temu i primjere dokumenata s visokim proporcijama za pojedine teme. Na temelju toga istraživač može procijeniti koja verzija nudi najinterpretabilnije i najkorisnije teme za istraživačke ciljeve.</p>
+<p>U kontekstu istraživanja masovne komunikacije tematsko modeliranje omogućuje niz analitičkih pristupa. <strong>Longitudinalna analiza</strong> može pratiti kako se prominentnost pojedinih tema mijenja kroz vrijeme, primjerice kako ekonomska tematika dobiva na važnosti tijekom recesije ili kako sigurnosne teme rastu nakon terorističkih napada. Graf koji prikazuje udio pojedinih tema kroz vrijeme može otkriti ciklične obrasce ili strukturne pomake u medijskoj agendi. <strong>Komparativna analiza</strong> može uspoređivati tematske profile različitih medija, otkrivajući koji mediji posvećuju više prostora određenim temama. Primjerice, analiza može pokazati da komercijalni mediji više naglašavaju kriminalnu kroniku dok javni mediji više pokrivaju političke procese. <strong>Analiza agenda-settinga</strong> može korelirati tematsku strukturu medijskih sadržaja s javnomnijenjskim istraživanjima, testirajući hipoteze o utjecaju medija na percepciju važnosti pojedinih tema.</p>
+<p>Tablica 1 prikazuje hipotetski primjer rezultata LDA analize za korpus političkih govora s pet tema.</p>
+<table class="caption-top table">
+<caption>Hipotetski rezultat LDA analize političkih govora s pet tema</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 52%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tema</th>
+<th style="text-align: left;">Najvjerojatnije riječi</th>
+<th style="text-align: left;">Interpretacija</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tema 1</td>
+<td style="text-align: left;">radna, mjesta, zapošljavanje, poticaji, gospodarstvo, tvrtke, investicije, plaće</td>
+<td style="text-align: left;">Ekonomija i zapošljavanje</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tema 2</td>
+<td style="text-align: left;">škole, obrazovanje, studenti, nastavnici, reforma, kvaliteta, kurikulum, diploma</td>
+<td style="text-align: left;">Obrazovna politika</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tema 3</td>
+<td style="text-align: left;">europska, unija, fondovi, projekti, suradnja, partnerstvo, bruxelles, integracija</td>
+<td style="text-align: left;">EU integracije</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tema 4</td>
+<td style="text-align: left;">sigurnost, obrana, vojska, granice, NATO, zaštita, prijetnje, stabilnost</td>
+<td style="text-align: left;">Nacionalna sigurnost</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tema 5</td>
+<td style="text-align: left;">zdravstvo, bolnice, liječnici, pacijenti, lijekovi, skrb, osiguranje, prevencija</td>
+<td style="text-align: left;">Zdravstvena politika</td>
+</tr>
+</tbody>
+</table>
+<p>Valja napomenuti da tematsko modeliranje ima i svoja ograničenja koja istraživač mora uzeti u obzir. Model pretpostavlja da se teme mogu razdvojiti na temelju supojavljivanja riječi, što ne mora uvijek odgovarati konceptualnim kategorijama koje bi ljudski analitičar prepoznao. Primjerice, LDA može spojiti teme koje su konceptualno različite ali dijele vokabular, ili razdvojiti jednu koherentnu temu na više fragmenata. Kratki tekstovi poput tvitova često ne sadrže dovoljno riječi za pouzdanu procjenu tematske distribucije, što motivira razvoj modificiranih algoritama poput Biterm Topic Modela. Također, standardni LDA ne uzima u obzir redoslijed riječi niti sintaktičke odnose, tretirajući dokument kao vreću riječi. Naprednije varijante poput Structural Topic Modela (STM) omogućuju uključivanje metapodataka kao kovarijata koje utječu na tematsku strukturu.</p>
+</section>
+<section id="rječnički-pristupi-analiza-sentimenta" class="level2">
+<h2 class="anchored" data-anchor-id="rječnički-pristupi-analiza-sentimenta">Rječnički pristupi (analiza sentimenta)</h2>
+<p>Pretpostavimo da istraživač želi izmjeriti kako se emocionalni ton medijskog izvještavanja o određenoj temi mijenjao tijekom vremena. Je li izvještavanje o pristupanju Europskoj uniji bilo optimističnije u godinama neposredno prije ulaska nego danas? Pokazuju li tabloidni mediji negativniji ton u političkom izvještavanju od ozbiljnih dnevnika? Razlikuje li se emocionalni naboj komentara čitatelja ovisno o temi članka? Za odgovore na ovakva pitanja koriste se <strong>rječnički pristupi</strong>, koji se oslanjaju na unaprijed definirane popise riječi s pridruženim vrijednostima.</p>
+<p>Osnovna logika rječničkih pristupa je jednostavna i intuitivna. Polazimo od pretpostavke da određene riječi nose inherentno pozitivnu ili negativnu konotaciju. Riječi poput “uspjeh”, “napredak”, “poboljšanje”, “pobjeda” tipično se percipiraju kao pozitivne, dok riječi poput “kriza”, “pad”, “neuspjeh”, “katastrofa” nose negativne konotacije. Ako prebrojimo koliko pozitivnih i negativnih riječi sadrži tekst, možemo izračunati njegov ukupni sentiment kao razliku ili omjer. Ovaj pristup ima dugu tradiciju u psihologiji i lingvistici, a s razvojem računalne obrade teksta postao je primjenjiv na velike korpuse.</p>
+<p><strong>Sentimentni rječnici</strong> ili leksikoni predstavljaju ključni resurs za ovaj pristup. Radi se o popisima riječi kojima su pridružene vrijednosti sentimenta. Različiti leksikoni koriste različite načine kodiranja. Neki koriste binarnu klasifikaciju gdje je svaka riječ označena kao pozitivna ili negativna bez dodatnih nijansi. Drugi koriste numeričke skale, primjerice od -5 za izrazito negativne riječi do +5 za izrazito pozitivne, omogućujući razlikovanje intenziteta. Postoje i leksikoni koji kodiraju specifične emocije poput ljutnje, straha, radosti i tuge, pružajući bogatiju sliku emocionalnog sadržaja teksta.</p>
+<p>Među najpoznatije engleske sentimentne leksikone ubrajaju se sljedeći. <strong>AFINN</strong> leksikon sadrži oko 2.500 riječi kojima su pridružene vrijednosti na skali od -5 do +5, pri čemu negativne vrijednosti označavaju negativan sentiment, a pozitivne pozitivan. Primjerice, riječ “outstanding” ima vrijednost +5, “good” ima +3, “neutral” ima 0, “bad” ima -3, dok “terrible” ima vrijednost -4. Ovaj leksikon razvio je Finn Årup Nielsen i posebno je koristan za analizu tekstova s društvenih mreža.</p>
+<p><strong>Bing</strong> leksikon, nazvan po Bing Liu koji ga je razvio, kategorizira oko 6.800 riječi u dvije klase: pozitivne i negativne, bez numeričkih vrijednosti intenziteta. Ovaj leksikon je jednostavniji za primjenu i interpretaciju, ali ne razlikuje nijanse intenziteta. Primjerice, “excellent” i “good” obje su označene samo kao pozitivne, bez razlikovanja stupnja.</p>
+<p><strong>NRC</strong> leksikon (National Research Council Canada) osim pozitivnog i negativnog sentimenta kodira osam dodatnih emocija: ljutnju (anger), iščekivanje (anticipation), gađenje (disgust), strah (fear), radost (joy), tugu (sadness), iznenađenje (surprise) i povjerenje (trust). Svaka riječ može biti označena za više emocija istovremeno. Primjerice, riječ “death” može biti označena kao negativna, tužna i strah-izazivajuća. Ovaj leksikon omogućuje finije analize emocionalnog sadržaja teksta.</p>
+<p>Postupak analize sentimenta korištenjem rječnika sastoji se od nekoliko koraka. Prvo se tekst tokenizira u pojedinačne riječi, primjenjujući postupke pripreme opisane u ranijim poglavljima. Zatim se svaka riječ uspoređuje s rječnikom i, ako se nalazi u rječniku, preuzima se njezina sentimentna vrijednost. Riječi koje nisu u rječniku (a to je većina riječi u tipičnom tekstu) tretiraju se kao neutralne i ne doprinose ukupnom sentimentu. Konačno, agregiraju se vrijednosti za sve riječi u dokumentu kako bi se dobila ukupna mjera sentimenta. Agregacija može biti jednostavan zbroj, prosjek ili omjer pozitivnih i negativnih riječi.</p>
+<p>Formalno, ako dokument <span class="math inline">\(d\)</span> sadrži <span class="math inline">\(n\)</span> riječi i koristimo leksikon koji svakoj riječi <span class="math inline">\(w\)</span> pridružuje vrijednost <span class="math inline">\(s(w)\)</span>, ukupni sentiment dokumenta može se izračunati kao:</p>
+<p><span class="math display">\[Sentiment(d) = \sum_{w \in d} s(w)\]</span></p>
+<p>ili kao normalizirana vrijednost koja uzima u obzir duljinu dokumenta:</p>
+<p><span class="math display">\[Sentiment_{norm}(d) = \frac{\sum_{w \in d} s(w)}{|d|}\]</span></p>
+<p>gdje <span class="math inline">\(|d|\)</span> označava broj riječi u dokumentu. Normalizacija je važna kada uspoređujemo dokumente različitih duljina, jer duži dokumenti prirodno sadrže više sentimentnih riječi.</p>
+<p>Alternativno, možemo izračunati sentiment kao razliku proporcija:</p>
+<p><span class="math display">\[Sentiment_{prop}(d) = \frac{N_{poz} - N_{neg}}{N_{poz} + N_{neg}}\]</span></p>
+<p>gdje <span class="math inline">\(N_{poz}\)</span> i <span class="math inline">\(N_{neg}\)</span> označavaju broj pozitivnih odnosno negativnih riječi u dokumentu. Ova mjera kreće se od -1 (sav sentiment je negativan) do +1 (sav sentiment je pozitivan).</p>
+<p>Rječnički pristupi imaju nekoliko važnih prednosti. Prije svega, <strong>transparentni su i interpretabilni</strong>. Istraživač točno zna koje riječi doprinose izračunatom sentimentu i može provjeriti ima li to smisla u kontekstu. Ako rezultat izgleda čudno, može se pregledati koje su konkretne riječi označene kao pozitivne ili negativne i procijeniti je li to opravdano. Drugo, <strong>ne zahtijevaju označene podatke za treniranje</strong>, što ih čini primjenjivima i kada nisu dostupni resursi za ručno kodiranje. Treće, <strong>rezultati su konzistentni i reproducibilni</strong> jer isti tekst uvijek dobiva istu vrijednost sentimenta kada se koristi isti rječnik.</p>
+<p>Međutim, postoje i značajna ograničenja koja istraživač mora uzeti u obzir. <strong>Kontekstualna ovisnost značenja</strong> predstavlja temeljni problem. Riječ “jeftin” ima pozitivnu konotaciju kada opisuje cijene (“jeftino putovanje”), ali negativnu kada opisuje kvalitetu (“jeftina taktika”). Riječ “agresivan” je negativna u kontekstu međuljudskih odnosa (“agresivno ponašanje”), ali može biti pozitivna u kontekstu poslovne strategije (“agresivan marketing”). Riječ “kritičan” može značiti “vrlo važan” (pozitivno) ili “sklon kritiziranju” (neutralno do negativno). Rječnici ne mogu uhvatiti ove nijanse jer pridružuju fiksne vrijednosti riječima bez obzira na kontekst.</p>
+<p><strong>Negacije</strong> predstavljaju drugi značajan izazov. Fraza “nije loše” ima pozitivno značenje premda sadrži negativnu riječ “loše”. “Nikad nisam bio sretniji” izražava intenzivnu pozitivnu emociju unatoč prisutnosti negacije. Jednostavni rječnički pristup koji broji riječi ne može prepoznati da negacija invertira sentiment. Sofisticiraniji pristupi pokušavaju detektirati negacije i modificirati sentiment susjednih riječi (primjerice invertirati predznak za nekoliko riječi nakon negacije), ali to značajno povećava složenost analize i ne funkcionira savršeno.</p>
+<p><strong>Sarkazam i ironija</strong> predstavljaju posebno težak problem. Rečenica “Baš sjajan dan, kiša pada, tramvaj kasni, šef viče” koristi pozitivnu riječ “sjajan” u izrazito negativnom kontekstu. Rječnički pristup označit će “sjajan” kao pozitivan, potpuno promašujući stvarni sentiment. Prepoznavanje sarkazma zahtijeva razumijevanje konteksta, očekivanja i nepodudarnosti između izrečenog i očekivanog, što je izvan mogućnosti jednostavnih rječničkih pristupa.</p>
+<p><strong>Problem domenske specifičnosti</strong> odnosi se na činjenicu da sentimentna konotacija riječi ovisi o kontekstu domene. U financijskom izvještavanju riječ “volatilnost” tipično ima negativnu konotaciju jer sugerira nestabilnost i rizik. U glazbenoj kritici “glasan” može biti pozitivno ili negativno ovisno o žanru. U medicinskim tekstovima “agresivan” često ima pozitivnu konotaciju kada opisuje liječenje tumora. Rječnici razvijeni za opći jezik možda neće adekvatno funkcionirati u specifičnim domenama, što motivira razvoj domenski specifičnih leksikona za financije, zdravstvo, politiku i druge domene.</p>
+<p>Za hrvatski jezik situacija je dodatno kompliciranija zbog oskudice resursa. Dok za engleski postoje višestruki validirani sentimentni leksikoni s desetinama tisuća riječi, za hrvatski je dostupnost znatno manja. Istraživači često pribjegavaju prevođenju engleskih leksikona, što unosi dodatne izvore pogreške jer se sentimentne konotacije ne prevode uvijek izravno. Primjerice, engleski “blue” ima negativnu konotaciju (osjećati se blue = tužno), dok hrvatski “plav” nema tu konotaciju. Morfološko bogatstvo hrvatskog jezika također zahtijeva da leksikon sadrži sve oblike riječi (svih sedam padeža za pridjeve, sve glagolske oblike) ili da se tekstovi prethodno lematiziraju kako bi se sveli na osnovne oblike.</p>
+<table class="caption-top table">
+<caption>Usporedba najčešće korištenih engleskih sentimentnih leksikona</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 27%">
+<col style="width: 31%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Leksikon</th>
+<th style="text-align: left;">Broj riječi</th>
+<th style="text-align: left;">Tip kodiranja</th>
+<th style="text-align: left;">Primjer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AFINN</td>
+<td style="text-align: left;">~2.500</td>
+<td style="text-align: left;">Numerička skala (-5 do +5)</td>
+<td style="text-align: left;">“outstanding” = +5, “terrible” = -4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bing</td>
+<td style="text-align: left;">~6.800</td>
+<td style="text-align: left;">Binarna klasifikacija</td>
+<td style="text-align: left;">“excellent” = pozitivno, “awful” = negativno</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NRC</td>
+<td style="text-align: left;">~14.000</td>
+<td style="text-align: left;">Emocije + polaritet</td>
+<td style="text-align: left;">“death” = negativno, strah, tuga</td>
+</tr>
+</tbody>
+</table>
+<p>Unatoč ograničenjima, rječnički pristupi ostaju vrijedan alat za eksplorativnu analizu velikih korpusa i za generiranje grubih mjera sentimenta koje mogu poslužiti kao polazište za dublje kvalitativne analize. Posebno su korisni za longitudinalne analize gdje nas zanima opći trend kroz vrijeme, a ne precizna procjena sentimenta pojedinog dokumenta. Agregacijom preko velikog broja dokumenata, nasumične pogreške na razini pojedinačnih tekstova tendiraju se međusobno poništiti.</p>
+</section>
+<section id="ekstrakcija-entiteta-ner" class="level2">
+<h2 class="anchored" data-anchor-id="ekstrakcija-entiteta-ner">Ekstrakcija entiteta (NER)</h2>
+<p>U analizi medijskog sadržaja često nas zanima ne samo što mediji govore, nego i o kome govore. Koji se politički akteri najčešće spominju? Koje organizacije dominiraju ekonomskim vijestima? Koje lokacije su u fokusu međunarodnog izvještavanja? Koji se datumi i događaji ističu? <strong>Prepoznavanje imenovanih entiteta</strong> (engl. <em>Named Entity Recognition</em>, skraćeno NER) predstavlja tehniku koja automatski identificira i klasificira imenice koje označavaju konkretne objekte iz stvarnog svijeta.</p>
+<p>Imenovani entiteti obuhvaćaju riječi ili fraze koje se odnose na jedinstvene objekte koji imaju vlastita imena. Filozofski gledano, radi se o “rigidnim designatorima” kako ih je definirao Saul Kripke - izrazima koji označavaju isti objekt u svim mogućim svjetovima. Tipične kategorije uključuju <strong>osobe</strong> (imena pojedinaca poput “Andrej Plenković”, “Angela Merkel” ili “Luka Modrić”), <strong>organizacije</strong> (poput “Vlada Republike Hrvatske”, “Europska unija”, “Zagrebački holding” ili “HNK Hajduk”), <strong>lokacije</strong> (geografske lokacije poput “Zagreb”, “Jadransko more”, “Bruxelles” ili “Bliski istok”), <strong>vremenske oznake</strong> (poput “siječanj 2024.”, “prošli tjedan” ili “Drugi svjetski rat”) te <strong>novčane vrijednosti</strong> (poput “5 milijuna eura” ili “100 kuna”). Različiti sustavi koriste različite skupove kategorija ovisno o domeni primjene; primjerice, biomedicinski NER sustavi prepoznaju nazive lijekova, bolesti i gena.</p>
+<p>Proces prepoznavanja entiteta konceptualno se sastoji od dvije faze. <strong>Detekcija entiteta</strong> identificira dijelove teksta koji predstavljaju imenice, razlikujući ih od općih imenica i drugih vrsta riječi. Ključan je izazov prepoznati granice entiteta, primjerice utvrditi da “Republika Hrvatska” čini jedan entitet, a ne dva odvojena. <strong>Klasifikacija entiteta</strong> zatim svakom detektiranom entitetu pridružuje kategoriju iz unaprijed definiranog skupa. U praksi ove se faze često izvode istovremeno pomoću sekvencijalnih modela koji svakom tokenu u tekstu pridružuju oznaku.</p>
+<p>Za označavanje entiteta koriste se standardizirane sheme poput <strong>BIO notacije</strong> (Begin-Inside-Outside). U ovoj notaciji svaki token dobiva oznaku koja kombinira poziciju u entitetu i kategoriju entiteta. Token koji započinje entitet osobe označava se s “B-PER”, tokeni koji nastavljaju taj entitet označavaju se s “I-PER”, dok tokeni koji nisu dio nijednog entiteta dobivaju oznaku “O”. Postoji i proširena <strong>BIOES notacija</strong> koja dodatno razlikuje tokene koji sami čine cijeli entitet (S - Single) i tokene koji završavaju entitet (E - End), što može poboljšati preciznost za neke algoritme.</p>
+<p>Primjerice, u rečenici “Predsjednik Zoran Milanović posjetio je Zagreb”, tokeni bi bili označeni kao: “Predsjednik” (O), “Zoran” (B-PER), “Milanović” (I-PER), “posjetio” (O), “je” (O), “Zagreb” (B-LOC). Kompleksniji primjer: “Ministarstvo vanjskih i europskih poslova Republike Hrvatske” bio bi označen kao: “Ministarstvo” (B-ORG), “vanjskih” (I-ORG), “i” (I-ORG), “europskih” (I-ORG), “poslova” (I-ORG), “Republike” (I-ORG), “Hrvatske” (I-ORG).</p>
+<p>Tehnike prepoznavanja entiteta razvijale su se kroz nekoliko generacija. <strong>Pristupi temeljeni na pravilima</strong> koriste ručno definirane obrasce i gramatička pravila za identifikaciju entiteta. Primjerice, pravilo može specificirati da riječ koja počinje velikim slovom nakon titule poput “gospodin”, “predsjednik” ili “ministrica” vjerojatno predstavlja ime osobe. Drugi primjer: slijed od dva do tri riječi koje počinju velikim slovom, gdje prva može biti uobičajeno ime (iz liste imena), vjerojatno je ime osobe. Ovakvi pristupi postižu visoku preciznost za jasno definirane obrasce, ali imaju ograničen odziv jer ne mogu pokriti sve načine na koje se entiteti pojavljuju u tekstu. Također zahtijevaju značajan ekspertni rad za izradu pravila.</p>
+<p><strong>Statistički pristupi</strong> koriste algoritme strojnog učenja trenirane na označenim podacima. Modeli poput uvjetnih nasumičnih polja (Conditional Random Fields, CRF) pokazali su se posebno učinkovitima jer mogu modelirati zavisnosti između susjednih oznaka. Primjerice, ako je prethodni token označen kao početak imena osobe (B-PER), vjerojatnost da sljedeći token nastavlja to ime (I-PER) je veća nego da započinje novi entitet. CRF modeli koriste razna obilježja tokena: sam token, njegova mala/velika slova, sufiks, je li u rječniku imena, obilježja susjednih tokena itd.</p>
+<p>Suvremeni sustavi za prepoznavanje entiteta uglavnom se temelje na <strong>dubokom učenju</strong> i neuronskim mrežama. Posebno su uspješne arhitekture temeljene na <strong>transformerima</strong> i prethodno trenirani jezični modeli poput BERT-a, koji postižu iznimne rezultate jer mogu uhvatiti složene kontekstualne ovisnosti. Ovi modeli mogu naučiti da “Apple” u kontekstu “Apple je objavio nove iPhone uređaje” označava organizaciju, dok u kontekstu “Pojeo sam jabuku” (eng. “I ate an apple”) označava voće. Prethodno treniranje na velikim korpusima teksta omogućuje modelu da nauči opće jezične obrasce, a fino podešavanje na označenim NER podacima specijalizira ga za prepoznavanje entiteta.</p>
+<p>Za istraživanje masovne komunikacije ekstrakcija entiteta otvara brojne analitičke mogućnosti. <strong>Analiza vidljivosti aktera</strong> može kvantificirati koliko često se pojedini političari, stranke ili institucije spominju u medijima i kako se ta vidljivost mijenja kroz vrijeme. Istraživač može pratiti rast ili pad medijske prisutnosti pojedinog političara, uspoređivati vidljivost vladajućih i oporbenih aktera, ili analizirati koje institucije dominiraju u izvještavanju o određenim temama. <strong>Analiza geografskog fokusa</strong> može mapirati koje lokacije dominiraju u izvještavanju pojedinih medija, otkrivajući primjerice metropolitansku pristranost (dominacija Zagreba), regionalnu specijalizaciju ili fokus na određene zemlje u međunarodnom izvještavanju.</p>
+<p><strong>Mrežna analiza</strong> može rekonstruirati odnose između entiteta na temelju njihova supojavljivanja u tekstu. Ako se dva političara često spominju u istim člancima, to sugerira da ih mediji percipiraju kao povezane, bilo kroz suradnju ili sukob. Vizualizacija mreže supojavljivanja može otkriti klastere aktera, centralne figure i mostove između grupa. <strong>Praćenje događaja</strong> može koristiti ekstrakciju vremenskih oznaka i lokacija za mapiranje izvještavanja o događajima kroz vrijeme i prostor.</p>
+<p>Tablica 2 prikazuje primjer ekstrakcije entiteta iz hipotetskog novinskog naslova i prvog paragrafa vijesti.</p>
+<table class="caption-top table">
+<caption>Primjer ekstrakcije entiteta iz naslova “Premijer Plenković u Bruxellesu razgovarao s čelnicima EU o 7 milijardi eura”</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tekst</th>
+<th style="text-align: left;">Entitet</th>
+<th style="text-align: left;">Kategorija</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Premijer Plenković</td>
+<td style="text-align: left;">Plenković</td>
+<td style="text-align: left;">OSOBA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u Bruxellesu</td>
+<td style="text-align: left;">Bruxelles</td>
+<td style="text-align: left;">LOKACIJA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">s čelnicima EU</td>
+<td style="text-align: left;">EU</td>
+<td style="text-align: left;">ORGANIZACIJA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">o 7 milijardi eura</td>
+<td style="text-align: left;">7 milijardi eura</td>
+<td style="text-align: left;">NOVČANA VRIJEDNOST</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">u petak</td>
+<td style="text-align: left;">petak</td>
+<td style="text-align: left;">VRIJEME</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Europska komisija</td>
+<td style="text-align: left;">Europska komisija</td>
+<td style="text-align: left;">ORGANIZACIJA</td>
+</tr>
+</tbody>
+</table>
+<p>Ekstrakcija entiteta suočava se s nekoliko izazova koje istraživač mora uzeti u obzir. <strong>Višeznačnost</strong> je čest problem jer ista riječ može označavati entitete različitih kategorija ovisno o kontekstu. “Washington” može biti grad (Washington D.C.), savezna država (Washington State), prezime osobe (George Washington) ili metonimija za američku administraciju. “IRA” može označavati Irsku republikansku armiju ili Individual Retirement Account. Kontekstualna analiza nužna je za ispravnu klasifikaciju, a čak i sofisticirani sustavi ponekad griješe.</p>
+<p><strong>Varijabilnost imenovanja</strong> odnosi se na činjenicu da se isti entitet može pojavljivati pod različitim imenima. Ista osoba može biti navedena kao “Zoran Milanović”, “predsjednik Milanović”, “Milanović”, “Z. Milanović” ili samo “predsjednik”. Ista organizacija može se pojaviti kao “HRT”, “Hrvatska radiotelevizija”, “javna televizija” ili “Prisavlje”. Za neke analize potrebno je razriješiti ove varijante i povezati ih s jedinstvenim entitetom, što se naziva <strong>povezivanje entiteta</strong> (entity linking) ili <strong>razrješenje koreferencije</strong> (coreference resolution). Ovo je posebno važno za mrežnu analizu gdje želimo pravilno prebrojati sve spominjanja istog entiteta.</p>
+<p>Za hrvatski jezik prepoznavanje entiteta dodatno je otežano morfološkim bogatstvom. Ime “Plenković” pojavljuje se u različitim padežima kao “Plenkovića” (genitiv, akuzativ), “Plenkoviću” (dativ, lokativ), “Plenkoviću” (vokativ) itd. Naziv “Republika Hrvatska” mijenja se kroz padeže: “Republike Hrvatske”, “Republici Hrvatskoj”, “Republiku Hrvatsku”. Sustavi trenirani na engleskom ne mogu se izravno primijeniti jer engleski ima minimalne flektivne promjene. Resursi specifični za hrvatski, premda postoje (primjerice modeli u sklopu projekata hr500k ili reldi), manje su opsežni i testirani nego za engleski.</p>
+<table class="caption-top table">
+<caption>Usporedni pregled pristupa analizi teksta</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 25%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pristup</th>
+<th style="text-align: left;">Prednosti</th>
+<th style="text-align: left;">Ograničenja</th>
+<th style="text-align: left;">Tipična primjena</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Nadzirano učenje</td>
+<td style="text-align: left;">Visoka preciznost za definirane kategorije</td>
+<td style="text-align: left;">Zahtijeva označene podatke</td>
+<td style="text-align: left;">Klasifikacija vijesti, detekcija lažnih vijesti</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nenadzirano učenje</td>
+<td style="text-align: left;">Otkriva nepoznate strukture</td>
+<td style="text-align: left;">Zahtijeva interpretaciju</td>
+<td style="text-align: left;">Eksploracija korpusa, praćenje tema</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rječnički pristupi</td>
+<td style="text-align: left;">Transparentnost, bez potrebe za treniranjem</td>
+<td style="text-align: left;">Kontekstualna neosjetljivost</td>
+<td style="text-align: left;">Analiza sentimenta, longitudinalne studije</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ekstrakcija entiteta</td>
+<td style="text-align: left;">Identificira konkretne aktere</td>
+<td style="text-align: left;">Višeznačnost, varijabilnost</td>
+<td style="text-align: left;">Analiza vidljivosti, mrežna analiza</td>
+</tr>
+</tbody>
+</table>
+<p>Zaključno, svaki od predstavljenih pristupa nudi jedinstvenu perspektivu na tekstualne podatke i odgovara na različite vrste istraživačkih pitanja. Nadzirano učenje omogućuje preciznu klasifikaciju prema unaprijed definiranim kategorijama kada imamo jasnu konceptualnu shemu i resurse za označavanje primjera. Nenadzirano učenje otkriva latentne tematske strukture i posebno je korisno u eksplorativnoj fazi istraživanja kada još ne znamo koje kategorije su relevantne. Rječnički pristupi kvantificiraju sentiment i emocije na transparentan i reproducibilan način, idealni za longitudinalne usporedbe. Ekstrakcija entiteta identificira ključne aktere i omogućuje analize vidljivosti i relacija. Vješt istraživač kombinira ove pristupe kako bi iz tekstualnih podataka izvukao bogat spektar uvida o medijskom diskursu i komunikacijskim praksama, birajući metode koje najbolje odgovaraju specifičnim istraživačkim pitanjima i dostupnim resursima.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

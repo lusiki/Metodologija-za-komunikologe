@@ -1,0 +1,169 @@
+---
+title: "Reprezentacija teksta"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    fig-width: 8
+    fig-height: 5
+    format-links:
+      - pdf
+      - docx
+  pdf:
+    documentclass: article
+    geometry: margin=2.5cm
+    fontsize: 11pt
+    fig-width: 6
+    fig-height: 4
+    keep-tex: false
+    babel-lang: croatian
+  docx:
+    toc: true
+    toc-depth: 2
+    fig-width: 6
+    fig-height: 4
+lang: hr
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+library(dplyr)
+theme_bw_custom <- theme_bw(base_size = 12) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 13),
+    plot.subtitle = element_text(hjust = 0.5, size = 10, color = "gray30"),
+    axis.title = element_text(size = 11),
+    legend.position = "bottom"
+  )
+theme_set(theme_bw_custom)
+set.seed(42)
+```
+
+# Reprezentacija teksta
+
+Zamislimo istraživača koji želi usporediti kako tri vodeća hrvatska informativna portala izvještavaju o klimatskim promjenama. Na raspolaganju mu je korpus od nekoliko tisuća članaka prikupljenih tijekom jednogodišnjeg razdoblja. Nakon što je proveo tokenizaciju, uklonio stop-riječi i normalizirao tekst, suočava se s temeljnim pitanjem: kako pretvoriti ove tekstualne podatke u oblik koji će omogućiti sustavnu usporedbu i statističku analizu? Drugim riječima, kako reprezentirati tekst na način koji će računalu omogućiti prepoznavanje sličnosti i razlika između dokumenata, identificiranje karakterističnih tema za svaki portal te otkrivanje obrazaca u medijskom diskursu?
+
+**Reprezentacija teksta** odnosi se na postupke kojima se tekstualni podaci transformiraju u matematičke strukture, najčešće vektore ili matrice, pogodne za računalnu obradu. Ova transformacija predstavlja ključan korak jer kvaliteta reprezentacije izravno utječe na uspješnost svih naknadnih analitičkih postupaka. Loše odabrana reprezentacija može prikriti relevantne obrasce ili, suprotno, proizvesti artefakte koji ne odražavaju stvarne karakteristike teksta.
+
+Temeljni izazov reprezentacije teksta proizlazi iz fundamentalne razlike između prirode jezika i zahtjeva kvantitativnih metoda. Jezik je semantički bogat, kontekstualno ovisan i inherentno višeznačan sustav u kojem značenje proizlazi iz složenih odnosa između riječi, rečenica i šireg diskursnog konteksta. S druge strane, statistički algoritmi zahtijevaju precizno definirane numeričke vrijednosti organizirane u pravilne strukture. Svaka reprezentacija stoga nužno uključuje određenu razinu pojednostavljenja i gubitka informacija, a istraživačev zadatak je odabrati pristup koji optimalno balansira između računalne učinkovitosti i očuvanja semantički relevantnih svojstava teksta.
+
+U ovom poglavlju razmatramo tri temeljne metode reprezentacije teksta koje čine konceptualnu osnovu za većinu naprednih tehnika analize. Započinjemo s najjednostavnijim pristupom poznatim kao model vreće riječi, zatim prelazimo na sofisticiraniju mjeru TF-IDF koja uvodi koncept težinskih vrijednosti, te zaključujemo s matricom supojavljivanja koja omogućuje analizu semantičkih odnosa između riječi.
+
+
+## Bag-of-Words (BoW) – Vreća riječi
+
+Model **vreće riječi**, poznat i pod engleskim nazivom *Bag-of-Words* ili skraćenicom BoW, predstavlja najjednostavniji i povijesno najraniji pristup reprezentaciji teksta za kvantitativnu analizu. Osnovna intuicija ovog modela proizlazi iz pretpostavke da se sadržaj dokumenta može aproksimirati jednostavnim prebrojavanjem riječi koje se u njemu pojavljuju, pri čemu se potpuno zanemaruje redoslijed riječi i gramatička struktura. Metaforički rečeno, zamišljamo da sve riječi iz dokumenta ubacujemo u veliku vreću, miješamo ih i potom samo brojimo koliko puta se svaka riječ pojavljuje.
+
+Premda se ova pretpostavka može činiti drastičnim pojednostavljenjem, praksa je pokazala da za mnoge analitičke zadatke takva reprezentacija pruža iznenađujuće dobre rezultate. Ako želimo klasificirati novinarske članke prema temama, činjenica da članak sadrži riječi poput "inflacija", "kamatna stopa", "BDP" i "proračun" snažno sugerira da se radi o ekonomskoj tematici, neovisno o tome kojim redoslijedom se te riječi pojavljuju u tekstu. Slično tome, visoka frekvencija riječi poput "utakmica", "gol", "prvak" i "reprezentacija" pouzdano identificira sportski sadržaj.
+
+Formalno, model vreće riječi reprezentira korpus dokumenata pomoću **matrice dokument-termin** (engl. *document-term matrix*, skraćeno DTM). Radi se o matrici u kojoj svaki redak predstavlja jedan dokument, svaki stupac predstavlja jednu jedinstvenu riječ iz cjelokupnog vokabulara korpusa, a vrijednost u svakoj ćeliji označava frekvenciju pojavljivanja te riječi u tom dokumentu. Ako imamo korpus od $m$ dokumenata i vokabular od $n$ jedinstvenih riječi, rezultirajuća matrica ima dimenzije $m \times n$.
+
+Zamislimo konkretan primjer s tri kratka naslova novinskih članaka: "Vlada najavljuje nove porezne reforme", "Premijer najavljuje reforme zdravstvenog sustava" i "Nove mjere za poticanje gospodarstva". Nakon tokenizacije i pretvaranja u mala slova, gradimo vokabular koji uključuje sve jedinstvene riječi iz sva tri dokumenta. Matrica dokument-termin za ovaj mini-korpus izgledala bi otprilike ovako:
+
+| Dokument | vlada | najavljuje | nove | porezne | reforme | premijer | zdravstvenog | sustava | mjere | poticanje | gospodarstva |
+|:---------|:-----:|:----------:|:----:|:-------:|:-------:|:--------:|:------------:|:-------:|:-----:|:---------:|:------------:|
+| D1 | 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| D2 | 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
+| D3 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 1 | 1 |
+
+: Primjer matrice dokument-termin za tri kratka dokumenta
+
+Iz ove matrice možemo iščitati nekoliko informacija. Dokumenti D1 i D2 dijele riječi "najavljuje" i "reforme", što sugerira određenu tematsku sličnost. Dokument D3 nema preklapanja s ostala dva dokumenta u pogledu specifičnih riječi, premda svi govore o nekoj vrsti ekonomske ili političke aktivnosti. Valja primijetiti da je većina ćelija u matrici jednaka nuli jer svaki dokument koristi samo mali podskup ukupnog vokabulara.
+
+Upravo ova karakteristika, poznata kao **rijetka popunjenost** ili sparsnost matrice, postaje izazov pri radu s većim korpusima. U realističnom scenariju analize medijskog sadržaja korpus može sadržavati desetke tisuća dokumenata i vokabular od stotina tisuća jedinstvenih riječi. Rezultirajuća matrica ima milijarde ćelija od kojih je više od 99% jednako nuli. Takve matrice zahtijevaju specijalizirane strukture za pohranu i algoritme za obradu koji učinkovito rukuju rijetkim podacima.
+
+Usprkos svojoj jednostavnosti, model vreće riječi ima nekoliko inherentnih ograničenja. Najočitije je potpuni gubitak informacije o redoslijedu riječi. Rečenice "Čovjek je ugrizao psa" i "Pas je ugrizao čovjeka" imale bi identičnu reprezentaciju u modelu vreće riječi premda nose dijametralno suprotna značenja. Slično tome, negacije poput "nije dobro" gube svoj semantički učinak jer se "nije" i "dobro" tretiraju kao nezavisne jedinice. Za istraživanja koja se fokusiraju na tematsku klasifikaciju ili općenitu usporedbu sadržaja ova ograničenja često nisu kritična, no za finije analize poput analize sentimenata ili retoričkih strategija model vreće riječi može se pokazati nedostatnim.
+
+
+## TF-IDF (Term Frequency – Inverse Document Frequency)
+
+Model vreće riječi tretira sve riječi kao jednako važne, što ne odgovara intuiciji o tome kako funkcionira značenje u tekstu. Neke riječi poput "je", "u" ili "na" pojavljuju se vrlo često u gotovo svim tekstovima i nose malo informacije o specifičnom sadržaju dokumenta. S druge strane, riječi koje se pojavljuju rjeđe, ali konzistentno unutar određenog dokumenta, često su upravo one koje definiraju njegovu tematsku posebnost. Istraživač koji analizira korpus članaka o različitim temama želi identificirati koje riječi najbolje karakteriziraju svaki pojedini dokument, odnosno koje su riječi "potpis" pojedinog teksta.
+
+**TF-IDF** (skraćenica od engl. *Term Frequency – Inverse Document Frequency*) predstavlja statističku mjeru koja pokušava kvantificirati upravo tu intuiciju o važnosti riječi. Osnovna ideja je da riječ treba imati visoku težinu ako se često pojavljuje u određenom dokumentu, ali rijetko u ostalim dokumentima korpusa. Takva riječ vjerojatno nosi važnu informaciju o specifičnom sadržaju tog dokumenta. Suprotno tome, riječ koja se pojavljuje u gotovo svim dokumentima, bez obzira na to koliko često, ima nisku diskriminacijsku vrijednost i treba joj dodijeliti manju težinu.
+
+Mjera TF-IDF sastoji se od dva komponenta. Prvi komponenta, **frekvencija termina** (TF), jednostavno mjeri koliko se često određena riječ pojavljuje u dokumentu. Može se izraziti kao sirovi broj pojavljivanja ili, češće, kao relativna frekvencija dobivena dijeljenjem broja pojavljivanja s ukupnim brojem riječi u dokumentu. Formalno, za riječ $t$ u dokumentu $d$:
+
+$$TF(t, d) = \frac{f_{t,d}}{\sum_{t' \in d} f_{t',d}}$$
+
+gdje $f_{t,d}$ označava broj pojavljivanja riječi $t$ u dokumentu $d$, a nazivnik predstavlja ukupan broj riječi u dokumentu.
+
+Drugi komponenta, **inverzna frekvencija dokumenta** (IDF), mjeri koliko je riječ rijetka ili česta u cijelom korpusu. Definira se kao logaritam omjera ukupnog broja dokumenata i broja dokumenata koji sadrže tu riječ:
+
+$$IDF(t, D) = \ln\left(\frac{N}{|\{d \in D : t \in d\}|}\right)$$
+
+gdje $N$ označava ukupan broj dokumenata u korpusu $D$, a nazivnik broji koliko dokumenata sadrži riječ $t$. Logaritamska transformacija služi ublažavanju ekstremnih vrijednosti.
+
+Konačna vrijednost TF-IDF dobiva se množenjem ova dva komponenta:
+
+$$TF\text{-}IDF(t, d, D) = TF(t, d) \times IDF(t, D)$$
+
+Promotrimo što ova formula implicira. Riječ koja se često pojavljuje u jednom dokumentu, ali rijetko u ostalima, imat će visoku vrijednost TF-IDF jer će oba faktora biti visoka. Riječ koja se pojavljuje u svim dokumentima imat će IDF jednak nuli (jer je logaritam od 1 jednak nuli), pa će njezina TF-IDF vrijednost također biti nula bez obzira na to koliko se često pojavljuje. Na taj način mjera automatski neutralizira utjecaj općenitih, visokofrekventnih riječi.
+
+Za istraživača masovne komunikacije TF-IDF nudi mogućnost identificiranja **karakterističnih riječi** za pojedine medije, autore ili vremenska razdoblja. Primjerice, ako analiziramo članke različitih hrvatskih portala, visoke TF-IDF vrijednosti mogu otkriti terminologiju koju preferira svaki portal. Jedan portal možda češće koristi termine poput "građani" i "zajednica", dok drugi preferira "potrošači" i "tržište", što može ukazivati na različite ideološke okvire ili ciljane publike.
+
+Tablica 1 prikazuje hipotetski primjer TF-IDF vrijednosti za odabrane riječi u tri dokumenta o ekonomskoj tematici.
+
+| Riječ | D1 (Fiskalna politika) | D2 (Monetarna politika) | D3 (Opći pregled) |
+|:------|:----------------------:|:-----------------------:|:-----------------:|
+| proračun | 0.089 | 0.012 | 0.031 |
+| deficit | 0.076 | 0.008 | 0.022 |
+| kamatna | 0.011 | 0.094 | 0.028 |
+| inflacija | 0.023 | 0.081 | 0.035 |
+| gospodarstvo | 0.018 | 0.021 | 0.019 |
+| ekonomija | 0.015 | 0.017 | 0.016 |
+
+: Hipotetske TF-IDF vrijednosti za odabrane riječi u tri ekonomska teksta
+
+Iz tablice vidimo da riječi "proračun" i "deficit" imaju najviše vrijednosti u dokumentu D1 koji se bavi fiskalnom politikom, dok "kamatna" i "inflacija" dominiraju u D2 o monetarnoj politici. Riječi "gospodarstvo" i "ekonomija" imaju slične, relativno niske vrijednosti u sva tri dokumenta jer se pojavljuju u svima i nemaju diskriminacijsku snagu. Ovakva analiza omogućuje istraživaču da brzo identificira tematski fokus svakog dokumenta te prepozna termine koji ga razlikuju od ostalih.
+
+Valja napomenuti da TF-IDF, unatoč širokoj primjeni, ostaje heuristička mjera bez čvrste teorijske utemeljenosti u informacijskoj teoriji. Različite varijante formule koriste se u praksi, uključujući logaritamsko skaliranje frekvencije termina ili dodavanje konstanti za izbjegavanje dijeljenja s nulom. Izbor konkretne varijante ovisi o karakteristikama korpusa i specifičnostima analitičkog zadatka.
+
+
+## Matrica supojavljivanja
+
+Prethodno razmatrane metode reprezentacije fokusirale su se na odnos između riječi i dokumenata, tretirajući svaku riječ kao nezavisnu jedinicu. Međutim, značenje riječi u prirodnom jeziku uvelike ovisi o kontekstu u kojem se pojavljuje i o drugim riječima s kojima se redovito javlja zajedno. Lingvistička hipoteza distribucijske semantike, koju je formulirao Zellig Harris sredinom dvadesetog stoljeća, tvrdi da riječi koje se pojavljuju u sličnim kontekstima imaju slična značenja. Ova intuicija motivira pristup reprezentaciji teksta temeljen na analizi **supojavljivanja** (engl. *co-occurrence*) riječi.
+
+**Matrica supojavljivanja** bilježi koliko se često parovi riječi pojavljuju zajedno unutar definiranog kontekstualnog prozora. Za razliku od matrice dokument-termin gdje redci predstavljaju dokumente, u matrici supojavljivanja i redci i stupci predstavljaju riječi iz vokabulara. Vrijednost u ćeliji $(i, j)$ označava koliko se puta riječ $i$ pojavila u neposrednoj blizini riječi $j$ u cijelom korpusu. Veličina kontekstualnog prozora, najčešće definirana kao određeni broj riječi prije i poslije ciljne riječi, parametar je koji istraživač mora odrediti ovisno o analitičkim ciljevima.
+
+Zamislimo da analiziramo korpus novinskih članaka o hrvatskom turizmu i definiramo kontekstualni prozor od dvije riječi s obje strane. Ako se u tekstu često pojavljuju fraze poput "turistička sezona", "ljetna sezona", "zimska sezona", matrica supojavljivanja će zabilježiti visoke vrijednosti za parove (turistička, sezona), (ljetna, sezona) i (zimska, sezona). Slično tome, ako se "Dubrovnik" često pojavljuje u blizini riječi "zidine", "Stari grad", "kulturna baština", te asocijacije bit će vidljive u matrici.
+
+Ključna prednost matrice supojavljivanja jest što omogućuje otkrivanje **semantičkih odnosa** između riječi. Riječi koje se pojavljuju u sličnim kontekstima imat će slične profile supojavljivanja, odnosno slične retke u matrici. To znači da možemo mjeriti semantičku sličnost između riječi usporedbom njihovih vektora supojavljivanja. Kosinusna sličnost ili drugi mjere udaljenosti mogu otkriti da su "automobil" i "vozilo" semantički bliski jer se pojavljuju s istim skupom riječi poput "parkirati", "voziti", "autocesta", premda se rijetko pojavljuju neposredno jedan pored drugog.
+
+Za istraživanje masovne komunikacije matrica supojavljivanja otvara mogućnosti analize koje nadilaze jednostavno prebrojavanje riječi. Možemo istraživati kako mediji konceptualno povezuju različite pojmove, primjerice koje se riječi najčešće pojavljuju uz "migranti" u konzervativnim naspram liberalnih medija. Takva analiza može otkriti različite okvire predstavljanja istog fenomena, pri čemu jedni mediji asociraju migrante s terminima poput "sigurnost", "granica", "kontrola", dok drugi koriste termine poput "humanitarni", "pomoć", "integracija".
+
+Praktična implementacija matrice supojavljivanja suočava se s izazovom dimenzionalnosti. Za vokabular od samo deset tisuća riječi rezultirajuća matrica ima sto milijuna ćelija. Upravo zato se u praksi često primjenjuju tehnike **redukcije dimenzionalnosti** poput dekompozicije singularnih vrijednosti (SVD) koja komprimira informacije iz velike rijetke matrice u gušću matricu nižih dimenzija. Ovaj postupak, poznat pod nazivom latentna semantička analiza (LSA), producira vektorske reprezentacije riječi koje zadržavaju semantičke odnose, ali u kompaktnijem obliku.
+
+Tablica 2 prikazuje hipotetski isječak matrice supojavljivanja za mali skup riječi iz korpusa o ekonomiji.
+
+| | rast | pad | gospodarstvo | inflacija | plaće |
+|:------------|:----:|:---:|:------------:|:---------:|:-----:|
+| rast | - | 12 | 87 | 23 | 45 |
+| pad | 12 | - | 65 | 34 | 38 |
+| gospodarstvo | 87 | 65 | - | 41 | 52 |
+| inflacija | 23 | 34 | 41 | - | 28 |
+| plaće | 45 | 38 | 52 | 28 | - |
+
+: Hipotetski isječak matrice supojavljivanja za ekonomski vokabular
+
+Iz tablice možemo iščitati da se "rast" i "gospodarstvo" vrlo često pojavljuju zajedno (87 supojavljivanja), dok "rast" i "pad" supostoje znatno rjeđe (12), što je očekivano jer se radi o antonimima koji se rijetko koriste u istom kontekstu. Zanimljivo je primijetiti da "gospodarstvo" ima visoke vrijednosti supojavljivanja sa svim ostalim riječima jer je to općeniti termin koji se prirodno kombinira s raznim ekonomskim konceptima.
+
+Matrica supojavljivanja može se vizualizirati kao mreža ili graf u kojem čvorovi predstavljaju riječi, a bridovi povezuju riječi koje se često pojavljuju zajedno. Debljina ili boja bridova može kodirati jačinu asocijacije. Takve vizualizacije posebno su korisne za eksplorativnu analizu i komunikaciju rezultata široj publici jer omogućuju intuitivno razumijevanje semantičke strukture korpusa.
+
+Valja zaključiti da različite metode reprezentacije teksta nude komplementarne perspektive na tekstualne podatke. Model vreće riječi pruža jednostavan i robustan temelj za mnoge analitičke zadatke. TF-IDF nadograđuje taj temelj uvođenjem koncepta težina koje reflektiraju diskriminacijsku vrijednost riječi. Matrica supojavljivanja otvara prozor u semantičke odnose koji definiraju značenje riječi u kontekstu. Izbor metode ovisi o specifičnostima istraživačkog pitanja, karakteristikama korpusa i računalnim resursima. U praksi se ove metode često kombiniraju ili služe kao polazište za naprednije tehnike poput tematskog modeliranja ili strojnog učenja.
+
+| Metoda | Struktura | Što mjeri | Tipična primjena |
+|:-------|:----------|:----------|:-----------------|
+| Vreća riječi (BoW) | Matrica dokument-termin | Frekvencija riječi u dokumentima | Klasifikacija dokumenata, pretraživanje |
+| TF-IDF | Matrica dokument-termin s težinama | Važnost riječi za dokument u korpusu | Identificiranje ključnih termina, usporedba dokumenata |
+| Matrica supojavljivanja | Matrica riječ-riječ | Kontekstualna bliskost riječi | Semantička analiza, analiza diskursa |
+
+: Usporedba metoda reprezentacije teksta
