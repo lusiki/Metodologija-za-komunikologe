@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Budući pravci i trendovi</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="txt Zakljucak_files/libs/clipboard/clipboard.min.js"></script>
+<script src="txt Zakljucak_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="txt Zakljucak_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="txt Zakljucak_files/libs/quarto-html/popper.min.js"></script>
+<script src="txt Zakljucak_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="txt Zakljucak_files/libs/quarto-html/anchor.min.js"></script>
+<link href="txt Zakljucak_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="txt Zakljucak_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="txt Zakljucak_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="txt Zakljucak_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="txt Zakljucak_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#budući-pravci-i-trendovi" id="toc-budući-pravci-i-trendovi" class="nav-link active" data-scroll-target="#budući-pravci-i-trendovi">Budući pravci i trendovi</a>
+  <ul class="collapse">
+  <li><a href="#veliki-jezični-modeli-i-transformerska-revolucija" id="toc-veliki-jezični-modeli-i-transformerska-revolucija" class="nav-link" data-scroll-target="#veliki-jezični-modeli-i-transformerska-revolucija">Veliki jezični modeli i transformerska revolucija</a></li>
+  <li><a href="#multimodalna-analiza-integracija-teksta-slike-i-videa" id="toc-multimodalna-analiza-integracija-teksta-slike-i-videa" class="nav-link" data-scroll-target="#multimodalna-analiza-integracija-teksta-slike-i-videa">Multimodalna analiza: integracija teksta, slike i videa</a></li>
+  <li><a href="#višejezičnost-i-jezici-s-manjim-resursima" id="toc-višejezičnost-i-jezici-s-manjim-resursima" class="nav-link" data-scroll-target="#višejezičnost-i-jezici-s-manjim-resursima">Višejezičnost i jezici s manjim resursima</a></li>
+  <li><a href="#učinkovitost-dostupnost-i-održivost" id="toc-učinkovitost-dostupnost-i-održivost" class="nav-link" data-scroll-target="#učinkovitost-dostupnost-i-održivost">Učinkovitost, dostupnost i održivost</a></li>
+  <li><a href="#kauzalna-inferencija-i-uzročno-zaključivanje-iz-teksta" id="toc-kauzalna-inferencija-i-uzročno-zaključivanje-iz-teksta" class="nav-link" data-scroll-target="#kauzalna-inferencija-i-uzročno-zaključivanje-iz-teksta">Kauzalna inferencija i uzročno zaključivanje iz teksta</a></li>
+  <li><a href="#analiza-u-stvarnom-vremenu-i-kontinuirani-nadzor" id="toc-analiza-u-stvarnom-vremenu-i-kontinuirani-nadzor" class="nav-link" data-scroll-target="#analiza-u-stvarnom-vremenu-i-kontinuirani-nadzor">Analiza u stvarnom vremenu i kontinuirani nadzor</a></li>
+  <li><a href="#sintetički-podaci-generativna-umjetna-inteligencija-i-autentičnost" id="toc-sintetički-podaci-generativna-umjetna-inteligencija-i-autentičnost" class="nav-link" data-scroll-target="#sintetički-podaci-generativna-umjetna-inteligencija-i-autentičnost">Sintetički podaci, generativna umjetna inteligencija i autentičnost</a></li>
+  <li><a href="#etička-regulacija-i-upravljanje" id="toc-etička-regulacija-i-upravljanje" class="nav-link" data-scroll-target="#etička-regulacija-i-upravljanje">Etička regulacija i upravljanje</a></li>
+  <li><a href="#implikacije-za-obrazovanje-i-metodološku-obuku" id="toc-implikacije-za-obrazovanje-i-metodološku-obuku" class="nav-link" data-scroll-target="#implikacije-za-obrazovanje-i-metodološku-obuku">Implikacije za obrazovanje i metodološku obuku</a></li>
+  <li><a href="#prema-integraciji-kvantitativnog-i-kvalitativnog" id="toc-prema-integraciji-kvantitativnog-i-kvalitativnog" class="nav-link" data-scroll-target="#prema-integraciji-kvantitativnog-i-kvalitativnog">Prema integraciji kvantitativnog i kvalitativnog</a></li>
+  <li><a href="#zaključak-pripremanje-za-neizvjesnu-budućnost" id="toc-zaključak-pripremanje-za-neizvjesnu-budućnost" class="nav-link" data-scroll-target="#zaključak-pripremanje-za-neizvjesnu-budućnost">Zaključak: pripremanje za neizvjesnu budućnost</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="txt-Zakljucak.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="txt Zakljucak.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Budući pravci i trendovi</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="budući-pravci-i-trendovi" class="level1">
+<h1>Budući pravci i trendovi</h1>
+<p>Područje računalne analize teksta prolazi kroz razdoblje iznimno brzih promjena. Metode koje su prije samo nekoliko godina predstavljale vrhunac tehnologije danas su zamijenjene novim pristupima koji postižu impresivne rezultate na zadacima koji su se činili nedostižnima. <strong>Veliki jezični modeli</strong> (Large Language Models, LLM) poput GPT-a, Clauda i Llame transformirali su način na koji računala procesiraju i generiraju tekst. <strong>Multimodalna analiza</strong> proširuje fokus s čistog teksta na integraciju slike, zvuka i videa. <strong>Višejezični modeli</strong> smanjuju barijere za jezike s manjim resursima poput hrvatskog. Istovremeno, rastuća svijest o <strong>etičkim implikacijama</strong>, <strong>pristranostima</strong> i <strong>ekološkom otisku</strong> velikih modela potiče razvoj odgovornijih i učinkovitijih pristupa.</p>
+<p>U ovom zaključnom poglavlju razmatramo trendove koji će oblikovati budućnost računalne analize teksta u istraživanju masovne komunikacije. Cilj nije pružiti detaljan tehnički pregled najnovijih algoritama, koji bi ionako brzo zastario, već identificirati šire smjerove razvoja i njihove implikacije za istraživačku praksu. Kako će novi alati promijeniti pitanja koja možemo postavljati? Koje nove mogućnosti otvaraju, a koje nove izazove donose? Kako se istraživači masovne komunikacije mogu pripremiti za budućnost koja dolazi brže nego što mnogi očekuju?</p>
+<p>Valja napomenuti da su predviđanja u ovom brzomijenjajućem području inherentno nesigurna. Razvoj koji se čini nevjerojatnim danas može postati realnost za godinu dana, dok obećavajuće tehnologije mogu naići na nepredviđene prepreke. Stoga pristupamo budućnosti s kombinacijom entuzijazma za nove mogućnosti i opreza pred neizvjesnostima. Naš cilj je osposobiti čitatelja da prati razvoj, kritički procjenjuje nove alate i donosi informirane odluke o njihovoj primjeni u vlastitom istraživanju.</p>
+<section id="veliki-jezični-modeli-i-transformerska-revolucija" class="level2">
+<h2 class="anchored" data-anchor-id="veliki-jezični-modeli-i-transformerska-revolucija">Veliki jezični modeli i transformerska revolucija</h2>
+<p>Razvoj <strong>transformer arhitekture</strong>, predstavljene 2017. godine u čuvenom radu “Attention is All You Need”, pokrenuo je revoluciju u obradi prirodnog jezika. Transformeri koriste mehanizam <strong>samopažnje</strong> (self-attention) koji omogućuje modelu da pri obradi svake riječi uzme u obzir sve ostale riječi u tekstu, zahvaćajući složene kontekstualne ovisnosti koje su bile izvan dosega ranijih arhitektura.</p>
+<p>Na temelju transformera razvijeni su <strong>veliki jezični modeli</strong> koji su trenirani na ogromnim količinama teksta s interneta. Modeli poput BERT-a (Bidirectional Encoder Representations from Transformers), GPT-a (Generative Pre-trained Transformer), Clauda, Llame i drugih dostigli su razine razumijevanja i generiranja teksta koje su prije samo nekoliko godina bile nezamislive. Ovi modeli mogu odgovarati na složena pitanja, pisati koherentne tekstove, prevoditi između jezika, sažimati dokumente i obavljati mnoge druge zadatke s impresivnom točnošću.</p>
+<p>Za istraživanje masovne komunikacije, veliki jezični modeli otvaraju nekoliko transformativnih mogućnosti. <strong>Automatska anotacija</strong> tekstova postaje dostupnija jer se modeli mogu koristiti za klasifikaciju bez opsežnog ručnog označavanja. Umjesto da treniramo klasifikator na stotinama ručno označenih primjera, možemo jednostavno zamoliti veliki jezični model da klasificira tekst prema zadanim kategorijama. Istraživanja pokazuju da ovakvi pristupi mogu postići usporedivu, ponekad čak i bolju, točnost od tradicionalnih nadziranih metoda.</p>
+<p><strong>Zero-shot i few-shot učenje</strong> predstavljaju paradigmatski pomak. Tradicionalno nadzirano učenje zahtijevalo je značajnu količinu označenih podataka za treniranje; tipično stotine ili tisuće primjera po kategoriji. Veliki jezični modeli mogu klasificirati tekstove “iz nule” (zero-shot), samo na temelju opisa kategorija, ili s vrlo malo primjera (few-shot). Ovo dramatično smanjuje troškove i vrijeme potrebno za postavljanje analize, posebno za nove ili neuobičajene kategorije za koje ne postoje gotovi označeni skupovi podataka.</p>
+<p><strong>Generiranje sintetičkih podataka</strong> postaje moguće na načine koji mogu pomoći, ali i stvoriti nove izazove. Modeli mogu generirati primjere tekstova za treniranje, proširujući ograničene skupove podataka. Međutim, isti kapacitet omogućuje i generiranje dezinformacija, lažnih vijesti i manipulativnog sadržaja na skali koja je ranije bila nemoguća. Istraživači masovne komunikacije suočit će se s rastućim izazovom razlikovanja autentičnog i generiranog sadržaja.</p>
+<p><strong>Interaktivna analiza</strong> postaje moguća kroz konverzacijske sučelje s jezičnim modelima. Istraživač može voditi dijalog s modelom, postavljati dodatna pitanja, tražiti pojašnjenja, iterativno rafinirati analizu. Ovo može ubrzati eksplorativnu fazu istraživanja, premda zahtijeva oprez jer modeli mogu proizvoditi uvjerljive ali netočne tvrdnje (fenomen poznat kao “halucinacije”).</p>
+<p>Međutim, s velikim mogućnostima dolaze i značajni izazovi. <strong>Neprozirnost</strong> velikih modela nadilazi čak i ranija ograničenja interpretabilnosti. Modeli s desetinama ili stotinama milijardi parametara funkcioniraju kao potpune “crne kutije” čije je odlučivanje gotovo nemoguće razumjeti. <strong>Računalni zahtjevi</strong> za treniranje i pokretanje velikih modela su enormni, što ih čini nedostupnima za mnoge istraživače bez pristupa oblaku ili specijaliziranoj infrastrukturi. <strong>Halucinacije</strong>, odnosno samopouzdano generiranje netočnih informacija, predstavljaju ozbiljan problem za primjene koje zahtijevaju faktičku točnost.</p>
+<table class="caption-top table">
+<caption>Prednosti i izazovi velikih jezičnih modela za istraživanje</caption>
+<colgroup>
+<col style="width: 41%">
+<col style="width: 25%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Prednost</th>
+<th style="text-align: left;">Opis</th>
+<th style="text-align: left;">Izazov</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Zero-shot klasifikacija</td>
+<td style="text-align: left;">Klasifikacija bez označenih podataka</td>
+<td style="text-align: left;">Varijabilnost i nepouzdanost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kontekstualno razumijevanje</td>
+<td style="text-align: left;">Zahvaćanje nijansi i implicitnih značenja</td>
+<td style="text-align: left;">Neprozirnost odlučivanja</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Višezadaćnost</td>
+<td style="text-align: left;">Jedan model za mnoge zadatke</td>
+<td style="text-align: left;">Generalizacija vs.&nbsp;specijalizacija</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Generiranje teksta</td>
+<td style="text-align: left;">Sažeci, prijevodi, proširenja</td>
+<td style="text-align: left;">Halucinacije i netočnosti</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Interaktivna analiza</td>
+<td style="text-align: left;">Dijalog s modelom</td>
+<td style="text-align: left;">Ovisnost o formulaciji upita</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="multimodalna-analiza-integracija-teksta-slike-i-videa" class="level2">
+<h2 class="anchored" data-anchor-id="multimodalna-analiza-integracija-teksta-slike-i-videa">Multimodalna analiza: integracija teksta, slike i videa</h2>
+<p>Dosad smo se fokusirali isključivo na tekstualne podatke, no medijska komunikacija rijetko je čisto tekstualna. Vijesti uključuju fotografije, infografike i video materijale. Objave na društvenim mrežama kombiniraju tekst, slike, emotikone i GIF-ove. Politička komunikacija koristi plakate, videospotove i multimedijalne prezentacije. <strong>Multimodalna analiza</strong> pokušava zahvatiti ovu višemedijsku stvarnost integrirajući analizu različitih modaliteta: teksta, slike, zvuka i videa.</p>
+<p>Razvoj multimodalnih modela omogućuje istovremenu obradu različitih tipova podataka. Modeli poput CLIP-a (Contrastive Language-Image Pre-training) naučeni su povezivati slike i tekst u zajedničkom semantičkom prostoru. To omogućuje pretraživanje slika prema tekstualnim opisima, klasifikaciju slika prema tekstualnim kategorijama i analizu odnosa između vizualnog i tekstualnog sadržaja. Noviji modeli proširuju ove sposobnosti na video, omogućujući analizu pokretnih slika zajedno s pripadajućim tekstom i zvukom.</p>
+<p>Za istraživanje masovne komunikacije, multimodalna analiza otvara nove mogućnosti. <strong>Analiza mema</strong> postaje moguća na način koji zahvaća njihovu inherentnu multimodalnost. Memi tipično kombiniraju sliku i tekst na načine koji proizvode značenje koje nije prisutno ni u jednom modalitetu pojedinačno. Humor, ironija i kritika često proizlaze iz napetosti između vizualnog i tekstualnog elementa. Čisto tekstualna analiza nužno propušta ovu dimenziju.</p>
+<p><strong>Verifikacija vizualnog sadržaja</strong> postaje sve važnija u doba kada su manipulirane slike i deepfake videozapisi sve uvjerljiviji. Multimodalni pristupi mogu uspoređivati vizualni sadržaj s tekstualnim tvrdnjama, detektirati nekonzistentnosti između slike i njenog opisa, i identificirati potencijalno manipulirani sadržaj.</p>
+<p><strong>Analiza televizijskog sadržaja</strong> može integrirati transkripte govora, vizualnu analizu kadrirane, prepoznavanje lica govornika i analizu emocionalnog tona glasa. Ova integracija omogućuje bogatije razumijevanje načina na koji televizija konstruira priče i prezentira aktere.</p>
+<p>Međutim, multimodalna analiza donosi i specifične izazove. <strong>Kompleksnost integracije</strong> različitih modaliteta nije trivijalna. Tekst, slika i zvuk imaju fundamentalno različite strukture i reprezentacije. Kako ih smisleno kombinirati? Kako odrediti relativnu važnost svakog modaliteta? Kako razriješiti situacije kada različiti modaliteti sugeriraju suprotne interpretacije?</p>
+<p><strong>Računalni zahtjevi</strong> multimodalne analize značajno premašuju zahtjeve čisto tekstualne analize. Video materijali zahtijevaju ogromne količine memorije i procesorske snage. Istraživači s ograničenim resursima možda neće moći primijeniti napredne multimodalne metode.</p>
+<p><strong>Validacija</strong> postaje složenija kada analiza uključuje više modaliteta. Kako verificirati da model ispravno interpretira odnos između slike i teksta? Potrebni su novi pristupi evaluaciji koji zahvaćaju multimodalnu kompleksnost.</p>
+<pre><code>[Konceptualna ilustracija]
+
+TEKST          SLIKA           ZVUK/VIDEO
+   |              |                |
+   v              v                v
+[Tekstualni]  [Vizualni]    [Audio/Video]
+ encoder       encoder        encoder
+   |              |                |
+   +--------------+----------------+
+                  |
+                  v
+         [Multimodalna fuzija]
+                  |
+                  v
+         [Zajednička reprezentacija]
+                  |
+                  v
+    [Klasifikacija / Generiranje / Analiza]</code></pre>
+</section>
+<section id="višejezičnost-i-jezici-s-manjim-resursima" class="level2">
+<h2 class="anchored" data-anchor-id="višejezičnost-i-jezici-s-manjim-resursima">Višejezičnost i jezici s manjim resursima</h2>
+<p>Većina naprednih jezičnih modela primarno je razvijena za engleski jezik. Engleski dominira internetom, akademskom literaturom i korporativnim istraživanjima u području umjetne inteligencije. Međutim, razvoj <strong>višejezičnih modela</strong> (multilingual models) postupno smanjuje jaz između engleskog i drugih jezika, uključujući hrvatski.</p>
+<p>Modeli poput mBERT-a (multilingual BERT), XLM-RoBERTa i novijih višejezičnih verzija velikih jezičnih modela trenirani su na tekstovima iz stotina jezika. Ovi modeli mogu obavljati zadatke poput klasifikacije, prepoznavanja entiteta i semantičke analize na jezicima za koje nisu eksplicitno trenirani, koristeći znanje preneseno iz srodnih jezika.</p>
+<p><strong>Prijenosno učenje</strong> (transfer learning) između jezika pokazuje obećavajuće rezultate. Model treniran na engleskim podacima za određeni zadatak može se primijeniti na hrvatski tekst s razumnom točnošću, čak i bez dodatnog treniranja na hrvatskim podacima. Ovo je posebno korisno za zadatke poput analize sentimenta, detekcije govora mržnje ili tematske klasifikacije, gdje postoje obilni označeni podaci na engleskom, ali ne na hrvatskom.</p>
+<p><strong>Zero-shot cross-lingual transfer</strong> predstavlja još napredniji pristup gdje se model uopće ne izlaže ciljnom jeziku tijekom treniranja, već se oslanja na višejezične reprezentacije koje povezuju jezike u zajedničkom semantičkom prostoru. Istraživanja pokazuju da ovakvi pristupi mogu postići konkurentne rezultate na jezicima poput hrvatskog, premda još uvijek zaostaju za modelima specifično treniranim na ciljnom jeziku.</p>
+<p>Ipak, izazovi za <strong>jezike s manjim resursima</strong> ostaju značajni. Višejezični modeli tipično postižu bolje rezultate na jezicima koji su dobro zastupljeni u trenažnim podacima, dok “manjinski” jezici dobivaju manju pažnju algoritma. Morfološki bogati jezici poput hrvatskog predstavljaju dodatni izazov jer njihova kompleksnost nije uvijek adekvatno zahvaćena modelima primarno optimiziranim za morfološki jednostavnije jezike.</p>
+<p>Pozitivan trend jest rastući interes za razvoj <strong>jezično-specifičnih resursa</strong> i modela. Inicijative poput BERTić-a (BERT za hrvatski) i srodnih projekata pokazuju da zajednica prepoznaje potrebu za specijaliziranim resursima. Kako računalna lingvistika postaje globalnija, možemo očekivati poboljšanu podršku za jezike izvan englesko-kinesko-španjolskog mainstreama.</p>
+<table class="caption-top table">
+<caption>Pristupi za analizu hrvatskog teksta</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 14%">
+<col style="width: 64%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pristup</th>
+<th style="text-align: left;">Opis</th>
+<th style="text-align: left;">Primjenjivost za hrvatski</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Višejezični modeli</td>
+<td style="text-align: left;">Jedan model za mnoge jezike</td>
+<td style="text-align: left;">Dobra, ali suboptimalna</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cross-lingual transfer</td>
+<td style="text-align: left;">Prijenos s engleskog</td>
+<td style="text-align: left;">Obećavajuća, zahtijeva validaciju</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jezično-specifični modeli</td>
+<td style="text-align: left;">Modeli za hrvatski</td>
+<td style="text-align: left;">Najbolja, ali ograničena dostupnost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Prijevod + analiza</td>
+<td style="text-align: left;">Prevedi na engleski, analiziraj</td>
+<td style="text-align: left;">Jednostavna, gubi nijanse</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="učinkovitost-dostupnost-i-održivost" class="level2">
+<h2 class="anchored" data-anchor-id="učinkovitost-dostupnost-i-održivost">Učinkovitost, dostupnost i održivost</h2>
+<p>Rast velikih jezičnih modela prati eksponencijalni rast njihovih računalnih zahtjeva. Treniranje modela poput GPT-4 zahtijeva stotine milijuna dolara računalnih resursa i proizvodi značajnu količinu ugljičnog dioksida. Pokretanje velikih modela zahtijeva specijalizirani hardver koji nije dostupan većini istraživača. Ovaj trend prema sve većim modelima postavio je pitanja <strong>održivosti</strong> i <strong>dostupnosti</strong>.</p>
+<p>Kao odgovor, razvijaju se pristupi za stvaranje <strong>manjih, učinkovitijih modela</strong> koji postižu usporedive rezultate s manje resursa. <strong>Destilacija znanja</strong> (knowledge distillation) komprimira znanje velikog modela u manji, učinkovitiji model. <strong>Kvantizacija</strong> smanjuje preciznost brojčanih reprezentacija, dramatično smanjujući memorijske zahtjeve. <strong>Obrezivanje</strong> (pruning) uklanja parametre koji malo doprinose performansama. Rezultat su modeli koji se mogu pokretati na standardnim računalima ili čak mobilnim uređajima.</p>
+<p><strong>Otvoreni modeli</strong> poput Llame, Mistral i drugih predstavljaju demokratizaciju pristupa naprednim jezičnim modelima. Za razliku od zatvorenih komercijalnih modela dostupnih samo kroz API, otvoreni modeli mogu se preuzeti, modificirati i pokretati lokalno. Ovo je posebno važno za istraživače koji rade s osjetljivim podacima koji ne bi smjeli napustiti instituciju, ili za one s ograničenim budžetom za plaćanje API poziva.</p>
+<p><strong>Fino podešavanje</strong> (fine-tuning) omogućuje prilagodbu općenitih modela specifičnim zadacima s relativno malo dodatnog treniranja. Istraživač može uzeti pretreniran model i prilagoditi ga svom specifičnom korpusu ili zadatku s nekoliko stotina ili tisuća primjera, postižući bolje rezultate nego što bi bilo moguće treniranjem od nule.</p>
+<p>Za istraživače masovne komunikacije, ovi trendovi znače da napredne metode postaju postupno dostupnije. Ono što je prije zahtijevalo pristup skupim oblačnim servisima ili specijaliziranoj infrastrukturi, sada se može izvoditi na dobro opremljenom prijenosnom računalu. Ovo smanjuje barijere za ulazak i omogućuje širem krugu istraživača da eksperimentira s naprednim metodama.</p>
+<p>Pitanje <strong>ekološke održivosti</strong> postaje sve relevantnije. Treniranje i pokretanje velikih modela ima značajan ugljični otisak. Istraživači bi trebali biti svjesni ovog aspekta i razmotriti je li korištenje najvećih modela opravdano za njihov specifični zadatak, ili bi manji, učinkovitiji modeli mogli postići dovoljno dobre rezultate s manjim ekološkim troškovima.</p>
+</section>
+<section id="kauzalna-inferencija-i-uzročno-zaključivanje-iz-teksta" class="level2">
+<h2 class="anchored" data-anchor-id="kauzalna-inferencija-i-uzročno-zaključivanje-iz-teksta">Kauzalna inferencija i uzročno zaključivanje iz teksta</h2>
+<p>Tradicionalna analiza teksta pretežno je korelacijska: identificiramo obrasce, mjerimo asocijacije, opisujemo trendove. Međutim, mnoga istraživačka pitanja u masovnoj komunikaciji inherentno su <strong>kauzalna</strong>: Utječe li negativan medijski ton na javno mnijenje? Povećava li izloženost dezinformacijama polarizaciju? Mijenja li uokvirivanje vijesti percepciju problema?</p>
+<p>Razvoj metoda za <strong>kauzalnu inferenciju iz tekstualnih podataka</strong> predstavlja uzbudljiv pravac istraživanja. Ove metode pokušavaju identificirati uzročne učinke korištenjem teksta kao tretmana, ishoda ili kontrolne varijable.</p>
+<p><strong>Tekst kao tretman</strong> analizira kako karakteristike teksta utječu na ishode. Primjerice, kako različiti načini uokvirivanja iste vijesti utječu na percepciju čitatelja? Eksperimenti u kojima se manipulira tekstualnim sadržajem, a mjeri reakcija sudionika, omogućuju kauzalno zaključivanje o učincima jezičnih izbora.</p>
+<p><strong>Tekst kao ishod</strong> analizira kako tretmani utječu na proizvedeni tekst. Primjerice, kako promjena vlasništva nad medijem utječe na uređivačku politiku? Usporedba tekstova prije i nakon intervencije može otkriti kauzalne učinke na sadržaj.</p>
+<p><strong>Tekst kao kontrolna varijabla</strong> koristi tekstualne mjere za kontrolu konfundirajućih varijabli u kauzalnim analizama. Primjerice, ako želimo procijeniti učinak određene medijske kampanje, možemo koristiti tekstualne mjere prethodnog izvještavanja kao kontrolu za baznu razinu pažnje prema temi.</p>
+<p>Feder i suradnici u preglednom članku “Causal Inference in Natural Language Processing” sistematiziraju ovo područje, identificirajući izazove poput definiranja tekstualnih tretmana, rješavanja problema visoke dimenzionalnosti i validacije kauzalnih pretpostavki. Egami i suradnici razvijaju metodološke okvire za rigorozno kauzalno zaključivanje s tekstualnim podacima, naglašavajući potrebu za pažljivom konceptualizacijom tretmana i ishoda.</p>
+<p>Ovaj pravac istraživanja obećava pomicanje analize teksta od deskriptivne prema eksplanatornoj, omogućujući ne samo identifikaciju obrazaca, već i razumijevanje mehanizama koji te obrasce produciraju.</p>
+</section>
+<section id="analiza-u-stvarnom-vremenu-i-kontinuirani-nadzor" class="level2">
+<h2 class="anchored" data-anchor-id="analiza-u-stvarnom-vremenu-i-kontinuirani-nadzor">Analiza u stvarnom vremenu i kontinuirani nadzor</h2>
+<p>Tradicionalna analiza teksta tipično je retrospektivna: prikupimo korpus, analiziramo ga, objavimo rezultate. Međutim, medijska komunikacija odvija se kontinuirano, a mnoga istraživačka pitanja zahtijevaju praćenje u stvarnom vremenu ili blizu stvarnog vremena.</p>
+<p><strong>Streaming analiza</strong> obrađuje tekstualne podatke čim postanu dostupni, omogućujući kontinuirani nadzor medijskog prostora. Platforme za praćenje društvenih mreža već nude ovakve mogućnosti za komercijalnu upotrebu, a istraživačke primjene postaju sve sofisticiranije.</p>
+<p><strong>Detekcija događaja</strong> automatski identificira pojavu novih tema ili neočekivanih promjena u medijskom diskursu. Algoritmi mogu detektirati kada se nova tema pojavi, kada postojeća tema doživi nagli porast pažnje, ili kada se sentiment prema određenoj temi značajno promijeni.</p>
+<p><strong>Prediktivno modeliranje</strong> pokušava anticipirati buduće trendove na temelju trenutnih obrazaca. Može li analiza ranijih obrazaca predvidjeti koje teme će dominirati medijskom agendom sljedećeg tjedna? Koji sadržaji će postati viralni? Ove aplikacije ostaju izazovne, no napreduju.</p>
+<p>Za istraživanje masovne komunikacije, analiza u stvarnom vremenu omogućuje proučavanje <strong>dinamike medijske pažnje</strong>, <strong>brzine širenja informacija</strong> i <strong>evolucije narativa</strong> na načine koji nisu bili mogući s retrospektivnim pristupima. Međutim, ova mogućnost donosi i etičke izazove: kontinuirani nadzor javnog diskursa može služiti legitimnim istraživačkim ciljevima, ali i problematičnim praksama nadzora i manipulacije.</p>
+</section>
+<section id="sintetički-podaci-generativna-umjetna-inteligencija-i-autentičnost" class="level2">
+<h2 class="anchored" data-anchor-id="sintetički-podaci-generativna-umjetna-inteligencija-i-autentičnost">Sintetički podaci, generativna umjetna inteligencija i autentičnost</h2>
+<p>Sposobnost velikih jezičnih modela da generiraju koherentan tekst koji je teško razlikovati od ljudski napisanog teksta ima dalekosežne implikacije za istraživanje masovne komunikacije.</p>
+<p>S jedne strane, <strong>sintetički podaci</strong> mogu pomoći istraživačima. Generiranje dodatnih primjera za proširenje ograničenih trenažnih skupova, stvaranje testnih scenarija, augmentacija podataka za poboljšanje robusnosti modela. Ove primjene mogu učiniti istraživanje učinkovitijim i dostupnijim.</p>
+<p>S druge strane, isti kapacitet omogućuje <strong>proizvodnju dezinformacija na industrijskoj skali</strong>. Lažne vijesti, propagandni sadržaj, astroturf kampanje koje simuliraju organsko javno mnijenje – sve to postaje jeftinije i jednostavnije proizvoditi. Istraživači masovne komunikacije suočavaju se s rastućim izazovom proučavanja medijskog prostora u kojem značajan dio sadržaja može biti strojno generiran.</p>
+<p><strong>Detekcija generiranog teksta</strong> postaje nova istraživačka domena. Razvijaju se metode za identificiranje teksta proizveden od strane jezičnih modela, no ovo je utrka u kojoj se napadači i branitelji neprestano prilagođavaju. Modeli za detekciju nikada neće biti savršeni, a sofisticirane tehnike generiranja mogu zaobići većinu detektora.</p>
+<p><strong>Autentičnost i povjerenje</strong> postaju centralna pitanja za medije i istraživače. Kako verificirati da je tekst koji analiziramo autentičan ljudski proizvod, a ne strojno generiran? Ovo pitanje ima implikacije za valjanost istraživanja, ali i za šire društveno povjerenje u medije i informacijski ekosustav.</p>
+</section>
+<section id="etička-regulacija-i-upravljanje" class="level2">
+<h2 class="anchored" data-anchor-id="etička-regulacija-i-upravljanje">Etička regulacija i upravljanje</h2>
+<p>Rastuća moć jezičnih modela prati rastući interes za njihovu <strong>regulaciju i etičko upravljanje</strong>. Europska unija kroz Akt o umjetnoj inteligenciji (AI Act) postavlja regulatorni okvir koji će utjecati na to kako se jezični modeli mogu razvijati i primjenjivati. Slični regulatorni napori odvijaju se globalno.</p>
+<p>Za istraživače, ova regulatorna evolucija ima nekoliko implikacija. <strong>Pristup podacima</strong> može postati restriktivniji kako platforme implementiraju strože politike privatnosti i uvjete korištenja. Istraživanja koja su bila moguća prije nekoliko godina možda više neće biti izvediva zbog promjena u dostupnosti podataka.</p>
+<p><strong>Transparentnost i odgovornost</strong> postaju eksplicitni zahtjevi. Istraživači će morati jasnije dokumentirati kako koriste jezične modele, koje pristranosti mogu biti prisutne, i kako osiguravaju da njihova istraživanja ne štete subjektima čiji se tekstovi analiziraju.</p>
+<p><strong>Akademska zajednica</strong> sve aktivnije raspravlja o etičkim smjernicama za korištenje velikih jezičnih modela u istraživanju. Pitanja uključuju: je li etično koristiti modele trenirane na tekstu bez eksplicitnog pristanka autora? Kako citirati i pripisati doprinos jezičnih modela u istraživačkom procesu? Koje su odgovornosti istraživača kada koriste alate čiji su mehanizmi neprozirni?</p>
+<p>Ova pitanja nemaju jednostavne odgovore i zahtijevat će kontinuiranu refleksiju kako se tehnologije i društvene norme razvijaju.</p>
+</section>
+<section id="implikacije-za-obrazovanje-i-metodološku-obuku" class="level2">
+<h2 class="anchored" data-anchor-id="implikacije-za-obrazovanje-i-metodološku-obuku">Implikacije za obrazovanje i metodološku obuku</h2>
+<p>Brze promjene u metodama računalne analize teksta imaju značajne implikacije za <strong>obrazovanje budućih istraživača</strong>. Kurikulumi koji su bili aktualni prije pet godina danas su zastarjeli. Vještine koje će biti potrebne za pet godina teško je predvidjeti.</p>
+<p>Ipak, možemo identificirati nekoliko trajnih principa koji nadilaze specifične tehnologije. <strong>Kritičko mišljenje</strong> o metodama ostaje esencijalno bez obzira na to koji se alati koriste. Sposobnost procjene valjanosti, pouzdanosti i primjenjivosti metoda ne zastarijeva s pojavom novih algoritama. <strong>Temeljno razumijevanje statistike i strojnog učenja</strong> pruža osnovu za razumijevanje novih pristupa, čak i ako se specifični algoritmi mijenjaju. <strong>Vještine programiranja</strong> omogućuju prilagodbu i kombiniranje alata za specifične istraživačke potrebe.</p>
+<p><strong>Interdisciplinarna suradnja</strong> postaje sve važnija. Rijetko pojedinac može savladati sve aspekte moderne analize teksta, od lingvistike i komunikologije do računalne znanosti i statistike. Timski pristup koji kombinira ekspertize postaje norma za napredna istraživanja.</p>
+<p><strong>Kontinuirano učenje</strong> postaje nužnost, ne opcija. Istraživači moraju pratiti razvoj u polju, eksperimentirati s novim alatima i neprestano ažurirati svoje vještine. Ovo zahtijeva institucionalnu podršku za profesionalni razvoj, pristup resursima za obuku i kulturu koja vrednuje metodološku inovaciju.</p>
+</section>
+<section id="prema-integraciji-kvantitativnog-i-kvalitativnog" class="level2">
+<h2 class="anchored" data-anchor-id="prema-integraciji-kvantitativnog-i-kvalitativnog">Prema integraciji kvantitativnog i kvalitativnog</h2>
+<p>Jedan od najobećavajućih trendova jest postupna <strong>integracija kvantitativnih računalnih metoda s kvalitativnim pristupima</strong>. Tradicionalna dihotomija između kvantitativnog (veliki uzorci, statistička analiza) i kvalitativnog (duboka interpretacija, mali uzorci) pristupa počinje se razrješavati.</p>
+<p><strong>Računalno potpomognuta kvalitativna analiza</strong> koristi algoritme za identifikaciju obrazaca i odabir reprezentativnih primjera koje zatim istraživač detaljno analizira. Umjesto da ručno pregleda tisuće dokumenata, istraživač koristi algoritme za usmjeravanje pažnje na najrelevantnije ili najtipičnije primjere.</p>
+<p><strong>Miješane metode</strong> u pravom smislu kombiniraju snage oba pristupa. Kvantitativna analiza identificira obrasce na razini korpusa; kvalitativna analiza dublje istražuje te obrasce na razini pojedinačnih tekstova. Zaključci proizlaze iz dijaloga između razina analize.</p>
+<p><strong>Interpretativna validacija</strong> koristi kvalitativno čitanje za provjeru smislenosti kvantitativnih rezultata. Ako tematski model identificira “temu”, istraživač pregledava konkretne tekstove visoko asocirane s tom temom kako bi procijenio odgovara li statistički obrazac smislenom konceptu.</p>
+<p>Ovaj integrirani pristup odražava prepoznavanje da ni kvantitativne ni kvalitativne metode same po sebi nisu dovoljne za razumijevanje kompleksnosti medijske komunikacije. Računalne metode omogućuju opseg i sistematičnost; kvalitativne metode pružaju dubinu i kontekstualno razumijevanje. Budućnost pripada pristupima koji mudro kombiniraju oboje.</p>
+</section>
+<section id="zaključak-pripremanje-za-neizvjesnu-budućnost" class="level2">
+<h2 class="anchored" data-anchor-id="zaključak-pripremanje-za-neizvjesnu-budućnost">Zaključak: pripremanje za neizvjesnu budućnost</h2>
+<p>Ako je jedno sigurno, to je da će se područje računalne analize teksta nastaviti brzo mijenjati. Metode koje danas koristimo vjerojatno će biti zamijenjene naprednijima; izazovi koje danas identificiramo možda će biti riješeni, dok će se pojaviti novi, nepredviđeni izazovi. Kako se istraživač masovne komunikacije može pripremiti za ovu neizvjesnu budućnost?</p>
+<p><strong>Graditi na temeljima, ne na alatima.</strong> Specifični alati i algoritmi prolaze, ali temeljni principi dobreg istraživanja ostaju: jasna istraživačka pitanja, rigorozna metodologija, kritička evaluacija, etička odgovornost. Ulaganje u razumijevanje temelja isplatit će se čak i kada se specifične tehnologije promijene.</p>
+<p><strong>Održavati fleksibilnost i otvorenost.</strong> Biti spreman učiti nove pristupe, eksperimentirati s novim alatima, prilagođavati se promjenjivom krajoliku. Rigidno prianjanje uz jednu metodu ili alat rizikira zaostajanje kako se polje razvija.</p>
+<p><strong>Surađivati preko disciplinarnih granica.</strong> Najuzbudljiviji razvoji događaju se na sjecištima disciplina. Komunikolozi koji surađuju s računalnim znanstvenicima, lingvistima i statistčarima mogu postići više nego što bi bilo tko od njih mogao sam.</p>
+<p><strong>Zadržati kritički stav.</strong> Entuzijazam za nove mogućnosti ne bi trebao zaslijepiti za ograničenja, pristranosti i potencijalne štete. Odgovoran istraživač istovremeno prihvaća mogućnosti novih tehnologija i kritički procjenjuje njihove implikacije.</p>
+<p><strong>Usmjeriti se na pitanja, ne na metode.</strong> Metode su alati za odgovaranje na pitanja, ne ciljevi sami po sebi. Najbolja istraživanja počinju s važnim pitanjima o medijskoj komunikaciji i društvu, a zatim traže najprikladnije metode za odgovaranje na ta pitanja, bile one tradicionalne ili najsuvremenije.</p>
+<p>S ovim principima na umu, budućnost računalne analize teksta u istraživanju masovne komunikacije izgleda uzbudljivo i obećavajuće. Izazovi su značajni, ali tako su i mogućnosti. Istraživači koji se pripreme za ovu budućnost bit će u poziciji da pruže uvide koji su i metodološki rigorozni i supstantivno značajni, doprinoseći našem razumijevanju medijske komunikacije u sve složenijem informacijskom krajoliku.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Ograničenja metode</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="txt Ogranicenja_files/libs/clipboard/clipboard.min.js"></script>
+<script src="txt Ogranicenja_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="txt Ogranicenja_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="txt Ogranicenja_files/libs/quarto-html/popper.min.js"></script>
+<script src="txt Ogranicenja_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="txt Ogranicenja_files/libs/quarto-html/anchor.min.js"></script>
+<link href="txt Ogranicenja_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="txt Ogranicenja_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="txt Ogranicenja_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="txt Ogranicenja_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="txt Ogranicenja_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#ograničenja-metode" id="toc-ograničenja-metode" class="nav-link active" data-scroll-target="#ograničenja-metode">Ograničenja metode</a>
+  <ul class="collapse">
+  <li><a href="#temeljne-pretpostavke-računalne-analize-teksta" id="toc-temeljne-pretpostavke-računalne-analize-teksta" class="nav-link" data-scroll-target="#temeljne-pretpostavke-računalne-analize-teksta">Temeljne pretpostavke računalne analize teksta</a></li>
+  <li><a href="#valjanost-i-pouzdanost" id="toc-valjanost-i-pouzdanost" class="nav-link" data-scroll-target="#valjanost-i-pouzdanost">Valjanost i pouzdanost</a></li>
+  <li><a href="#problem-reprezentacije-teksta" id="toc-problem-reprezentacije-teksta" class="nav-link" data-scroll-target="#problem-reprezentacije-teksta">Problem reprezentacije teksta</a></li>
+  <li><a href="#jezično-specifični-izazovi-hrvatski-jezik" id="toc-jezično-specifični-izazovi-hrvatski-jezik" class="nav-link" data-scroll-target="#jezično-specifični-izazovi-hrvatski-jezik">Jezično-specifični izazovi: hrvatski jezik</a></li>
+  <li><a href="#pristranost-u-podacima-i-uzorkovanju" id="toc-pristranost-u-podacima-i-uzorkovanju" class="nav-link" data-scroll-target="#pristranost-u-podacima-i-uzorkovanju">Pristranost u podacima i uzorkovanju</a></li>
+  <li><a href="#generalizacija-i-prekomjerno-prilagođavanje" id="toc-generalizacija-i-prekomjerno-prilagođavanje" class="nav-link" data-scroll-target="#generalizacija-i-prekomjerno-prilagođavanje">Generalizacija i prekomjerno prilagođavanje</a></li>
+  <li><a href="#interpretabilnost-i-problem-crne-kutije" id="toc-interpretabilnost-i-problem-crne-kutije" class="nav-link" data-scroll-target="#interpretabilnost-i-problem-crne-kutije">Interpretabilnost i problem “crne kutije”</a></li>
+  <li><a href="#etička-razmatranja" id="toc-etička-razmatranja" class="nav-link" data-scroll-target="#etička-razmatranja">Etička razmatranja</a></li>
+  <li><a href="#validacija-kao-nužnost" id="toc-validacija-kao-nužnost" class="nav-link" data-scroll-target="#validacija-kao-nužnost">Validacija kao nužnost</a></li>
+  <li><a href="#zaključak-prema-odgovornoj-primjeni-metoda" id="toc-zaključak-prema-odgovornoj-primjeni-metoda" class="nav-link" data-scroll-target="#zaključak-prema-odgovornoj-primjeni-metoda">Zaključak: prema odgovornoj primjeni metoda</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="txt-Ogranicenja.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="txt Ogranicenja.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ograničenja metode</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="ograničenja-metode" class="level1">
+<h1>Ograničenja metode</h1>
+<p>Prethodna poglavlja predstavila su impresivan arsenal tehnika za računalnu analizu teksta: od pripreme podataka i reprezentacije, preko klasifikacije i tematskog modeliranja, do sofisticirane diskurzivne analize. Čitatelj bi mogao steći dojam da su ove metode gotovo magične u svojoj sposobnosti da iz velikih količina nestrukturiranog teksta izvuku smislene uvide o društvenim fenomenima. Međutim, svaka metoda ima svoja ograničenja, a kritičko razumijevanje tih ograničenja nužno je za odgovorno i valjano istraživanje. Kao što su Justin Grimmer i Brandon Stewart upozorili u svojem utjecajnom članku “Text as Data”, automatske metode analize teksta “nisu zamjena za pažljivo razmišljanje i pomno čitanje te zahtijevaju opsežnu i problemski specifičnu validaciju.”</p>
+<p>U ovom poglavlju sistematski razmatramo ograničenja računalne analize teksta iz perspektive istraživača masovne komunikacije. Započinjemo s <strong>temeljnim pretpostavkama</strong> koje leže u osnovi svih metoda i pitanjima <strong>valjanosti i pouzdanosti</strong> koja su centralna za svako empirijsko istraživanje. Zatim analiziramo specifične probleme koji proizlaze iz načina na koji računalne metode <strong>reprezentiraju tekst</strong>, posebno gubitak konteksta i redoslijeda riječi. Posvećujemo posebnu pažnju <strong>jezično-specifičnim izazovima</strong> koji se javljaju pri radu s hrvatskim jezikom, uključujući morfološku kompleksnost i oskudicu resursa. Razmatramo probleme <strong>pristranosti</strong> u podacima i uzorkovanju, izazove <strong>generalizacije</strong> i opasnosti prekomjernog prilagođavanja. Diskutiramo pitanja <strong>interpretabilnosti</strong> algoritama i problem “crne kutije”. Konačno, adresiramo <strong>etička razmatranja</strong> i pitanja privatnosti koja postaju sve relevantnija kako se računalne metode primjenjuju na sve osjetljivije domene ljudske komunikacije.</p>
+<p>Cilj ovog poglavlja nije obeshrabriti korištenje računalnih metoda, već osposobiti istraživača za njihovu kritičku i odgovornu primjenu. Svjesnost o ograničenjima nije slabost, već preduvjet za kvalitetno istraživanje. Istraživač koji razumije ograničenja svojih alata može donijeti informirane odluke o tome kada su metode prikladne, kako interpretirati rezultate s odgovarajućom dozom opreza i kako dizajnirati studije koje maksimiziraju prednosti uz minimiziranje rizika.</p>
+<section id="temeljne-pretpostavke-računalne-analize-teksta" class="level2">
+<h2 class="anchored" data-anchor-id="temeljne-pretpostavke-računalne-analize-teksta">Temeljne pretpostavke računalne analize teksta</h2>
+<p>Grimmer, Roberts i Stewart u svojoj knjizi “Text as Data” identificiraju četiri temeljne pretpostavke koje vrijede za sve metode računalne analize teksta. Razumijevanje ovih pretpostavki ključno je za procjenu kada su metode prikladne i kako interpretirati njihove rezultate.</p>
+<p><strong>Prva pretpostavka</strong> glasi: sve kvantitativne modele tekstualnih podataka treba tretirati kao pogrešne, ali potencijalno korisne. Nijedan statistički model ne može uhvatiti svu kompleksnost prirodnog jezika. Jezik je višeznačan, kontekstualno ovisan, kulturno specifičan i neprestano se mijenja. Modeli nužno pojednostavljuju ovu kompleksnost kako bi bili računalno izvedivi i interpretabilni. Pretpostavka da je model “pogrešan” ne znači da je beskoristan; mnogi pojednostavljeni modeli proizvode korisne aproksimacije stvarnosti. Međutim, istraživač mora biti svjestan da rezultati modela nisu “istina”, već aproksimacije koje mogu biti više ili manje korisne ovisno o specifičnom istraživačkom pitanju.</p>
+<p><strong>Druga pretpostavka</strong> ističe da kvantitativne metode za tekst pojačavaju ljudske sposobnosti, ali ih ne zamjenjuju. Računalna analiza može obraditi količine teksta koje bi bile nemoguće za ljudsku analizu, identificirati obrasce koji bi promakli ljudskom oku i kvantificirati fenomene na način koji omogućuje statističko zaključivanje. Međutim, računala ne “razumiju” tekst u smislu u kojem to čine ljudi. Interpretacija rezultata, procjena njihove smislenosti, povezivanje s teorijskim okvirima i donošenje zaključaka ostaju ljudske zadaće. Pokušaj potpune automatizacije istraživačkog procesa gotovo sigurno vodi do trivialnih ili pogrešnih zaključaka.</p>
+<p><strong>Treća pretpostavka</strong> naglašava da ne postoji jedna “istinita” organizacija tekstova. Isti korpus može se smisleno organizirati na mnogo različitih načina ovisno o istraživačkom pitanju. Vijesti se mogu kategorizirati prema temama, prema tonalitetu, prema izvoru, prema geografskom fokusu, prema vremenskom okviru ili prema bilo kojem drugom kriteriju relevantnom za istraživanje. Nijedna od ovih organizacija nije inherentno “ispravnija” od druge; svaka odgovara na različita pitanja. Zato je besmisleno tražiti algoritam koji će otkriti “pravu” strukturu teksta. Umjesto toga, istraživač mora jasno artikulirati koje aspekte teksta želi zahvatiti i odabrati metode koje su prikladne za te specifične aspekte.</p>
+<p><strong>Četvrta pretpostavka</strong> upozorava da je validacija rezultata neophodna. Za razliku od nekih područja statistike gdje postoje matematički dokazi optimalnosti pojedinih metoda, u analizi teksta takvi dokazi općenito ne postoje. Teoremi koji jamče da će određeni algoritam proizvesti “ispravne” rezultate na prirodnom jeziku rijetki su ili nepostojeći. Zato se valjanost rezultata mora empirijski demonstrirati, a ne pretpostaviti na temelju teorijskih svojstava algoritma. Validacija mora biti specifična za problem: činjenica da je metoda funkcionirala na jednom korpusu i za jedno istraživačko pitanje ne jamči da će funkcionirati na drugom korpusu ili za drugo pitanje.</p>
+<p>Ove četiri pretpostavke imaju dalekosežne implikacije za istraživačku praksu. One sugeriraju skeptični, ali konstruktivni stav prema metodama: koristiti ih kao alate koji mogu pomoći u odgovaranju na istraživačka pitanja, ali ne očekivati da će sami po sebi generirati uvide bez aktivnog angažmana istraživača.</p>
+</section>
+<section id="valjanost-i-pouzdanost" class="level2">
+<h2 class="anchored" data-anchor-id="valjanost-i-pouzdanost">Valjanost i pouzdanost</h2>
+<p><strong>Valjanost</strong> (validity) i <strong>pouzdanost</strong> (reliability) tradicionalni su kriteriji kvalitete mjerenja u društvenim znanostima, a njihova primjena na računalnu analizu teksta zahtijeva pažljivu konceptualizaciju.</p>
+<p><strong>Valjanost mjerenja</strong> odnosi se na pitanje mjeri li naša mjera ono što mislimo da mjeri. U kontekstu analize teksta, valjanost ima nekoliko dimenzija. <strong>Sadržajna valjanost</strong> pita pokriva li naša operacionalizacija sve relevantne aspekte koncepta koji želimo mjeriti. Primjerice, ako mjerimo sentiment teksta prebrojavanjem pozitivnih i negativnih riječi iz rječnika, pokriva li taj rječnik sve relevantne načine izražavanja sentimenta u našem korpusu? Propuštamo li ironiju, sarkazam, implicitne evaluacije? <strong>Konstruktna valjanost</strong> pita odgovara li naša mjera teorijskom konstruktu koji je u pozadini. Ako koristimo tematsko modeliranje za identifikaciju “tema” u korpusu, odgovaraju li statistički identificirane teme onome što teorija komunikacije podrazumijeva pod “temama”? <strong>Prediktivna valjanost</strong> pita predviđa li naša mjera druge varijable s kojima bi teorijski trebala biti povezana. Ako tvrdimo da mjerimo negativan ton izvještavanja, korelira li naša mjera s percepcijom čitatelja o negativnosti istog izvještavanja?</p>
+<p>Problem valjanosti posebno je akutan kod <strong>prijenosa</strong> metoda i resursa iz jednog konteksta u drugi. Sentimentni rječnik razvijen za analizu recenzija proizvoda na engleskom možda neće valjano mjeriti sentiment u hrvatskim političkim komentarima. Klasifikator treniran na američkim vijestima možda neće valjano kategorizirati hrvatske vijesti. Svaki prijenos zahtijeva revalidaciju u novom kontekstu.</p>
+<p><strong>Pouzdanost</strong> odnosi se na konzistentnost mjerenja. <strong>Test-retest pouzdanost</strong> pita hoće li ponovljena primjena iste metode na iste podatke proizvesti iste rezultate. Za determinističke algoritme (poput prebrajanja riječi iz rječnika) ovo je trivijalno zadovoljeno. Međutim, mnogi suvremeni algoritmi uključuju stohastičke elemente: inicijalizacija parametara, uzorkovanje tijekom treniranja, odabir podskupova podataka. Rezultati takvih algoritama mogu varirati između pokretanja. Istraživač mora provjeriti jesu li zaključci robusni na ove varijacije, primjerice pokretanjem algoritma više puta s različitim nasumičnim sjemenkama i provjerom konzistentnosti rezultata.</p>
+<p><strong>Međukoderska pouzdanost</strong> tradicionalno mjeri slaganje između ljudskih kodera. U kontekstu računalne analize, analogna mjera uspoređuje rezultate algoritma s ljudskim procjenama. Ako klasifikator kategorizira članke u teme, koliko se te klasifikacije slažu s klasifikacijama koje bi napravili obučeni ljudski koderi? Ovo je oblik validacije, ali također mjera pouzdanosti u smislu da testira stabilnost rezultata kroz različite “mjerne instrumente” (algoritam vs.&nbsp;čovjek).</p>
+<table class="caption-top table">
+<caption>Dimenzije valjanosti i pouzdanosti u računalnoj analizi teksta</caption>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Aspekt</th>
+<th style="text-align: left;">Pitanje</th>
+<th style="text-align: left;">Primjer u analizi teksta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sadržajna valjanost</td>
+<td style="text-align: left;">Pokriva li mjera sve aspekte koncepta?</td>
+<td style="text-align: left;">Je li rječnik sentimenta potpun za domenu?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Konstruktna valjanost</td>
+<td style="text-align: left;">Odgovara li mjera teorijskom konstruktu?</td>
+<td style="text-align: left;">Odgovaraju li LDA teme teorijskim konceptima?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prediktivna valjanost</td>
+<td style="text-align: left;">Predviđa li mjera povezane varijable?</td>
+<td style="text-align: left;">Korelira li automatski sentiment s ljudskim procjenama?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Test-retest pouzdanost</td>
+<td style="text-align: left;">Daje li metoda konzistentne rezultate?</td>
+<td style="text-align: left;">Variraju li rezultati između pokretanja?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Međukoderska pouzdanost</td>
+<td style="text-align: left;">Slažu li se algoritam i ljudi?</td>
+<td style="text-align: left;">Koliko se klasifikator slaže s ljudskim koderima?</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="problem-reprezentacije-teksta" class="level2">
+<h2 class="anchored" data-anchor-id="problem-reprezentacije-teksta">Problem reprezentacije teksta</h2>
+<p>Sve metode koje smo razmatrali temelje se na nekom obliku <strong>numeričke reprezentacije teksta</strong>. Tekst, inherentno sekvencijalan i simbolički, mora se transformirati u vektore ili matrice brojeva kako bi bio podložan matematičkim operacijama. Ova transformacija nužno gubi informacije, a priroda gubitka ovisi o odabranoj reprezentaciji.</p>
+<p><strong>Model vreće riječi</strong> (bag-of-words), koji leži u osnovi većine tradicionalnih metoda, tretira dokument kao neuređenu kolekciju riječi, potpuno ignorirajući redoslijed. Rečenice “Čovjek ugrizao psa” i “Pas ugrizao čovjeka” imaju identičnu reprezentaciju u ovom modelu, premda imaju potpuno različita značenja. Gubimo sintaktičke odnose, gramatičke strukture i pragmatičke nijanse koje proizlaze iz načina na koji su riječi poredane.</p>
+<p>Ovaj gubitak ima praktične posljedice. Negacija je klasičan primjer: “Nije dobro” sadrži riječ “dobro” koja će biti označena kao pozitivna u sentimentnom rječniku, potpuno ignorirajući negaciju koja invertira značenje. Usporedbe također postaju problematične: “Bolje nego očekivano” i “Gore nego očekivano” mogu imati sličnu reprezentaciju ako rječnik ne kodira “bolje” i “gore” dovoljno različito. Idiomi i frazemi gube značenje jer se rastavljaju na sastavne riječi: “baciti koplje u trnje” (odustati) postaje zbunjujuća kombinacija riječi “baciti”, “koplje” i “trnje” bez prepoznavanja frazeološkog značenja.</p>
+<p><strong>N-grami</strong> djelomično ublažavaju ovaj problem zahvaćajući kratke sekvence riječi, ali prozor od dvije ili tri riječi još uvijek ne može uhvatiti duže sintaktičke ovisnosti. Subjekt i objekt rečenice mogu biti udaljeni više riječi, a n-grami to ne mogu zahvatiti.</p>
+<p><strong>Kontekstualni embeddingi</strong> poput onih iz transformer modela (BERT i slični) predstavljaju napredak jer uzimaju u obzir širi kontekst pri reprezentaciji svake riječi. Riječ “banka” dobiva različitu reprezentaciju u kontekstu “sjedim na banci u parku” i “idem u banku podići novac”. Međutim, čak ni ovi modeli ne razumiju tekst u ljudskom smislu; oni učinkovito aproksimiraju statističke pravilnosti u velikim korpusima teksta, što može, ali ne mora, odgovarati ljudskom razumijevanju značenja.</p>
+<p><strong>Dimenzionalnost</strong> predstavlja dodatni izazov. Vokabular tipičnog korpusa može sadržavati desetke ili stotine tisuća jedinstvenih riječi. Reprezentacija dokumenta kao vektora u takvom visokodimenzionalnom prostoru stvara izazove za statističko modeliranje: tzv. “prokletstvo dimenzionalnosti” (curse of dimensionality) čini mnoge statističke metode nestabilnima ili računalno neizvedivima. Tehnike redukcije dimenzionalnosti (poput LSA ili word embeddings) komprimiraju ovu kompleksnost, ali u procesu nužno gube informacije. Odluka o tome koliko dimenzija zadržati predstavlja kompromis između očuvanja informacija i računalne izvedivosti.</p>
+</section>
+<section id="jezično-specifični-izazovi-hrvatski-jezik" class="level2">
+<h2 class="anchored" data-anchor-id="jezično-specifični-izazovi-hrvatski-jezik">Jezično-specifični izazovi: hrvatski jezik</h2>
+<p>Većina metoda i resursa za računalnu analizu teksta razvijeni su za engleski jezik. Engleski ima relativno jednostavnu morfologiju, bogatu tradiciju računalne lingvistike i obilje dostupnih resursa: korpusa, rječnika, prethodno treniranih modela. Hrvatski jezik, s druge strane, predstavlja specifične izazove koji značajno kompliciraju primjenu standardnih metoda.</p>
+<p><strong>Morfološka kompleksnost</strong> hrvatskog jezika daleko premašuje engleski. Imenice se dekliniraju kroz sedam padeža, dva broja i tri roda. Pridjev “dobar” ima preko dvadeset različitih oblika: dobar, dobra, dobro, dobri, dobre, dobrih, dobrim, dobrima, itd. Glagoli se konjugiraju kroz različita vremena, načine, lica i brojeve. Ova bogatost oblika ima izravne posljedice za analizu teksta. U modelu vreće riječi, svaki morfološki oblik tretira se kao zasebna riječ. Rečenice “Vlada je donijela odluku” i “Vlade su donosile odluke” dijelit će malo zajedničkih tokena unatoč semantičkoj sličnosti.</p>
+<p><strong>Lematizacija</strong> postaje kritični korak pripreme podataka za hrvatski. Svi oblici riječi moraju se svesti na kanonski oblik (lemu) kako bi se prepoznalo da “dobrih”, “dobrim” i “dobre” predstavljaju istu riječ. Međutim, kvalitetna lematizacija za hrvatski zahtijeva sofisticirane jezične resurse: morfološke rječnike, pravila dezambiguacije, ponekad čak i sintaktičku analizu za razrješavanje višeznačnosti. Iako postoje alati za hrvatsku lematizaciju, oni nisu jednako razvijeni ni testirani kao oni za engleski.</p>
+<p><strong>Slobodan redoslijed riječi</strong> u hrvatskom dodatno komplicira analizu. Dok engleski ima relativno fiksiran redoslijed subjekt-glagol-objekt (SVO), hrvatski dopušta značajnu fleksibilnost zahvaljujući padežnom sustavu koji eksplicitno označava gramatičke funkcije. “Marko voli Anu”, “Anu voli Marko”, “Voli Marko Anu” sve izražavaju istu propoziciju, premda s različitim informacijskim fokusom. Za metode koje se oslanjaju na poziciju riječi ili n-grame, ova fleksibilnost uvodi varijabilnost koja može zamagliti obrasce.</p>
+<p><strong>Oskudica resursa</strong> predstavlja praktičan izazov. Sentimentni rječnici za hrvatski znatno su manji i manje validirani nego oni za engleski. Prethodno trenirani jezični modeli (embeddinzi, transformeri) za hrvatski postoje, ali su trenirani na manjim korpusima i manje su testirani. Označeni korpusi za treniranje nadziranih modela (primjerice, za prepoznavanje imenovanih entiteta ili klasifikaciju sentimenta) mnogo su skromniji. Istraživač koji želi primijeniti napredne metode na hrvatski tekst često mora sam izraditi resurse ili se osloniti na prijenos iz srodnih jezika.</p>
+<p><strong>Dijakritički znakovi</strong> mogu uzrokovati tehničke probleme ako se ne tretiraju konzistentno. Slova č, ć, đ, š, ž specifična su za hrvatski i mogu se pojavljivati u različitim enkodiranjima (UTF-8, ISO-8859-2, Windows-1250). Nekonzistentno rukovanje enkodiranjem može rezultirati pogrešnom tokenizacijom ili nemogućnošću prepoznavanja istih riječi pisanih u različitim enkodiranjima.</p>
+<table class="caption-top table">
+<caption>Jezično-specifični izazovi za računalnu analizu hrvatskog teksta</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 15%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Izazov</th>
+<th style="text-align: left;">Opis</th>
+<th style="text-align: left;">Implikacije za analizu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Morfološka kompleksnost</td>
+<td style="text-align: left;">7 padeža, 3 roda, bogata konjugacija</td>
+<td style="text-align: left;">Potrebna kvalitetna lematizacija</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slobodan redoslijed riječi</td>
+<td style="text-align: left;">Fleksibilna sintaksa</td>
+<td style="text-align: left;">N-grami manje informativni</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Oskudica resursa</td>
+<td style="text-align: left;">Manji rječnici, korpusi, modeli</td>
+<td style="text-align: left;">Ograničene mogućnosti naprednih metoda</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dijakritički znakovi</td>
+<td style="text-align: left;">č, ć, đ, š, ž</td>
+<td style="text-align: left;">Tehnički problemi s enkodiranjem</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Višeznačnost</td>
+<td style="text-align: left;">Homografi i homonimi</td>
+<td style="text-align: left;">Potrebna dezambiguacija</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pristranost-u-podacima-i-uzorkovanju" class="level2">
+<h2 class="anchored" data-anchor-id="pristranost-u-podacima-i-uzorkovanju">Pristranost u podacima i uzorkovanju</h2>
+<p>Rezultati računalne analize teksta mogu biti samo onoliko dobri koliko su dobri podaci na kojima se temelje. <strong>Pristranost</strong> (bias) može ući u analizu na više točaka: u konstrukciji korpusa, u označenim podacima za treniranje i u samim algoritmima.</p>
+<p><strong>Pristranost uzorkovanja</strong> javlja se kada korpus nije reprezentativan za populaciju o kojoj želimo zaključivati. Ako analiziramo “hrvatsko novinarstvo”, ali naš korpus sadrži samo članke iz dvaju najvećih portala, naši zaključci neće biti generalizabilni na cjelokupno novinarstvo. Ako analiziramo “javno mnijenje” na temelju objava na društvenim mrežama, moramo biti svjesni da korisnici društvenih mreža nisu reprezentativni uzorak populacije: mlađi su, urbaniziraniji, obrazovaniji. Ova pristranost ne mora biti fatalna ako je istraživačko pitanje usmjereno upravo na taj specifični izvor, ali postaje problematična kada se generalizira izvan opravdanog opsega.</p>
+<p><strong>Temporalna pristranost</strong> nastaje kada korpus pokriva samo određeno vremensko razdoblje. Jezik se mijenja, teme dolaze i odlaze, stilovi izvještavanja evoluiraju. Model treniran na člancima iz 2015. godine možda neće dobro funkcionirati na člancima iz 2024. godine. Pandemi COVID-19 uvela je čitav novi vokabular (“lockdown”, “epidemiološke mjere”, “samozolacija”) koji modeli trenirani prije 2020. neće prepoznati. Istraživač mora biti svjestan temporalnog opsega svojih podataka i opreza pri generalizaciji izvan tog opsega.</p>
+<p><strong>Pristranost u označenim podacima</strong> posebno je relevantna za nadzirano učenje. Ljudski koderi koji označavaju podatke za treniranje unose vlastite pristranosti, nekonzistentnosti i pogreške. Ako su koderi dominantno jednog političkog uvjerenja, njihove procjene sentimenta ili kategorizacije mogu sistematski favorizirati jednu stranu. Ako su koderi nedovoljno obučeni ili se smjernice za kodiranje nedovoljno precizne, označeni podaci bit će šumni i nekonzistentni. Model treniran na takvim podacima naučit će te pristranosti i reproducirati ih pri klasifikaciji novih tekstova.</p>
+<p><strong>Algoritmička pristranost</strong> odnosi se na sistemske pogreške koje algoritmi uče iz podataka. Jezični modeli trenirani na velikim korpusima interneta uče i reproduciraju stereotipe, predrasude i neravnoteže prisutne u tim podacima. Ako se žene u korpusu češće spominju u kontekstu obitelji i kućanstva, a muškarci u kontekstu karijere i politike, model će te asocijacije internalizirati i potencijalno reproducirati u svojim predikcijama. Ova pristranost posebno je problematična jer je često nevidljiva: model može postizati visoku točnost na standardnim metrikama, a ipak sistematski diskriminirati određene grupe.</p>
+<p><strong>Pristranost dostupnosti</strong> proizlazi iz činjenice da nisu svi tekstovi jednako dostupni za analizu. Arhivirani materijali, tekstovi iza paywalla, sadržaj koji je uklonjen, privatne komunikacije – sve to ostaje izvan dosega istraživača. Ono što je dostupno može biti sistematski različito od onoga što nije. Primjerice, objave koje su korisnici naknadno obrisali s društvenih mreža možda su sistematski drugačije (provokativnije, emocionalno nabijene) od onih koje su ostale, što može iskriviti analizu ako se temelji samo na dostupnom materijalu.</p>
+</section>
+<section id="generalizacija-i-prekomjerno-prilagođavanje" class="level2">
+<h2 class="anchored" data-anchor-id="generalizacija-i-prekomjerno-prilagođavanje">Generalizacija i prekomjerno prilagođavanje</h2>
+<p>Temeljni cilj većine statističkog modeliranja jest naučiti obrasce iz dostupnih podataka koji će se generalizirati na nove, neviđene podatke. <strong>Prekomjerno prilagođavanje</strong> (overfitting) javlja se kada model nauči specifičnosti trenažnih podataka umjesto generalizirajućih obrazaca. Takav model ima izvrsne performanse na trenažnim podacima, ali loše performanse na novim podacima.</p>
+<p>U kontekstu analize teksta, prekomjerno prilagođavanje može poprimiti različite oblike. Klasifikator može naučiti da su članci određenog autora tipično pozitivni, pa klasificira kao pozitivno sve što dolazi od tog autora, čak i kada je sadržaj negativan. Tematski model može identificirati “teme” koje zapravo odražavaju specifičnosti jednog izvora ili jednog vremenskog razdoblja, a ne generalne tematske strukture. Sentimentni model može naučiti da određena imena (primjerice, određenog političara) koreliraju s negativnim sentimentom u trenažnim podacima, pa ih koristi kao prečac umjesto da stvarno analizira sentiment teksta.</p>
+<p><strong>Strategije za izbjegavanje prekomjernog prilagođavanja</strong> uključuju podjelu podataka na trenažni, validacijski i testni skup. Model se trenira na trenažnom skupu, hiperparametri se podešavaju na validacijskom skupu, a konačna evaluacija provodi se na testnom skupu koji model nikad prije nije vidio. Ključno je da testni skup ostane “nedirnut” do samog kraja; višestruko testiranje na istom testnom skupu i prilagođavanje modela na temelju rezultata zapravo pretvara testni skup u validacijski, poništavajući svrhu podjele.</p>
+<p><strong>Unakrsna validacija</strong> (cross-validation) pruža robusniju procjenu generalizacijske sposobnosti, posebno kada su podaci ograničeni. Podaci se dijele na k dijelova, model se trenira k puta (svaki put ostavljajući jedan dio za testiranje), a performanse se agregiraju preko svih iteracija. Ovo smanjuje ovisnost procjene o specifičnoj podjeli podataka.</p>
+<p><strong>Regularizacija</strong> je tehnička strategija koja kažnjava kompleksne modele, preferirajući jednostavnije modele koji su manje skloni prekomjernom prilagođavanju. U kontekstu tekstualne klasifikacije, regularizacija može spriječiti model da pridaje preveliku težinu rijetkim riječima koje su možda korelirana s ishodom u trenažnim podacima, ali ta korelacija je slučajna.</p>
+<p><strong>Domenski pomak</strong> (domain shift) nastaje kada se model primjenjuje na podatke koji dolaze iz drugačije distribucije nego trenažni podaci. Klasifikator treniran na vijestima iz jednog medija možda neće funkcionirati na vijestima iz drugog medija koji ima drugačiji stil, vokabular ili tematski fokus. Čak i unutar istog medija, članci iz različitih rubrika (politika, sport, kultura) mogu biti dovoljno različiti da model treniran na jednoj rubrici loše funkcionira na drugoj. Istraživač mora pažljivo razmisliti o tome odgovaraju li njegovi podaci za treniranje podacima na kojima će se model primjenjivati.</p>
+</section>
+<section id="interpretabilnost-i-problem-crne-kutije" class="level2">
+<h2 class="anchored" data-anchor-id="interpretabilnost-i-problem-crne-kutije">Interpretabilnost i problem “crne kutije”</h2>
+<p>Različiti algoritmi nude različite stupnjeve <strong>interpretabilnosti</strong>, odnosno mogućnosti da istraživač razumije zašto je model donio određenu odluku.</p>
+<p>Na jednom kraju spektra nalaze se <strong>rječnički pristupi</strong> koji su potpuno transparentni. Ako tekst ima pozitivan sentiment, istraživač može točno vidjeti koje su riječi tome doprinijele jer se postupak svodi na prebrojavanje unaprijed definiranih riječi. Ova transparentnost omogućuje provjeru smislenosti rezultata i identifikaciju potencijalnih problema (primjerice, ako neka riječ iz rječnika ima drugačije značenje u specifičnom kontekstu).</p>
+<p><strong>Logistička regresija</strong> i slični linearni modeli također nude relativno dobru interpretabilnost. Svaka riječ (obilježje) ima koeficijent koji pokazuje koliko i u kojem smjeru utječe na predikciju. Istraživač može pregledati riječi s najvišim i najnižim koeficijentima i procijeniti jesu li ti odnosi smisleni. Ako model predviđa negativan sentiment na temelju prisutnosti imena određenog političara, to je signal da model možda uči prečace umjesto stvarnih indikatora sentimenta.</p>
+<p>Na drugom kraju spektra nalaze se <strong>duboki neuronski mrežni modeli</strong> poput transformera (BERT i slični) koji su notorno teški za interpretaciju. Ovi modeli imaju stotine milijuna ili čak milijarde parametara organiziranih u kompleksne arhitekture s višestrukim slojevima nelinearnih transformacija. Zašto je model određeni tekst klasificirao kao negativan? Odgovor se ne može jednostavno svesti na nekoliko ključnih riječi jer model uzima u obzir kompleksne interakcije između riječi, pozicije, konteksta. Razvijaju se tehnike za interpretaciju ovakvih modela (poput analize pažnje ili LIME/SHAP vrijednosti), ali one pružaju samo aproksimacije i parcijalne uvide.</p>
+<p><strong>Problem “crne kutije”</strong> ima praktične i etičke implikacije. S praktične strane, teško je dijagnosticirati pogreške modela ako ne razumijemo zašto donosi odluke koje donosi. Model može postizati dobre agregatne metrike, ali sistematski griješiti na određenim tipovima teksta na način koji ostaje nevidljiv. S etičke strane, korištenje neinterpretabilnih modela za donošenje odluka koje utječu na ljude (primjerice, filtriranje sadržaja, procjena rizika, automatska moderacija) postavlja pitanja odgovornosti i pravednosti.</p>
+<table class="caption-top table">
+<caption>Stupnjevi interpretabilnosti različitih metoda</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 38%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metoda</th>
+<th style="text-align: left;">Interpretabilnost</th>
+<th style="text-align: left;">Prednosti</th>
+<th style="text-align: left;">Nedostaci</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Rječnički pristupi</td>
+<td style="text-align: left;">Visoka</td>
+<td style="text-align: left;">Potpuna transparentnost</td>
+<td style="text-align: left;">Ograničena fleksibilnost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Logistička regresija</td>
+<td style="text-align: left;">Visoka</td>
+<td style="text-align: left;">Koeficijenti pokazuju doprinos</td>
+<td style="text-align: left;">Linearnost može biti ograničenje</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Stabla odlučivanja</td>
+<td style="text-align: left;">Srednja</td>
+<td style="text-align: left;">Vizualizacija pravila</td>
+<td style="text-align: left;">Nestabilnost, prekomjerno prilagođavanje</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SVM</td>
+<td style="text-align: left;">Niska do srednja</td>
+<td style="text-align: left;">Dobra generalizacija</td>
+<td style="text-align: left;">Teško interpretirati u visokim dimenzijama</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neuronske mreže</td>
+<td style="text-align: left;">Niska</td>
+<td style="text-align: left;">Visoka prediktivna moć</td>
+<td style="text-align: left;">“Crna kutija”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Transformeri (BERT)</td>
+<td style="text-align: left;">Vrlo niska</td>
+<td style="text-align: left;">Vrhunske performanse</td>
+<td style="text-align: left;">Gotovo potpuna neprozirnost</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="etička-razmatranja" class="level2">
+<h2 class="anchored" data-anchor-id="etička-razmatranja">Etička razmatranja</h2>
+<p>Računalna analiza teksta, posebno kada se primjenjuje na ljudsku komunikaciju, otvara niz <strong>etičkih pitanja</strong> koja istraživač mora uzeti u obzir.</p>
+<p><strong>Privatnost</strong> postaje sve relevantnija tema kako se metode primjenjuju na sve veće količine osobnih podataka. Objave na društvenim mrežama, komentari, e-mailovi, poruke – sve to može sadržavati osjetljive osobne informacije. Čak i kada su ti tekstovi “javno” dostupni, to ne znači da su njihovi autori pristali na to da budu predmet istraživanja. Agregirana analiza velike količine javnih objava može otkriti informacije koje pojedinci nisu namjeravali dijeliti: zdravstveno stanje, političke stavove, seksualne preferencije, financijsku situaciju. Etička istraživačka praksa zahtijeva promišljanje o tome može li analiza štetiti subjektima čiji se tekstovi analiziraju i kako minimizirati tu štetu.</p>
+<p><strong>Pristanak</strong> je složeno pitanje u kontekstu analize teksta. Tradicionalni model informiranog pristanka teško je primjenjiv kada se analiziraju tisuće ili milijuni tekstova napisanih od različitih autora. Korištenje javno dostupnih podataka bez eksplicitnog pristanka može biti zakonito, ali etička opravdanost ovisi o kontekstu: analizirati javne govore političara drugačije je od analiziranja osobnih objava privatnih osoba. Neke platforme zabranjuju korištenje svojih podataka za istraživanje u svojim uvjetima korištenja, što dodaje pravnu dimenziju etičkim razmatranjima.</p>
+<p><strong>Potencijalna zloupotreba</strong> istraživačkih rezultata zahtijeva anticipaciju mogućih štetnih primjena. Metode za detekciju sentimenta mogu se koristiti za praćenje javnog mnijenja u legitimne svrhe, ali i za nadzor, manipulaciju ili ciljano uznemiravanje. Metode za klasifikaciju teksta mogu se koristiti za filtriranje spam poruka, ali i za cenzuru legitimnog govora. Istraživač ima određenu odgovornost razmisliti o mogućim zlouporabama svojih metoda i rezultata.</p>
+<p><strong>Pristranost i pravednost</strong> posebno su relevantne kada se modeli koriste za donošenje odluka koje utječu na ljude. Model koji sistematski drugačije tretira tekstove na temelju roda, etničke pripadnosti ili drugih zaštićenih karakteristika autora može perpetuirati ili čak pojačati postojeće nejednakosti. Primjerice, ako sustav za automatsku moderaciju sadržaja češće uklanja sadržaj određenih grupa korisnika, to predstavlja oblik diskriminacije čak i ako nije namjerna.</p>
+<p><strong>Transparentnost i reproducijalnost</strong> etičke su norme znanstvene prakse koje dobivaju posebnu težinu u kontekstu računalnih metoda. Istraživač bi trebao jasno dokumentirati svoje metode, podatke i analitičke odluke na način koji omogućuje drugima da procijene i repliciraju rezultate. To uključuje dijeljenje koda, opisa pripreme podataka, izbora parametara i kriterija evaluacije. Nažalost, praksa u društvenim znanostima često zaostaje za ovim idealom.</p>
+</section>
+<section id="validacija-kao-nužnost" class="level2">
+<h2 class="anchored" data-anchor-id="validacija-kao-nužnost">Validacija kao nužnost</h2>
+<p>S obzirom na sva navedena ograničenja, <strong>validacija</strong> postaje ne samo preporučljiva, već nužna komponenta svakog ozbiljnog istraživanja koje koristi računalnu analizu teksta. Validacija nije jednokratni korak na kraju analize, već kontinuirani proces koji prožima cijeli istraživački tijek.</p>
+<p><strong>Validacija reprezentacije</strong> provjerava odgovara li način na koji smo reprezentirali tekst našem istraživačkom pitanju. Jesu li izbori koje smo napravili prilikom pripreme podataka (tokenizacija, uklanjanje zaustavnih riječi, lematizacija) opravdani za naš specifični kontekst? Jesmo li izgubili relevantne informacije? Ova validacija može uključivati pregled uzorka dokumenata prije i nakon pripreme kako bismo procijenili što je zadržano, a što izgubljeno.</p>
+<p><strong>Validacija modela</strong> provjerava proizvodi li model rezultate koji odgovaraju ljudskim procjenama. Za klasifikacijske zadatke, to uključuje usporedbu predikcija modela s “zlatnim standardom” ljudskog kodiranja. Za nenadziranu analizu poput tematskog modeliranja, validacija može uključivati procjenu koherentnosti tema od strane ljudskih ocjenjivača ili testiranje predviđa li tematska struktura druge varijable s kojima bi trebala biti povezana.</p>
+<p><strong>Validacija zaključaka</strong> provjerava jesu li supstantivni zaključci koje izvlačimo iz analize opravdani. Čak i ako model ima dobre tehničke metrike, zaključci mogu biti pogrešni ako smo krivo interpretirali rezultate, generalizirali izvan opravdanog opsega ili ignorirali alternativna objašnjenja. Ova razina validacije zahtijeva kritičko promišljanje i često uključuje triangulaciju s drugim izvorima podataka ili metodama.</p>
+<p><strong>Robusnost zaključaka</strong> testira jesu li zaključci osjetljivi na analitičke odluke. Što se događa ako promijenimo prag za uklanjanje rijetkih riječi? Ako koristimo drugačiji algoritam? Ako podijelimo podatke drugačije? Ako isključimo određeni izvor iz korpusa? Zaključci koji se drže robusnim kroz varijacije u analitičkim odlukama zaslužuju veće povjerenje od onih koji ovise o specifičnim, proizvoljnim izborima.</p>
+<p>Grimmer, Roberts i Stewart zagovaraju pristup “ljudi u petlji” (human-in-the-loop) gdje računalne metode služe kao alat za pojačavanje ljudskih analitičkih sposobnosti, a ne kao njihova zamjena. Računalo može identificirati obrasce, sortirati dokumente, kvantificirati fenomene. Ali interpretacija značenja, procjena relevantnosti, povezivanje s teorijom i donošenje zaključaka ostaju ljudske zadaće. Najbolji istraživački radovi kombiniraju snagu računalne analize velikih korpusa s dubinom kvalitativnog čitanja odabranih tekstova, koristeći svaku metodu za ono u čemu je najjača.</p>
+</section>
+<section id="zaključak-prema-odgovornoj-primjeni-metoda" class="level2">
+<h2 class="anchored" data-anchor-id="zaključak-prema-odgovornoj-primjeni-metoda">Zaključak: prema odgovornoj primjeni metoda</h2>
+<p>Ovo poglavlje može djelovati obeshrabrujuće nakon entuzijazma prethodnih poglavlja. Toliko ograničenja, toliko potencijalnih zamki, toliko načina na koje analiza može poći po zlu! Međutim, svrha nije obeshrabriti korištenje računalnih metoda, već osposobiti istraživača za njihovu <strong>kritičku i odgovornu primjenu</strong>.</p>
+<p>Svaka metoda, uključujući tradicionalne kvalitativne metode, ima svoja ograničenja. Prednost računalnih metoda jest što su mnoga njihova ograničenja eksplicitna i formalizirana, što omogućuje njihovo sustavno adresiranje. Pristranost u kodiranju ljudskih kodera također postoji, ali je teže je identificirati i kvantificirati nego pristranost algoritma.</p>
+<p>Ključne preporuke za odgovornu primjenu mogu se sažeti u nekoliko principa. <strong>Budite skromni</strong> u tvrdnjama: rezultati modela su aproksimacije, ne istine. <strong>Budite transparentni</strong> u metodama: jasno dokumentirajte sve analitičke odluke. <strong>Budite skeptični</strong> prema rezultatima: tražite alternativna objašnjenja, testirajte robusnost. <strong>Budite etični</strong> u primjeni: razmislite o mogućim štetama i kako ih minimizirati. <strong>Budite iterativni</strong> u procesu: validacija nije jednokratni korak, već kontinuirani dijalog između metoda, podataka i istraživačkih pitanja.</p>
+<p>S ovim principima na umu, računalna analiza teksta ostaje moćan alat za istraživanje masovne komunikacije. Omogućuje pitanja koja bi inače bila nemoguća, uvide koji bi ostali skriveni i kvantifikaciju fenomena koji bi inače bili dostupni samo impresionistički. Ograničenja nisu razlog za odbacivanje metoda, već za njihovu promišljenu, kritičku i odgovornu primjenu.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,230 @@
+---
+title: "Ograničenja metode"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    theme: cosmo
+    fig-width: 8
+    fig-height: 5
+    format-links:
+      - pdf
+      - docx
+  pdf:
+    documentclass: article
+    geometry: margin=2.5cm
+    fontsize: 11pt
+    fig-width: 6
+    fig-height: 4
+    keep-tex: false
+    babel-lang: croatian
+  docx:
+    toc: true
+    toc-depth: 2
+    fig-width: 6
+    fig-height: 4
+lang: hr
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(ggplot2)
+library(dplyr)
+theme_bw_custom <- theme_bw(base_size = 12) +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 13),
+    plot.subtitle = element_text(hjust = 0.5, size = 10, color = "gray30"),
+    axis.title = element_text(size = 11),
+    legend.position = "bottom"
+  )
+theme_set(theme_bw_custom)
+set.seed(42)
+```
+
+# Ograničenja metode
+
+Prethodna poglavlja predstavila su impresivan arsenal tehnika za računalnu analizu teksta: od pripreme podataka i reprezentacije, preko klasifikacije i tematskog modeliranja, do sofisticirane diskurzivne analize. Čitatelj bi mogao steći dojam da su ove metode gotovo magične u svojoj sposobnosti da iz velikih količina nestrukturiranog teksta izvuku smislene uvide o društvenim fenomenima. Međutim, svaka metoda ima svoja ograničenja, a kritičko razumijevanje tih ograničenja nužno je za odgovorno i valjano istraživanje. Kao što su Justin Grimmer i Brandon Stewart upozorili u svojem utjecajnom članku "Text as Data", automatske metode analize teksta "nisu zamjena za pažljivo razmišljanje i pomno čitanje te zahtijevaju opsežnu i problemski specifičnu validaciju."
+
+U ovom poglavlju sistematski razmatramo ograničenja računalne analize teksta iz perspektive istraživača masovne komunikacije. Započinjemo s **temeljnim pretpostavkama** koje leže u osnovi svih metoda i pitanjima **valjanosti i pouzdanosti** koja su centralna za svako empirijsko istraživanje. Zatim analiziramo specifične probleme koji proizlaze iz načina na koji računalne metode **reprezentiraju tekst**, posebno gubitak konteksta i redoslijeda riječi. Posvećujemo posebnu pažnju **jezično-specifičnim izazovima** koji se javljaju pri radu s hrvatskim jezikom, uključujući morfološku kompleksnost i oskudicu resursa. Razmatramo probleme **pristranosti** u podacima i uzorkovanju, izazove **generalizacije** i opasnosti prekomjernog prilagođavanja. Diskutiramo pitanja **interpretabilnosti** algoritama i problem "crne kutije". Konačno, adresiramo **etička razmatranja** i pitanja privatnosti koja postaju sve relevantnija kako se računalne metode primjenjuju na sve osjetljivije domene ljudske komunikacije.
+
+Cilj ovog poglavlja nije obeshrabriti korištenje računalnih metoda, već osposobiti istraživača za njihovu kritičku i odgovornu primjenu. Svjesnost o ograničenjima nije slabost, već preduvjet za kvalitetno istraživanje. Istraživač koji razumije ograničenja svojih alata može donijeti informirane odluke o tome kada su metode prikladne, kako interpretirati rezultate s odgovarajućom dozom opreza i kako dizajnirati studije koje maksimiziraju prednosti uz minimiziranje rizika.
+
+
+## Temeljne pretpostavke računalne analize teksta
+
+Grimmer, Roberts i Stewart u svojoj knjizi "Text as Data" identificiraju četiri temeljne pretpostavke koje vrijede za sve metode računalne analize teksta. Razumijevanje ovih pretpostavki ključno je za procjenu kada su metode prikladne i kako interpretirati njihove rezultate.
+
+**Prva pretpostavka** glasi: sve kvantitativne modele tekstualnih podataka treba tretirati kao pogrešne, ali potencijalno korisne. Nijedan statistički model ne može uhvatiti svu kompleksnost prirodnog jezika. Jezik je višeznačan, kontekstualno ovisan, kulturno specifičan i neprestano se mijenja. Modeli nužno pojednostavljuju ovu kompleksnost kako bi bili računalno izvedivi i interpretabilni. Pretpostavka da je model "pogrešan" ne znači da je beskoristan; mnogi pojednostavljeni modeli proizvode korisne aproksimacije stvarnosti. Međutim, istraživač mora biti svjestan da rezultati modela nisu "istina", već aproksimacije koje mogu biti više ili manje korisne ovisno o specifičnom istraživačkom pitanju.
+
+**Druga pretpostavka** ističe da kvantitativne metode za tekst pojačavaju ljudske sposobnosti, ali ih ne zamjenjuju. Računalna analiza može obraditi količine teksta koje bi bile nemoguće za ljudsku analizu, identificirati obrasce koji bi promakli ljudskom oku i kvantificirati fenomene na način koji omogućuje statističko zaključivanje. Međutim, računala ne "razumiju" tekst u smislu u kojem to čine ljudi. Interpretacija rezultata, procjena njihove smislenosti, povezivanje s teorijskim okvirima i donošenje zaključaka ostaju ljudske zadaće. Pokušaj potpune automatizacije istraživačkog procesa gotovo sigurno vodi do trivialnih ili pogrešnih zaključaka.
+
+**Treća pretpostavka** naglašava da ne postoji jedna "istinita" organizacija tekstova. Isti korpus može se smisleno organizirati na mnogo različitih načina ovisno o istraživačkom pitanju. Vijesti se mogu kategorizirati prema temama, prema tonalitetu, prema izvoru, prema geografskom fokusu, prema vremenskom okviru ili prema bilo kojem drugom kriteriju relevantnom za istraživanje. Nijedna od ovih organizacija nije inherentno "ispravnija" od druge; svaka odgovara na različita pitanja. Zato je besmisleno tražiti algoritam koji će otkriti "pravu" strukturu teksta. Umjesto toga, istraživač mora jasno artikulirati koje aspekte teksta želi zahvatiti i odabrati metode koje su prikladne za te specifične aspekte.
+
+**Četvrta pretpostavka** upozorava da je validacija rezultata neophodna. Za razliku od nekih područja statistike gdje postoje matematički dokazi optimalnosti pojedinih metoda, u analizi teksta takvi dokazi općenito ne postoje. Teoremi koji jamče da će određeni algoritam proizvesti "ispravne" rezultate na prirodnom jeziku rijetki su ili nepostojeći. Zato se valjanost rezultata mora empirijski demonstrirati, a ne pretpostaviti na temelju teorijskih svojstava algoritma. Validacija mora biti specifična za problem: činjenica da je metoda funkcionirala na jednom korpusu i za jedno istraživačko pitanje ne jamči da će funkcionirati na drugom korpusu ili za drugo pitanje.
+
+Ove četiri pretpostavke imaju dalekosežne implikacije za istraživačku praksu. One sugeriraju skeptični, ali konstruktivni stav prema metodama: koristiti ih kao alate koji mogu pomoći u odgovaranju na istraživačka pitanja, ali ne očekivati da će sami po sebi generirati uvide bez aktivnog angažmana istraživača.
+
+
+## Valjanost i pouzdanost
+
+**Valjanost** (validity) i **pouzdanost** (reliability) tradicionalni su kriteriji kvalitete mjerenja u društvenim znanostima, a njihova primjena na računalnu analizu teksta zahtijeva pažljivu konceptualizaciju.
+
+**Valjanost mjerenja** odnosi se na pitanje mjeri li naša mjera ono što mislimo da mjeri. U kontekstu analize teksta, valjanost ima nekoliko dimenzija. **Sadržajna valjanost** pita pokriva li naša operacionalizacija sve relevantne aspekte koncepta koji želimo mjeriti. Primjerice, ako mjerimo sentiment teksta prebrojavanjem pozitivnih i negativnih riječi iz rječnika, pokriva li taj rječnik sve relevantne načine izražavanja sentimenta u našem korpusu? Propuštamo li ironiju, sarkazam, implicitne evaluacije? **Konstruktna valjanost** pita odgovara li naša mjera teorijskom konstruktu koji je u pozadini. Ako koristimo tematsko modeliranje za identifikaciju "tema" u korpusu, odgovaraju li statistički identificirane teme onome što teorija komunikacije podrazumijeva pod "temama"? **Prediktivna valjanost** pita predviđa li naša mjera druge varijable s kojima bi teorijski trebala biti povezana. Ako tvrdimo da mjerimo negativan ton izvještavanja, korelira li naša mjera s percepcijom čitatelja o negativnosti istog izvještavanja?
+
+Problem valjanosti posebno je akutan kod **prijenosa** metoda i resursa iz jednog konteksta u drugi. Sentimentni rječnik razvijen za analizu recenzija proizvoda na engleskom možda neće valjano mjeriti sentiment u hrvatskim političkim komentarima. Klasifikator treniran na američkim vijestima možda neće valjano kategorizirati hrvatske vijesti. Svaki prijenos zahtijeva revalidaciju u novom kontekstu.
+
+**Pouzdanost** odnosi se na konzistentnost mjerenja. **Test-retest pouzdanost** pita hoće li ponovljena primjena iste metode na iste podatke proizvesti iste rezultate. Za determinističke algoritme (poput prebrajanja riječi iz rječnika) ovo je trivijalno zadovoljeno. Međutim, mnogi suvremeni algoritmi uključuju stohastičke elemente: inicijalizacija parametara, uzorkovanje tijekom treniranja, odabir podskupova podataka. Rezultati takvih algoritama mogu varirati između pokretanja. Istraživač mora provjeriti jesu li zaključci robusni na ove varijacije, primjerice pokretanjem algoritma više puta s različitim nasumičnim sjemenkama i provjerom konzistentnosti rezultata.
+
+**Međukoderska pouzdanost** tradicionalno mjeri slaganje između ljudskih kodera. U kontekstu računalne analize, analogna mjera uspoređuje rezultate algoritma s ljudskim procjenama. Ako klasifikator kategorizira članke u teme, koliko se te klasifikacije slažu s klasifikacijama koje bi napravili obučeni ljudski koderi? Ovo je oblik validacije, ali također mjera pouzdanosti u smislu da testira stabilnost rezultata kroz različite "mjerne instrumente" (algoritam vs. čovjek).
+
+| Aspekt | Pitanje | Primjer u analizi teksta |
+|:-------|:--------|:-------------------------|
+| Sadržajna valjanost | Pokriva li mjera sve aspekte koncepta? | Je li rječnik sentimenta potpun za domenu? |
+| Konstruktna valjanost | Odgovara li mjera teorijskom konstruktu? | Odgovaraju li LDA teme teorijskim konceptima? |
+| Prediktivna valjanost | Predviđa li mjera povezane varijable? | Korelira li automatski sentiment s ljudskim procjenama? |
+| Test-retest pouzdanost | Daje li metoda konzistentne rezultate? | Variraju li rezultati između pokretanja? |
+| Međukoderska pouzdanost | Slažu li se algoritam i ljudi? | Koliko se klasifikator slaže s ljudskim koderima? |
+
+: Dimenzije valjanosti i pouzdanosti u računalnoj analizi teksta
+
+
+## Problem reprezentacije teksta
+
+Sve metode koje smo razmatrali temelje se na nekom obliku **numeričke reprezentacije teksta**. Tekst, inherentno sekvencijalan i simbolički, mora se transformirati u vektore ili matrice brojeva kako bi bio podložan matematičkim operacijama. Ova transformacija nužno gubi informacije, a priroda gubitka ovisi o odabranoj reprezentaciji.
+
+**Model vreće riječi** (bag-of-words), koji leži u osnovi većine tradicionalnih metoda, tretira dokument kao neuređenu kolekciju riječi, potpuno ignorirajući redoslijed. Rečenice "Čovjek ugrizao psa" i "Pas ugrizao čovjeka" imaju identičnu reprezentaciju u ovom modelu, premda imaju potpuno različita značenja. Gubimo sintaktičke odnose, gramatičke strukture i pragmatičke nijanse koje proizlaze iz načina na koji su riječi poredane.
+
+Ovaj gubitak ima praktične posljedice. Negacija je klasičan primjer: "Nije dobro" sadrži riječ "dobro" koja će biti označena kao pozitivna u sentimentnom rječniku, potpuno ignorirajući negaciju koja invertira značenje. Usporedbe također postaju problematične: "Bolje nego očekivano" i "Gore nego očekivano" mogu imati sličnu reprezentaciju ako rječnik ne kodira "bolje" i "gore" dovoljno različito. Idiomi i frazemi gube značenje jer se rastavljaju na sastavne riječi: "baciti koplje u trnje" (odustati) postaje zbunjujuća kombinacija riječi "baciti", "koplje" i "trnje" bez prepoznavanja frazeološkog značenja.
+
+**N-grami** djelomično ublažavaju ovaj problem zahvaćajući kratke sekvence riječi, ali prozor od dvije ili tri riječi još uvijek ne može uhvatiti duže sintaktičke ovisnosti. Subjekt i objekt rečenice mogu biti udaljeni više riječi, a n-grami to ne mogu zahvatiti.
+
+**Kontekstualni embeddingi** poput onih iz transformer modela (BERT i slični) predstavljaju napredak jer uzimaju u obzir širi kontekst pri reprezentaciji svake riječi. Riječ "banka" dobiva različitu reprezentaciju u kontekstu "sjedim na banci u parku" i "idem u banku podići novac". Međutim, čak ni ovi modeli ne razumiju tekst u ljudskom smislu; oni učinkovito aproksimiraju statističke pravilnosti u velikim korpusima teksta, što može, ali ne mora, odgovarati ljudskom razumijevanju značenja.
+
+**Dimenzionalnost** predstavlja dodatni izazov. Vokabular tipičnog korpusa može sadržavati desetke ili stotine tisuća jedinstvenih riječi. Reprezentacija dokumenta kao vektora u takvom visokodimenzionalnom prostoru stvara izazove za statističko modeliranje: tzv. "prokletstvo dimenzionalnosti" (curse of dimensionality) čini mnoge statističke metode nestabilnima ili računalno neizvedivima. Tehnike redukcije dimenzionalnosti (poput LSA ili word embeddings) komprimiraju ovu kompleksnost, ali u procesu nužno gube informacije. Odluka o tome koliko dimenzija zadržati predstavlja kompromis između očuvanja informacija i računalne izvedivosti.
+
+
+## Jezično-specifični izazovi: hrvatski jezik
+
+Većina metoda i resursa za računalnu analizu teksta razvijeni su za engleski jezik. Engleski ima relativno jednostavnu morfologiju, bogatu tradiciju računalne lingvistike i obilje dostupnih resursa: korpusa, rječnika, prethodno treniranih modela. Hrvatski jezik, s druge strane, predstavlja specifične izazove koji značajno kompliciraju primjenu standardnih metoda.
+
+**Morfološka kompleksnost** hrvatskog jezika daleko premašuje engleski. Imenice se dekliniraju kroz sedam padeža, dva broja i tri roda. Pridjev "dobar" ima preko dvadeset različitih oblika: dobar, dobra, dobro, dobri, dobre, dobrih, dobrim, dobrima, itd. Glagoli se konjugiraju kroz različita vremena, načine, lica i brojeve. Ova bogatost oblika ima izravne posljedice za analizu teksta. U modelu vreće riječi, svaki morfološki oblik tretira se kao zasebna riječ. Rečenice "Vlada je donijela odluku" i "Vlade su donosile odluke" dijelit će malo zajedničkih tokena unatoč semantičkoj sličnosti.
+
+**Lematizacija** postaje kritični korak pripreme podataka za hrvatski. Svi oblici riječi moraju se svesti na kanonski oblik (lemu) kako bi se prepoznalo da "dobrih", "dobrim" i "dobre" predstavljaju istu riječ. Međutim, kvalitetna lematizacija za hrvatski zahtijeva sofisticirane jezične resurse: morfološke rječnike, pravila dezambiguacije, ponekad čak i sintaktičku analizu za razrješavanje višeznačnosti. Iako postoje alati za hrvatsku lematizaciju, oni nisu jednako razvijeni ni testirani kao oni za engleski.
+
+**Slobodan redoslijed riječi** u hrvatskom dodatno komplicira analizu. Dok engleski ima relativno fiksiran redoslijed subjekt-glagol-objekt (SVO), hrvatski dopušta značajnu fleksibilnost zahvaljujući padežnom sustavu koji eksplicitno označava gramatičke funkcije. "Marko voli Anu", "Anu voli Marko", "Voli Marko Anu" sve izražavaju istu propoziciju, premda s različitim informacijskim fokusom. Za metode koje se oslanjaju na poziciju riječi ili n-grame, ova fleksibilnost uvodi varijabilnost koja može zamagliti obrasce.
+
+**Oskudica resursa** predstavlja praktičan izazov. Sentimentni rječnici za hrvatski znatno su manji i manje validirani nego oni za engleski. Prethodno trenirani jezični modeli (embeddinzi, transformeri) za hrvatski postoje, ali su trenirani na manjim korpusima i manje su testirani. Označeni korpusi za treniranje nadziranih modela (primjerice, za prepoznavanje imenovanih entiteta ili klasifikaciju sentimenta) mnogo su skromniji. Istraživač koji želi primijeniti napredne metode na hrvatski tekst često mora sam izraditi resurse ili se osloniti na prijenos iz srodnih jezika.
+
+**Dijakritički znakovi** mogu uzrokovati tehničke probleme ako se ne tretiraju konzistentno. Slova č, ć, đ, š, ž specifična su za hrvatski i mogu se pojavljivati u različitim enkodiranjima (UTF-8, ISO-8859-2, Windows-1250). Nekonzistentno rukovanje enkodiranjem može rezultirati pogrešnom tokenizacijom ili nemogućnošću prepoznavanja istih riječi pisanih u različitim enkodiranjima.
+
+| Izazov | Opis | Implikacije za analizu |
+|:-------|:-----|:-----------------------|
+| Morfološka kompleksnost | 7 padeža, 3 roda, bogata konjugacija | Potrebna kvalitetna lematizacija |
+| Slobodan redoslijed riječi | Fleksibilna sintaksa | N-grami manje informativni |
+| Oskudica resursa | Manji rječnici, korpusi, modeli | Ograničene mogućnosti naprednih metoda |
+| Dijakritički znakovi | č, ć, đ, š, ž | Tehnički problemi s enkodiranjem |
+| Višeznačnost | Homografi i homonimi | Potrebna dezambiguacija |
+
+: Jezično-specifični izazovi za računalnu analizu hrvatskog teksta
+
+
+## Pristranost u podacima i uzorkovanju
+
+Rezultati računalne analize teksta mogu biti samo onoliko dobri koliko su dobri podaci na kojima se temelje. **Pristranost** (bias) može ući u analizu na više točaka: u konstrukciji korpusa, u označenim podacima za treniranje i u samim algoritmima.
+
+**Pristranost uzorkovanja** javlja se kada korpus nije reprezentativan za populaciju o kojoj želimo zaključivati. Ako analiziramo "hrvatsko novinarstvo", ali naš korpus sadrži samo članke iz dvaju najvećih portala, naši zaključci neće biti generalizabilni na cjelokupno novinarstvo. Ako analiziramo "javno mnijenje" na temelju objava na društvenim mrežama, moramo biti svjesni da korisnici društvenih mreža nisu reprezentativni uzorak populacije: mlađi su, urbaniziraniji, obrazovaniji. Ova pristranost ne mora biti fatalna ako je istraživačko pitanje usmjereno upravo na taj specifični izvor, ali postaje problematična kada se generalizira izvan opravdanog opsega.
+
+**Temporalna pristranost** nastaje kada korpus pokriva samo određeno vremensko razdoblje. Jezik se mijenja, teme dolaze i odlaze, stilovi izvještavanja evoluiraju. Model treniran na člancima iz 2015. godine možda neće dobro funkcionirati na člancima iz 2024. godine. Pandemi COVID-19 uvela je čitav novi vokabular ("lockdown", "epidemiološke mjere", "samozolacija") koji modeli trenirani prije 2020. neće prepoznati. Istraživač mora biti svjestan temporalnog opsega svojih podataka i opreza pri generalizaciji izvan tog opsega.
+
+**Pristranost u označenim podacima** posebno je relevantna za nadzirano učenje. Ljudski koderi koji označavaju podatke za treniranje unose vlastite pristranosti, nekonzistentnosti i pogreške. Ako su koderi dominantno jednog političkog uvjerenja, njihove procjene sentimenta ili kategorizacije mogu sistematski favorizirati jednu stranu. Ako su koderi nedovoljno obučeni ili se smjernice za kodiranje nedovoljno precizne, označeni podaci bit će šumni i nekonzistentni. Model treniran na takvim podacima naučit će te pristranosti i reproducirati ih pri klasifikaciji novih tekstova.
+
+**Algoritmička pristranost** odnosi se na sistemske pogreške koje algoritmi uče iz podataka. Jezični modeli trenirani na velikim korpusima interneta uče i reproduciraju stereotipe, predrasude i neravnoteže prisutne u tim podacima. Ako se žene u korpusu češće spominju u kontekstu obitelji i kućanstva, a muškarci u kontekstu karijere i politike, model će te asocijacije internalizirati i potencijalno reproducirati u svojim predikcijama. Ova pristranost posebno je problematična jer je često nevidljiva: model može postizati visoku točnost na standardnim metrikama, a ipak sistematski diskriminirati određene grupe.
+
+**Pristranost dostupnosti** proizlazi iz činjenice da nisu svi tekstovi jednako dostupni za analizu. Arhivirani materijali, tekstovi iza paywalla, sadržaj koji je uklonjen, privatne komunikacije – sve to ostaje izvan dosega istraživača. Ono što je dostupno može biti sistematski različito od onoga što nije. Primjerice, objave koje su korisnici naknadno obrisali s društvenih mreža možda su sistematski drugačije (provokativnije, emocionalno nabijene) od onih koje su ostale, što može iskriviti analizu ako se temelji samo na dostupnom materijalu.
+
+
+## Generalizacija i prekomjerno prilagođavanje
+
+Temeljni cilj većine statističkog modeliranja jest naučiti obrasce iz dostupnih podataka koji će se generalizirati na nove, neviđene podatke. **Prekomjerno prilagođavanje** (overfitting) javlja se kada model nauči specifičnosti trenažnih podataka umjesto generalizirajućih obrazaca. Takav model ima izvrsne performanse na trenažnim podacima, ali loše performanse na novim podacima.
+
+U kontekstu analize teksta, prekomjerno prilagođavanje može poprimiti različite oblike. Klasifikator može naučiti da su članci određenog autora tipično pozitivni, pa klasificira kao pozitivno sve što dolazi od tog autora, čak i kada je sadržaj negativan. Tematski model može identificirati "teme" koje zapravo odražavaju specifičnosti jednog izvora ili jednog vremenskog razdoblja, a ne generalne tematske strukture. Sentimentni model može naučiti da određena imena (primjerice, određenog političara) koreliraju s negativnim sentimentom u trenažnim podacima, pa ih koristi kao prečac umjesto da stvarno analizira sentiment teksta.
+
+**Strategije za izbjegavanje prekomjernog prilagođavanja** uključuju podjelu podataka na trenažni, validacijski i testni skup. Model se trenira na trenažnom skupu, hiperparametri se podešavaju na validacijskom skupu, a konačna evaluacija provodi se na testnom skupu koji model nikad prije nije vidio. Ključno je da testni skup ostane "nedirnut" do samog kraja; višestruko testiranje na istom testnom skupu i prilagođavanje modela na temelju rezultata zapravo pretvara testni skup u validacijski, poništavajući svrhu podjele.
+
+**Unakrsna validacija** (cross-validation) pruža robusniju procjenu generalizacijske sposobnosti, posebno kada su podaci ograničeni. Podaci se dijele na k dijelova, model se trenira k puta (svaki put ostavljajući jedan dio za testiranje), a performanse se agregiraju preko svih iteracija. Ovo smanjuje ovisnost procjene o specifičnoj podjeli podataka.
+
+**Regularizacija** je tehnička strategija koja kažnjava kompleksne modele, preferirajući jednostavnije modele koji su manje skloni prekomjernom prilagođavanju. U kontekstu tekstualne klasifikacije, regularizacija može spriječiti model da pridaje preveliku težinu rijetkim riječima koje su možda korelirana s ishodom u trenažnim podacima, ali ta korelacija je slučajna.
+
+**Domenski pomak** (domain shift) nastaje kada se model primjenjuje na podatke koji dolaze iz drugačije distribucije nego trenažni podaci. Klasifikator treniran na vijestima iz jednog medija možda neće funkcionirati na vijestima iz drugog medija koji ima drugačiji stil, vokabular ili tematski fokus. Čak i unutar istog medija, članci iz različitih rubrika (politika, sport, kultura) mogu biti dovoljno različiti da model treniran na jednoj rubrici loše funkcionira na drugoj. Istraživač mora pažljivo razmisliti o tome odgovaraju li njegovi podaci za treniranje podacima na kojima će se model primjenjivati.
+
+
+## Interpretabilnost i problem "crne kutije"
+
+Različiti algoritmi nude različite stupnjeve **interpretabilnosti**, odnosno mogućnosti da istraživač razumije zašto je model donio određenu odluku.
+
+Na jednom kraju spektra nalaze se **rječnički pristupi** koji su potpuno transparentni. Ako tekst ima pozitivan sentiment, istraživač može točno vidjeti koje su riječi tome doprinijele jer se postupak svodi na prebrojavanje unaprijed definiranih riječi. Ova transparentnost omogućuje provjeru smislenosti rezultata i identifikaciju potencijalnih problema (primjerice, ako neka riječ iz rječnika ima drugačije značenje u specifičnom kontekstu).
+
+**Logistička regresija** i slični linearni modeli također nude relativno dobru interpretabilnost. Svaka riječ (obilježje) ima koeficijent koji pokazuje koliko i u kojem smjeru utječe na predikciju. Istraživač može pregledati riječi s najvišim i najnižim koeficijentima i procijeniti jesu li ti odnosi smisleni. Ako model predviđa negativan sentiment na temelju prisutnosti imena određenog političara, to je signal da model možda uči prečace umjesto stvarnih indikatora sentimenta.
+
+Na drugom kraju spektra nalaze se **duboki neuronski mrežni modeli** poput transformera (BERT i slični) koji su notorno teški za interpretaciju. Ovi modeli imaju stotine milijuna ili čak milijarde parametara organiziranih u kompleksne arhitekture s višestrukim slojevima nelinearnih transformacija. Zašto je model određeni tekst klasificirao kao negativan? Odgovor se ne može jednostavno svesti na nekoliko ključnih riječi jer model uzima u obzir kompleksne interakcije između riječi, pozicije, konteksta. Razvijaju se tehnike za interpretaciju ovakvih modela (poput analize pažnje ili LIME/SHAP vrijednosti), ali one pružaju samo aproksimacije i parcijalne uvide.
+
+**Problem "crne kutije"** ima praktične i etičke implikacije. S praktične strane, teško je dijagnosticirati pogreške modela ako ne razumijemo zašto donosi odluke koje donosi. Model može postizati dobre agregatne metrike, ali sistematski griješiti na određenim tipovima teksta na način koji ostaje nevidljiv. S etičke strane, korištenje neinterpretabilnih modela za donošenje odluka koje utječu na ljude (primjerice, filtriranje sadržaja, procjena rizika, automatska moderacija) postavlja pitanja odgovornosti i pravednosti.
+
+| Metoda | Interpretabilnost | Prednosti | Nedostaci |
+|:-------|:------------------|:----------|:----------|
+| Rječnički pristupi | Visoka | Potpuna transparentnost | Ograničena fleksibilnost |
+| Logistička regresija | Visoka | Koeficijenti pokazuju doprinos | Linearnost može biti ograničenje |
+| Stabla odlučivanja | Srednja | Vizualizacija pravila | Nestabilnost, prekomjerno prilagođavanje |
+| SVM | Niska do srednja | Dobra generalizacija | Teško interpretirati u visokim dimenzijama |
+| Neuronske mreže | Niska | Visoka prediktivna moć | "Crna kutija" |
+| Transformeri (BERT) | Vrlo niska | Vrhunske performanse | Gotovo potpuna neprozirnost |
+
+: Stupnjevi interpretabilnosti različitih metoda
+
+
+## Etička razmatranja
+
+Računalna analiza teksta, posebno kada se primjenjuje na ljudsku komunikaciju, otvara niz **etičkih pitanja** koja istraživač mora uzeti u obzir.
+
+**Privatnost** postaje sve relevantnija tema kako se metode primjenjuju na sve veće količine osobnih podataka. Objave na društvenim mrežama, komentari, e-mailovi, poruke – sve to može sadržavati osjetljive osobne informacije. Čak i kada su ti tekstovi "javno" dostupni, to ne znači da su njihovi autori pristali na to da budu predmet istraživanja. Agregirana analiza velike količine javnih objava može otkriti informacije koje pojedinci nisu namjeravali dijeliti: zdravstveno stanje, političke stavove, seksualne preferencije, financijsku situaciju. Etička istraživačka praksa zahtijeva promišljanje o tome može li analiza štetiti subjektima čiji se tekstovi analiziraju i kako minimizirati tu štetu.
+
+**Pristanak** je složeno pitanje u kontekstu analize teksta. Tradicionalni model informiranog pristanka teško je primjenjiv kada se analiziraju tisuće ili milijuni tekstova napisanih od različitih autora. Korištenje javno dostupnih podataka bez eksplicitnog pristanka može biti zakonito, ali etička opravdanost ovisi o kontekstu: analizirati javne govore političara drugačije je od analiziranja osobnih objava privatnih osoba. Neke platforme zabranjuju korištenje svojih podataka za istraživanje u svojim uvjetima korištenja, što dodaje pravnu dimenziju etičkim razmatranjima.
+
+**Potencijalna zloupotreba** istraživačkih rezultata zahtijeva anticipaciju mogućih štetnih primjena. Metode za detekciju sentimenta mogu se koristiti za praćenje javnog mnijenja u legitimne svrhe, ali i za nadzor, manipulaciju ili ciljano uznemiravanje. Metode za klasifikaciju teksta mogu se koristiti za filtriranje spam poruka, ali i za cenzuru legitimnog govora. Istraživač ima određenu odgovornost razmisliti o mogućim zlouporabama svojih metoda i rezultata.
+
+**Pristranost i pravednost** posebno su relevantne kada se modeli koriste za donošenje odluka koje utječu na ljude. Model koji sistematski drugačije tretira tekstove na temelju roda, etničke pripadnosti ili drugih zaštićenih karakteristika autora može perpetuirati ili čak pojačati postojeće nejednakosti. Primjerice, ako sustav za automatsku moderaciju sadržaja češće uklanja sadržaj određenih grupa korisnika, to predstavlja oblik diskriminacije čak i ako nije namjerna.
+
+**Transparentnost i reproducijalnost** etičke su norme znanstvene prakse koje dobivaju posebnu težinu u kontekstu računalnih metoda. Istraživač bi trebao jasno dokumentirati svoje metode, podatke i analitičke odluke na način koji omogućuje drugima da procijene i repliciraju rezultate. To uključuje dijeljenje koda, opisa pripreme podataka, izbora parametara i kriterija evaluacije. Nažalost, praksa u društvenim znanostima često zaostaje za ovim idealom.
+
+
+## Validacija kao nužnost
+
+S obzirom na sva navedena ograničenja, **validacija** postaje ne samo preporučljiva, već nužna komponenta svakog ozbiljnog istraživanja koje koristi računalnu analizu teksta. Validacija nije jednokratni korak na kraju analize, već kontinuirani proces koji prožima cijeli istraživački tijek.
+
+**Validacija reprezentacije** provjerava odgovara li način na koji smo reprezentirali tekst našem istraživačkom pitanju. Jesu li izbori koje smo napravili prilikom pripreme podataka (tokenizacija, uklanjanje zaustavnih riječi, lematizacija) opravdani za naš specifični kontekst? Jesmo li izgubili relevantne informacije? Ova validacija može uključivati pregled uzorka dokumenata prije i nakon pripreme kako bismo procijenili što je zadržano, a što izgubljeno.
+
+**Validacija modela** provjerava proizvodi li model rezultate koji odgovaraju ljudskim procjenama. Za klasifikacijske zadatke, to uključuje usporedbu predikcija modela s "zlatnim standardom" ljudskog kodiranja. Za nenadziranu analizu poput tematskog modeliranja, validacija može uključivati procjenu koherentnosti tema od strane ljudskih ocjenjivača ili testiranje predviđa li tematska struktura druge varijable s kojima bi trebala biti povezana.
+
+**Validacija zaključaka** provjerava jesu li supstantivni zaključci koje izvlačimo iz analize opravdani. Čak i ako model ima dobre tehničke metrike, zaključci mogu biti pogrešni ako smo krivo interpretirali rezultate, generalizirali izvan opravdanog opsega ili ignorirali alternativna objašnjenja. Ova razina validacije zahtijeva kritičko promišljanje i često uključuje triangulaciju s drugim izvorima podataka ili metodama.
+
+**Robusnost zaključaka** testira jesu li zaključci osjetljivi na analitičke odluke. Što se događa ako promijenimo prag za uklanjanje rijetkih riječi? Ako koristimo drugačiji algoritam? Ako podijelimo podatke drugačije? Ako isključimo određeni izvor iz korpusa? Zaključci koji se drže robusnim kroz varijacije u analitičkim odlukama zaslužuju veće povjerenje od onih koji ovise o specifičnim, proizvoljnim izborima.
+
+Grimmer, Roberts i Stewart zagovaraju pristup "ljudi u petlji" (human-in-the-loop) gdje računalne metode služe kao alat za pojačavanje ljudskih analitičkih sposobnosti, a ne kao njihova zamjena. Računalo može identificirati obrasce, sortirati dokumente, kvantificirati fenomene. Ali interpretacija značenja, procjena relevantnosti, povezivanje s teorijom i donošenje zaključaka ostaju ljudske zadaće. Najbolji istraživački radovi kombiniraju snagu računalne analize velikih korpusa s dubinom kvalitativnog čitanja odabranih tekstova, koristeći svaku metodu za ono u čemu je najjača.
+
+
+## Zaključak: prema odgovornoj primjeni metoda
+
+Ovo poglavlje može djelovati obeshrabrujuće nakon entuzijazma prethodnih poglavlja. Toliko ograničenja, toliko potencijalnih zamki, toliko načina na koje analiza može poći po zlu! Međutim, svrha nije obeshrabriti korištenje računalnih metoda, već osposobiti istraživača za njihovu **kritičku i odgovornu primjenu**.
+
+Svaka metoda, uključujući tradicionalne kvalitativne metode, ima svoja ograničenja. Prednost računalnih metoda jest što su mnoga njihova ograničenja eksplicitna i formalizirana, što omogućuje njihovo sustavno adresiranje. Pristranost u kodiranju ljudskih kodera također postoji, ali je teže je identificirati i kvantificirati nego pristranost algoritma.
+
+Ključne preporuke za odgovornu primjenu mogu se sažeti u nekoliko principa. **Budite skromni** u tvrdnjama: rezultati modela su aproksimacije, ne istine. **Budite transparentni** u metodama: jasno dokumentirajte sve analitičke odluke. **Budite skeptični** prema rezultatima: tražite alternativna objašnjenja, testirajte robusnost. **Budite etični** u primjeni: razmislite o mogućim štetama i kako ih minimizirati. **Budite iterativni** u procesu: validacija nije jednokratni korak, već kontinuirani dijalog između metoda, podataka i istraživačkih pitanja.
+
+S ovim principima na umu, računalna analiza teksta ostaje moćan alat za istraživanje masovne komunikacije. Omogućuje pitanja koja bi inače bila nemoguća, uvide koji bi ostali skriveni i kvantifikaciju fenomena koji bi inače bili dostupni samo impresionistički. Ograničenja nisu razlog za odbacivanje metoda, već za njihovu promišljenu, kritičku i odgovornu primjenu.

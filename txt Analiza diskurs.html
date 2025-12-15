@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analiza na razini diskursa</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="txt Analiza diskurs_files/libs/clipboard/clipboard.min.js"></script>
+<script src="txt Analiza diskurs_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="txt Analiza diskurs_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="txt Analiza diskurs_files/libs/quarto-html/popper.min.js"></script>
+<script src="txt Analiza diskurs_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="txt Analiza diskurs_files/libs/quarto-html/anchor.min.js"></script>
+<link href="txt Analiza diskurs_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="txt Analiza diskurs_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="txt Analiza diskurs_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="txt Analiza diskurs_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="txt Analiza diskurs_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#analiza-na-razini-diskursa" id="toc-analiza-na-razini-diskursa" class="nav-link active" data-scroll-target="#analiza-na-razini-diskursa">Analiza na razini diskursa</a>
+  <ul class="collapse">
+  <li><a href="#n-grami-i-kolokacije" id="toc-n-grami-i-kolokacije" class="nav-link" data-scroll-target="#n-grami-i-kolokacije">N-grami i kolokacije</a></li>
+  <li><a href="#kontekst-i-negacija-u-analizi-sentimenta" id="toc-kontekst-i-negacija-u-analizi-sentimenta" class="nav-link" data-scroll-target="#kontekst-i-negacija-u-analizi-sentimenta">Kontekst i negacija u analizi sentimenta</a></li>
+  <li><a href="#analiza-okvira-framing-analysis" id="toc-analiza-okvira-framing-analysis" class="nav-link" data-scroll-target="#analiza-okvira-framing-analysis">Analiza okvira (framing analysis)</a></li>
+  <li><a href="#analiza-retoričke-strukture" id="toc-analiza-retoričke-strukture" class="nav-link" data-scroll-target="#analiza-retoričke-strukture">Analiza retoričke strukture</a></li>
+  <li><a href="#mreže-riječi-i-vizualizacija" id="toc-mreže-riječi-i-vizualizacija" class="nav-link" data-scroll-target="#mreže-riječi-i-vizualizacija">Mreže riječi i vizualizacija</a></li>
+  <li><a href="#integracija-diskurzivnih-analiza" id="toc-integracija-diskurzivnih-analiza" class="nav-link" data-scroll-target="#integracija-diskurzivnih-analiza">Integracija diskurzivnih analiza</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="txt-Analiza-diskurs.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="txt Analiza diskurs.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analiza na razini diskursa</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="analiza-na-razini-diskursa" class="level1">
+<h1>Analiza na razini diskursa</h1>
+<p>Dosadašnja poglavlja fokusirala su se pretežno na analizu pojedinačnih riječi ili dokumenata kao cjelina. Međutim, značenje u tekstu rijetko proizlazi iz izoliranih riječi; ono nastaje kroz odnose između riječi, kroz načine na koje se riječi kombiniraju u veće jedinice, kroz obrasce koji se ponavljaju kroz korpus i kroz implicitne strukture koje organiziraju diskurs. Kada novinar izvještava o “ekonomskoj krizi”, značenje te fraze nije jednostavno zbroj značenja riječi “ekonomska” i “kriza”, već emergentna cjelina s vlastitim konotacijama, asocijacijama i pragmatičkim implikacijama. Slično tome, način na koji mediji <strong>uokviruju</strong> određenu temu, koje metafore koriste, koje aktere stavljaju u prvi plan, a koje marginaliziraju, ima dalekosežne posljedice za javno razumijevanje društvenih fenomena.</p>
+<p>U ovom poglavlju prelazimo s razine pojedinačnih riječi na razinu <strong>diskursa</strong>, odnosno na analizu širih jezičnih obrazaca i struktura koje organiziraju značenje u tekstu. Počinjemo s <strong>n-gramima i kolokacijama</strong>, tehnikama koje nam omogućuju da identificiramo uobičajene kombinacije riječi i izmjerimo snagu njihove asocijacije. Zatim razmatramo kako n-grami mogu pomoći u rješavanju problema <strong>negacije i konteksta</strong> koji su ograničavali jednostavne rječničke pristupe analizi sentimenta. Središnji dio poglavlja posvećujemo <strong>analizi okvira</strong> (framing analysis), jednoj od najvažnijih metoda u istraživanju masovne komunikacije, koja ispituje kako mediji konstruiraju određene interpretacije stvarnosti. Razmatramo i <strong>analizu retoričke strukture</strong> koja ispituje kako se dijelovi teksta povezuju u koherentnu cjelinu. Konačno, predstavljamo <strong>mrežnu analizu riječi</strong> koja omogućuje vizualizaciju i kvantifikaciju odnosa između riječi u korpusu.</p>
+<p>Ove tehnike pomažu istraživaču da premosti jaz između kvantitativne analize velikih korpusa i kvalitativnih uvida u diskurzivne prakse. One omogućuju identifikaciju obrazaca koji bi bili nevidljivi ručnom analizom, ali istovremeno zadržavaju osjetljivost na kontekst i odnose koja nedostaje jednostavnijim pristupima poput prebrajanja riječi. U konačnici, analiza na razini diskursa približava nas razumijevanju ne samo što mediji govore, nego i kako govore, koje interpretativne okvire nude i koje alternativne perspektive isključuju.</p>
+<section id="n-grami-i-kolokacije" class="level2">
+<h2 class="anchored" data-anchor-id="n-grami-i-kolokacije">N-grami i kolokacije</h2>
+<p>Dosad smo tekstove analizirali pretežno kroz prizmu pojedinačnih riječi, tretirajući dokument kao “vreću riječi” bez obzira na redoslijed i međusobne odnose. Međutim, jezik ne funkcionira kao nasumični niz izoliranih riječi. Riječi se kombiniraju u uobičajene obrasce, neke kombinacije su češće nego što bismo očekivali na temelju slučajnosti, a te kombinacije često nose značenje koje nadilazi značenje sastavnih dijelova. Britanski lingvist John Rupert Firth sažeo je ovu ideju čuvenom izrekom: “Riječ ćeš upoznati po društvu koje drži” (You shall know a word by the company it keeps). <strong>N-grami</strong> i <strong>kolokacije</strong> predstavljaju tehnike koje nam omogućuju da istražimo to “društvo” koje riječi drže.</p>
+<p><strong>N-gram</strong> je uzastopni niz od n riječi u tekstu. Kada je n jednak 1, govorimo o <strong>unigramima</strong>, što odgovara analizi pojedinačnih riječi kakvu smo već razmatrali. Kada je n jednak 2, govorimo o <strong>bigramima</strong> ili parovima uzastopnih riječi. Trigram (n=3) je niz od tri uzastopne riječi, i tako dalje. Primjerice, rečenica “Vlada je usvojila proračun” sadrži sljedeće bigrame: “Vlada je”, “je usvojila”, “usvojila proračun”. Trigrami iste rečenice bili bi: “Vlada je usvojila”, “je usvojila proračun”. Primjetimo da se n-grami preklapaju: riječ “usvojila” pojavljuje se i kao drugi element prvog trigrama i kao prvi element drugog trigrama.</p>
+<p>Analiza bigrama otkriva uzastopne parove riječi koji se često pojavljuju zajedno. U korpusu hrvatskih političkih govora, najčešći bigrami vjerojatno uključuju kombinacije poput “Republika Hrvatska”, “Europska unija”, “Hrvatski sabor”, “socijalna pravda”, “gospodarski rast” ili “fiskalna politika”. Mnogi od ovih bigrama predstavljaju ustaljene fraze ili termine čije je značenje više od zbroja sastavnih dijelova. “Europska unija” nije samo bilo koja unija koja je europska, već specifična politička i ekonomska zajednica s jasno definiranim značenjem.</p>
+<p>Međutim, kao i kod analize pojedinačnih riječi, najčešći bigrami često nisu najinformativniji. Dominiraju kombinacije funkcionalnih riječi poput “u kojima”, “za koje”, “da se”, “koji su” i slično. Ove kombinacije su česte, ali rijetko nose značajan sadržaj za većinu istraživačkih pitanja. Zato se primjenjuju slične tehnike filtriranja kao kod pojedinačnih riječi: uklanjanje bigrama koji sadrže zaustavne riječi, fokusiranje na bigrame koji sadrže imenice, pridjeve ili glagole, ili korištenje statističkih mjera koje identificiraju bigrame s neočekivano visokom frekvencijom.</p>
+<p><strong>Kolokacija</strong> je širi pojam od bigrama. Dok bigram zahtijeva da riječi budu neposredno susjedne, kolokacija označava tendenciju dviju riječi da se pojavljuju u međusobnoj blizini, unutar određenog prozora konteksta, čak i ako nisu neposredno susjedne. Primjerice, riječi “donijeti” i “odluka” čine kolokaciju u hrvatskom jeziku: one se često pojavljuju zajedno u frazi “donijeti odluku”, ali mogu biti razdvojene drugim riječima (“donijeti važnu odluku”, “donijeti konačnu odluku”). Kolokacije odražavaju idiomatske i konvencionalne načine izražavanja u jeziku.</p>
+<p>Za identifikaciju statistički značajnih kolokacija koriste se razne <strong>mjere asocijacije</strong> koje kvantificiraju snagu veze između dviju riječi. Ove mjere uspoređuju opaženu frekvenciju zajedničkog pojavljivanja s očekivanom frekvencijom pod pretpostavkom nezavisnosti. Ako se dvije riječi pojavljuju zajedno češće nego što bismo očekivali na temelju njihovih individualnih frekvencija, to sugerira da postoji neka veza između njih.</p>
+<p><strong>Uzajamna informacija</strong> (Pointwise Mutual Information, PMI) jedna je od najčešće korištenih mjera. Definira se kao:</p>
+<p><span class="math display">\[PMI(w_1, w_2) = \log_2 \frac{P(w_1, w_2)}{P(w_1) \cdot P(w_2)}\]</span></p>
+<p>gdje <span class="math inline">\(P(w_1, w_2)\)</span> označava vjerojatnost zajedničkog pojavljivanja riječi <span class="math inline">\(w_1\)</span> i <span class="math inline">\(w_2\)</span> (unutar definiranog prozora), a <span class="math inline">\(P(w_1)\)</span> i <span class="math inline">\(P(w_2)\)</span> označavaju marginalne vjerojatnosti pojedinih riječi. Vjerojatnosti se procjenjuju iz korpusa kao relativne frekvencije. Ako je PMI jednak nuli, riječi su nezavisne, odnosno pojavljuju se zajedno točno onoliko često koliko bismo očekivali na temelju slučajnosti. Pozitivne vrijednosti PMI ukazuju na pozitivnu asocijaciju (riječi se privlače), dok negativne vrijednosti ukazuju na negativnu asocijaciju (riječi se međusobno izbjegavaju). Tipične jake kolokacije imaju PMI vrijednosti između 3 i 10.</p>
+<p>Prednost PMI mjere jest što nije ovisna o ukupnoj veličini korpusa, pa se vrijednosti mogu uspoređivati između korpusa različitih veličina. Međutim, PMI ima poznatu slabost: tendira precjenjivati snagu asocijacije za rijetke riječi. Ako se dvije rijetke riječi pojave zajedno samo jednom ili dvaput, PMI može dati izrazito visoku vrijednost koja ne odražava stabilnu jezičnu pravilnost, već slučajnost uzorkovanja. Zato se PMI često kombinira s pragom minimalne frekvencije koji isključuje rijetke kombinacije.</p>
+<p><strong>T-vrijednost</strong> (t-score) predstavlja alternativnu mjeru koja uzima u obzir varijabilnost podataka:</p>
+<p><span class="math display">\[t = \frac{O - E}{\sqrt{O}}\]</span></p>
+<p>gdje <span class="math inline">\(O\)</span> označava opaženu frekvenciju kolokacije, a <span class="math inline">\(E\)</span> očekivanu frekvenciju pod pretpostavkom nezavisnosti. T-vrijednost je konzervativnija od PMI i favorizira česte kolokacije. Visoke t-vrijednosti tipično imaju kombinacije čestih riječi koje se redovito pojavljuju zajedno, dok rijetke ali snažno asocirane kombinacije mogu imati niže t-vrijednosti. Za istraživanje uobičajenih jezičnih obrazaca t-vrijednost može biti prikladnija, dok je PMI bolji za identifikaciju specifičnih, tehničkih ili idiomatskih izraza.</p>
+<p><strong>Log-likelihood omjer</strong> (log-likelihood ratio, često označen kao G² ili LL) predstavlja robustniju mjeru koja ne pretpostavlja normalnu distribuciju i bolje funkcionira s rijetkim podacima:</p>
+<p><span class="math display">\[G^2 = 2 \sum O \cdot \ln\frac{O}{E}\]</span></p>
+<p>gdje se sumira preko svih ćelija tablice kontingencije (zajedničko pojavljivanje, pojavljivanje samo prve riječi, pojavljivanje samo druge riječi, nepojavljivanje obje). Log-likelihood omjer ima poznatu distribuciju pod nultom hipotezom nezavisnosti, što omogućuje formalno statističko testiranje značajnosti kolokacije.</p>
+<table class="caption-top table">
+<caption>Usporedba mjera asocijacije za identifikaciju kolokacija</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 38%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Mjera</th>
+<th style="text-align: left;">Formula</th>
+<th style="text-align: left;">Karakteristike</th>
+<th style="text-align: left;">Primjena</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">PMI</td>
+<td style="text-align: left;"><span class="math inline">\(\log_2 \frac{P(w_1, w_2)}{P(w_1) \cdot P(w_2)}\)</span></td>
+<td style="text-align: left;">Osjetljiva na rijetke riječi</td>
+<td style="text-align: left;">Specifični termini, idiomi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">T-vrijednost</td>
+<td style="text-align: left;"><span class="math inline">\(\frac{O - E}{\sqrt{O}}\)</span></td>
+<td style="text-align: left;">Favorizira česte kombinacije</td>
+<td style="text-align: left;">Uobičajeni jezični obrasci</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Log-likelihood</td>
+<td style="text-align: left;"><span class="math inline">\(2 \sum O \cdot \ln\frac{O}{E}\)</span></td>
+<td style="text-align: left;">Robusna, statistički testabilna</td>
+<td style="text-align: left;">Opća primjena</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chi-kvadrat</td>
+<td style="text-align: left;"><span class="math inline">\(\sum \frac{(O - E)^2}{E}\)</span></td>
+<td style="text-align: left;">Problematična za rijetke podatke</td>
+<td style="text-align: left;">Česte kolokacije</td>
+</tr>
+</tbody>
+</table>
+<p>U kontekstu istraživanja masovne komunikacije, analiza n-grama i kolokacija može odgovoriti na niz pitanja. Koje su karakteristične fraze pojedinih političkih stranaka ili političara? Istraživač može usporediti bigrame i trigrame u govorima različitih aktera i identificirati jezične markere koji razlikuju njihov diskurs. Kako se kolokacije određene riječi razlikuju između medija? Primjerice, koje riječi mediji različitih političkih orijentacija povezuju s riječju “migranti”? Jedan medij možda preferira kolokacije poput “migranti+ilegalni”, “migranti+prijetnja”, dok drugi preferira “migranti+izbjeglice”, “migranti+zaštita”. Ove razlike u kolokacijama odražavaju različite interpretativne okvire.</p>
+<p>Longitudinalna analiza kolokacija može pratiti promjene u jezičnoj upotrebi kroz vrijeme. Koje su se nove kolokacije pojavile s riječju “klima” u posljednjem desetljeću? Vjerojatno bismo vidjeli porast kolokacija poput “klimatska+kriza”, “klimatske+promjene”, “klimatska+neutralnost” koje odražavaju promjene u javnom diskursu o okolišu.</p>
+</section>
+<section id="kontekst-i-negacija-u-analizi-sentimenta" class="level2">
+<h2 class="anchored" data-anchor-id="kontekst-i-negacija-u-analizi-sentimenta">Kontekst i negacija u analizi sentimenta</h2>
+<p>U prethodnom poglavlju razmotrili smo rječničke pristupe analizi sentimenta i identificirali njihova ograničenja, posebno problem negacija i kontekstualne ovisnosti značenja. N-grami pružaju djelomično rješenje za ove probleme jer omogućuju analizu riječi u njihovom neposrednom kontekstu umjesto u izolaciji.</p>
+<p>Problem negacije možemo ilustrirati jednostavnim primjerom. Rečenica “Film nije bio loš” izražava blago pozitivan sentiment, no jednostavni rječnički pristup prepoznaje samo riječ “loš” i klasificira rečenicu kao negativnu. Slično, “Nikad nisam bio sretniji” izražava intenzivnu pozitivnu emociju, no prisutnost negacije “nikad” i “nisam” može zbuniti jednostavne algoritme. Analiza bigrama omogućuje da identificiramo obrasce poput “nije loš”, “nije dobro”, “nikad sretniji” i tretiramo ih kao cjeline s vlastitim sentimentom.</p>
+<p>Praktični pristup sastoji se od analize bigrama koji počinju s negacijskim riječima. U hrvatskom jeziku tipične negacije uključuju “ne”, “nije”, “nisu”, “nisam”, “nismo”, “niste”, “nikad”, “nikada”, “nimalo”, “ništa” i slično. Za svaku od ovih negacija možemo identificirati najčešće riječi koje ih slijede i analizirati njihov utjecaj na sentiment. Ako nakon negacije slijedi pozitivna riječ (primjerice “nije dobro”, “ne volim”), ukupni sentiment je negativan. Ako nakon negacije slijedi negativna riječ (primjerice “nije loše”, “ne mrzim”), ukupni sentiment je neutralan do pozitivan, ovisno o intenzitetu.</p>
+<p>Formalizacija ovog pristupa zahtijeva modificirani izračun sentimenta. Označimo s <span class="math inline">\(N\)</span> skup negacijskih riječi, a s <span class="math inline">\(s(w)\)</span> sentimentnu vrijednost riječi <span class="math inline">\(w\)</span> iz leksikona. Za bigram <span class="math inline">\((w_1, w_2)\)</span> gdje je <span class="math inline">\(w_1 \in N\)</span>, možemo definirati modificirani sentiment kao <span class="math inline">\(-s(w_2)\)</span> ili kao <span class="math inline">\(-\alpha \cdot s(w_2)\)</span> gdje je <span class="math inline">\(\alpha\)</span> parametar koji kontrolira intenzitet inverzije (tipično između 0.5 i 1). Alternativno, možemo jednostavno isključiti iz analize sve riječi koje slijede negaciju unutar određenog prozora (primjerice 3 riječi).</p>
+<p>Istraživanja pokazuju da je doseg negacije ograničen. Negacija tipično utječe na jednu do tri riječi koje slijede, nakon čega njezin utjecaj slabi. Fraza “Ne mislim da je film bio loš, dapače, bio je odličan” sadrži negaciju “ne”, negativnu riječ “loš” i pozitivnu riječ “odličan”. Jednostavna inverzija sentimenta za sve riječi nakon negacije dala bi pogrešan rezultat. Sofisticiraniji pristupi koriste sintaktičku analizu za određivanje dosega negacije, ali to zahtijeva naprednije jezične resurse.</p>
+<p>Osim negacije, bigram analiza može pomoći u rješavanju problema <strong>pojačivača</strong> (intensifiers) i <strong>ublažavača</strong> (diminishers). Riječi poput “vrlo”, “izrazito”, “potpuno”, “krajnje” pojačavaju sentiment riječi koja slijedi. “Vrlo dobro” ima jači pozitivni sentiment od samog “dobro”. Suprotno, riječi poput “pomalo”, “donekle”, “relativno”, “djelomično” ublažavaju sentiment. “Pomalo razočaran” ima slabiji negativni sentiment od “razočaran”. Ovaj pristup možemo implementirati definiranjem multiplikatora za pojačivače (primjerice 1.5) i ublažavače (primjerice 0.5) koji se primjenjuju na sentiment susjedne riječi.</p>
+<table class="caption-top table">
+<caption>Tipovi kontekstualnih modifikatora sentimenta</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tip modifikatora</th>
+<th style="text-align: left;">Primjeri</th>
+<th style="text-align: left;">Učinak na sentiment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Negacije</td>
+<td style="text-align: left;">nije, nikad, nimalo</td>
+<td style="text-align: left;">Inverzija (× -1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pojačivači</td>
+<td style="text-align: left;">vrlo, izrazito, potpuno</td>
+<td style="text-align: left;">Pojačanje (× 1.5)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ublažavači</td>
+<td style="text-align: left;">pomalo, donekle, relativno</td>
+<td style="text-align: left;">Ublažavanje (× 0.5)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Suprotnosti</td>
+<td style="text-align: left;">ali, međutim, no</td>
+<td style="text-align: left;">Promjena smjera</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Suprotni veznici</strong> poput “ali”, “međutim”, “no”, “ipak” signaliziraju promjenu smjera u tekstu. Struktura “X, ali Y” tipično daje veću težinu dijelu Y. “Film ima dobru glumu, ali dosadnu radnju” ukupno ima negativan sentiment jer negativni dio dolazi nakon suprotnog veznika. Ovo odražava pragmatičku konvenciju u jeziku gdje informacija nakon “ali” nosi veću komunikativnu težinu.</p>
+<p>Sve ove kontekstualne prilagodbe poboljšavaju jednostavne rječničke pristupe, no ne rješavaju temeljni problem: sentiment često ovisi o širem kontekstu koji nadilazi neposredno susjedstvo riječi. Ironija, sarkazam, implicitne reference i kulturno specifične konotacije ostaju izvan dosega ovih tehnika. Zato se kontekstualna analiza sentimenta najbolje koristi kao poboljšanje, a ne zamjena za pažljivo dizajnirane studije koje kombiniraju kvantitativne i kvalitativne metode.</p>
+</section>
+<section id="analiza-okvira-framing-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analiza-okvira-framing-analysis">Analiza okvira (framing analysis)</h2>
+<p><strong>Uokvirivanje</strong> (framing) predstavlja jedan od središnjih koncepata u istraživanju masovne komunikacije. Ideja je da mediji ne samo prenose informacije o događajima, nego ih aktivno interpretiraju, odabirući određene aspekte stvarnosti, naglašavajući ih i čineći ih istaknutijima, dok druge aspekte marginaliziraju ili potpuno ignoriraju. Robert Entman definirao je uokvirivanje kao proces odabira “nekih aspekata percipirane stvarnosti i činjenja tih aspekata istaknutijima u komunikacijskom tekstu, na način da se promovira određena definicija problema, kauzalna interpretacija, moralna evaluacija i/ili preporuka tretmana.”</p>
+<p>Klasičan primjer je izvještavanje o demonstracijama. Isti događaj može biti uokviren kao “mirni prosvjed građana za svoja prava” ili kao “nasilni neredi koji ugrožavaju javni red”. Odabir okvira utječe na to kako će publika razumjeti događaj, koje uzroke će pripisati, koje aktere će smatrati odgovornima i koje reakcije će smatrati prikladnima. Uokvirivanje nije nužno svjesna manipulacija; ono odražava profesionalne rutine, organizacijske pritiske, kulturne pretpostavke i ideološke pozicije koje oblikuju novinarsku praksu.</p>
+<p>Računalna analiza okvira pokušava automatizirati ili barem podržati identifikaciju okvira u velikim korpusima teksta. Ovo je izazovan zadatak jer okviri nisu eksplicitno označeni u tekstu, već proizlaze iz kompleksne interakcije leksičkih izbora, retoričkih struktura, metafora, narativnih obrazaca i implicitnih pretpostavki. Ipak, određene tehnike mogu pomoći u identifikaciji elemenata koji konstituiraju okvire.</p>
+<p><strong>Leksički pristupi</strong> polaze od pretpostavke da se okviri manifestiraju kroz karakteristične riječi i fraze. Istraživač može definirati “rječnike okvira” koji sadrže riječi tipične za pojedine okvire, analogno sentimentnim rječnicima. Primjerice, okvir “ekonomske racionalnosti” mogao bi uključivati riječi poput “učinkovitost”, “troškovi”, “konkurentnost”, “produktivnost”, “ulaganje”, dok okvir “ljudskih prava” mogao bi uključivati “dostojanstvo”, “zaštita”, “jednakost”, “diskriminacija”, “pravednost”. Prebrajanjem riječi iz svakog rječnika može se procijeniti relativna prominentnost različitih okvira u tekstu ili korpusu.</p>
+<p>Ovaj pristup ima očite paralele s rječničkom analizom sentimenta i dijeli njezina ograničenja. Riječi mogu pripadati različitim okvirima ovisno o kontekstu. Riječ “sigurnost” može biti dio okvira nacionalne sigurnosti (vojska, granice, prijetnje), ali i okvira socijalne sigurnosti (mirovina, zdravstvo, skrb). Zato je leksički pristup najkorisniji kada se kombinira s kvalitativnom analizom koja validira i kontekstualizira kvantitativne nalaze.</p>
+<p><strong>Kolokacijska analiza</strong> pruža sofisticiraniji pristup identifikaciji okvira. Umjesto da prebrojimo pojedinačne riječi, analiziramo koje riječi se tipično pojavljuju zajedno s ključnim pojmovima. Ako nas zanima kako je uokvirena tema migracija, možemo analizirati kolokacije riječi “migranti”, “izbjeglice”, “azilanti” i srodnih termina. Kolokacije poput “ilegalni+migranti”, “migrantska+kriza”, “val+migranata” sugeriraju sigurnosni ili krizni okvir. Kolokacije poput “zaštita+izbjeglica”, “humanitarna+pomoć”, “pravo+azil” sugeriraju humanitarni okvir.</p>
+<p>Usporedba kolokacija između različitih medija ili vremenskih razdoblja može otkriti sistematske razlike u uokvirivanju. Istraživač može izračunati log-likelihood omjere za kolokacije u dva korpusa (primjerice lijevo i desno orijentirani mediji) i identificirati kolokacije koje su statistički značajno češće u jednom korpusu nego u drugom. Ove “karakteristične kolokacije” predstavljaju empirijsku osnovu za identifikaciju različitih interpretativnih okvira.</p>
+<p><strong>Tematsko modeliranje</strong> o kojem smo govorili u prethodnom poglavlju također može doprinijeti analizi okvira. Latentne teme koje algoritam identificira mogu se interpretirati kao okviri ili elementi okvira. Međutim, veza između statistički deriviranih tema i teorijski definiranih okvira nije izravna. Teme odražavaju statističke pravilnosti u supojavljivanju riječi, dok su okviri interpretativni paketi koji uključuju definicije problema, kauzalne atribucije i moralne evaluacije. Istraživač mora pažljivo interpretirati rezultate tematskog modeliranja u svjetlu teorije uokvirivanja.</p>
+<p><strong>Analiza metafora</strong> predstavlja posebno važan pristup jer metafore često čine srž konceptualnih okvira. Kognitivni lingvisti George Lakoff i Mark Johnson pokazali su da metafore nisu samo stilsko ukrašavanje, već temeljni način na koji konceptualiziramo apstraktne pojmove. Metafora “RASPRAVA JE RAT” strukturira naše razumijevanje rasprave kroz pojmove poput “napada”, “obrane”, “pobjede”, “poraza”. Metafora “EKONOMIJA JE ZDRAVLJE” strukturira ekonomski diskurs kroz pojmove poput “zdravog gospodarstva”, “bolesne ekonomije”, “oporavka”, “dijagnoze”.</p>
+<p>Automatska identifikacija metafora u tekstu ostaje izazovan zadatak, no određeni pristupi mogu pomoći. Kolokacije koje kombiniraju apstraktne i konkretne domene mogu ukazivati na metaforički jezik. Primjerice, kolokacija “ekonomija+ozdravljenje” kombinira apstraktnu domenu (ekonomija) s konkretnom domenom (zdravlje), sugerirajući metaforički prijenos. Istraživač može definirati popise izvorne domene (zdravlje, rat, putovanje, obitelj) i ciljne domene (ekonomija, politika, društvo) te tražiti neočekivane kombinacije koje ukazuju na metafore.</p>
+<table class="caption-top table">
+<caption>Elementi okvira i računalni pristupi njihovoj identifikaciji</caption>
+<colgroup>
+<col style="width: 36%">
+<col style="width: 43%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Element okvira</th>
+<th style="text-align: left;">Računalni pristup</th>
+<th style="text-align: left;">Primjer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Definicija problema</td>
+<td style="text-align: left;">Kolokacije ključnih pojmova</td>
+<td style="text-align: left;">“migrantska kriza” vs “humanitarna situacija”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kauzalna atribucija</td>
+<td style="text-align: left;">Analiza subjekata i objekata</td>
+<td style="text-align: left;">Tko čini što kome?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moralna evaluacija</td>
+<td style="text-align: left;">Sentimentne kolokacije</td>
+<td style="text-align: left;">Pozitivne/negativne asocijacije</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Preporučeni tretman</td>
+<td style="text-align: left;">Kolokacije s glagolima akcije</td>
+<td style="text-align: left;">“zaustaviti”, “pomoći”, “regulirati”</td>
+</tr>
+</tbody>
+</table>
+<p>Istraživač koji koristi računalne metode za analizu okvira mora biti svjestan da one pružaju <strong>indikatore</strong>, a ne definitivne identifikacije okvira. Kolokacije, teme i leksičke frekvencije mogu ukazati na obrasce koji sugeriraju određene okvire, no konačna interpretacija zahtijeva kvalitativnu analizu konkretnih tekstova. Najbolja praksa kombinira računalno potpomognutu identifikaciju obrazaca s detaljnom analizom reprezentativnih primjera koji ilustriraju i validiraju te obrasce.</p>
+</section>
+<section id="analiza-retoričke-strukture" class="level2">
+<h2 class="anchored" data-anchor-id="analiza-retoričke-strukture">Analiza retoričke strukture</h2>
+<p>Tekst nije samo skup rečenica poredanih jedna za drugom; rečenice su međusobno povezane odnosima koji čine tekst koherentnom cjelinom. <strong>Teorija retoričke strukture</strong> (Rhetorical Structure Theory, RST), koju su razvili William Mann i Sandra Thompson, pruža okvir za analizu tih odnosa. Prema RST-u, tekst se može rastaviti na elementarne diskurzivne jedinice (obično klauzule) koje su povezane retoričkim relacijama poput uzroka, posljedice, kontrasta, elaboracije, dokaza i sličnih.</p>
+<p>Razmotrimo primjer: “Vlada je povećala porez na dohodak. To će negativno utjecati na potrošnju građana.” Dvije rečenice povezane su relacijom <strong>uzrok-posljedica</strong>: prva rečenica navodi uzrok (povećanje poreza), a druga posljedicu (pad potrošnje). Alternativna struktura mogla bi biti: “Vlada je povećala porez na dohodak, iako je obećala suprotno.” Ovdje je relacija <strong>kontrast</strong> ili <strong>koncesija</strong>: druga klauzula uvodi informaciju koja je u napetosti s očekivanjem koje proizlazi iz prve.</p>
+<p>RST razlikuje <strong>nukleus</strong> i <strong>satelit</strong> u većini relacija. Nukleus je centralni, nezavisni dio koji može stajati sam, dok je satelit periferni dio koji dopunjuje, objašnjava ili modificira nukleus. U relaciji dokaza, tvrdnja je nukleus, a dokaz je satelit koji podupire tu tvrdnju. U relaciji elaboracije, općenita izjava je nukleus, a specifičniji detalji su sateliti. Neke relacije su simetrične (poput kontrasta ili slijeda), gdje oba dijela imaju jednak status.</p>
+<p>Standardne RST relacije uključuju:</p>
+<p><strong>Elaboracija</strong> dodaje detalje ili specifikaciju. “Konferencija je bila uspješna. Okupila je više od 500 sudionika iz 30 zemalja.”</p>
+<p><strong>Uzrok</strong> i <strong>posljedica</strong> izražavaju kauzalne odnose. “Zbog suše su žetve propale. Cijene hrane su porasle.”</p>
+<p><strong>Kontrast</strong> i <strong>koncesija</strong> izražavaju suprotnost ili neočekivanost. “Ekonomija raste, no nezaposlenost ostaje visoka.”</p>
+<p><strong>Dokaz</strong> pruža potporu za tvrdnju. “Projekt je uspješan. Svi postavljeni ciljevi su ostvareni.”</p>
+<p><strong>Svrha</strong> izražava namjeru ili cilj. “Vlada uvodi nove mjere kako bi smanjila inflaciju.”</p>
+<p><strong>Uvjet</strong> izražava hipotetičke situacije. “Ako se inflacija ne smanji, kamatne stope će rasti.”</p>
+<p>Automatska analiza retoričke strukture predstavlja složen zadatak računalne lingvistike. Suvremeni sustavi koriste kombinaciju sintaktičke analize, leksičkih signala (veznici poput “jer”, “iako”, “zato”) i strojnog učenja treniranog na ručno označenim korpusima. Međutim, preciznost automatske RST analize još uvijek značajno zaostaje za ljudskom analizom, posebno za implicitne relacije koje nisu signalizirane eksplicitnim veznicima.</p>
+<p>Za istraživače masovne komunikacije, čak i djelomična analiza retoričke strukture može biti vrijedna. <strong>Distribucija relacija</strong> u korpusu može otkriti karakteristike diskursa. Tekstovi bogati relacijama dokaza i uzroka mogu sugerirati argumentativni, analitički stil. Tekstovi s dominantnim relacijama slijeda i elaboracije mogu sugerirati narativni, deskriptivni stil. Usporedba distribucije relacija između žanrova, medija ili autora može otkriti sistematske razlike u diskurzivnim praksama.</p>
+<p><strong>Analiza diskurzivnih veznika</strong> predstavlja jednostavniji pristup koji ne zahtijeva potpunu RST analizu. Veznici poput “jer”, “zato”, “stoga” signaliziraju kauzalne relacije. Veznici poput “ali”, “međutim”, “ipak” signaliziraju kontrastne relacije. Veznici poput “osim toga”, “također”, “nadalje” signaliziraju aditivne relacije. Prebrajanjem i analizom distribucije ovih veznika može se dobiti gruba slika retoričke organizacije teksta.</p>
+<table class="caption-top table">
+<caption>Tipovi diskurzivnih relacija i njihovi leksički signali</caption>
+<colgroup>
+<col style="width: 26%">
+<col style="width: 32%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tip relacije</th>
+<th style="text-align: left;">Tipični veznici</th>
+<th style="text-align: left;">Diskurzivna funkcija</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Kauzalna</td>
+<td style="text-align: left;">jer, zato, stoga, budući da</td>
+<td style="text-align: left;">Objašnjenje, argumentacija</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kontrastna</td>
+<td style="text-align: left;">ali, međutim, ipak, no</td>
+<td style="text-align: left;">Suprotstavljanje, koncesija</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aditivna</td>
+<td style="text-align: left;">i, također, osim toga, nadalje</td>
+<td style="text-align: left;">Nadogradnja, nabrajanje</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Temporalna</td>
+<td style="text-align: left;">zatim, potom, nakon toga, prije</td>
+<td style="text-align: left;">Sekvenciranje, naracija</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kondicijska</td>
+<td style="text-align: left;">ako, ukoliko, pod uvjetom</td>
+<td style="text-align: left;">Hipotetički scenariji</td>
+</tr>
+</tbody>
+</table>
+<p>Primjena u analizi medijskih tekstova može uključivati usporedbu argumentativne strukture izvještavanja različitih medija o istoj temi. Koriste li određeni mediji više kauzalnih objašnjenja, dok se drugi oslanjaju na puko navođenje činjenica? Kako se struktura argumentacije razlikuje u vijestima, komentarima i analizama? Ova pitanja mogu se barem djelomično adresirati analizom distribucije diskurzivnih veznika i relacija.</p>
+</section>
+<section id="mreže-riječi-i-vizualizacija" class="level2">
+<h2 class="anchored" data-anchor-id="mreže-riječi-i-vizualizacija">Mreže riječi i vizualizacija</h2>
+<p>Dosadašnje tehnike koje smo razmatrali produciraju tablice frekvencija, mjera asocijacije i distribucija. Međutim, odnosi između riječi u tekstu inherentno su mrežni: riječi su povezane s drugim riječima kroz kolokacije, supojavljivanja i semantičke odnose. <strong>Mrežna analiza riječi</strong> eksplicira ovu strukturu, omogućujući vizualizaciju i kvantifikaciju kompleksnih obrazaca koji bi inače ostali skriveni.</p>
+<p>U mreži riječi, <strong>čvorovi</strong> predstavljaju riječi, a <strong>veze</strong> (bridovi) predstavljaju odnose između riječi. Veze mogu biti definirane na različite načine: bigram relacije (riječ A neposredno prethodi riječi B), kolokacijske relacije (riječi se pojavljuju zajedno unutar prozora), korelacijske relacije (riječi se pojavljuju u istim dokumentima) ili semantičke relacije (riječi su sinonimi, hiperonimi, itd.). Veze mogu biti <strong>usmjerene</strong> (bigram: A → B) ili <strong>neusmjerene</strong> (kolokacija: A — B), te mogu imati <strong>težine</strong> koje odražavaju snagu asocijacije.</p>
+<p>Konstrukcija mreže bigrama počinje od tablice frekvencija bigrama. Svaki bigram (riječ1, riječ2) postaje usmjerena veza od riječ1 do riječ2. Težina veze može biti sirova frekvencija bigrama ili neka mjera asocijacije poput PMI. Tipično se primjenjuje prag koji uključuje samo bigrame iznad određene frekvencije ili snage asocijacije, kako bi se izbjegla prezasićenost mreže rijetkim i potencijalno slučajnim kombinacijama.</p>
+<p>Vizualizacija mreže riječi koristi algoritme za raspoređivanje čvorova u dvodimenzionalnom prostoru. Algoritmi poput Fruchterman-Reingolda ili ForceAtlas2 pozicioniraju povezane čvorove blizu jedan drugome, a nepovezane čvorove razdvojeno. Rezultat je dijagram gdje klasteri gusto povezanih riječi formiraju vizualno prepoznatljive grupe, dok mostovi između klastera ukazuju na veze između različitih tematskih ili semantičkih domena.</p>
+<p>Mrežna analiza omogućuje izračun raznih <strong>mrežnih metrika</strong> koje kvantificiraju strukturu diskursa. <strong>Stupanj čvora</strong> (degree) mjeri broj veza koje čvor ima, ukazujući na “povezanost” riječi. Riječi s visokim stupnjem su centralne u diskursu, povezujući mnoge druge riječi. <strong>Međupoloženost</strong> (betweenness centrality) mjeri koliko često čvor leži na najkraćim putevima između drugih čvorova, ukazujući na “mostovnu” ulogu riječi koja povezuje inače odvojene dijelove mreže. <strong>Bliskost</strong> (closeness centrality) mjeri prosječnu udaljenost čvora od svih drugih čvorova, ukazujući na globalnu centralnost u mreži.</p>
+<p>Formalno, međupoloženost čvora <span class="math inline">\(v\)</span> definira se kao:</p>
+<p><span class="math display">\[B(v) = \sum_{s \neq v \neq t} \frac{\sigma_{st}(v)}{\sigma_{st}}\]</span></p>
+<p>gdje <span class="math inline">\(\sigma_{st}\)</span> označava broj najkraćih puteva između čvorova <span class="math inline">\(s\)</span> i <span class="math inline">\(t\)</span>, a <span class="math inline">\(\sigma_{st}(v)\)</span> broj tih puteva koji prolaze kroz <span class="math inline">\(v\)</span>. Visoka međupoloženost ukazuje da je riječ ključna za povezivanje različitih dijelova diskursa.</p>
+<p><strong>Detekcija zajednica</strong> (community detection) identificira skupine čvorova koje su gusto povezane međusobno, a slabo povezane s ostatkom mreže. Algoritmi poput Louvainove metode ili propagacije oznaka mogu automatski identificirati ove zajednice. U mreži riječi, zajednice često odgovaraju tematskim ili semantičkim skupinama. Primjerice, u mreži konstruiranoj iz političkih govora, jedna zajednica mogla bi sadržavati riječi vezane uz ekonomiju (proračun, deficit, porez, rast), druga riječi vezane uz socijalnu politiku (mirovina, zdravstvo, obrazovanje), treća riječi vezane uz vanjsku politiku (EU, NATO, diplomatija).</p>
+<table class="caption-top table">
+<caption>Mrežne metrike i njihova interpretacija u analizi diskursa</caption>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 25%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metrika</th>
+<th style="text-align: left;">Definicija</th>
+<th style="text-align: left;">Interpretacija u diskursu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Stupanj</td>
+<td style="text-align: left;">Broj veza čvora</td>
+<td style="text-align: left;">Povezanost, prominentnost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Međupoloženost</td>
+<td style="text-align: left;">Broj najkraćih puteva kroz čvor</td>
+<td style="text-align: left;">Mostovna uloga, povezivanje tema</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bliskost</td>
+<td style="text-align: left;">Prosječna udaljenost do svih čvorova</td>
+<td style="text-align: left;">Globalna centralnost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Koeficijent klasteriranja</td>
+<td style="text-align: left;">Udio povezanih susjeda</td>
+<td style="text-align: left;">Lokalna kohezija</td>
+</tr>
+</tbody>
+</table>
+<p>U kontekstu istraživanja masovne komunikacije, mreže riječi mogu vizualizirati i kvantificirati strukturu diskursa na načine koji nadilaze jednostavne liste frekvencija. <strong>Usporedba mreža</strong> između različitih medija može otkriti sistematske razlike u načinu na koji organiziraju i povezuju koncepte. Dva medija mogu koristiti slične riječi, ali ih povezivati na različite načine, što se manifestira u različitoj topologiji njihovih mreža. <strong>Dinamička analiza mreža</strong> može pratiti kako se struktura diskursa mijenja kroz vrijeme, identificirajući pojavu novih klastera, nestanak starih veza ili promjene u centralnosti pojedinih pojmova.</p>
+<p>Mreže supojavljivanja entiteta predstavljaju posebno korisnu primjenu. Ako povežemo osobe koje se spominju u istim člancima, dobivamo mrežu koja odražava medijsku percepciju odnosa između aktera. Političari koji se često spominju zajedno mogu biti percipirani kao saveznici ili protivnici; analiza konteksta može razlikovati ove dvije interpretacije. Centralni akteri u mreži su oni koji povezuju različite sfere javnog života, dok periferni akteri pojavljuju se samo u specifičnim kontekstima.</p>
+<p>Vizualizacija mreže riječi može biti moćan komunikacijski alat za prezentaciju nalaza istraživanja, no zahtijeva pažljivu izradu. Prezasićene mreže s previše čvorova i veza postaju nečitljive. Preporučuje se ograničiti mrežu na nekoliko stotina najvažnijih čvorova, koristiti veličinu čvorova proporcionalnu njihovoj centralnosti, boju čvorova za označavanje zajednica i debljinu veza proporcionalnu snazi asocijacije. Interaktivne vizualizacije koje omogućuju zumiranje i filtriranje mogu pomoći u eksploraciji kompleksnih mreža.</p>
+</section>
+<section id="integracija-diskurzivnih-analiza" class="level2">
+<h2 class="anchored" data-anchor-id="integracija-diskurzivnih-analiza">Integracija diskurzivnih analiza</h2>
+<p>Tehnike predstavljene u ovom poglavlju nisu međusobno isključive; naprotiv, njihova integracija omogućuje bogatiji uvid u diskurzivne prakse nego što bi svaka pojedinačno mogla pružiti. N-grami i kolokacije identificiraju uobičajene jezične obrasce i mjere snagu asocijacije između riječi. Kontekstualna analiza sentimenta koristi te obrasce za preciznije mjerenje emocionalnog tona. Analiza okvira interpretira jezične izbore u svjetlu širih interpretativnih paketa. Retorička analiza ispituje kako se dijelovi teksta povezuju u argumentativne ili narativne strukture. Mrežna analiza vizualizira i kvantificira cjelokupnu strukturu diskursa.</p>
+<p>Tipičan integrirani radni tijek mogao bi izgledati ovako. Istraživač započinje s <strong>eksplorativnom analizom</strong> kolokacija i mreža riječi kako bi stekao uvid u opću strukturu korpusa i identificirao ključne pojmove i obrasce. Na temelju tih uvida, razvija <strong>specifične hipoteze</strong> o okvirima ili diskurzivnim strategijama koje želi testirati. Zatim koristi <strong>ciljanu analizu</strong> kolokacija određenih ključnih riječi, distribucije diskurzivnih veznika ili sentimentnih obrazaca kako bi kvantificirao obrasce relevantne za te hipoteze. Konačno, provodi <strong>kvalitativnu analizu</strong> reprezentativnih tekstova koji ilustriraju identificirane obrasce, validirajući kvantitativne nalaze i pružajući dublje razumijevanje diskurzivnih mehanizama.</p>
+<p>Ovaj pristup omogućuje da se snaga računalne analize (obrada velikih količina podataka, identifikacija obrazaca, kvantifikacija) kombinira sa snagom kvalitativne analize (interpretacija značenja, razumijevanje konteksta, teorijska artikulacija). Računalne metode ne zamjenjuju istraživačku ekspertizu, već je podupiru i proširuju, omogućujući pitanja koja bi bila nemoguća bez tehničke pomoći, ali čiji odgovori i dalje zahtijevaju ljudsku interpretaciju i prosudbu.</p>
+<p>Valja napomenuti i ograničenja diskurzivne analize potpomognute računalom. Jezične nijanse, implicitna značenja, kulturne reference i kontekstualna ironija ostaju izvan dosega većine automatskih metoda. Okviri se manifestiraju ne samo kroz leksičke izbore, već i kroz strukturu priče, odabir izvora, vizualne elemente i ono što tekst prešućuje, a ne samo što eksplicitno kaže. Zato računalna analiza diskursa treba biti shvaćena kao alat koji pomaže istraživaču, a ne kao zamjena za duboko čitanje i kritičku interpretaciju tekstova.</p>
+<p>Završno, analiza na razini diskursa podsjeća nas da tekst nije samo spremnik informacija koje treba izvući, već aktivni konstrukt koji oblikuje naše razumijevanje svijeta. Mediji ne samo izvještavaju o stvarnosti; oni je interpretiraju, uokviruju i konstruiraju. Tehnike predstavljene u ovom poglavlju pružaju alate za sistematsko istraživanje tih konstruktivnih procesa na razini koja nadilazi pojedinačne tekstove, omogućujući uvide u šire diskurzivne prakse koje oblikuju javnu sferu.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
