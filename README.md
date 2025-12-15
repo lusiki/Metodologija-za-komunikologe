@@ -105,30 +105,6 @@ Knjiga je u aktivnom razvoju. Planirana su sljedeća poglavlja:
 - [ ] **Poglavlje 8:** Faktorska analiza
 - [ ] **Poglavlje 9:** Uvod u Bayesian statistiku
 
----
-
-## 🎨 Ključne značajke
-
-### ✅ **Quarto format**
-Sva poglavlja u .qmd formatu s podrškom za HTML, PDF i DOCX izlaz
-
-### ✅ **Crno-bijeli grafovi**
-Profesionalni grafovi optimizirani za ispis i akademske publikacije
-
-### ✅ **Skriven R kod**
-Kod je skriven u izlaznim dokumentima (`echo: false`) za čitljivost
-
-### ✅ **Hrvatski primjeri**
-- 📺 HRT Dnevnik gledanost
-- 📰 Index.hr engagement metrics
-- 📱 Instagram influencer analytics
-- 🎬 Nova TV prime time ratings
-- 💬 Facebook dijeljenje sadržaja
-
-### ✅ **Akademski stil**
-- Formalna proza bez bullet pointa u glavnom tekstu
-- LaTeX formule za sve statističke koncepte
-- Tablice s konvencijama interpretacije
 
 ---
 
@@ -139,53 +115,7 @@ Kod je skriven u izlaznim dokumentima (`echo: false`) za čitljivost
 - **Praktičari** – Data-driven novinarstvo, media analytics
 - **Nastavnici** – Kompletan nastavni materijal
 
----
 
-## 🎯 Pedagoški pristup
-
-Svaka sekcija slijedi strukturu:
-
-1. **📖 Motivacija** – Zašto nam treba ovaj koncept?
-2. **🔬 Formalizacija** – Matematička definicija i formula
-3. **📊 Primjer** – Primjena na hrvatskim medijskim podacima
-4. **✨ Interpretacija** – Što brojke znače u praksi?
-
----
-
-## 🌟 Najvažnija lekcija
-
-> **Statistička značajnost ≠ Praktična značajnost**
-> 
-> Uvijek izvještavajte:
-> - Deskriptivne statistike (M, SD, N)
-> - Testnu statistiku i p-vrijednost
-> - Veličinu efekta (d, η², V, r)
-> - Intervale pouzdanosti
-> - **Kontekst** – što brojke znače u stvarnom svijetu
-
----
-
-## 📝 YAML konfiguracija za poglavlja
-
-Sva poglavlja koriste standardiziranu konfiguraciju:
-
-```yaml
----
-title: "Naslov poglavlja"
-format:
-  html:
-    toc: true
-    format-links: [pdf, docx]
-  pdf:
-    babel-lang: english
-    geometry: margin=2.5cm
-  docx:
-    toc: true
-lang: hr
-execute:
-  echo: false
----
-```
 
 ---
 
