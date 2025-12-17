@@ -216,91 +216,38 @@ empirijsko istraživanje komunikacijskih fenomena.
 
 Međutim, ulazak u svijet računalne analize teksta zahtijeva od
 istraživača ne samo tehničke vještine, već i temeljito epistemološko
-razumijevanje pretpostavki, mogućnosti i ograničenja ovih metoda. Justin
-Grimmer, Margaret Roberts i Brandon Stewart, vodeći metodolozi u ovom
-području, u svojoj utjecajnoj knjizi \emph{Text as Data: A New Framework
-for Machine Learning and the Social Sciences} identificiraju četiri
-temeljne pretpostavke koje vrijede za sve metode računalne analize
-teksta i koje svaki istraživač mora internalizirati prije nego što
-pristupi primjeni ovih tehnika.
+razumijevanje pretpostavki, mogućnosti i ograničenja ovih metoda. Četiri
+važne pretpostavke koje vrijede za sve metode računalne analize teksta i
+koje svaki istraživač mora internalizirati prije nego što pristupi
+primjeni ovih tehnika.
 
 Prva pretpostavka glasi da sve kvantitativne modele tekstualnih podataka
-treba tretirati kao pogrešne, ali potencijalno korisne. Nijedan
-statistički model ne može uhvatiti svu kompleksnost prirodnog jezika jer
-je jezik višeznačan, kontekstualno ovisan, kulturno specifičan i
-neprestano se mijenja. Modeli nužno pojednostavljuju ovu kompleksnost
-kako bi bili računalno izvedivi i interpretabilni. Pretpostavka da je
-model ``pogrešan'' ne znači da je beskoristan jer mnogi pojednostavljeni
-modeli proizvode korisne aproksimacije stvarnosti. Međutim, istraživač
-mora biti svjestan da rezultati modela nisu ``istina'', već
-aproksimacije koje mogu biti više ili manje korisne ovisno o specifičnom
-istraživačkom pitanju.
-
-Druga pretpostavka ističe da kvantitativne metode za tekst pojačavaju
-ljudske sposobnosti, ali ih ne zamjenjuju. Računalna analiza može
-obraditi količine teksta koje bi bile nemoguće za ljudsku analizu,
-identificirati obrasce koji bi promakli ljudskom oku i kvantificirati
-fenomene na način koji omogućuje statističko zaključivanje. Međutim,
-računala ne ``razumiju'' tekst u smislu u kojem to čine ljudi.
-Interpretacija rezultata, procjena njihove smislenosti, povezivanje s
-teorijskim okvirima i donošenje zaključaka ostaju ljudske zadaće.
-Pokušaj potpune automatizacije istraživačkog procesa gotovo sigurno vodi
-do trivialnih ili pogrešnih zaključaka.
-
-Treća pretpostavka naglašava da je potrebna ekstenzivna validacija
-specifična za problem. Ne postoji univerzalni algoritam koji funkcionira
-za sve istraživačke zadatke i sve korpuse. Metoda koja izvrsno
-funkcionira za klasifikaciju vijesti prema temama možda će podbaciti za
-analizu sentimenta u komentarima na društvenim mrežama. Algoritam
-treniran na engleskim tekstovima neće nužno dobro funkcionirati na
-hrvatskim tekstovima. Zato je svako istraživanje dužno uključiti
-rigoroznu validaciju koja demonstrira da odabrane metode proizvode
-valjane rezultate u specifičnom kontekstu primjene.
-
-Četvrta pretpostavka upozorava da računalne metode za tekst ne
-otklanjaju potrebu za pomnim čitanjem i analitičkim razmišljanjem.
-Upravo suprotno, one zahtijevaju još više pomnog čitanja jer istraživač
-mora razumjeti podatke koje analizira, mora moći procijeniti smislenost
-rezultata algoritama i mora znati interpretirati kvantitativne nalaze u
-svjetlu kvalitativnog razumijevanja tekstualnog materijala. Računalna
-analiza ne eliminira interpretaciju, već joj pruža kvantitativnu
-podlogu.
-
-Tablica 1 sažima ove četiri pretpostavke i njihove implikacije za
-istraživačku praksu.
-
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6667}}@{}}
-\caption{Četiri temeljne pretpostavke računalne analize teksta prema
-Grimmeru, Roberts i Stewartu}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Pretpostavka
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Implikacija za istraživača
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Pretpostavka
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Implikacija za istraživača
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Svi modeli su pogrešni, ali mogu biti korisni & Tretirati rezultate kao
-aproksimacije, ne kao istine \\
-Metode pojačavaju, ne zamjenjuju ljudsku prosudbu & Zadržati
-interpretativnu ulogu istraživača \\
-Potrebna je validacija specifična za problem & Ne pretpostavljati
-transferabilnost metoda bez provjere \\
-Potrebno je pomno čitanje i analitičko razmišljanje & Kombinirati
-kvantitativnu analizu s kvalitativnim uvidom \\
-\end{longtable}
+treba tretirati kao pogrešne, ali potencijalno korisne.Druga
+pretpostavka ističe da kvantitativne metode za tekst pojačavaju ljudske
+sposobnosti, ali ih ne zamjenjuju. Računalna analiza može obraditi
+količine teksta koje bi bile nemoguće za ljudsku analizu, identificirati
+obrasce koji bi promakli ljudskom oku i kvantificirati fenomene na način
+koji omogućuje statističko zaključivanje. Međutim, računala ne
+``razumiju'' tekst u smislu u kojem to čine ljudi. Interpretacija
+rezultata, procjena njihove smislenosti, povezivanje s teorijskim
+okvirima i donošenje zaključaka ostaju ljudske zadaće. Pokušaj potpune
+automatizacije istraživačkog procesa gotovo sigurno vodi do trivialnih
+ili pogrešnih zaključaka. Treća pretpostavka naglašava da je potrebna
+ekstenzivna validacija specifična za problem. Ne postoji univerzalni
+algoritam koji funkcionira za sve istraživačke zadatke i sve korpuse.
+Metoda koja izvrsno funkcionira za klasifikaciju vijesti prema temama
+možda će podbaciti za analizu sentimenta u komentarima na društvenim
+mrežama. Algoritam treniran na engleskim tekstovima neće nužno dobro
+funkcionirati na hrvatskim tekstovima. Zato je svako istraživanje dužno
+uključiti rigoroznu validaciju koja demonstrira da odabrane metode
+proizvode valjane rezultate u specifičnom kontekstu primjene. Četvrta
+pretpostavka upozorava da računalne metode za tekst ne otklanjaju
+potrebu za pomnim čitanjem i analitičkim razmišljanjem. Upravo suprotno,
+one zahtijevaju još više pomnog čitanja jer istraživač mora razumjeti
+podatke koje analizira, mora moći procijeniti smislenost rezultata
+algoritama i mora znati interpretirati kvantitativne nalaze u svjetlu
+kvalitativnog razumijevanja tekstualnog materijala. Računalna analiza ne
+eliminira interpretaciju, već joj pruža kvantitativnu podlogu.
 
 Razumijevanje ovih pretpostavki posebno je važno u kontekstu
 komunikoloških istraživanja gdje su pitanja značenja, interpretacije i
@@ -453,24 +400,23 @@ ispravno za većinu analiza.
 riječi}\label{uklanjanje-zaustavnih-rijeux10di}
 
 Nakon tokenizacije, korpus tipično sadrži velik broj visokofrekventnih
-riječi koje nose malo semantičke informacije. Riječi poput ``i'',
+riječi koje nose malo semantičke vrijednosti. Riječi poput ``i'',
 ``ili'', ``je'', ``su'', ``na'', ``u'', ``za'' pojavljuju se u gotovo
 svakom dokumentu i dominiraju distribucijom frekvencija. Ove se riječi
 konvencionalno nazivaju zaustavnim riječima jer ne doprinose
 razlikovanju dokumenata prema sadržaju. U analizi tematske strukture
 korpusa novinarskih članaka, činjenica da svi članci sadrže veznik ``i''
-ne govori nam ništa o njihovu sadržaju.
-
-Uklanjanje zaustavnih riječi smanjuje dimenzionalnost podataka i
-poboljšava omjer signala i šuma u analizi. Tipična lista zaustavnih
-riječi za hrvatski jezik sadrži nekoliko stotina najčešćih riječi
-uključujući članove, veznike, prijedloge, pomoćne glagole i najčešće
-zamjenice. Međutim, sastavljanje takve liste nije trivijalan zadatak i
-uključuje interpretativne odluke. Je li riječ ``može'' zaustavna riječ
-ili sadržajna riječ? Odgovor ovisi o kontekstu. U korpusu političkih
-govora, modalni glagoli poput ``može'', ``mora'', ``treba'' mogu nositi
-značajnu informaciju o diskurzivnim strategijama govornika. U tehničkim
-tekstovima, iste riječi možda nemaju takvu funkciju.
+ne govori nam ništa o njihovu sadržaju. Uklanjanje zaustavnih riječi
+stogaa smanjuje dimenzionalnost podataka i poboljšava omjer signala i
+šuma u analizi. Tipična lista zaustavnih riječi za hrvatski jezik sadrži
+nekoliko stotina najčešćih riječi uključujući članove, veznike,
+prijedloge, pomoćne glagole i najčešće zamjenice. Međutim, sastavljanje
+takve liste nije trivijalan zadatak i uključuje interpretativne odluke.
+Je li riječ ``može'' zaustavna riječ ili sadržajna riječ? Odgovor ovisi
+o kontekstu. U korpusu političkih govora, modalni glagoli poput
+``može'', ``mora'', ``treba'' mogu nositi značajnu informaciju o
+diskurzivnim strategijama govornika. U tehničkim tekstovima, iste riječi
+možda nemaju takvu funkciju.
 
 Tablica 3 prikazuje primjer tipičnih hrvatskih zaustavnih riječi
 organiziranih prema vrstama riječi.
@@ -518,21 +464,19 @@ zaustavnih riječi i prilagodi je potrebama svog istraživanja.
 \subsection{Stemizacija i
 lematizacija}\label{stemizacija-i-lematizacija}
 
-Flektivna narav hrvatskog jezika rezultira time da se ista riječ
+Infleskivna priroda hrvatskog jezika rezultira time da se ista riječ
 pojavljuje u mnogim različitim oblicima ovisno o gramatičkom kontekstu.
 Glagol ``govoriti'' može se pojaviti kao ``govorim'', ``govoriš'',
 ``govori'', ``govorimo'', ``govorite'', ``govore'', ``govorio'',
 ``govorila'', ``govorili'', ``govorile'', ``govoreći'' i u brojnim
-drugim oblicima. Za mnoge analitičke svrhe, sve ove oblike želimo
-tretirati kao manifestacije iste temeljne konceptualne jedinice.
-
-Stemizacija i lematizacija dva su komplementarna pristupa rješavanju
-ovog problema, pri čemu oba teže svođenju različitih morfoloških
-varijanti riječi na zajednički korijen. Njihova temeljna logika je
-intuitivno jasna jer ako znamo da oblici ``ekonomija'', ``ekonomije'',
-``ekonomski'' i ``ekonomista'' dijele zajedničku semantičku jezgru, ima
-smisla tretirati ih kao manifestacije iste temeljne konceptualne
-jedinice prilikom analize sadržaja.
+drugim oblicima. Za analitičke svrhe, sve ove oblike želimo tretirati
+kao različite varijante iste temeljne konceptualne jedinice. Stemizacija
+i lematizacija dva su komplementarna pristupa rješavanju ovog problema,
+pri čemu oba teže svođenju različitih morfoloških varijanti riječi na
+zajednički korijen. Njihova temeljna logika je intuitivno jasna jer ako
+znamo da oblici ``ekonomija'', ``ekonomije'', ``ekonomski'' i
+``ekonomista'' dijele zajedničku semantičku jezgru, ima smisla tretirati
+ih kao iste konceptualne jedinice.
 
 Stemizacija predstavlja heuristički pristup koji koristi skup pravila za
 uklanjanje sufiksa i prefiksa s riječi kako bi se dobio korijen ili
@@ -543,17 +487,15 @@ korijen koji služi kao oznaka klase morfološki srodnih riječi.
 Primjerice, stemizacija riječi ``ekonomski'', ``ekonomije'' i
 ``ekonomista'' mogla bi proizvesti korijen ``ekonom'' koji nije
 samostalna hrvatska riječ, ali služi kao zajednički identifikator za sve
-tri izvorne riječi.
-
-Lematizacija, s druge strane, predstavlja lingvistički sofisticiraniji
-pristup koji svodi riječi na njihov kanonski oblik ili lemu, odnosno
-oblik koji bi se pronašao kao natuknica u rječniku. Za imenice to je
-nominativ jednine, za glagole infinitiv, za pridjeve nominativ jednine
-muškog roda. Za razliku od stemizacije, lematizacija uzima u obzir
-kontekst u kojem se riječ javlja i njezinu gramatičku funkciju. Tako će
-riječ ``bolje'' biti ispravno svedena na lemu ``dobar'' kao komparativ
-pridjeva, dok bi stemizacija vjerojatno proizvela nevaljani korijen
-poput ``bolj''.
+tri izvorne riječi. Lematizacija, s druge strane, predstavlja
+lingvistički sofisticiraniji pristup koji svodi riječi na njihov
+kanonski oblik ili lemu, odnosno oblik koji bi se pronašao kao natuknica
+u rječniku. Za imenice to je nominativ jednine, za glagole infinitiv, za
+pridjeve nominativ jednine muškog roda. Za razliku od stemizacije,
+lematizacija uzima u obzir kontekst u kojem se riječ javlja i njezinu
+gramatičku funkciju. Tako će riječ ``bolje'' biti ispravno svedena na
+lemu ``dobar'' kao komparativ pridjeva, dok bi stemizacija vjerojatno
+proizvela nevaljani korijen poput ``bolj''.
 
 Tablica 4 ilustrira razliku između stemizacije i lematizacije na
 konkretnim primjerima.
@@ -617,19 +559,17 @@ hrvatskog i relativne oskudnosti dostupnih jezičnih resursa. Dok su
 alati i metode razvijene pretežno za engleski jezik dostigli visoku
 razinu sofisticiranosti, njihova prilagodba morfološki bogatijim i
 resursno siromašnijim jezicima poput hrvatskog ostaje aktivan
-istraživački problem.
-
-Morfološka složenost hrvatskog jezika predstavlja fundamentalni izazov.
-Hrvatski pripada skupini slavenskih jezika s bogatom flektivnom
-morfologijom, što znači da imenice, pridjevi i zamjenice poznaju sedam
-padeža u jednini i množini, dok glagoli variraju prema licu, broju,
-vremenu, načinu i vidu. Posljedica toga je izrazito visok broj
-različitih oblika koje ista leksička jedinica može poprimiti.
-Procjenjuje se da prosječna hrvatska imenica ima četrnaest različitih
-morfoloških realizacija, dok glagoli mogu imati i preko stotinu oblika
-kada se uključe svi aspekti konjugacije. Ova morfološka raznolikost
-drastično povećava dimenzionalnost podataka i otežava prepoznavanje
-obrazaca.
+istraživački problem. Morfološka složenost hrvatskog jezika stoga
+predstavlja izazov računalnoj obradi teksta. Hrvatski pripada skupini
+slavenskih jezika s bogatom flektivnom morfologijom, što znači da
+imenice, pridjevi i zamjenice poznaju sedam padeža u jednini i množini,
+dok glagoli variraju prema licu, broju, vremenu, načinu i vidu.
+Posljedica toga je izrazito visok broj različitih oblika koje ista
+leksička jedinica može poprimiti. Procjenjuje se da prosječna hrvatska
+imenica ima četrnaest različitih morfoloških realizacija, dok glagoli
+mogu imati i preko stotinu oblika kada se uključe svi aspekti
+konjugacije. Ova morfološka raznolikost drastično povećava
+dimenzionalnost podataka i otežava prepoznavanje obrazaca.
 
 Relativno slobodan redoslijed riječi u hrvatskom predstavlja dodatnu
 komplikaciju za metode koje se oslanjaju na sekvencijalne obrasce poput
