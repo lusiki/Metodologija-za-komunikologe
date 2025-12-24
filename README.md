@@ -117,7 +117,7 @@ Sveobuhvatni pregled računalne analize teksta u istraživanju masovne komunikac
   
   
 ---
-### [📄 Poglavlje 6: Mrežna analiza](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Racunalna%20analiza%20teksta.html)
+### [📄 Poglavlje 6: Mrežna analiza](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Analiza%20mreza.html)
 **~XX,000 riječi**
 
 1. **Uvod: Relacijska perspektiva**
