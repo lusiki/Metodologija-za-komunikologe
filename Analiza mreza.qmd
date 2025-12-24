@@ -2021,4 +2021,1266 @@ plot(broker_demo,
 
 Razumijevanje grupne strukture mreža pruža temelj za sofisticirane analize komunikacijskih fenomena. Identificiranje klika otkriva najuže krugove intenzivne suradnje. Mjerenje homofilije kvantificira tendencije formiranja veza po sličnosti. Detekcija zajednica mapira globalnu strukturu javne sfere. Analiza strukturnih rupa identificira ključne posrednike koji kontroliraju tokove informacija. Zajedno, ovi koncepti čine bogat analitički arsenal za razumijevanje kako su komunikacijske mreže strukturirane i kakve su posljedice te strukture za procese poput širenja informacija, formiranja javnog mnijenja i fragmentacije diskursa.
 
+# Vizualizacija mreža
+
+Vizualizacija predstavlja jedan od najsnažnijih aspekata analize društvenih mreža. Za razliku od tradicionalnih statističkih pristupa koji reduciraju složene strukture na numeričke pokazatelje, mrežna vizualizacija omogućuje istraživaču da doslovno vidi strukturu odnosa, identificira obrasce, uoči anomalije i komunicira nalaze na intuitivan način. Dobra vizualizacija može otkriti strukturne karakteristike koje bi ostale skrivene u tablicama brojeva, poput postojanja klastera, identificiranja centralnih aktera ili otkrivanja mostova između zajednica. Međutim, vizualizacija mreža daleko je od trivijalne zadaće. Smještanje desetaka, stotina ili tisuća čvorova i njihovih veza u dvodimenzionalni prostor na način koji je informativan, čitljiv i estetski ugodan predstavlja značajan tehnički i konceptualni izazov.
+
+U ovom poglavlju razmatramo temeljne principe i praktične aspekte vizualizacije mreža. Započinjemo algoritmima rasporeda koji određuju položaje čvorova u prostoru, s posebnim fokusom na pristupe temeljene na silama koji dominiraju suvremenom praksom. Potom analiziramo problem preopterećenosti, poznat kao efekt dlakave lopte, koji nastaje kada mreža postane prevelika ili pregusta za smislenu vizualizaciju. Zaključujemo pregledom softverskih alata koji stoje na raspolaganju istraživačima, od specijaliziranih programa poput Gephija do analitičkih okruženja poput R-a.
+
+```{r}
+#| label: setup-section6
+#| include: false
+
+library(igraph)
+library(ggraph)
+library(tidygraph)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+
+theme_set(theme_minimal(base_size = 12))
+```
+
+
+## Algoritmi rasporeda
+
+Problem rasporeda mreže (engl. *graph layout*) svodi se na pitanje kako dodijeliti koordinate svakom čvoru u dvodimenzionalnom (ili trodimenzionalnom) prostoru tako da rezultirajuća vizualizacija bude informativna i čitljiva. Budući da mreža sama po sebi ne sadrži prostorne informacije, odnosno čvorovi nemaju inherentne koordinate, algoritam rasporeda mora te koordinate konstruirati na temelju topoloških svojstava mreže. Idealan raspored trebao bi smjestiti blisko povezane čvorove blizu jedni drugima, jasno razdvojiti različite klastere, minimizirati preklapanje veza i stvoriti vizualno uravnoteženu sliku.
+
+Najutjecajnija obitelj algoritama za raspored mreža temelji se na **fizikalnoj analogiji sila** (engl. *force-directed layout*). Ovi algoritmi tretiraju mrežu kao fizički sustav u kojem čvorovi djeluju poput nabijenih čestica koje se međusobno odbijaju, dok veze djeluju poput opruga koje privlače povezane čvorove. Sustav se iterativno simulira dok ne dosegne ravnotežno stanje u kojem se privlačne i odbojne sile uravnotežuju. Rezultat je raspored u kojem su povezani čvorovi blizu, nepovezani čvorovi daleko, a cjelokupna struktura poprima organski, ravnotežni izgled.
+
+```{r}
+#| label: fig-force-directed-concept
+#| fig-cap: "Konceptualna ilustracija algoritma temeljenog na silama. Veze djeluju kao opruge koje privlače povezane čvorove (zelene strelice), dok se svi parovi čvorova međusobno odbijaju poput istoimenih naboja (crvene strelice). Iterativna simulacija vodi prema ravnotežnom stanju."
+#| fig-width: 10
+#| fig-height: 5
+
+set.seed(42)
+
+par(mfrow = c(1, 2), mar = c(2, 1, 3, 1))
+
+demo_net <- graph_from_literal(A--B--C--A, B--D)
+
+initial_coords <- matrix(c(
+  0.2, 0.5,
+  0.4, 0.3,
+  0.6, 0.7,
+  0.8, 0.4
+), ncol = 2, byrow = TRUE)
+
+plot(demo_net,
+     layout = initial_coords,
+     vertex.size = 35,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1.3,
+     edge.color = "gray40",
+     edge.width = 3,
+     main = "Početno stanje:\nNasumični položaji")
+
+arrows(0.25, 0.48, 0.35, 0.35, col = "#27ae60", lwd = 2, length = 0.1)
+arrows(0.55, 0.65, 0.45, 0.38, col = "#27ae60", lwd = 2, length = 0.1)
+arrows(0.3, 0.4, 0.15, 0.55, col = "#e74c3c", lwd = 1.5, length = 0.08)
+arrows(0.7, 0.6, 0.85, 0.45, col = "#e74c3c", lwd = 1.5, length = 0.08)
+
+final_coords <- layout_with_fr(demo_net)
+final_coords <- scales::rescale(final_coords, to = c(0.2, 0.8))
+
+plot(demo_net,
+     layout = final_coords,
+     vertex.size = 35,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1.3,
+     edge.color = "gray40",
+     edge.width = 3,
+     main = "Ravnotežno stanje:\nSile uravnotežene")
+```
+
+Najpopularniji algoritam temeljen na silama jest **Fruchterman-Reingold** algoritam koji kombinira privlačne sile proporcionalne udaljenosti povezanih čvorova s odbojnim silama obrnuto proporcionalnim kvadratu udaljenosti svih parova čvorova. Matematički, privlačna sila između povezanih čvorova $u$ i $v$ definira se kao:
+
+$$f_a(d) = \frac{d^2}{k}$$
+
+dok se odbojna sila između bilo koja dva čvora definira kao:
+
+$$f_r(d) = -\frac{k^2}{d}$$
+
+U ovim formulama $d$ označava udaljenost između čvorova, a $k$ je parametar koji kontrolira idealnu udaljenost i ovisi o veličini prostora i broju čvorova. Algoritam iterativno pomiče čvorove u smjeru rezultantne sile, postupno smanjujući veličinu pomaka (temperaturu) dok sustav ne konvergira.
+
+```{r}
+#| label: fig-layout-comparison
+#| fig-cap: "Usporedba različitih algoritama rasporeda na istoj mreži od 40 čvorova. Svaki algoritam proizvodi karakterističan raspored ovisno o svojim principima optimizacije. Fruchterman-Reingold i Kamada-Kawai su algoritmi temeljeni na silama, kružni i zvjezdasti su geometrijski rasporedi."
+#| fig-width: 12
+#| fig-height: 10
+
+set.seed(42)
+
+comparison_net <- sample_islands(
+  islands.n = 3,
+  islands.size = 12,
+  islands.pin = 0.4,
+  n.inter = 3
+)
+
+communities <- cluster_louvain(comparison_net)
+V(comparison_net)$community <- membership(communities)
+
+par(mfrow = c(2, 3), mar = c(1, 1, 3, 1))
+
+plot(comparison_net,
+     layout = layout_with_fr,
+     vertex.size = 10,
+     vertex.color = V(comparison_net)$community,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "Fruchterman-Reingold\n(force-directed)")
+
+plot(comparison_net,
+     layout = layout_with_kk,
+     vertex.size = 10,
+     vertex.color = V(comparison_net)$community,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "Kamada-Kawai\n(force-directed)")
+
+plot(comparison_net,
+     layout = layout_with_drl,
+     vertex.size = 10,
+     vertex.color = V(comparison_net)$community,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "DrL (Distributed Recursive)\n(za velike mreže)")
+
+plot(comparison_net,
+     layout = layout_in_circle,
+     vertex.size = 10,
+     vertex.color = V(comparison_net)$community,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "Kružni raspored\n(geometrijski)")
+
+plot(comparison_net,
+     layout = layout_as_star,
+     vertex.size = 10,
+     vertex.color = V(comparison_net)$community,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "Zvjezdasti raspored\n(geometrijski)")
+
+plot(comparison_net,
+     layout = layout_with_graphopt,
+     vertex.size = 10,
+     vertex.color = V(comparison_net)$community,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "GraphOpt\n(force-directed, brži)")
+```
+
+Alternativni algoritam temeljen na silama jest **Kamada-Kawai** koji definira idealnu udaljenost između svaka dva čvora kao proporcionalnu njihovoj grafovskoj udaljenosti (najkraćem putu). Algoritam zatim minimizira ukupnu energiju sustava definiranu kao suma kvadrata odstupanja stvarnih udaljenosti od idealnih. Ovaj pristup često proizvodi simetričnije rasporede, ali može biti računalno zahtjevniji za veće mreže.
+
+Za vrlo velike mreže s desecima tisuća čvorova razvijeni su specijalizirani algoritmi poput **OpenOrd** (poznat i kao DrL) koji koristi višerazinsku dekompoziciju i paralelno procesiranje za učinkovito raspoređivanje masivnih mreža. Ovi algoritmi žrtvuju preciznost lokalnog rasporeda u korist globalne strukture i računalne učinkovitosti.
+
+```{r}
+#| label: tbl-layout-algorithms
+#| tbl-cap: "Pregled popularnih algoritama rasporeda s njihovim karakteristikama i preporučenim primjenama."
+
+layout_algorithms <- data.frame(
+  Algoritam = c(
+    "Fruchterman-Reingold",
+    "Kamada-Kawai",
+    "DrL / OpenOrd",
+    "ForceAtlas2",
+    "Kružni",
+    "Hijerarhijski"
+  ),
+  Princip = c(
+    "Privlačne i odbojne sile",
+    "Minimizacija energije opruga",
+    "Višerazinska dekompozicija",
+    "Prilagođene sile za vizualizaciju",
+    "Geometrijski, fiksni krug",
+    "Rangiranje po razinama"
+  ),
+  Velicina_mreze = c(
+    "Do nekoliko tisuća",
+    "Do tisuću",
+    "Deseci tisuća",
+    "Tisuće do deseci tisuća",
+    "Bilo koja",
+    "Do nekoliko stotina"
+  ),
+  Prednosti = c(
+    "Dobar opći izbor, intuitivni rezultati",
+    "Simetrični rasporedi, teorijski utemeljen",
+    "Skalabilnost, brzina",
+    "Čitljivo razdvajanje klastera",
+    "Deterministički, jednostavan",
+    "Pokazuje tokove i hijerarhije"
+  )
+)
+
+kable(layout_algorithms,
+      col.names = c("Algoritam", "Princip", "Optimalna veličina", "Prednosti")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+Važno je naglasiti da algoritmi temeljeni na silama imaju stohastičku komponentu jer obično započinju s nasumičnim početnim položajima čvorova. To znači da će svako pokretanje algoritma potencijalno proizvesti različit raspored iste mreže. Iako će strukturne karakteristike poput klastera biti konzistentno prikazane, točni položaji čvorova variraju. Za reproducibilnost rezultata nužno je fiksirati sjeme generatora slučajnih brojeva prije pokretanja algoritma.
+
+```{r}
+#| label: fig-seed-importance
+#| fig-cap: "Ista mreža vizualizirana s različitim sjemenima generatora slučajnih brojeva. Iako globalna struktura ostaje prepoznatljiva, konkretni položaji čvorova značajno variraju. Za reproducibilnost je nužno dokumentirati korišteno sjeme."
+#| fig-width: 12
+#| fig-height: 4
+
+demo_net2 <- sample_islands(islands.n = 2, islands.size = 10, islands.pin = 0.5, n.inter = 2)
+V(demo_net2)$community <- rep(c(1, 2), each = 10)
+
+par(mfrow = c(1, 4), mar = c(1, 1, 3, 1))
+
+for (seed in c(1, 42, 123, 999)) {
+  set.seed(seed)
+  plot(demo_net2,
+       layout = layout_with_fr,
+       vertex.size = 12,
+       vertex.color = V(demo_net2)$community + 1,
+       vertex.frame.color = NA,
+       vertex.label = NA,
+       edge.color = adjustcolor("gray50", alpha = 0.5),
+       edge.width = 1,
+       main = paste0("Sjeme = ", seed))
+}
+```
+
+
+## Problem dlakave lopte
+
+Kako broj čvorova i veza u mreži raste, vizualizacija postaje sve izazovnija. U određenoj točki, čak i najbolji algoritmi rasporeda proizvode sliku koja nalikuje spletenoj lopti od dlaka, nečitljivu masu preklapajućih čvorova i veza iz koje je nemoguće izvući smislene informacije. Ovaj fenomen naziva se **efekt dlakave lopte** (engl. *hairball effect*) i predstavlja fundamentalno ograničenje mrežne vizualizacije.
+
+Efekt dlakave lopte nastaje zbog kombinacije nekoliko faktora. S porastom broja čvorova, prostor za njihov smještaj postaje sve ograničeniji, što dovodi do preklapanja. Istovremeno, broj veza tipično raste brže od broja čvorova (posebno u mrežama s visokim klasteriranjem), što rezultira gustim prepletom linija koje zamagljuju strukturu. Konačno, ljudska percepcija ima ograničenu sposobnost procesiranja složenih vizualnih podražaja, pa čak i savršeno raspoređena mreža s tisućama elemenata nadmašuje naše kognitivne kapacitete.
+
+```{r}
+#| label: fig-hairball-progression
+#| fig-cap: "Progresija od čitljive do nečitljive vizualizacije s porastom veličine mreže. Mreža od 30 čvorova jasno pokazuje strukturu, mreža od 100 čvorova postaje gušća, mreža od 300 čvorova ulazi u zonu dlakave lopte, a mreža od 1000 čvorova potpuno je nečitljiva."
+#| fig-width: 12
+#| fig-height: 8
+
+par(mfrow = c(2, 2), mar = c(1, 1, 3, 1))
+
+set.seed(42)
+net_30 <- barabasi.game(30, m = 2, directed = FALSE)
+plot(net_30,
+     layout = layout_with_fr,
+     vertex.size = 8,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.6),
+     edge.width = 1,
+     main = "n = 30 čvorova\nStruktura jasno vidljiva")
+
+set.seed(42)
+net_100 <- barabasi.game(100, m = 2, directed = FALSE)
+plot(net_100,
+     layout = layout_with_fr,
+     vertex.size = 5,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.4),
+     edge.width = 0.5,
+     main = "n = 100 čvorova\nStruktura još prepoznatljiva")
+
+set.seed(42)
+net_300 <- barabasi.game(300, m = 2, directed = FALSE)
+plot(net_300,
+     layout = layout_with_fr,
+     vertex.size = 3,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.2),
+     edge.width = 0.3,
+     main = "n = 300 čvorova\nPočetak efekta dlakave lopte")
+
+set.seed(42)
+net_1000 <- barabasi.game(1000, m = 2, directed = FALSE)
+plot(net_1000,
+     layout = layout_with_fr,
+     vertex.size = 1.5,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.1),
+     edge.width = 0.2,
+     main = "n = 1000 čvorova\nPotpuna dlakava lopta")
+```
+
+Postoji niz strategija za suočavanje s efektom dlakave lopte. Prva strategija jest **filtriranje** mreže uklanjanjem manje važnih čvorova ili veza. Na primjer, možemo zadržati samo čvorove s visokom centralnošću ili veze iznad određenog praga težine. Ova strategija reducira složenost ali zahtijeva oprez jer filtriranje može ukloniti važne strukturne karakteristike.
+
+```{r}
+#| label: fig-filtering-strategy
+#| fig-cap: "Strategija filtriranja za smanjenje efekta dlakave lopte. Lijevo: originalna mreža od 200 čvorova. Desno: filtrirana mreža koja prikazuje samo čvorove s više od 5 veza. Filtriranje otkriva strukturu hubova koja je bila skrivena u originalnoj vizualizaciji."
+#| fig-width: 12
+#| fig-height: 5
+
+set.seed(42)
+filter_net <- barabasi.game(200, m = 2, directed = FALSE)
+V(filter_net)$degree <- degree(filter_net)
+
+par(mfrow = c(1, 2), mar = c(1, 1, 3, 1))
+
+plot(filter_net,
+     layout = layout_with_fr,
+     vertex.size = 3,
+     vertex.color = "#3498db",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.2),
+     edge.width = 0.3,
+     main = "Originalna mreža (n = 200)\nStruktura skrivena")
+
+high_degree_nodes <- which(V(filter_net)$degree > 5)
+filtered_net <- induced_subgraph(filter_net, high_degree_nodes)
+
+set.seed(42)
+plot(filtered_net,
+     layout = layout_with_fr,
+     vertex.size = sqrt(degree(filtered_net)) * 2,
+     vertex.color = "#e74c3c",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.5),
+     edge.width = 1,
+     main = paste0("Filtrirano (stupanj > 5, n = ", vcount(filtered_net), ")\nHubovi jasno vidljivi"))
+```
+
+Druga strategija jest **agregacija** čvorova u veće jedinice. Umjesto prikazivanja svakog pojedinačnog čvora, možemo grupirati čvorove u zajednice i prikazati mrežu zajednica. Svaka zajednica postaje jedan super-čvor čija veličina odražava broj članova, a veze između super-čvorova odražavaju gustoću veza između odgovarajućih zajednica.
+
+```{r}
+#| label: fig-aggregation-strategy
+#| fig-cap: "Strategija agregacije za smanjenje složenosti. Lijevo: originalna mreža s označenim zajednicama. Desno: agregirana mreža gdje svaka zajednica postaje jedan čvor. Veličina čvora proporcionalna je broju članova zajednice, a debljina veze broju međuzajedničkih veza."
+#| fig-width: 12
+#| fig-height: 5
+
+set.seed(42)
+agg_net <- sample_islands(islands.n = 5, islands.size = 20, islands.pin = 0.4, n.inter = 8)
+communities <- cluster_louvain(agg_net)
+V(agg_net)$community <- membership(communities)
+
+par(mfrow = c(1, 2), mar = c(1, 1, 3, 1))
+
+community_colors <- c("#3498db", "#e74c3c", "#2ecc71", "#9b59b6", "#f39c12")
+V(agg_net)$color <- community_colors[V(agg_net)$community]
+
+set.seed(42)
+plot(agg_net,
+     layout = layout_with_fr,
+     vertex.size = 5,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.3),
+     edge.width = 0.5,
+     main = "Originalna mreža (n = 100)\nS označenim zajednicama")
+
+contracted_net <- contract(agg_net, V(agg_net)$community, vertex.attr.comb = list(
+  community = "first",
+  color = "first",
+  "ignore"
+))
+contracted_net <- simplify(contracted_net, remove.multiple = TRUE, remove.loops = TRUE,
+                           edge.attr.comb = list(weight = "sum", "ignore"))
+
+community_sizes <- table(V(agg_net)$community)
+V(contracted_net)$size <- as.numeric(community_sizes)
+V(contracted_net)$color <- community_colors[1:5]
+
+plot(contracted_net,
+     layout = layout_with_fr,
+     vertex.size = sqrt(V(contracted_net)$size) * 5,
+     vertex.frame.color = "white",
+     vertex.frame.width = 2,
+     vertex.label = paste0("Z", 1:5, "\n(", V(contracted_net)$size, ")"),
+     vertex.label.color = "white",
+     vertex.label.cex = 0.9,
+     edge.color = "gray40",
+     edge.width = 2,
+     main = "Agregirana mreža zajednica\nJasna makro-struktura")
+```
+
+Treća strategija jest korištenje **interaktivnih vizualizacija** koje omogućuju korisniku zumiranje, pomicanje i filtriranje u stvarnom vremenu. Interaktivna vizualizacija može prikazati globalnu strukturu na udaljenoj razini zumiranja, a zatim omogućiti detaljno istraživanje pojedinih regija. Ova strategija zahtijeva specijalizirane alate koji podržavaju interaktivnost.
+
+```{r}
+#| label: tbl-hairball-solutions
+#| tbl-cap: "Strategije za suočavanje s efektom dlakave lopte s njihovim prednostima i ograničenjima."
+
+hairball_solutions <- data.frame(
+  Strategija = c(
+    "Filtriranje čvorova",
+    "Filtriranje veza",
+    "Agregacija u zajednice",
+    "Uzorkovanje",
+    "Interaktivna vizualizacija",
+    "Višerazinska vizualizacija"
+  ),
+  Opis = c(
+    "Zadržavanje samo visoko centralnih čvorova",
+    "Zadržavanje samo jakih veza (iznad praga)",
+    "Grupiranje čvorova u super-čvorove",
+    "Nasumični uzorak čvorova i njihovih veza",
+    "Zumiranje, filtriranje u stvarnom vremenu",
+    "Različite razine detalja za različite skale"
+  ),
+  Prednosti = c(
+    "Otkriva ključne aktere",
+    "Naglašava jake odnose",
+    "Pokazuje makro-strukturu",
+    "Jednostavno za implementaciju",
+    "Fleksibilno istraživanje",
+    "Kombinira pregled i detalje"
+  ),
+  Ogranicenja = c(
+    "Gubi periferne čvorove",
+    "Može ukloniti važne slabe veze",
+    "Skriva unutarzajedničku strukturu",
+    "Može propustiti važne dijelove",
+    "Zahtijeva specijalizirane alate",
+    "Složeno za implementaciju"
+  )
+)
+
+kable(hairball_solutions,
+      col.names = c("Strategija", "Opis", "Prednosti", "Ograničenja")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+Četvrta strategija uključuje **vizualno kodiranje** dodatnih informacija kroz veličinu, boju i oblik čvorova. Čak i u gustoj mreži, čvorovi kodirani bojom prema zajednici ili veličinom prema centralnosti mogu prenijeti strukturne informacije bez potrebe za čitanjem individualnih veza.
+
+```{r}
+#| label: fig-visual-encoding
+#| fig-cap: "Vizualno kodiranje kao strategija za povećanje čitljivosti. Ista mreža prikazana bez kodiranja (lijevo) i s kodiranjem veličine prema stupnju te boje prema zajednici (desno). Kodiranje omogućuje prepoznavanje strukture čak i bez čitanja pojedinačnih veza."
+#| fig-width: 12
+#| fig-height: 5
+
+set.seed(42)
+encoding_net <- barabasi.game(150, m = 2, directed = FALSE)
+communities <- cluster_louvain(encoding_net)
+V(encoding_net)$community <- membership(communities)
+V(encoding_net)$degree <- degree(encoding_net)
+
+par(mfrow = c(1, 2), mar = c(1, 1, 3, 1))
+
+set.seed(42)
+layout_coords <- layout_with_fr(encoding_net)
+
+plot(encoding_net,
+     layout = layout_coords,
+     vertex.size = 4,
+     vertex.color = "gray50",
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.15),
+     edge.width = 0.3,
+     main = "Bez vizualnog kodiranja\nStruktura nejasna")
+
+community_colors <- c("#3498db", "#e74c3c", "#2ecc71", "#9b59b6", "#f39c12", 
+                      "#1abc9c", "#e67e22", "#34495e")
+V(encoding_net)$color <- community_colors[V(encoding_net)$community]
+
+plot(encoding_net,
+     layout = layout_coords,
+     vertex.size = sqrt(V(encoding_net)$degree) * 2,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray40", alpha = 0.15),
+     edge.width = 0.3,
+     main = "S vizualnim kodiranjem\nZajednice i hubovi vidljivi")
+```
+
+
+## Alati za vizualizaciju
+
+Istraživačima masovne komunikacije na raspolaganju stoji niz softverskih alata za vizualizaciju i analizu mreža. Svaki alat ima svoje prednosti i ograničenja, a izbor ovisi o veličini mreže, potrebnim analizama, razini tehničke ekspertize i zahtjevima za kvalitetom vizualnog outputa.
+
+**Gephi** predstavlja vjerojatno najpopularniji samostalni softver za vizualizaciju mreža. Kao besplatni program otvorenog koda, Gephi nudi intuitivno grafičko sučelje koje omogućuje istraživačima bez programerskog iskustva da učitaju, vizualiziraju i analiziraju mreže. Program podržava veliki broj formata za učitavanje podataka, implementira sve standardne mjere centralnosti i algoritme za detekciju zajednica, te nudi sofisticirane algoritme rasporeda uključujući ForceAtlas2 koji je posebno dizajniran za čitljivu vizualizaciju. Gephi također podržava interaktivno istraživanje mreže, vremensku dinamiku i izvoz visokokvalitetnih vizualizacija za publikacije.
+
+**UCINET** (University of California at Irvine NETwork) jest komercijalni softver s dugom tradicijom u analizi društvenih mreža, posebno popularan među sociolozima. UCINET nudi opsežan skup statističkih analiza i integrira se s programom **NetDraw** za vizualizaciju. Iako sučelje može djelovati zastarjelo u usporedbi s modernijim alatima, UCINET ostaje referentni alat za mnoge napredne mrežne analize i koristi se kao standard u akademskoj literaturi.
+
+**R** s paketima poput **igraph**, **ggraph**, **tidygraph** i **statnet** nudi programatičan pristup mrežnoj analizi. Prednost R okruženja jest potpuna reproducibilnost analiza, fleksibilnost u prilagodbi vizualizacija i integracija s širim ekosustavam statističkih metoda. Nedostatak jest potreba za programerskim vještinama i strmija krivulja učenja u usporedbi s alatima s grafičkim sučeljem.
+
+```{r}
+#| label: fig-ggraph-demo
+#| fig-cap: "Primjer sofisticirane vizualizacije mreže kreirane u R-u pomoću paketa ggraph. Paket omogućuje primjenu gramatike grafike na mrežne podatke, nudeći veliku fleksibilnost u dizajnu vizualizacija."
+#| fig-width: 10
+#| fig-height: 8
+
+set.seed(42)
+
+demo_data <- sample_islands(islands.n = 4, islands.size = 15, islands.pin = 0.35, n.inter = 4) |>
+  as_tbl_graph() |>
+  mutate(
+    name = paste0("N", row_number()),
+    community = as.factor(group_louvain()),
+    centrality = centrality_degree(),
+    betweenness = centrality_betweenness()
+  )
+
+ggraph(demo_data, layout = "fr") +
+  geom_edge_link(alpha = 0.2, color = "gray50") +
+  geom_node_point(aes(size = centrality, color = community), alpha = 0.8) +
+  geom_node_text(aes(label = ifelse(centrality > quantile(centrality, 0.9), name, "")),
+                 repel = TRUE, size = 3) +
+  scale_size_continuous(range = c(2, 10), name = "Stupanj") +
+  scale_color_brewer(palette = "Set1", name = "Zajednica") +
+  labs(
+    title = "Mrežna vizualizacija s ggraph paketom",
+    subtitle = "Veličina čvora prema stupnju, boja prema zajednici, označeni visoko centralni čvorovi"
+  ) +
+  theme_graph() +
+  theme(legend.position = "bottom")
+```
+
+**Python** s bibliotekama **NetworkX**, **graph-tool** i **pyvis** nudi sličnu programatičnu fleksibilnost kao R. NetworkX je posebno popularan zbog jednostavnosti korištenja i dobre dokumentacije, dok graph-tool nudi superiorne performanse za vrlo velike mreže.
+
+Za interaktivnu vizualizaciju u web preglednicima, biblioteke poput **D3.js**, **Sigma.js** i **Cytoscape.js** omogućuju kreiranje dinamičnih, zumabilnih vizualizacija koje se mogu ugraditi u web stranice i aplikacije. Ovi alati posebno su korisni za prezentaciju rezultata široj publici ili za istraživačke alate koji zahtijevaju interaktivnost.
+
+```{r}
+#| label: tbl-tools-comparison
+#| tbl-cap: "Usporedba popularnih alata za mrežnu analizu i vizualizaciju s preporukama za različite profile korisnika."
+
+tools_comparison <- data.frame(
+  Alat = c(
+    "Gephi",
+    "UCINET + NetDraw",
+    "R (igraph, ggraph)",
+    "Python (NetworkX)",
+    "NodeXL",
+    "Cytoscape"
+  ),
+  Tip = c(
+    "Samostalni program",
+    "Samostalni program",
+    "Programski jezik",
+    "Programski jezik",
+    "Excel dodatak",
+    "Samostalni program"
+  ),
+  Cijena = c(
+    "Besplatan",
+    "Komercijalan",
+    "Besplatan",
+    "Besplatan",
+    "Freemium",
+    "Besplatan"
+  ),
+  Prednosti = c(
+    "Intuitivno sučelje, interaktivnost, ForceAtlas2",
+    "Opsežne analize, akademski standard",
+    "Reproducibilnost, fleksibilnost, integracija",
+    "Jednostavnost, velika zajednica",
+    "Integracija s Excelom, pristupačnost",
+    "Biološke mreže, dodaci"
+  ),
+  Preporuceno_za = c(
+    "Istraživanje i prezentaciju",
+    "Akademsku analizu",
+    "Napredne korisnike, reproducibilnost",
+    "Programere, brze prototipe",
+    "Početnike, manje mreže",
+    "Bioinformatiku"
+  )
+)
+
+kable(tools_comparison,
+      col.names = c("Alat", "Tip", "Cijena", "Prednosti", "Preporučeno za")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+Izbor alata ovisi o specifičnim potrebama istraživanja. Za brzo istraživačko vizualiziranje i prezentaciju rezultata, Gephi nudi najbolji omjer jednostavnosti i mogućnosti. Za rigorozne akademske analize koje zahtijevaju reproducibilnost, R ili Python pružaju programatičnu kontrolu nad svakim korakom analize. Za specifične domene poput bioinformatike, specijalizirani alati poput Cytoscapea nude prilagođenu funkcionalnost. Za interaktivne web prezentacije, JavaScript biblioteke omogućuju ugradnju dinamičnih vizualizacija u digitalne publikacije.
+
+```{r}
+#| label: fig-export-quality
+#| fig-cap: "Primjer vizualizacije visoke kvalitete pogodne za publikaciju. Pažljivo odabrani parametri uključuju minimalističku estetiku, jasno čitljive oznake za ključne čvorove i legendu koja objašnjava kodiranje."
+#| fig-width: 10
+#| fig-height: 8
+
+set.seed(42)
+
+publication_net <- sample_islands(islands.n = 3, islands.size = 12, islands.pin = 0.4, n.inter = 3) |>
+  as_tbl_graph() |>
+  mutate(
+    community = as.factor(group_louvain()),
+    degree = centrality_degree(),
+    is_hub = degree > quantile(degree, 0.85)
+  )
+
+hub_names <- c("Portal A", "Influencer", "Novinar", "Agencija", "TV kuća")
+node_count <- publication_net |> as_tibble() |> nrow()
+
+publication_net <- publication_net |>
+  mutate(
+    label = ifelse(is_hub, hub_names[cumsum(is_hub)], "")
+  )
+
+ggraph(publication_net, layout = "fr") +
+  geom_edge_link(alpha = 0.15, color = "gray60", width = 0.5) +
+  geom_node_point(aes(size = degree, fill = community), shape = 21, color = "white", stroke = 0.5) +
+  geom_node_text(aes(label = label), repel = TRUE, size = 3.5, fontface = "bold",
+                 box.padding = 0.5, point.padding = 0.3) +
+  scale_size_continuous(range = c(3, 12), name = "Broj veza", breaks = c(5, 10, 15)) +
+  scale_fill_manual(values = c("#2c3e50", "#e74c3c", "#27ae60"), name = "Zajednica",
+                    labels = c("Mainstream mediji", "Alternativni portali", "Društvene mreže")) +
+  labs(
+    title = "Mreža dijeljenja vijesti u hrvatskom medijskom prostoru",
+    subtitle = "Hipotetski primjer za ilustraciju kvalitete vizualizacije",
+    caption = "Izvor: Hipotetski podaci | Vizualizacija: R/ggraph"
+  ) +
+  theme_graph(base_family = "sans") +
+  theme(
+    legend.position = "right",
+    legend.box = "vertical",
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 11, color = "gray40"),
+    plot.caption = element_text(size = 9, color = "gray50")
+  )
+```
+
+Vizualizacija mreža ostaje koliko umjetnost toliko i znanost. Tehnička kompetencija u korištenju algoritama i alata nužna je, ali nije dovoljna. Učinkovita vizualizacija zahtijeva razumijevanje principa vizualne percepcije, pažljiv odabir vizualnih varijabli i iterativno dotjerivanje dok vizualizacija ne komunicira željenu poruku. Istraživač mora balansirati između vjernosti podacima i čitljivosti prikaza, između detalja i pregleda, između estetike i informativnosti. Ovladavanje ovim balansima dolazi s iskustvom i kritičkim promišljanjem o tome što vizualizacija treba postići i za koju publiku je namijenjena.
+
+# Metodološki problemi i ograničenja
+
+Analiza društvenih mreža pruža moćan konceptualni i metodološki aparat za razumijevanje relacijskih fenomena, no kao i svaka istraživačka metoda, suočava se s nizom izazova koji mogu ugroziti valjanost i pouzdanost nalaza. Istraživači koji primjenjuju mrežnu analizu moraju biti svjesni ovih ograničenja i aktivno ih adresirati u dizajnu istraživanja, prikupljanju podataka i interpretaciji rezultata. Ignoriranje metodoloških problema može dovesti do pristrane slike mrežne strukture, pogrešnih zaključaka o odnosima među akterima i neopravdanih generalizacija.
+
+U ovom zaključnom poglavlju razmatramo tri ključna metodološka izazova s kojima se suočavaju istraživači mreža u kontekstu masovne komunikacije. Problem granica odnosi se na pitanje kako definirati koje aktere i veze uključiti u analizu, odluku koja fundamentalno oblikuje sve naknadne nalaze. Problem nedostajućih podataka proizlazi iz činjenice da rijetko imamo potpune informacije o svim vezama u mreži, a nedostajući podaci mogu značajno iskriviti izračunate mjere. Etički izazovi odnose se na tenziju između znanstvene transparentnosti i zaštite privatnosti sudionika, posebno akutnu u mrežnim podacima gdje anonimizacija individualnih čvorova ne garantira zaštitu identiteta.
+
+```{r}
+#| label: setup-section7
+#| include: false
+
+library(igraph)
+library(ggraph)
+library(tidygraph)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+
+theme_set(theme_minimal(base_size = 12))
+```
+
+
+## Problem granica
+
+Svaka mrežna analiza započinje fundamentalnom odlukom: koji akteri i koje veze čine mrežu koju proučavamo? Ova naizgled jednostavna pitanja kriju duboke konceptualne i praktične izazove poznate kao **problem granica** (engl. *boundary specification problem*). Za razliku od tradicionalnih istraživanja gdje uzorak možemo definirati prema jasnim kriterijima pripadnosti populaciji, mrežne granice često su nejasne, propusne i ovisne o arbitrarnim odlukama istraživača.
+
+Problem granica manifestira se na dvije razine. **Realistička** perspektiva pretpostavlja da mreža ima objektivne granice koje istraživač treba otkriti, poput formalne pripadnosti organizaciji ili geografskog područja. **Nominalistička** perspektiva priznaje da su granice konstrukt koji istraživač nameće podacima prema teorijskim ili praktičnim kriterijima. U praksi, većina istraživanja kombinira oba pristupa, koristeći neke objektivne kriterije uz nužne arbitrarne odluke.
+
+```{r}
+#| label: fig-boundary-problem
+#| fig-cap: "Ilustracija problema granica. Crtkana linija označava arbitrarno postavljenu granicu mreže. Čvorovi izvan granice (sivi) isključeni su iz analize iako imaju veze s čvorovima unutar granice. Različite odluke o granicama produciraju različite slike mrežne strukture."
+#| fig-width: 10
+#| fig-height: 7
+
+set.seed(42)
+
+full_net <- sample_gnp(30, 0.15)
+
+core_nodes <- 1:20
+boundary_nodes <- 21:25
+external_nodes <- 26:30
+
+V(full_net)$type <- case_when(
+  1:30 %in% core_nodes ~ "Unutar granice",
+  1:30 %in% boundary_nodes ~ "Na granici",
+  TRUE ~ "Izvan granice"
+)
+
+V(full_net)$color <- case_when(
+  V(full_net)$type == "Unutar granice" ~ "#3498db",
+  V(full_net)$type == "Na granici" ~ "#f39c12",
+  TRUE ~ "#bdc3c7"
+)
+
+set.seed(42)
+layout_coords <- layout_with_fr(full_net)
+
+layout_coords[core_nodes, ] <- layout_coords[core_nodes, ] * 0.6
+layout_coords[external_nodes, 1] <- layout_coords[external_nodes, 1] + 2
+
+plot(full_net,
+     layout = layout_coords,
+     vertex.size = 15,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1.5,
+     main = "Problem granica: Gdje završava mreža?")
+
+theta <- seq(0, 2*pi, length.out = 100)
+boundary_x <- cos(theta) * 1.3
+boundary_y <- sin(theta) * 1.1
+lines(boundary_x, boundary_y, lty = 2, lwd = 2, col = "#e74c3c")
+
+legend("bottomleft",
+       legend = c("Unutar granice", "Na granici", "Izvan granice", "Granica mreže"),
+       col = c("#3498db", "#f39c12", "#bdc3c7", "#e74c3c"),
+       pch = c(16, 16, 16, NA),
+       lty = c(NA, NA, NA, 2),
+       lwd = c(NA, NA, NA, 2),
+       bty = "n")
+```
+
+U istraživanjima masovne komunikacije, problem granica poprima specifične oblike. Ako proučavamo mrežu dijeljenja vijesti na Twitteru, moramo odlučiti koje korisnike uključiti. Uključujemo li samo korisnike koji su objavili određeni hashtag? Sve koji su retweetali te objave? Pratitelje tih korisnika? Svakom odlukom definiramo drugačiju mrežu s potencijalno drugačijim strukturnim karakteristikama. Ako proučavamo mrežu citiranja među medijima, moramo odlučiti koje medije smatramo relevantnima. Uključujemo li samo mainstream medije ili i blogove? Samo domaće ili i strane izvore? Samo aktivne ili i ugašene portale?
+
+```{r}
+#| label: fig-boundary-effects
+#| fig-cap: "Efekt različitih odluka o granicama na izračunate mjere centralnosti. Ista jezgra mreže analizirana s različitim granicama producira različite vrijednosti centralnosti za iste čvorove. Čvor A ima najvišu centralnost u uskoj granici, ali gubi tu poziciju kada se granica proširi."
+#| fig-width: 12
+#| fig-height: 5
+
+set.seed(123)
+
+core <- graph_from_literal(A--B--C--D--A, B--D, A--E--F, C--G)
+
+extended <- core + vertices("H", "I", "J") + edges(c("E","H", "F","I", "G","J", "H","I"))
+
+full <- extended + vertices("K", "L", "M") + edges(c("J","K", "K","L", "L","M", "M","K", "I","L"))
+
+calculate_centrality <- function(g, node_name) {
+  if (node_name %in% V(g)$name) {
+    idx <- which(V(g)$name == node_name)
+    return(degree(g)[idx])
+  }
+  return(NA)
+}
+
+core_nodes <- V(core)$name
+centrality_data <- data.frame(
+  Cvor = core_nodes,
+  Uska = degree(core)[core_nodes],
+  Srednja = degree(extended)[core_nodes],
+  Siroka = degree(full)[core_nodes]
+)
+
+centrality_long <- centrality_data |>
+  pivot_longer(cols = c(Uska, Srednja, Siroka),
+               names_to = "Granica", values_to = "Centralnost")
+centrality_long$Granica <- factor(centrality_long$Granica, 
+                                   levels = c("Uska", "Srednja", "Siroka"))
+
+ggplot(centrality_long, aes(x = Cvor, y = Centralnost, fill = Granica)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7) +
+  scale_fill_manual(values = c("#3498db", "#2ecc71", "#e74c3c"),
+                    labels = c("Uska (7 čvorova)", "Srednja (10 čvorova)", "Široka (13 čvorova)")) +
+  labs(
+    title = "Efekt granica na mjere centralnosti",
+    subtitle = "Stupanj centralnosti istih čvorova varira ovisno o definiciji granice mreže",
+    x = "Čvor",
+    y = "Stupanj centralnosti",
+    fill = "Definicija granice"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom")
+```
+
+Posljedice pogrešno postavljenih granica mogu biti ozbiljne. Preuzak obuhvat može isključiti važne aktere i veze, dajući nepotpunu sliku strukture. Preširok obuhvat može uključiti irelevantne aktere koji zamagljuju ključne obrasce. Posebno je problematično kada granice sijeku važne strukturne elemente poput mostova između zajednica jer tada možemo pogrešno zaključiti da su zajednice izolirane kada zapravo postoje veze koje smo isključili.
+
+```{r}
+#| label: tbl-boundary-strategies
+#| tbl-cap: "Strategije za definiranje granica mreže s primjerima iz istraživanja masovne komunikacije."
+
+boundary_strategies <- data.frame(
+  Strategija = c(
+    "Atributivna",
+    "Relaciona",
+    "Događajna",
+    "Geografska",
+    "Platformska",
+    "Snježna gruda"
+  ),
+  Opis = c(
+    "Čvorovi koji dijele određeni atribut",
+    "Čvorovi povezani s početnim skupom",
+    "Čvorovi uključeni u specifični događaj",
+    "Čvorovi unutar geografskog područja",
+    "Čvorovi na određenoj platformi",
+    "Iterativno proširivanje od početnog skupa"
+  ),
+  Primjer = c(
+    "Svi novinari s akreditacijom",
+    "Svi koji su retweetali određenu objavu",
+    "Svi koji su komentirali određenu vijest",
+    "Svi hrvatski portali",
+    "Svi korisnici Twittera (ne Facebooka)",
+    "Pratitelji pratitelja početnog korisnika"
+  ),
+  Rizici = c(
+    "Propušta neformalne aktere",
+    "Ovisi o odabiru početnog skupa",
+    "Ograničena generalizabilnost",
+    "Propušta globalne veze",
+    "Ignorira međuplatformske veze",
+    "Eksponencijalni rast, arbitrarno zaustavljanje"
+  )
+)
+
+kable(boundary_strategies,
+      col.names = c("Strategija", "Opis", "Primjer", "Rizici")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+Preporuke za suočavanje s problemom granica uključuju transparentno dokumentiranje svih odluka o granicama, provođenje analiza osjetljivosti s različitim definicijama granica, teorijsko opravdanje odabranih kriterija i oprez pri generalizaciji nalaza izvan definirane populacije. Idealno, istraživač bi trebao ispitati kako se ključni nalazi mijenjaju pod različitim razumnim definicijama granica. Ako su nalazi robusni, možemo imati više povjerenja u zaključke. Ako značajno variraju, to sugerira da su nalazi osjetljivi na arbitrarne odluke i zahtijevaju oprezniju interpretaciju.
+
+
+## Nedostajući podaci
+
+Čak i kada su granice mreže jasno definirane, rijetko imamo potpune podatke o svim čvorovima i vezama unutar tih granica. **Nedostajući podaci** (engl. *missing data*) predstavljaju sveprisutan problem u mrežnoj analizi koji može značajno iskriviti izračunate mjere i dovesti do pogrešnih zaključaka. Za razliku od tradicionalne statistike gdje nedostajući podaci utječu na pojedinačne opservacije, u mrežnoj analizi nedostajuća veza utječe na strukturu cijele mreže i mjere svih povezanih čvorova.
+
+Nedostajući podaci mogu nastati iz više razloga. **Neodaziv** (engl. *non-response*) javlja se kada akteri odbiju sudjelovati u istraživanju ili ne odgovore na pitanja o svojim vezama. **Granice sjećanja** ograničavaju sposobnost ispitanika da se prisjete svih svojih kontakata, posebno slabih veza. **Tehnička ograničenja** platformi mogu ograničiti pristup podacima, primjerice API ograničenja koja vraćaju samo uzorak veza. **Privatne postavke** korisnika mogu sakriti određene veze ili profile. **Dinamika mreže** znači da čvorovi i veze nastaju i nestaju, pa snimka u jednom trenutku propušta neke elemente.
+
+```{r}
+#| label: fig-missing-data-types
+#| fig-cap: "Tri tipa nedostajućih podataka u mrežama. Lijevo: nedostajući čvor (Actor F potpuno uklonjen). Sredina: nedostajuća veza (veza B-D postoji ali nije zabilježena). Desno: kombinacija (nedostaje čvor i neke veze). Svaki tip drugačije utječe na mrežne mjere."
+#| fig-width: 12
+#| fig-height: 4
+
+complete_net <- graph_from_literal(A--B--C--D--E--A, B--D, A--C, C--F--D)
+
+missing_node_net <- delete_vertices(complete_net, "F")
+
+missing_edge_net <- delete_edges(complete_net, "B|D")
+
+missing_both_net <- delete_vertices(complete_net, "F")
+missing_both_net <- delete_edges(missing_both_net, "A|C")
+
+par(mfrow = c(1, 4), mar = c(1, 1, 3, 1))
+
+V(complete_net)$color <- "#3498db"
+plot(complete_net,
+     layout = layout_with_fr,
+     vertex.size = 30,
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1.2,
+     edge.color = "gray40",
+     edge.width = 2.5,
+     main = "Potpuna mreža")
+
+V(missing_node_net)$color <- "#3498db"
+plot(missing_node_net,
+     layout = layout_with_fr,
+     vertex.size = 30,
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1.2,
+     edge.color = "gray40",
+     edge.width = 2.5,
+     main = "Nedostajući čvor\n(F uklonjen)")
+
+V(missing_edge_net)$color <- "#3498db"
+plot(missing_edge_net,
+     layout = layout_with_fr,
+     vertex.size = 30,
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1.2,
+     edge.color = "gray40",
+     edge.width = 2.5,
+     main = "Nedostajuća veza\n(B-D uklonjena)")
+
+V(missing_both_net)$color <- "#3498db"
+plot(missing_both_net,
+     layout = layout_with_fr,
+     vertex.size = 30,
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1.2,
+     edge.color = "gray40",
+     edge.width = 2.5,
+     main = "Kombinacija\n(F i A-C uklonjeni)")
+```
+
+Istraživanja pokazuju da različite mrežne mjere pokazuju različitu osjetljivost na nedostajuće podatke. **Gustoća** je relativno robusna jer je prosjek preko svih mogućih veza. **Stupanj centralnosti** umjereno je osjetljiv jer nedostajući podaci izravno utječu na broj veza svakog čvora. **Međuposredovanje** izrazito je osjetljivo jer ovisi o globalnoj strukturi putanja koja se dramatično mijenja s nedostajućim vezama. **Koeficijent klasteriranja** također je visoko osjetljiv jer nedostatak jedne veze u trokutu eliminira cijeli trokut.
+
+```{r}
+#| label: fig-missing-data-effect
+#| fig-cap: "Efekt nasumično nedostajućih podataka na mrežne mjere. Simulacija pokazuje kako se četiri mjere mijenjaju s porastom udjela nedostajućih veza. Međuposredovanje i klasteriranje najosjetljiviji su na nedostajuće podatke."
+#| fig-width: 10
+#| fig-height: 6
+
+set.seed(42)
+
+original_net <- sample_smallworld(dim = 1, size = 50, nei = 4, p = 0.1)
+
+missing_proportions <- seq(0, 0.4, by = 0.05)
+
+results <- data.frame(
+  udio_nedostajucih = numeric(),
+  gustoca = numeric(),
+  prosj_stupanj = numeric(),
+  prosj_medjuposredovanje = numeric(),
+  klasteriranje = numeric()
+)
+
+original_density <- edge_density(original_net)
+original_degree <- mean(degree(original_net))
+original_betweenness <- mean(betweenness(original_net))
+original_clustering <- transitivity(original_net, type = "global")
+
+for (prop in missing_proportions) {
+  temp_net <- original_net
+  n_edges <- ecount(temp_net)
+  n_remove <- floor(prop * n_edges)
+  
+  if (n_remove > 0) {
+    remove_edges <- sample(1:n_edges, n_remove)
+    temp_net <- delete_edges(temp_net, remove_edges)
+  }
+  
+  results <- rbind(results, data.frame(
+    udio_nedostajucih = prop,
+    gustoca = edge_density(temp_net) / original_density,
+    prosj_stupanj = mean(degree(temp_net)) / original_degree,
+    prosj_medjuposredovanje = mean(betweenness(temp_net)) / original_betweenness,
+    klasteriranje = transitivity(temp_net, type = "global") / original_clustering
+  ))
+}
+
+results_long <- results |>
+  pivot_longer(cols = -udio_nedostajucih,
+               names_to = "Mjera", values_to = "Relativna_vrijednost")
+
+results_long$Mjera <- factor(results_long$Mjera,
+                              levels = c("gustoca", "prosj_stupanj", 
+                                        "prosj_medjuposredovanje", "klasteriranje"),
+                              labels = c("Gustoća", "Prosječni stupanj",
+                                        "Prosječno međuposredovanje", "Klasteriranje"))
+
+ggplot(results_long, aes(x = udio_nedostajucih * 100, y = Relativna_vrijednost * 100,
+                          color = Mjera, shape = Mjera)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("#3498db", "#2ecc71", "#e74c3c", "#9b59b6")) +
+  geom_hline(yintercept = 100, linetype = "dashed", color = "gray50") +
+  labs(
+    title = "Osjetljivost mrežnih mjera na nedostajuće podatke",
+    subtitle = "Relativne vrijednosti u odnosu na potpunu mrežu (100% = izvorna vrijednost)",
+    x = "Udio nasumično uklonjenih veza (%)",
+    y = "Relativna vrijednost mjere (%)",
+    color = NULL, shape = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "bottom") +
+  ylim(0, 120)
+```
+
+Problem je dodatno kompliciran činjenicom da nedostajući podaci rijetko nedostaju potpuno nasumično. Akteri s određenim karakteristikama mogu biti skloniji neodazivu, čvorovi na periferiji mogu biti teže dostupni, a slabe veze lakše se zaboravljaju od jakih. Ovaj **selektivni nedostatak** može sustavno iskriviti sliku mrežne strukture na načine koje je teško detektirati i korigirati.
+
+```{r}
+#| label: tbl-missing-data-sources
+#| tbl-cap: "Izvori nedostajućih podataka u istraživanjima komunikacijskih mreža s implikacijama i mogućim rješenjima."
+
+missing_sources <- data.frame(
+  Izvor = c(
+    "Neodaziv ispitanika",
+    "Ograničenja sjećanja",
+    "API ograničenja",
+    "Privatne postavke",
+    "Obrisani računi",
+    "Dinamika mreže"
+  ),
+  Opis = c(
+    "Akteri odbijaju sudjelovanje",
+    "Ispitanici zaboravljaju veze",
+    "Platforme ograničavaju pristup",
+    "Korisnici skrivaju profile ili veze",
+    "Računi uklonjeni prije prikupljanja",
+    "Veze nastaju/nestaju između mjerenja"
+  ),
+  Tipicni_ucinak = c(
+    "Nedostaju cijeli čvorovi",
+    "Nedostaju slabe veze",
+    "Nasumični uzorak veza",
+    "Sustavno nedostaju određeni profili",
+    "Nedostaju povijesni čvorovi",
+    "Snimka ne odražava stabilnu strukturu"
+  ),
+  Moguce_rjesenje = c(
+    "Poticaji, više kontakata, procjena iz drugih izvora",
+    "Podsjetnički popisi, ograničenje na nedavne kontakte",
+    "Više API poziva, kombiniranje izvora",
+    "Transparentno dokumentiranje ograničenja",
+    "Arhivski podaci, web arhive",
+    "Longitudinalno prikupljanje, vremenske prozore"
+  )
+)
+
+kable(missing_sources,
+      col.names = c("Izvor", "Opis", "Tipični učinak", "Moguće rješenje")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+Strategije za suočavanje s nedostajućim podacima uključuju prevenciju kroz pažljiv dizajn prikupljanja, detekciju kroz usporedbu s očekivanim distribucijama, korekciju kroz statističke tehnike imputacije i transparentnost kroz dokumentiranje opsega i mogućih učinaka nedostajućih podataka. Posebno je važno provesti analize osjetljivosti koje ispituju kako bi se nalazi promijenili pod različitim scenarijima nedostajućih podataka. Ako su nalazi robusni čak i uz pesimistične pretpostavke o nedostajućim podacima, možemo im više vjerovati.
+
+
+## Etički izazovi
+
+Mrežni podaci nose posebne etičke izazove koji nadilaze standardne etičke protokole društvenih istraživanja. Fundamentalna tenzija proizlazi iz činjenice da mrežna analiza inherentno uključuje podatke o odnosima između ljudi, što znači da pristanak jedne osobe na sudjelovanje nužno uključuje podatke o drugima koji možda nisu pristali. Dodatno, strukturna priroda mrežnih podataka čini tradicionalne tehnike anonimizacije neučinkovitima jer se identitet čvorova često može rekonstruirati iz samih strukturnih obrazaca.
+
+**Problem relacijskog pristanka** manifestira se kada ispitanik izvijesti o svojim vezama s drugima. Ako osoba A navede da komunicira s osobom B, uključili smo osobu B u istraživanje bez njezina izričitog pristanka. U malim mrežama poput organizacija, ovo je osobito problematično jer struktura odnosa može otkriti osjetljive informacije o položaju, utjecaju ili izolaciji pojedinaca.
+
+```{r}
+#| label: fig-anonymization-problem
+#| fig-cap: "Problem anonimizacije u mrežnim podacima. Čak i kada su imena uklonjena, strukturna pozicija može otkriti identitet. U organizacijskoj mreži, čvor sa stupnjem 8 koji je jedini most između dva odjela vjerojatno je prepoznatljiv kolegama unatoč uklanjanju imena."
+#| fig-width: 10
+#| fig-height: 7
+
+set.seed(42)
+
+org_net <- graph_from_literal(
+  CEO -- VP1 -- M1 -- E1,
+  CEO -- VP1 -- M1 -- E2,
+  CEO -- VP1 -- M2 -- E3,
+  CEO -- VP1 -- M2 -- E4,
+  CEO -- VP2 -- M3 -- E5,
+  CEO -- VP2 -- M3 -- E6,
+  CEO -- VP2 -- M4 -- E7,
+  CEO -- VP2 -- M4 -- E8,
+  VP1 -- VP2,
+  M1 -- M2, M3 -- M4,
+  E1 -- E2, E3 -- E4, E5 -- E6, E7 -- E8
+)
+
+V(org_net)$degree <- degree(org_net)
+V(org_net)$color <- case_when(
+  V(org_net)$degree >= 5 ~ "#e74c3c",
+  V(org_net)$degree >= 3 ~ "#f39c12",
+  TRUE ~ "#3498db"
+)
+
+par(mfrow = c(1, 2), mar = c(1, 1, 3, 1))
+
+plot(org_net,
+     layout = layout_as_tree(org_net, root = 1),
+     vertex.size = 20,
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 0.7,
+     edge.color = "gray50",
+     edge.width = 1.5,
+     main = "S imenima:\nIdentiteti vidljivi")
+
+V(org_net)$anon_name <- paste0("Čvor ", 1:vcount(org_net))
+
+plot(org_net,
+     layout = layout_as_tree(org_net, root = 1),
+     vertex.size = 20,
+     vertex.frame.color = NA,
+     vertex.label = V(org_net)$anon_name,
+     vertex.label.color = "white",
+     vertex.label.cex = 0.6,
+     edge.color = "gray50",
+     edge.width = 1.5,
+     main = "Bez imena:\nStruktura i dalje otkriva poziciju")
+
+legend("bottomright",
+       legend = c("Visoka centralnost (5+)", "Srednja (3-4)", "Niska (1-2)"),
+       fill = c("#e74c3c", "#f39c12", "#3498db"),
+       bty = "n", cex = 0.8,
+       title = "Stupanj centralnosti")
+```
+
+**Reidentifikacija iz strukture** predstavlja možda najozbiljniji etički izazov. Istraživanja su pokazala da se pojedinci mogu identificirati samo na temelju strukturnih karakteristika njihovih veza, čak i bez ikakvih atributa. Ako napadač poznaje približnu strukturu veza neke osobe (primjerice iz druge javno dostupne mreže), može tu osobu locirati u anonimiziranom grafu. Ovo čini standardnu praksu uklanjanja imena potpuno neadekvatnom za zaštitu privatnosti.
+
+```{r}
+#| label: fig-reidentification-risk
+#| fig-cap: "Ilustracija rizika reidentifikacije. Ako napadač zna da ciljna osoba ima točno 4 kontakta specifičnog obrasca (trokut + izolirana veza), može je locirati u većoj mreži unatoč anonimizaciji. Crveni čvor jedini odgovara poznatom obrascu."
+#| fig-width: 10
+#| fig-height: 5
+
+set.seed(42)
+
+larger_net <- sample_gnp(25, 0.12)
+
+target_neighbors <- c(5, 8, 12, 18)
+for (n in target_neighbors) {
+  if (!are_adjacent(larger_net, 3, n)) {
+    larger_net <- add_edges(larger_net, c(3, n))
+  }
+}
+if (!are_adjacent(larger_net, 5, 8)) {
+  larger_net <- add_edges(larger_net, c(5, 8))
+}
+if (!are_adjacent(larger_net, 5, 12)) {
+  larger_net <- add_edges(larger_net, c(5, 12))
+}
+if (!are_adjacent(larger_net, 8, 12)) {
+  larger_net <- add_edges(larger_net, c(8, 12))
+}
+
+V(larger_net)$color <- "#3498db"
+V(larger_net)$color[3] <- "#e74c3c"
+V(larger_net)$color[target_neighbors] <- "#f39c12"
+
+par(mfrow = c(1, 2), mar = c(1, 1, 3, 1))
+
+known_pattern <- graph_from_literal(Target -- A -- B -- C -- A, Target -- D, A -- C)
+V(known_pattern)$color <- c("#e74c3c", rep("#f39c12", 4))
+
+plot(known_pattern,
+     vertex.size = 35,
+     vertex.frame.color = NA,
+     vertex.label.color = "white",
+     vertex.label.cex = 1,
+     edge.color = "gray40",
+     edge.width = 2.5,
+     main = "Poznati obrazac veza\n(napadačevo znanje)")
+
+set.seed(42)
+plot(larger_net,
+     layout = layout_with_fr,
+     vertex.size = 15,
+     vertex.frame.color = NA,
+     vertex.label = NA,
+     edge.color = adjustcolor("gray50", alpha = 0.5),
+     edge.width = 1,
+     main = "Anonimizirana mreža\n(crveni čvor = identificiran)")
+
+legend("bottomleft",
+       legend = c("Identificirana meta", "Poznati kontakti", "Ostali čvorovi"),
+       fill = c("#e74c3c", "#f39c12", "#3498db"),
+       bty = "n")
+```
+
+Etički okvir za mrežna istraživanja mora balansirati između znanstvene vrijednosti istraživanja, zaštite privatnosti sudionika i transparentnosti prema javnosti. **Informirani pristanak** trebao bi jasno komunicirati da sudjelovanje uključuje podatke o odnosima s drugima. **Minimizacija podataka** nalaže prikupljanje samo nužnih informacija za istraživačka pitanja. **Ograničenje pristupa** znači da sirovi podaci ne bi smjeli biti javno dostupni bez rigoroznih protokola zaštite. **Agregirana prezentacija** preporučuje izvještavanje na razini mreže ili zajednice umjesto pojedinačnih čvorova kada je to moguće.
+
+```{r}
+#| label: tbl-privacy-techniques
+#| tbl-cap: "Tehnike zaštite privatnosti u mrežnim podacima s procjenom učinkovitosti i utjecaja na korisnost podataka."
+
+privacy_techniques <- data.frame(
+  Tehnika = c(
+    "Uklanjanje identifikatora",
+    "K-anonimnost",
+    "Dodavanje šuma",
+    "Agregacija čvorova",
+    "Diferencijalna privatnost",
+    "Sigurno računanje"
+  ),
+  Opis = c(
+    "Zamjena imena pseudonimima",
+    "Osiguranje da svaki čvor dijeli karakteristike s k-1 drugih",
+    "Nasumično dodavanje/uklanjanje veza",
+    "Grupiranje čvorova u super-čvorove",
+    "Matematički garantirana zaštita od reidentifikacije",
+    "Analiza bez pristupa sirovim podacima"
+  ),
+  Ucinkovitost = c(
+    "Niska",
+    "Srednja",
+    "Srednja do visoka",
+    "Visoka",
+    "Vrlo visoka",
+    "Vrlo visoka"
+  ),
+  Utjecaj_na_podatke = c(
+    "Nikakav",
+    "Gubitak strukturnih detalja",
+    "Iskrivljenje mjera",
+    "Gubitak individualne razine",
+    "Kontrolirano iskrivljenje",
+    "Ograničene analize"
+  )
+)
+
+kable(privacy_techniques,
+      col.names = c("Tehnika", "Opis", "Učinkovitost zaštite", "Utjecaj na korisnost")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+U kontekstu istraživanja masovne komunikacije, etički izazovi poprimaju dodatne dimenzije. Analiza mreža na društvenim platformama često uključuje javno dostupne podatke, što stvara iluziju da pristanak nije potreban. Međutim, činjenica da su podaci tehnički javni ne znači da korisnici očekuju da će biti uključeni u istraživanja ili da će njihovi komunikacijski obrasci biti analizirani. Platforme poput Twittera doživjele su kontroverze kada su istraživači objavili analize koje su omogućile identificiranje korisnika unatoč nominalnoj anonimizaciji.
+
+```{r}
+#| label: fig-ethics-framework
+#| fig-cap: "Konceptualni okvir za etičko odlučivanje u mrežnim istraživanjima. Istraživač mora balansirati četiri dimenzije: znanstvenu vrijednost, privatnost sudionika, transparentnost i društvenu korist. Optimalna pozicija ovisi o specifičnom kontekstu istraživanja."
+#| fig-width: 9
+#| fig-height: 7
+
+ethics_data <- data.frame(
+  kategorija = c("Znanstvena\nvrijednost", "Zaštita\nprivatnosti", 
+                 "Transparentnost\nistraživanja", "Društvena\nkorist"),
+  vrijednost = c(0.85, 0.7, 0.8, 0.75),
+  angle = seq(0, 270, by = 90)
+)
+
+ggplot(ethics_data, aes(x = kategorija, y = vrijednost, fill = kategorija)) +
+  geom_col(width = 0.7, show.legend = FALSE) +
+  geom_hline(yintercept = c(0.25, 0.5, 0.75, 1), linetype = "dashed", 
+             color = "gray70", linewidth = 0.3) +
+  scale_fill_manual(values = c("#3498db", "#e74c3c", "#2ecc71", "#9b59b6")) +
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.25, 0.5, 0.75, 1),
+                     labels = c("0", "Nisko", "Srednje", "Visoko", "Maksimalno")) +
+  coord_polar(start = 0) +
+  labs(
+    title = "Etičko balansiranje u mrežnim istraživanjima",
+    subtitle = "Hipotetski profil istraživanja s visokom znanstvenom vrijednošću\ni umjerenom zaštitom privatnosti"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    axis.text.y = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank()
+  )
+```
+
+Preporuke za etičko provođenje mrežnih istraživanja uključuju konzultiranje s etičkim povjerenstvima specijaliziranim za digitalna istraživanja, proaktivno razmatranje rizika reidentifikacije prije objave podataka, ograničavanje javnog dijeljenja sirovih mrežnih podataka, korištenje agregiranih prikaza kada individualna razina nije nužna i kontinuirano praćenje razvoja tehnika zaštite privatnosti i regulatornog okvira. Etička odgovornost ne završava objavom već uključuje i odgovornost za potencijalnu buduću zloupotrebu objavljenih podataka.
+
+```{r}
+#| label: tbl-methodology-summary
+#| tbl-cap: "Sažetak ključnih metodoloških izazova u analizi društvenih mreža s preporukama za istraživače."
+
+methodology_summary <- data.frame(
+  Izazov = c(
+    "Problem granica",
+    "Nedostajući podaci",
+    "Etički izazovi"
+  ),
+  Kljucno_pitanje = c(
+    "Koje aktere i veze uključiti u mrežu?",
+    "Kako postupati s nepotpunim podacima?",
+    "Kako zaštititi privatnost uz znanstvenu vrijednost?"
+  ),
+  Potencijalne_posljedice = c(
+    "Različite granice daju različite nalaze",
+    "Iskrivljene mjere, pogrešni zaključci",
+    "Šteta za sudionike, gubitak povjerenja"
+  ),
+  Kljucne_preporuke = c(
+    "Transparentnost, teorijsko opravdanje, analize osjetljivosti",
+    "Procjena opsega, robusnost nalaza, dokumentiranje ograničenja",
+    "Minimizacija podataka, agregacija, napredne tehnike zaštite"
+  )
+)
+
+kable(methodology_summary,
+      col.names = c("Izazov", "Ključno pitanje", "Potencijalne posljedice", "Ključne preporuke")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
+
+Metodološka rigoroznost u mrežnoj analizi zahtijeva kontinuiranu refleksiju o odlukama koje oblikuju istraživanje. Problem granica podsjeća nas da svaka mreža koju analiziramo jest konstrukcija nastala iz naših odluka o tome što uključiti. Nedostajući podaci upozoravaju nas da naši podaci nikada nisu potpuni i da moramo razumjeti kako ta nepotpunost utječe na zaključke. Etički izazovi podsjećaju nas da iza svakog čvora i svake veze stoje stvarni ljudi čiju privatnost moramo poštivati. Svjesnost o ovim izazovima i aktivno suočavanje s njima razlikuje rigorozno istraživanje od naivne primjene tehnika bez razumijevanja njihovih ograničenja.
 

@@ -112,6 +112,18 @@ window.Quarto = {
   <li><a href="#modularnost-i-detekcija-zajednica" id="toc-modularnost-i-detekcija-zajednica" class="nav-link" data-scroll-target="#modularnost-i-detekcija-zajednica"><span class="header-section-number">5.3</span> Modularnost i detekcija zajednica</a></li>
   <li><a href="#strukturne-rupe" id="toc-strukturne-rupe" class="nav-link" data-scroll-target="#strukturne-rupe"><span class="header-section-number">5.4</span> Strukturne rupe</a></li>
   </ul></li>
+  <li><a href="#vizualizacija-mreža" id="toc-vizualizacija-mreža" class="nav-link" data-scroll-target="#vizualizacija-mreža"><span class="header-section-number">6</span> Vizualizacija mreža</a>
+  <ul class="collapse">
+  <li><a href="#algoritmi-rasporeda" id="toc-algoritmi-rasporeda" class="nav-link" data-scroll-target="#algoritmi-rasporeda"><span class="header-section-number">6.1</span> Algoritmi rasporeda</a></li>
+  <li><a href="#problem-dlakave-lopte" id="toc-problem-dlakave-lopte" class="nav-link" data-scroll-target="#problem-dlakave-lopte"><span class="header-section-number">6.2</span> Problem dlakave lopte</a></li>
+  <li><a href="#alati-za-vizualizaciju" id="toc-alati-za-vizualizaciju" class="nav-link" data-scroll-target="#alati-za-vizualizaciju"><span class="header-section-number">6.3</span> Alati za vizualizaciju</a></li>
+  </ul></li>
+  <li><a href="#metodološki-problemi-i-ograničenja" id="toc-metodološki-problemi-i-ograničenja" class="nav-link" data-scroll-target="#metodološki-problemi-i-ograničenja"><span class="header-section-number">7</span> Metodološki problemi i ograničenja</a>
+  <ul class="collapse">
+  <li><a href="#problem-granica" id="toc-problem-granica" class="nav-link" data-scroll-target="#problem-granica"><span class="header-section-number">7.1</span> Problem granica</a></li>
+  <li><a href="#nedostajući-podaci" id="toc-nedostajući-podaci" class="nav-link" data-scroll-target="#nedostajući-podaci"><span class="header-section-number">7.2</span> Nedostajući podaci</a></li>
+  <li><a href="#etički-izazovi" id="toc-etički-izazovi" class="nav-link" data-scroll-target="#etički-izazovi"><span class="header-section-number">7.3</span> Etički izazovi</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Analiza-mreza.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="Analiza mreza.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
 </div>
@@ -1635,6 +1647,715 @@ Figure&nbsp;26: Sažetak ključnih koncepata grupne strukture mreža. Od najstro
 </div>
 </div>
 <p>Razumijevanje grupne strukture mreža pruža temelj za sofisticirane analize komunikacijskih fenomena. Identificiranje klika otkriva najuže krugove intenzivne suradnje. Mjerenje homofilije kvantificira tendencije formiranja veza po sličnosti. Detekcija zajednica mapira globalnu strukturu javne sfere. Analiza strukturnih rupa identificira ključne posrednike koji kontroliraju tokove informacija. Zajedno, ovi koncepti čine bogat analitički arsenal za razumijevanje kako su komunikacijske mreže strukturirane i kakve su posljedice te strukture za procese poput širenja informacija, formiranja javnog mnijenja i fragmentacije diskursa.</p>
+</section>
+</section>
+<section id="vizualizacija-mreža" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Vizualizacija mreža</h1>
+<p>Vizualizacija predstavlja jedan od najsnažnijih aspekata analize društvenih mreža. Za razliku od tradicionalnih statističkih pristupa koji reduciraju složene strukture na numeričke pokazatelje, mrežna vizualizacija omogućuje istraživaču da doslovno vidi strukturu odnosa, identificira obrasce, uoči anomalije i komunicira nalaze na intuitivan način. Dobra vizualizacija može otkriti strukturne karakteristike koje bi ostale skrivene u tablicama brojeva, poput postojanja klastera, identificiranja centralnih aktera ili otkrivanja mostova između zajednica. Međutim, vizualizacija mreža daleko je od trivijalne zadaće. Smještanje desetaka, stotina ili tisuća čvorova i njihovih veza u dvodimenzionalni prostor na način koji je informativan, čitljiv i estetski ugodan predstavlja značajan tehnički i konceptualni izazov.</p>
+<p>U ovom poglavlju razmatramo temeljne principe i praktične aspekte vizualizacije mreža. Započinjemo algoritmima rasporeda koji određuju položaje čvorova u prostoru, s posebnim fokusom na pristupe temeljene na silama koji dominiraju suvremenom praksom. Potom analiziramo problem preopterećenosti, poznat kao efekt dlakave lopte, koji nastaje kada mreža postane prevelika ili pregusta za smislenu vizualizaciju. Zaključujemo pregledom softverskih alata koji stoje na raspolaganju istraživačima, od specijaliziranih programa poput Gephija do analitičkih okruženja poput R-a.</p>
+<section id="algoritmi-rasporeda" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="algoritmi-rasporeda"><span class="header-section-number">6.1</span> Algoritmi rasporeda</h2>
+<p>Problem rasporeda mreže (engl. <em>graph layout</em>) svodi se na pitanje kako dodijeliti koordinate svakom čvoru u dvodimenzionalnom (ili trodimenzionalnom) prostoru tako da rezultirajuća vizualizacija bude informativna i čitljiva. Budući da mreža sama po sebi ne sadrži prostorne informacije, odnosno čvorovi nemaju inherentne koordinate, algoritam rasporeda mora te koordinate konstruirati na temelju topoloških svojstava mreže. Idealan raspored trebao bi smjestiti blisko povezane čvorove blizu jedni drugima, jasno razdvojiti različite klastere, minimizirati preklapanje veza i stvoriti vizualno uravnoteženu sliku.</p>
+<p>Najutjecajnija obitelj algoritama za raspored mreža temelji se na <strong>fizikalnoj analogiji sila</strong> (engl. <em>force-directed layout</em>). Ovi algoritmi tretiraju mrežu kao fizički sustav u kojem čvorovi djeluju poput nabijenih čestica koje se međusobno odbijaju, dok veze djeluju poput opruga koje privlače povezane čvorove. Sustav se iterativno simulira dok ne dosegne ravnotežno stanje u kojem se privlačne i odbojne sile uravnotežuju. Rezultat je raspored u kojem su povezani čvorovi blizu, nepovezani čvorovi daleko, a cjelokupna struktura poprima organski, ravnotežni izgled.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-force-directed-concept" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-force-directed-concept-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-force-directed-concept-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-force-directed-concept-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;27: Konceptualna ilustracija algoritma temeljenog na silama. Veze djeluju kao opruge koje privlače povezane čvorove (zelene strelice), dok se svi parovi čvorova međusobno odbijaju poput istoimenih naboja (crvene strelice). Iterativna simulacija vodi prema ravnotežnom stanju.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Najpopularniji algoritam temeljen na silama jest <strong>Fruchterman-Reingold</strong> algoritam koji kombinira privlačne sile proporcionalne udaljenosti povezanih čvorova s odbojnim silama obrnuto proporcionalnim kvadratu udaljenosti svih parova čvorova. Matematički, privlačna sila između povezanih čvorova <span class="math inline">\(u\)</span> i <span class="math inline">\(v\)</span> definira se kao:</p>
+<p><span class="math display">\[f_a(d) = \frac{d^2}{k}\]</span></p>
+<p>dok se odbojna sila između bilo koja dva čvora definira kao:</p>
+<p><span class="math display">\[f_r(d) = -\frac{k^2}{d}\]</span></p>
+<p>U ovim formulama <span class="math inline">\(d\)</span> označava udaljenost između čvorova, a <span class="math inline">\(k\)</span> je parametar koji kontrolira idealnu udaljenost i ovisi o veličini prostora i broju čvorova. Algoritam iterativno pomiče čvorove u smjeru rezultantne sile, postupno smanjujući veličinu pomaka (temperaturu) dok sustav ne konvergira.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-layout-comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-layout-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-layout-comparison-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-layout-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28: Usporedba različitih algoritama rasporeda na istoj mreži od 40 čvorova. Svaki algoritam proizvodi karakterističan raspored ovisno o svojim principima optimizacije. Fruchterman-Reingold i Kamada-Kawai su algoritmi temeljeni na silama, kružni i zvjezdasti su geometrijski rasporedi.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Alternativni algoritam temeljen na silama jest <strong>Kamada-Kawai</strong> koji definira idealnu udaljenost između svaka dva čvora kao proporcionalnu njihovoj grafovskoj udaljenosti (najkraćem putu). Algoritam zatim minimizira ukupnu energiju sustava definiranu kao suma kvadrata odstupanja stvarnih udaljenosti od idealnih. Ovaj pristup često proizvodi simetričnije rasporede, ali može biti računalno zahtjevniji za veće mreže.</p>
+<p>Za vrlo velike mreže s desecima tisuća čvorova razvijeni su specijalizirani algoritmi poput <strong>OpenOrd</strong> (poznat i kao DrL) koji koristi višerazinsku dekompoziciju i paralelno procesiranje za učinkovito raspoređivanje masivnih mreža. Ovi algoritmi žrtvuju preciznost lokalnog rasporeda u korist globalne strukture i računalne učinkovitosti.</p>
+<div class="cell">
+<div id="tbl-layout-algorithms" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-layout-algorithms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;17: Pregled popularnih algoritama rasporeda s njihovim karakteristikama i preporučenim primjenama.
+</figcaption>
+<div aria-describedby="tbl-layout-algorithms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Algoritam</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Princip</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Optimalna veličina</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Prednosti</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fruchterman-Reingold</td>
+<td style="text-align: left;">Privlačne i odbojne sile</td>
+<td style="text-align: left;">Do nekoliko tisuća</td>
+<td style="text-align: left;">Dobar opći izbor, intuitivni rezultati</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kamada-Kawai</td>
+<td style="text-align: left;">Minimizacija energije opruga</td>
+<td style="text-align: left;">Do tisuću</td>
+<td style="text-align: left;">Simetrični rasporedi, teorijski utemeljen</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DrL / OpenOrd</td>
+<td style="text-align: left;">Višerazinska dekompozicija</td>
+<td style="text-align: left;">Deseci tisuća</td>
+<td style="text-align: left;">Skalabilnost, brzina</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ForceAtlas2</td>
+<td style="text-align: left;">Prilagođene sile za vizualizaciju</td>
+<td style="text-align: left;">Tisuće do deseci tisuća</td>
+<td style="text-align: left;">Čitljivo razdvajanje klastera</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kružni</td>
+<td style="text-align: left;">Geometrijski, fiksni krug</td>
+<td style="text-align: left;">Bilo koja</td>
+<td style="text-align: left;">Deterministički, jednostavan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hijerarhijski</td>
+<td style="text-align: left;">Rangiranje po razinama</td>
+<td style="text-align: left;">Do nekoliko stotina</td>
+<td style="text-align: left;">Pokazuje tokove i hijerarhije</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Važno je naglasiti da algoritmi temeljeni na silama imaju stohastičku komponentu jer obično započinju s nasumičnim početnim položajima čvorova. To znači da će svako pokretanje algoritma potencijalno proizvesti različit raspored iste mreže. Iako će strukturne karakteristike poput klastera biti konzistentno prikazane, točni položaji čvorova variraju. Za reproducibilnost rezultata nužno je fiksirati sjeme generatora slučajnih brojeva prije pokretanja algoritma.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-seed-importance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-seed-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-seed-importance-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-seed-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29: Ista mreža vizualizirana s različitim sjemenima generatora slučajnih brojeva. Iako globalna struktura ostaje prepoznatljiva, konkretni položaji čvorova značajno variraju. Za reproducibilnost je nužno dokumentirati korišteno sjeme.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-dlakave-lopte" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="problem-dlakave-lopte"><span class="header-section-number">6.2</span> Problem dlakave lopte</h2>
+<p>Kako broj čvorova i veza u mreži raste, vizualizacija postaje sve izazovnija. U određenoj točki, čak i najbolji algoritmi rasporeda proizvode sliku koja nalikuje spletenoj lopti od dlaka, nečitljivu masu preklapajućih čvorova i veza iz koje je nemoguće izvući smislene informacije. Ovaj fenomen naziva se <strong>efekt dlakave lopte</strong> (engl. <em>hairball effect</em>) i predstavlja fundamentalno ograničenje mrežne vizualizacije.</p>
+<p>Efekt dlakave lopte nastaje zbog kombinacije nekoliko faktora. S porastom broja čvorova, prostor za njihov smještaj postaje sve ograničeniji, što dovodi do preklapanja. Istovremeno, broj veza tipično raste brže od broja čvorova (posebno u mrežama s visokim klasteriranjem), što rezultira gustim prepletom linija koje zamagljuju strukturu. Konačno, ljudska percepcija ima ograničenu sposobnost procesiranja složenih vizualnih podražaja, pa čak i savršeno raspoređena mreža s tisućama elemenata nadmašuje naše kognitivne kapacitete.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hairball-progression" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hairball-progression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-hairball-progression-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hairball-progression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;30: Progresija od čitljive do nečitljive vizualizacije s porastom veličine mreže. Mreža od 30 čvorova jasno pokazuje strukturu, mreža od 100 čvorova postaje gušća, mreža od 300 čvorova ulazi u zonu dlakave lopte, a mreža od 1000 čvorova potpuno je nečitljiva.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Postoji niz strategija za suočavanje s efektom dlakave lopte. Prva strategija jest <strong>filtriranje</strong> mreže uklanjanjem manje važnih čvorova ili veza. Na primjer, možemo zadržati samo čvorove s visokom centralnošću ili veze iznad određenog praga težine. Ova strategija reducira složenost ali zahtijeva oprez jer filtriranje može ukloniti važne strukturne karakteristike.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-filtering-strategy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-filtering-strategy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-filtering-strategy-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filtering-strategy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;31: Strategija filtriranja za smanjenje efekta dlakave lopte. Lijevo: originalna mreža od 200 čvorova. Desno: filtrirana mreža koja prikazuje samo čvorove s više od 5 veza. Filtriranje otkriva strukturu hubova koja je bila skrivena u originalnoj vizualizaciji.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Druga strategija jest <strong>agregacija</strong> čvorova u veće jedinice. Umjesto prikazivanja svakog pojedinačnog čvora, možemo grupirati čvorove u zajednice i prikazati mrežu zajednica. Svaka zajednica postaje jedan super-čvor čija veličina odražava broj članova, a veze između super-čvorova odražavaju gustoću veza između odgovarajućih zajednica.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-aggregation-strategy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-aggregation-strategy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-aggregation-strategy-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-aggregation-strategy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32: Strategija agregacije za smanjenje složenosti. Lijevo: originalna mreža s označenim zajednicama. Desno: agregirana mreža gdje svaka zajednica postaje jedan čvor. Veličina čvora proporcionalna je broju članova zajednice, a debljina veze broju međuzajedničkih veza.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Treća strategija jest korištenje <strong>interaktivnih vizualizacija</strong> koje omogućuju korisniku zumiranje, pomicanje i filtriranje u stvarnom vremenu. Interaktivna vizualizacija može prikazati globalnu strukturu na udaljenoj razini zumiranja, a zatim omogućiti detaljno istraživanje pojedinih regija. Ova strategija zahtijeva specijalizirane alate koji podržavaju interaktivnost.</p>
+<div class="cell">
+<div id="tbl-hairball-solutions" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hairball-solutions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;18: Strategije za suočavanje s efektom dlakave lopte s njihovim prednostima i ograničenjima.
+</figcaption>
+<div aria-describedby="tbl-hairball-solutions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Strategija</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Opis</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Prednosti</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Ograničenja</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Filtriranje čvorova</td>
+<td style="text-align: left;">Zadržavanje samo visoko centralnih čvorova</td>
+<td style="text-align: left;">Otkriva ključne aktere</td>
+<td style="text-align: left;">Gubi periferne čvorove</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Filtriranje veza</td>
+<td style="text-align: left;">Zadržavanje samo jakih veza (iznad praga)</td>
+<td style="text-align: left;">Naglašava jake odnose</td>
+<td style="text-align: left;">Može ukloniti važne slabe veze</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Agregacija u zajednice</td>
+<td style="text-align: left;">Grupiranje čvorova u super-čvorove</td>
+<td style="text-align: left;">Pokazuje makro-strukturu</td>
+<td style="text-align: left;">Skriva unutarzajedničku strukturu</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Uzorkovanje</td>
+<td style="text-align: left;">Nasumični uzorak čvorova i njihovih veza</td>
+<td style="text-align: left;">Jednostavno za implementaciju</td>
+<td style="text-align: left;">Može propustiti važne dijelove</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Interaktivna vizualizacija</td>
+<td style="text-align: left;">Zumiranje, filtriranje u stvarnom vremenu</td>
+<td style="text-align: left;">Fleksibilno istraživanje</td>
+<td style="text-align: left;">Zahtijeva specijalizirane alate</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Višerazinska vizualizacija</td>
+<td style="text-align: left;">Različite razine detalja za različite skale</td>
+<td style="text-align: left;">Kombinira pregled i detalje</td>
+<td style="text-align: left;">Složeno za implementaciju</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Četvrta strategija uključuje <strong>vizualno kodiranje</strong> dodatnih informacija kroz veličinu, boju i oblik čvorova. Čak i u gustoj mreži, čvorovi kodirani bojom prema zajednici ili veličinom prema centralnosti mogu prenijeti strukturne informacije bez potrebe za čitanjem individualnih veza.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-visual-encoding" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-visual-encoding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-visual-encoding-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-visual-encoding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33: Vizualno kodiranje kao strategija za povećanje čitljivosti. Ista mreža prikazana bez kodiranja (lijevo) i s kodiranjem veličine prema stupnju te boje prema zajednici (desno). Kodiranje omogućuje prepoznavanje strukture čak i bez čitanja pojedinačnih veza.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="alati-za-vizualizaciju" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="alati-za-vizualizaciju"><span class="header-section-number">6.3</span> Alati za vizualizaciju</h2>
+<p>Istraživačima masovne komunikacije na raspolaganju stoji niz softverskih alata za vizualizaciju i analizu mreža. Svaki alat ima svoje prednosti i ograničenja, a izbor ovisi o veličini mreže, potrebnim analizama, razini tehničke ekspertize i zahtjevima za kvalitetom vizualnog outputa.</p>
+<p><strong>Gephi</strong> predstavlja vjerojatno najpopularniji samostalni softver za vizualizaciju mreža. Kao besplatni program otvorenog koda, Gephi nudi intuitivno grafičko sučelje koje omogućuje istraživačima bez programerskog iskustva da učitaju, vizualiziraju i analiziraju mreže. Program podržava veliki broj formata za učitavanje podataka, implementira sve standardne mjere centralnosti i algoritme za detekciju zajednica, te nudi sofisticirane algoritme rasporeda uključujući ForceAtlas2 koji je posebno dizajniran za čitljivu vizualizaciju. Gephi također podržava interaktivno istraživanje mreže, vremensku dinamiku i izvoz visokokvalitetnih vizualizacija za publikacije.</p>
+<p><strong>UCINET</strong> (University of California at Irvine NETwork) jest komercijalni softver s dugom tradicijom u analizi društvenih mreža, posebno popularan među sociolozima. UCINET nudi opsežan skup statističkih analiza i integrira se s programom <strong>NetDraw</strong> za vizualizaciju. Iako sučelje može djelovati zastarjelo u usporedbi s modernijim alatima, UCINET ostaje referentni alat za mnoge napredne mrežne analize i koristi se kao standard u akademskoj literaturi.</p>
+<p><strong>R</strong> s paketima poput <strong>igraph</strong>, <strong>ggraph</strong>, <strong>tidygraph</strong> i <strong>statnet</strong> nudi programatičan pristup mrežnoj analizi. Prednost R okruženja jest potpuna reproducibilnost analiza, fleksibilnost u prilagodbi vizualizacija i integracija s širim ekosustavam statističkih metoda. Nedostatak jest potreba za programerskim vještinama i strmija krivulja učenja u usporedbi s alatima s grafičkim sučeljem.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ggraph-demo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ggraph-demo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-ggraph-demo-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ggraph-demo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;34: Primjer sofisticirane vizualizacije mreže kreirane u R-u pomoću paketa ggraph. Paket omogućuje primjenu gramatike grafike na mrežne podatke, nudeći veliku fleksibilnost u dizajnu vizualizacija.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Python</strong> s bibliotekama <strong>NetworkX</strong>, <strong>graph-tool</strong> i <strong>pyvis</strong> nudi sličnu programatičnu fleksibilnost kao R. NetworkX je posebno popularan zbog jednostavnosti korištenja i dobre dokumentacije, dok graph-tool nudi superiorne performanse za vrlo velike mreže.</p>
+<p>Za interaktivnu vizualizaciju u web preglednicima, biblioteke poput <strong>D3.js</strong>, <strong>Sigma.js</strong> i <strong>Cytoscape.js</strong> omogućuju kreiranje dinamičnih, zumabilnih vizualizacija koje se mogu ugraditi u web stranice i aplikacije. Ovi alati posebno su korisni za prezentaciju rezultata široj publici ili za istraživačke alate koji zahtijevaju interaktivnost.</p>
+<div class="cell">
+<div id="tbl-tools-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tools-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;19: Usporedba popularnih alata za mrežnu analizu i vizualizaciju s preporukama za različite profile korisnika.
+</figcaption>
+<div aria-describedby="tbl-tools-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Alat</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Tip</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Cijena</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Prednosti</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Preporučeno za</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gephi</td>
+<td style="text-align: left;">Samostalni program</td>
+<td style="text-align: left;">Besplatan</td>
+<td style="text-align: left;">Intuitivno sučelje, interaktivnost, ForceAtlas2</td>
+<td style="text-align: left;">Istraživanje i prezentaciju</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UCINET + NetDraw</td>
+<td style="text-align: left;">Samostalni program</td>
+<td style="text-align: left;">Komercijalan</td>
+<td style="text-align: left;">Opsežne analize, akademski standard</td>
+<td style="text-align: left;">Akademsku analizu</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R (igraph, ggraph)</td>
+<td style="text-align: left;">Programski jezik</td>
+<td style="text-align: left;">Besplatan</td>
+<td style="text-align: left;">Reproducibilnost, fleksibilnost, integracija</td>
+<td style="text-align: left;">Napredne korisnike, reproducibilnost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Python (NetworkX)</td>
+<td style="text-align: left;">Programski jezik</td>
+<td style="text-align: left;">Besplatan</td>
+<td style="text-align: left;">Jednostavnost, velika zajednica</td>
+<td style="text-align: left;">Programere, brze prototipe</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NodeXL</td>
+<td style="text-align: left;">Excel dodatak</td>
+<td style="text-align: left;">Freemium</td>
+<td style="text-align: left;">Integracija s Excelom, pristupačnost</td>
+<td style="text-align: left;">Početnike, manje mreže</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cytoscape</td>
+<td style="text-align: left;">Samostalni program</td>
+<td style="text-align: left;">Besplatan</td>
+<td style="text-align: left;">Biološke mreže, dodaci</td>
+<td style="text-align: left;">Bioinformatiku</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Izbor alata ovisi o specifičnim potrebama istraživanja. Za brzo istraživačko vizualiziranje i prezentaciju rezultata, Gephi nudi najbolji omjer jednostavnosti i mogućnosti. Za rigorozne akademske analize koje zahtijevaju reproducibilnost, R ili Python pružaju programatičnu kontrolu nad svakim korakom analize. Za specifične domene poput bioinformatike, specijalizirani alati poput Cytoscapea nude prilagođenu funkcionalnost. Za interaktivne web prezentacije, JavaScript biblioteke omogućuju ugradnju dinamičnih vizualizacija u digitalne publikacije.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-export-quality" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-export-quality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-export-quality-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-export-quality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;35: Primjer vizualizacije visoke kvalitete pogodne za publikaciju. Pažljivo odabrani parametri uključuju minimalističku estetiku, jasno čitljive oznake za ključne čvorove i legendu koja objašnjava kodiranje.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Vizualizacija mreža ostaje koliko umjetnost toliko i znanost. Tehnička kompetencija u korištenju algoritama i alata nužna je, ali nije dovoljna. Učinkovita vizualizacija zahtijeva razumijevanje principa vizualne percepcije, pažljiv odabir vizualnih varijabli i iterativno dotjerivanje dok vizualizacija ne komunicira željenu poruku. Istraživač mora balansirati između vjernosti podacima i čitljivosti prikaza, između detalja i pregleda, između estetike i informativnosti. Ovladavanje ovim balansima dolazi s iskustvom i kritičkim promišljanjem o tome što vizualizacija treba postići i za koju publiku je namijenjena.</p>
+</section>
+</section>
+<section id="metodološki-problemi-i-ograničenja" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Metodološki problemi i ograničenja</h1>
+<p>Analiza društvenih mreža pruža moćan konceptualni i metodološki aparat za razumijevanje relacijskih fenomena, no kao i svaka istraživačka metoda, suočava se s nizom izazova koji mogu ugroziti valjanost i pouzdanost nalaza. Istraživači koji primjenjuju mrežnu analizu moraju biti svjesni ovih ograničenja i aktivno ih adresirati u dizajnu istraživanja, prikupljanju podataka i interpretaciji rezultata. Ignoriranje metodoloških problema može dovesti do pristrane slike mrežne strukture, pogrešnih zaključaka o odnosima među akterima i neopravdanih generalizacija.</p>
+<p>U ovom zaključnom poglavlju razmatramo tri ključna metodološka izazova s kojima se suočavaju istraživači mreža u kontekstu masovne komunikacije. Problem granica odnosi se na pitanje kako definirati koje aktere i veze uključiti u analizu, odluku koja fundamentalno oblikuje sve naknadne nalaze. Problem nedostajućih podataka proizlazi iz činjenice da rijetko imamo potpune informacije o svim vezama u mreži, a nedostajući podaci mogu značajno iskriviti izračunate mjere. Etički izazovi odnose se na tenziju između znanstvene transparentnosti i zaštite privatnosti sudionika, posebno akutnu u mrežnim podacima gdje anonimizacija individualnih čvorova ne garantira zaštitu identiteta.</p>
+<section id="problem-granica" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="problem-granica"><span class="header-section-number">7.1</span> Problem granica</h2>
+<p>Svaka mrežna analiza započinje fundamentalnom odlukom: koji akteri i koje veze čine mrežu koju proučavamo? Ova naizgled jednostavna pitanja kriju duboke konceptualne i praktične izazove poznate kao <strong>problem granica</strong> (engl. <em>boundary specification problem</em>). Za razliku od tradicionalnih istraživanja gdje uzorak možemo definirati prema jasnim kriterijima pripadnosti populaciji, mrežne granice često su nejasne, propusne i ovisne o arbitrarnim odlukama istraživača.</p>
+<p>Problem granica manifestira se na dvije razine. <strong>Realistička</strong> perspektiva pretpostavlja da mreža ima objektivne granice koje istraživač treba otkriti, poput formalne pripadnosti organizaciji ili geografskog područja. <strong>Nominalistička</strong> perspektiva priznaje da su granice konstrukt koji istraživač nameće podacima prema teorijskim ili praktičnim kriterijima. U praksi, većina istraživanja kombinira oba pristupa, koristeći neke objektivne kriterije uz nužne arbitrarne odluke.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boundary-problem" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boundary-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-boundary-problem-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boundary-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;36: Ilustracija problema granica. Crtkana linija označava arbitrarno postavljenu granicu mreže. Čvorovi izvan granice (sivi) isključeni su iz analize iako imaju veze s čvorovima unutar granice. Različite odluke o granicama produciraju različite slike mrežne strukture.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>U istraživanjima masovne komunikacije, problem granica poprima specifične oblike. Ako proučavamo mrežu dijeljenja vijesti na Twitteru, moramo odlučiti koje korisnike uključiti. Uključujemo li samo korisnike koji su objavili određeni hashtag? Sve koji su retweetali te objave? Pratitelje tih korisnika? Svakom odlukom definiramo drugačiju mrežu s potencijalno drugačijim strukturnim karakteristikama. Ako proučavamo mrežu citiranja među medijima, moramo odlučiti koje medije smatramo relevantnima. Uključujemo li samo mainstream medije ili i blogove? Samo domaće ili i strane izvore? Samo aktivne ili i ugašene portale?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boundary-effects" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boundary-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-boundary-effects-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boundary-effects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;37: Efekt različitih odluka o granicama na izračunate mjere centralnosti. Ista jezgra mreže analizirana s različitim granicama producira različite vrijednosti centralnosti za iste čvorove. Čvor A ima najvišu centralnost u uskoj granici, ali gubi tu poziciju kada se granica proširi.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Posljedice pogrešno postavljenih granica mogu biti ozbiljne. Preuzak obuhvat može isključiti važne aktere i veze, dajući nepotpunu sliku strukture. Preširok obuhvat može uključiti irelevantne aktere koji zamagljuju ključne obrasce. Posebno je problematično kada granice sijeku važne strukturne elemente poput mostova između zajednica jer tada možemo pogrešno zaključiti da su zajednice izolirane kada zapravo postoje veze koje smo isključili.</p>
+<div class="cell">
+<div id="tbl-boundary-strategies" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-boundary-strategies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;20: Strategije za definiranje granica mreže s primjerima iz istraživanja masovne komunikacije.
+</figcaption>
+<div aria-describedby="tbl-boundary-strategies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Strategija</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Opis</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Primjer</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Rizici</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Atributivna</td>
+<td style="text-align: left;">Čvorovi koji dijele određeni atribut</td>
+<td style="text-align: left;">Svi novinari s akreditacijom</td>
+<td style="text-align: left;">Propušta neformalne aktere</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Relaciona</td>
+<td style="text-align: left;">Čvorovi povezani s početnim skupom</td>
+<td style="text-align: left;">Svi koji su retweetali određenu objavu</td>
+<td style="text-align: left;">Ovisi o odabiru početnog skupa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Događajna</td>
+<td style="text-align: left;">Čvorovi uključeni u specifični događaj</td>
+<td style="text-align: left;">Svi koji su komentirali određenu vijest</td>
+<td style="text-align: left;">Ograničena generalizabilnost</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Geografska</td>
+<td style="text-align: left;">Čvorovi unutar geografskog područja</td>
+<td style="text-align: left;">Svi hrvatski portali</td>
+<td style="text-align: left;">Propušta globalne veze</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Platformska</td>
+<td style="text-align: left;">Čvorovi na određenoj platformi</td>
+<td style="text-align: left;">Svi korisnici Twittera (ne Facebooka)</td>
+<td style="text-align: left;">Ignorira međuplatformske veze</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Snježna gruda</td>
+<td style="text-align: left;">Iterativno proširivanje od početnog skupa</td>
+<td style="text-align: left;">Pratitelji pratitelja početnog korisnika</td>
+<td style="text-align: left;">Eksponencijalni rast, arbitrarno zaustavljanje</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Preporuke za suočavanje s problemom granica uključuju transparentno dokumentiranje svih odluka o granicama, provođenje analiza osjetljivosti s različitim definicijama granica, teorijsko opravdanje odabranih kriterija i oprez pri generalizaciji nalaza izvan definirane populacije. Idealno, istraživač bi trebao ispitati kako se ključni nalazi mijenjaju pod različitim razumnim definicijama granica. Ako su nalazi robusni, možemo imati više povjerenja u zaključke. Ako značajno variraju, to sugerira da su nalazi osjetljivi na arbitrarne odluke i zahtijevaju oprezniju interpretaciju.</p>
+</section>
+<section id="nedostajući-podaci" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="nedostajući-podaci"><span class="header-section-number">7.2</span> Nedostajući podaci</h2>
+<p>Čak i kada su granice mreže jasno definirane, rijetko imamo potpune podatke o svim čvorovima i vezama unutar tih granica. <strong>Nedostajući podaci</strong> (engl. <em>missing data</em>) predstavljaju sveprisutan problem u mrežnoj analizi koji može značajno iskriviti izračunate mjere i dovesti do pogrešnih zaključaka. Za razliku od tradicionalne statistike gdje nedostajući podaci utječu na pojedinačne opservacije, u mrežnoj analizi nedostajuća veza utječe na strukturu cijele mreže i mjere svih povezanih čvorova.</p>
+<p>Nedostajući podaci mogu nastati iz više razloga. <strong>Neodaziv</strong> (engl. <em>non-response</em>) javlja se kada akteri odbiju sudjelovati u istraživanju ili ne odgovore na pitanja o svojim vezama. <strong>Granice sjećanja</strong> ograničavaju sposobnost ispitanika da se prisjete svih svojih kontakata, posebno slabih veza. <strong>Tehnička ograničenja</strong> platformi mogu ograničiti pristup podacima, primjerice API ograničenja koja vraćaju samo uzorak veza. <strong>Privatne postavke</strong> korisnika mogu sakriti određene veze ili profile. <strong>Dinamika mreže</strong> znači da čvorovi i veze nastaju i nestaju, pa snimka u jednom trenutku propušta neke elemente.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-missing-data-types" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-missing-data-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-missing-data-types-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-missing-data-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;38: Tri tipa nedostajućih podataka u mrežama. Lijevo: nedostajući čvor (Actor F potpuno uklonjen). Sredina: nedostajuća veza (veza B-D postoji ali nije zabilježena). Desno: kombinacija (nedostaje čvor i neke veze). Svaki tip drugačije utječe na mrežne mjere.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Istraživanja pokazuju da različite mrežne mjere pokazuju različitu osjetljivost na nedostajuće podatke. <strong>Gustoća</strong> je relativno robusna jer je prosjek preko svih mogućih veza. <strong>Stupanj centralnosti</strong> umjereno je osjetljiv jer nedostajući podaci izravno utječu na broj veza svakog čvora. <strong>Međuposredovanje</strong> izrazito je osjetljivo jer ovisi o globalnoj strukturi putanja koja se dramatično mijenja s nedostajućim vezama. <strong>Koeficijent klasteriranja</strong> također je visoko osjetljiv jer nedostatak jedne veze u trokutu eliminira cijeli trokut.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-missing-data-effect" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-missing-data-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-missing-data-effect-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-missing-data-effect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;39: Efekt nasumično nedostajućih podataka na mrežne mjere. Simulacija pokazuje kako se četiri mjere mijenjaju s porastom udjela nedostajućih veza. Međuposredovanje i klasteriranje najosjetljiviji su na nedostajuće podatke.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Problem je dodatno kompliciran činjenicom da nedostajući podaci rijetko nedostaju potpuno nasumično. Akteri s određenim karakteristikama mogu biti skloniji neodazivu, čvorovi na periferiji mogu biti teže dostupni, a slabe veze lakše se zaboravljaju od jakih. Ovaj <strong>selektivni nedostatak</strong> može sustavno iskriviti sliku mrežne strukture na načine koje je teško detektirati i korigirati.</p>
+<div class="cell">
+<div id="tbl-missing-data-sources" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-missing-data-sources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;21: Izvori nedostajućih podataka u istraživanjima komunikacijskih mreža s implikacijama i mogućim rješenjima.
+</figcaption>
+<div aria-describedby="tbl-missing-data-sources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Izvor</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Opis</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Tipični učinak</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Moguće rješenje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Neodaziv ispitanika</td>
+<td style="text-align: left;">Akteri odbijaju sudjelovanje</td>
+<td style="text-align: left;">Nedostaju cijeli čvorovi</td>
+<td style="text-align: left;">Poticaji, više kontakata, procjena iz drugih izvora</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ograničenja sjećanja</td>
+<td style="text-align: left;">Ispitanici zaboravljaju veze</td>
+<td style="text-align: left;">Nedostaju slabe veze</td>
+<td style="text-align: left;">Podsjetnički popisi, ograničenje na nedavne kontakte</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">API ograničenja</td>
+<td style="text-align: left;">Platforme ograničavaju pristup</td>
+<td style="text-align: left;">Nasumični uzorak veza</td>
+<td style="text-align: left;">Više API poziva, kombiniranje izvora</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Privatne postavke</td>
+<td style="text-align: left;">Korisnici skrivaju profile ili veze</td>
+<td style="text-align: left;">Sustavno nedostaju određeni profili</td>
+<td style="text-align: left;">Transparentno dokumentiranje ograničenja</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Obrisani računi</td>
+<td style="text-align: left;">Računi uklonjeni prije prikupljanja</td>
+<td style="text-align: left;">Nedostaju povijesni čvorovi</td>
+<td style="text-align: left;">Arhivski podaci, web arhive</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dinamika mreže</td>
+<td style="text-align: left;">Veze nastaju/nestaju između mjerenja</td>
+<td style="text-align: left;">Snimka ne odražava stabilnu strukturu</td>
+<td style="text-align: left;">Longitudinalno prikupljanje, vremenske prozore</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Strategije za suočavanje s nedostajućim podacima uključuju prevenciju kroz pažljiv dizajn prikupljanja, detekciju kroz usporedbu s očekivanim distribucijama, korekciju kroz statističke tehnike imputacije i transparentnost kroz dokumentiranje opsega i mogućih učinaka nedostajućih podataka. Posebno je važno provesti analize osjetljivosti koje ispituju kako bi se nalazi promijenili pod različitim scenarijima nedostajućih podataka. Ako su nalazi robusni čak i uz pesimistične pretpostavke o nedostajućim podacima, možemo im više vjerovati.</p>
+</section>
+<section id="etički-izazovi" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="etički-izazovi"><span class="header-section-number">7.3</span> Etički izazovi</h2>
+<p>Mrežni podaci nose posebne etičke izazove koji nadilaze standardne etičke protokole društvenih istraživanja. Fundamentalna tenzija proizlazi iz činjenice da mrežna analiza inherentno uključuje podatke o odnosima između ljudi, što znači da pristanak jedne osobe na sudjelovanje nužno uključuje podatke o drugima koji možda nisu pristali. Dodatno, strukturna priroda mrežnih podataka čini tradicionalne tehnike anonimizacije neučinkovitima jer se identitet čvorova često može rekonstruirati iz samih strukturnih obrazaca.</p>
+<p><strong>Problem relacijskog pristanka</strong> manifestira se kada ispitanik izvijesti o svojim vezama s drugima. Ako osoba A navede da komunicira s osobom B, uključili smo osobu B u istraživanje bez njezina izričitog pristanka. U malim mrežama poput organizacija, ovo je osobito problematično jer struktura odnosa može otkriti osjetljive informacije o položaju, utjecaju ili izolaciji pojedinaca.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-anonymization-problem" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-anonymization-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-anonymization-problem-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anonymization-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;40: Problem anonimizacije u mrežnim podacima. Čak i kada su imena uklonjena, strukturna pozicija može otkriti identitet. U organizacijskoj mreži, čvor sa stupnjem 8 koji je jedini most između dva odjela vjerojatno je prepoznatljiv kolegama unatoč uklanjanju imena.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Reidentifikacija iz strukture</strong> predstavlja možda najozbiljniji etički izazov. Istraživanja su pokazala da se pojedinci mogu identificirati samo na temelju strukturnih karakteristika njihovih veza, čak i bez ikakvih atributa. Ako napadač poznaje približnu strukturu veza neke osobe (primjerice iz druge javno dostupne mreže), može tu osobu locirati u anonimiziranom grafu. Ovo čini standardnu praksu uklanjanja imena potpuno neadekvatnom za zaštitu privatnosti.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-reidentification-risk" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reidentification-risk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-reidentification-risk-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reidentification-risk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;41: Ilustracija rizika reidentifikacije. Ako napadač zna da ciljna osoba ima točno 4 kontakta specifičnog obrasca (trokut + izolirana veza), može je locirati u većoj mreži unatoč anonimizaciji. Crveni čvor jedini odgovara poznatom obrascu.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Etički okvir za mrežna istraživanja mora balansirati između znanstvene vrijednosti istraživanja, zaštite privatnosti sudionika i transparentnosti prema javnosti. <strong>Informirani pristanak</strong> trebao bi jasno komunicirati da sudjelovanje uključuje podatke o odnosima s drugima. <strong>Minimizacija podataka</strong> nalaže prikupljanje samo nužnih informacija za istraživačka pitanja. <strong>Ograničenje pristupa</strong> znači da sirovi podaci ne bi smjeli biti javno dostupni bez rigoroznih protokola zaštite. <strong>Agregirana prezentacija</strong> preporučuje izvještavanje na razini mreže ili zajednice umjesto pojedinačnih čvorova kada je to moguće.</p>
+<div class="cell">
+<div id="tbl-privacy-techniques" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-privacy-techniques-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;22: Tehnike zaštite privatnosti u mrežnim podacima s procjenom učinkovitosti i utjecaja na korisnost podataka.
+</figcaption>
+<div aria-describedby="tbl-privacy-techniques-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Tehnika</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Opis</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Učinkovitost zaštite</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Utjecaj na korisnost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Uklanjanje identifikatora</td>
+<td style="text-align: left;">Zamjena imena pseudonimima</td>
+<td style="text-align: left;">Niska</td>
+<td style="text-align: left;">Nikakav</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">K-anonimnost</td>
+<td style="text-align: left;">Osiguranje da svaki čvor dijeli karakteristike s k-1 drugih</td>
+<td style="text-align: left;">Srednja</td>
+<td style="text-align: left;">Gubitak strukturnih detalja</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dodavanje šuma</td>
+<td style="text-align: left;">Nasumično dodavanje/uklanjanje veza</td>
+<td style="text-align: left;">Srednja do visoka</td>
+<td style="text-align: left;">Iskrivljenje mjera</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Agregacija čvorova</td>
+<td style="text-align: left;">Grupiranje čvorova u super-čvorove</td>
+<td style="text-align: left;">Visoka</td>
+<td style="text-align: left;">Gubitak individualne razine</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Diferencijalna privatnost</td>
+<td style="text-align: left;">Matematički garantirana zaštita od reidentifikacije</td>
+<td style="text-align: left;">Vrlo visoka</td>
+<td style="text-align: left;">Kontrolirano iskrivljenje</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigurno računanje</td>
+<td style="text-align: left;">Analiza bez pristupa sirovim podacima</td>
+<td style="text-align: left;">Vrlo visoka</td>
+<td style="text-align: left;">Ograničene analize</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>U kontekstu istraživanja masovne komunikacije, etički izazovi poprimaju dodatne dimenzije. Analiza mreža na društvenim platformama često uključuje javno dostupne podatke, što stvara iluziju da pristanak nije potreban. Međutim, činjenica da su podaci tehnički javni ne znači da korisnici očekuju da će biti uključeni u istraživanja ili da će njihovi komunikacijski obrasci biti analizirani. Platforme poput Twittera doživjele su kontroverze kada su istraživači objavili analize koje su omogućile identificiranje korisnika unatoč nominalnoj anonimizaciji.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ethics-framework" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ethics-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Analiza-mreza_files/figure-html/fig-ethics-framework-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ethics-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;42: Konceptualni okvir za etičko odlučivanje u mrežnim istraživanjima. Istraživač mora balansirati četiri dimenzije: znanstvenu vrijednost, privatnost sudionika, transparentnost i društvenu korist. Optimalna pozicija ovisi o specifičnom kontekstu istraživanja.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Preporuke za etičko provođenje mrežnih istraživanja uključuju konzultiranje s etičkim povjerenstvima specijaliziranim za digitalna istraživanja, proaktivno razmatranje rizika reidentifikacije prije objave podataka, ograničavanje javnog dijeljenja sirovih mrežnih podataka, korištenje agregiranih prikaza kada individualna razina nije nužna i kontinuirano praćenje razvoja tehnika zaštite privatnosti i regulatornog okvira. Etička odgovornost ne završava objavom već uključuje i odgovornost za potencijalnu buduću zloupotrebu objavljenih podataka.</p>
+<div class="cell">
+<div id="tbl-methodology-summary" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-methodology-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;23: Sažetak ključnih metodoloških izazova u analizi društvenih mreža s preporukama za istraživače.
+</figcaption>
+<div aria-describedby="tbl-methodology-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Izazov</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Ključno pitanje</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Potencijalne posljedice</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Ključne preporuke</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Problem granica</td>
+<td style="text-align: left;">Koje aktere i veze uključiti u mrežu?</td>
+<td style="text-align: left;">Različite granice daju različite nalaze</td>
+<td style="text-align: left;">Transparentnost, teorijsko opravdanje, analize osjetljivosti</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nedostajući podaci</td>
+<td style="text-align: left;">Kako postupati s nepotpunim podacima?</td>
+<td style="text-align: left;">Iskrivljene mjere, pogrešni zaključci</td>
+<td style="text-align: left;">Procjena opsega, robusnost nalaza, dokumentiranje ograničenja</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Etički izazovi</td>
+<td style="text-align: left;">Kako zaštititi privatnost uz znanstvenu vrijednost?</td>
+<td style="text-align: left;">Šteta za sudionike, gubitak povjerenja</td>
+<td style="text-align: left;">Minimizacija podataka, agregacija, napredne tehnike zaštite</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Metodološka rigoroznost u mrežnoj analizi zahtijeva kontinuiranu refleksiju o odlukama koje oblikuju istraživanje. Problem granica podsjeća nas da svaka mreža koju analiziramo jest konstrukcija nastala iz naših odluka o tome što uključiti. Nedostajući podaci upozoravaju nas da naši podaci nikada nisu potpuni i da moramo razumjeti kako ta nepotpunost utječe na zaključke. Etički izazovi podsjećaju nas da iza svakog čvora i svake veze stoje stvarni ljudi čiju privatnost moramo poštivati. Svjesnost o ovim izazovima i aktivno suočavanje s njima razlikuje rigorozno istraživanje od naivne primjene tehnika bez razumijevanja njihovih ograničenja.</p>
 </section>
 </section>
 
