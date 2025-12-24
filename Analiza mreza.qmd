@@ -1,0 +1,144 @@
+---
+title: "Analiza društvenih mreža u istraživanju masovne komunikacije"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    theme: cosmo
+    fig-width: 8
+    fig-height: 5
+    format-links:
+      - pdf
+      - docx
+  pdf:
+    documentclass: article
+    geometry: margin=2.5cm
+    fontsize: 11pt
+    fig-width: 6
+    fig-height: 4
+    keep-tex: false
+    babel-lang: croatian
+  docx:
+    toc: true
+    toc-depth: 2
+    fig-width: 6
+    fig-height: 4
+lang: hr
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Uvod: Relacijska perspektiva
+
+Zamislimo da želimo razumjeti tko je najutjecajnija osoba na hrvatskom Twitteru. Je li to korisnik s najviše pratitelja ili možda osoba čije objave redovito dijele novinari vodećih medijskih kuća? Ova naizgled jednostavna pitanja otkrivaju fundamentalnu promjenu u načinu na koji suvremena društvena znanost pristupa istraživanju masovne komunikacije. Umjesto da analiziramo isključivo individualne karakteristike aktera, poput broja objava ili demografskih obilježja, fokus se premješta na proučavanje odnosa i veza među njima. Upravo taj pomak perspektive čini temelj analize društvenih mreža kao metodološkog pristupa.
+
+Ovaj pristup proizlazi iz spoznaje da društveni fenomeni nisu puki agregat individualnih atributa, već emergentna svojstva koja nastaju kroz interakciju. U kontekstu masovne komunikacije, to znači da razumijevanje širenja informacija, formiranja javnog mnijenja ili dinamike medijskog utjecaja zahtijeva mapiranje obrazaca povezanosti među akterima. Analiza društvenih mreža pruža teorijski okvir i metodološke alate za takvo istraživanje, omogućujući nam da vizualiziramo, kvantificiramo i interpretiramo strukturu komunikacijskih tokova.
+
+
+## Promjena paradigme: od atributa prema relacijama
+
+Tradicionalni pristupi u društvenim znanostima počivali su na pretpostavci da se ponašanje pojedinaca može objasniti proučavanjem njihovih atributa. U istraživanjima masovne komunikacije to se očitovalo kroz ankete koje su mjerile demografske varijable, stavove ili navike konzumacije medija. Takav pristup tretira pojedince kao izolirane jedinice čije karakteristike određuju njihovo ponašanje neovisno o društvenom kontekstu. Međutim, ova perspektiva zanemaruje činjenicu da su ljudi ukorijenjeni u mrežama odnosa koje oblikuju njihove stavove, ponašanja i mogućnosti djelovanja.
+
+**Relacijska perspektiva** predstavlja fundamentalni zaokret u znanstvenom mišljenju. Umjesto pitanja tko je netko, postavlja se pitanje s kim je povezan i na koji način. U kontekstu istraživanja medija, novinara ne definiraju samo njegove profesionalne kvalifikacije, već i mreža izvora, kolega i publike s kojima je povezan. Slično tome, viralnost sadržaja na društvenim mrežama ne ovisi isključivo o kvaliteti sadržaja, već o strukturnim pozicijama korisnika koji ga dijele. Upravo ta strukturna ukorijenjenost aktera čini središnji predmet analize društvenih mreža.
+
+Razliku između atributnog i relacijskog pristupa možemo ilustrirati jednostavnim primjerom iz prakse. Pretpostavimo da želimo identificirati ključne aktere u širenju dezinformacija na određenoj platformi. Atributni pristup fokusirao bi se na karakteristike pojedinih korisnika, poput učestalosti objavljivanja ili duljine članstva na platformi. S druge strane, relacijski pristup mapirao bi obrasce dijeljenja sadržaja među korisnicima, identificirajući čvorišta kroz koja informacije protječu i mostove koji povezuju različite zajednice. Ovaj drugi pristup omogućuje razumijevanje sistemske dinamike širenja informacija, otkrivajući strukturne ranjivosti informacijskog ekosustava.
+
+
+## Temeljni koncepti: čvorovi i veze
+
+Svaka mreža sastoji se od dva temeljna elementa. Prvi element jesu **čvorovi** koji predstavljaju entitete od interesa u istraživanju. U teoriji grafova koristi se i termin vrhovi, dok u sociološkoj tradiciji govorimo o akterima. U kontekstu istraživanja masovne komunikacije, čvorovi mogu predstavljati novinare, medijske kuće, političare, influencere ili obične korisnike društvenih mreža. Izbor entiteta koje ćemo modelirati kao čvorove ovisi o istraživačkom pitanju i teorijskom okviru studije.
+
+Drugi temeljni element mreže jesu **veze** koje povezuju čvorove. U literaturi se koriste i termini bridovi ili relacije. Veze predstavljaju odnose među akterima i mogu poprimiti različite oblike ovisno o fenomenu koji proučavamo. Primjerice, veza može predstavljati dijeljenje objave na društvenoj mreži, citiranje izvora u novinarskom članku, hiperlinkove između web stranica ili vlasničke strukture među medijskim kućama. Priroda veze određuje interpretaciju mrežne strukture, stoga je precizna definicija relacije od presudne važnosti za valjanost istraživanja.
+
+[Slika: Dijagram jednostavne mreže s označenim čvorovima i vezama, prikazujući osnovne elemente mrežne strukture]
+
+Formalno, mrežu možemo definirati kao uređeni par G = (V, E), gdje V predstavlja skup čvorova, a E skup veza među njima. Svaka veza e iz skupa E definirana je kao par čvorova (v₁, v₂) koje povezuje. Ova matematička formalizacija omogućuje precizno opisivanje strukture mreže i primjenu algoritama za njezinu analizu. Nadalje, čvorovi i veze mogu imati pridružene atribute koji obogaćuju analizu. Primjerice, čvorovima mogu biti pridruženi podaci o geografskoj lokaciji ili broju pratitelja, dok veze mogu nositi informaciju o vremenu nastanka ili učestalosti interakcije.
+
+U istraživanjima masovne komunikacije, akter može biti bilo koji entitet koji sudjeluje u komunikacijskom procesu. Medijska kuća poput HRT-a, portal Index.hr, novinar s imenom i prezimenom, ali i anonimni korisnik Twittera koji dijeli vijesti, svi oni mogu biti modelirani kao čvorovi u komunikacijskoj mreži. Ključno je razumjeti da mreža nije objektivna stvarnost, već analitička konstrukcija koju istraživač gradi prema svojim teorijskim pretpostavkama i istraživačkim ciljevima.
+
+
+## Povijesni razvoj: od sociometrije do mrežne znanosti
+
+Korijeni analize društvenih mreža sežu u tridesete godine dvadesetog stoljeća i rad rumunjsko-američkog psihijatra **Jacoba Levy Morena**. Moreno je razvio **sociometriju** kao metodu za proučavanje interpersonalnih odnosa unutar grupa. Njegova ključna inovacija bila je **sociogram**, grafički prikaz društvenih odnosa u kojem su pojedinci predstavljeni točkama, a njihovi odnosi linijama koje ih povezuju. U svojoj knjizi objavljenoj 1934. godine, Moreno je primijenio sociometrijske metode za analizu društvene strukture u institucijama poput škola i zatvora. Time je postavio temelje za sustavno empirijsko proučavanje mrežnih obrazaca.
+
+Morenov pristup donio je revolucionarnu spoznaju da prije bilo kakvog društvenog programa istraživač mora uzeti u obzir stvarnu konstituciju grupe. Sociometrija je omogućila otkrivanje skrivenih struktura koje oblikuju grupu, uključujući saveze, podgrupe, neizrečena uvjerenja i zabranjene agende. Moreno je identificirao konfiguraciju koju je nazvao sociometrijskom zvijezdom, odnosno pojedinca kojeg mnogi drugi biraju kao prijatelja. Ti rani uvidi anticipirali su suvremene koncepte poput čvorišta i utjecajnih korisnika u digitalnim mrežama.
+
+Sljedeći prijelomni trenutak u razvoju mrežnog pristupa predstavlja eksperiment **Stanleyja Milgrama** iz 1967. godine, poznat kao eksperiment malog svijeta. Milgram je postavio jednostavno pitanje koje je intrigiralo matematičare desetljećima: koliko posrednika treba da poveže dva nasumično odabrana čovjeka u Sjedinjenim Američkim Državama? Koristeći metodu lančanih pisama, Milgram je otkrio da je prosječna udaljenost između ispitanika iz Nebraske i ciljne osobe u Bostonu iznosila samo pet do šest koraka. Ovaj nalaz populariziran je pod nazivom **šest stupnjeva odvojenosti**, iako sam Milgram taj termin nikada nije upotrijebio.
+
+Milgramov eksperiment imao je duboke implikacije za razumijevanje društvene strukture. Otkrio je da bez obzira na ogromnu veličinu populacije, ljudsko društvo karakteriziraju iznenađujuće kratki lanci poznanstava. Nadalje, eksperiment je pokazao da se polovica svih pisama koja su stigla do cilja prošla kroz samo tri osobe, sugerirajući postojanje ključnih posrednika u društvenoj mreži. Ovi posrednici, koje suvremena mrežna znanost naziva mostovima ili povezivačima, igraju neproporcionalnu ulogu u širenju informacija kroz društvo.
+
+Suvremena era mrežne znanosti započinje krajem devedesetih godina dvadesetog stoljeća radom **Alberta-Lászla Barabásija** i njegove suradnice Réke Albert. Analizirajući topologiju dijela World Wide Weba, Barabási je otkrio da distribucija povezanosti stranica ne slijedi normalnu raspodjelu koja bi se očekivala u nasumičnim mrežama. Umjesto toga, distribucija je slijedila zakon potencije, što znači da mali broj stranica ima ogroman broj dolaznih veza dok velika većina stranica ima vrlo malo veza.
+
+Ovu strukturu Barabási je nazvao **mrežom bez skale**, a objasnio ju je mehanizmom **preferencijskog prikapčanja**. Prema ovom mehanizmu, novi čvorovi koji ulaze u mrežu imaju veću vjerojatnost povezivanja s već dobro povezanim čvorovima. Intuitivno, ovo možemo razumjeti kao fenomen bogatiji postaju bogatiji. Nova web stranica vjerojatnije će postaviti hiperveze prema Googleu nego prema nepoznatom blogu, baš kao što novi korisnik Twittera vjerojatnije slijedi poznatu javnu osobu nego anonimnog korisnika.
+
+Barabásijevo otkriće imalo je dalekosežne implikacije za razumijevanje komunikacijskih sustava. Mreže bez skale karakterizira postojanje **čvorišta** ili hubova, odnosno čvorova s disproporcionalno velikim brojem veza. U kontekstu masovne komunikacije, čvorišta mogu biti mainstream mediji čije sadržaje preuzimaju deseci manjih portala, ili influenceri čije objave dijele tisuće pratitelja. Razumijevanje uloge čvorišta ključno je za analizu procesa poput širenja vijesti, formiranja javnog mnijenja ili dinamike dezinformacijskih kampanja.
+
+[Slika: Usporedba nasumične mreže i mreže bez skale, ilustrirajući razliku u distribuciji povezanosti i postojanje čvorišta]
+
+
+# Osnovni elementi i vrste mreža
+
+Razumijevanje različitih tipova mrežnih struktura preduvjet je za odabir odgovarajućih analitičkih metoda i ispravnu interpretaciju rezultata. Mreže se mogu klasificirati prema nekoliko ključnih dimenzija koje odražavaju prirodu odnosa koji se proučavaju. U ovom poglavlju razmatramo tri temeljne karakteristike mrežnih podataka: usmjerenost veza, njihovu težinu te načine formalnog prikaza mrežne strukture.
+
+
+## Usmjerenost veza
+
+Jedna od temeljnih distinkcija u mrežnoj analizi jest razlika između **usmjerenih** i **neusmjerenih mreža**. U neusmjerenoj mreži veze nemaju smjer, što znači da ako postoji veza između čvora A i čvora B, ona je simetrična. Primjer neusmjerene mreže bio bi sustav komunikacije u kojem mjerimo jesu li dvije osobe međusobni prijatelji na Facebooku. U tom slučaju, prijateljstvo je po definiciji obostrano jer obje strane moraju prihvatiti zahtjev za prijateljstvom.
+
+S druge strane, **usmjerene mreže** karakterizira asimetričnost odnosa. Veza ima definiran smjer koji ide od izvornog čvora prema ciljnom čvoru. Klasičan primjer usmjerene mreže jest praćenje na Twitteru ili Instagramu, gdje korisnik A može pratiti korisnika B bez da korisnik B uzvraća praćenje. U kontekstu istraživanja medija, usmjerene mreže često modeliraju tokove informacija. Primjerice, mreža citiranja članaka usmjerena je jer članak A može citirati članak B, a da pritom članak B ne citira članak A.
+
+[Slika: Usporedni prikaz neusmjerene mreže bez strelica i usmjerene mreže sa strelicama koje pokazuju smjer veza]
+
+Razlikovanje usmjerenih i neusmjerenih mreža ima značajne analitičke implikacije. U usmjerenim mrežama razlikujemo **ulazni stupanj** koji mjeri broj veza koje dolaze u čvor, te **izlazni stupanj** koji mjeri broj veza koje izlaze iz čvora. U kontekstu Twittera, ulazni stupanj odgovara broju pratitelja, dok izlazni stupanj odgovara broju računa koje korisnik prati. Ova distinkcija omogućuje identificiranje različitih tipova aktera. Korisnik s visokim ulaznim stupnjem i niskim izlaznim stupnjem mogao bi biti influencer kojeg mnogi prate, ali on prati malo drugih. Obratno, korisnik s visokim izlaznim stupnjem i niskim ulaznim stupnjem mogao bi biti netko tko aktivno prati novosti, ali sam nije popularan.
+
+U istraživanjima masovne komunikacije, izbor između usmjerene i neusmjerene mreže ovisi o prirodi fenomena koji se proučava. Ako nas zanima tko utječe na koga, usmjerena mreža će pružiti bogatije informacije. Međutim, ako proučavamo suradnju ili zajedničku pripadnost grupama, neusmjerena mreža može biti primjereniji izbor. Primjerice, mreža koautorstva znanstvenih radova tipično se modelira kao neusmjerena jer koautorstvo podrazumijeva obostrani odnos.
+
+
+## Težina veze
+
+Druga važna dimenzija mrežne strukture jest razlika između **binarnih** i **ponderiranih mreža**. U binarnoj mreži veza između dva čvora može samo postojati ili ne postojati. Formalno, težina svake veze iznosi ili jedan ili nula. Ovakav prikaz pojednostavljuje strukturu mreže, ali gubi informaciju o intenzitetu odnosa. Primjerice, binarna mreža dijeljenja sadržaja bilježi samo činjenicu da je korisnik A podijelio objavu korisnika B, ne uzimajući u obzir koliko je puta to učinio.
+
+Nasuprot tome, **ponderirane mreže** svakoj vezi pridružuju numeričku vrijednost koja odražava snagu ili intenzitet odnosa. Ova težina može predstavljati učestalost interakcije, trajanje veze, količinu razmijenjenih resursa ili neku drugu mjeru jačine odnosa. U istraživanjima komunikacije, težina veze mogla bi predstavljati broj zajedničkih članaka koje su dva novinara napisala, učestalost međusobnih retvitova ili količinu prometa između dvije web stranice.
+
+Prednost ponderiranih mreža leži u njihovoj informativnosti. Veza između dva čvora koja se ostvaruje jednom tjedno kvalitativno je različita od veze koja se ostvaruje svakodnevno, premda obje postoje u binarnom smislu. Ponderirana mreža hvata tu razliku i omogućuje sofisticiranije analize. S druge strane, prikupljanje podataka o težini veza može biti zahtjevnije, a određene analitičke metode razvijene su primarno za binarne mreže. Istraživač mora pažljivo odvagnuti prednosti i nedostatke svakog pristupa s obzirom na istraživačka pitanja i dostupne podatke.
+
+U praksi se ponekad ponderirane mreže pretvaraju u binarne primjenom praga. Definiramo vrijednost ispod koje smatramo da veza ne postoji. Primjerice, možemo odlučiti da veza među korisnicima postoji samo ako su razmijenili najmanje pet poruka. Ovaj postupak **binarizacije** pojednostavljuje analizu, ali izbor praga utječe na rezultate i mora biti teorijski opravdan.
+
+
+## Matrični prikaz mreže
+
+Za analitičke svrhe, mrežne strukture mogu se prikazati u različitim formatima podataka. Najčešći i najsvestraniji format jest **matrica susjedstva**, poznata i kao adjacencijska matrica. Ova kvadratna matrica dimenzija n × n, gdje n predstavlja broj čvorova u mreži, bilježi postojanje i eventualnu težinu veza među svim parovima čvorova.
+
+U matrici susjedstva retci i stupci označeni su imenima ili identifikatorima čvorova. Vrijednost u ćeliji na presjeku retka i i stupca j označava vezu od čvora i prema čvoru j. U binarnoj mreži, vrijednost jedan označava postojanje veze, dok vrijednost nula označava njezinu odsutnost. U ponderiranoj mreži, vrijednost u ćeliji odgovara težini veze. Dijagonala matrice predstavlja potencijalne samopoveznice, odnosno veze čvora sa samim sobom, koje se u mnogim primjenama postavljaju na nulu.
+
+Tablica 1 prikazuje primjer ponderirane matrice susjedstva za mrežu citiranja među četiri hrvatske medijske kuće. Vrijednost u ćeliji označava broj puta koliko je medij u retku citirao medij u stupcu tijekom određenog razdoblja.
+
+|           | HRT | N1 | Index | Jutarnji |
+|:----------|:---:|:--:|:-----:|:--------:|
+| HRT       | 0   | 3  | 1     | 2        |
+| N1        | 2   | 0  | 4     | 1        |
+| Index     | 0   | 2  | 0     | 5        |
+| Jutarnji  | 1   | 0  | 3     | 0        |
+
+: Primjer matrice susjedstva za hipotetsku mrežu citiranja među četiri medijske kuće
+
+Iz ove matrice možemo iščitati obrasce citiranja među medijima. Primjerice, vrijednost 3 u ćeliji HRT-N1 označava da je HRT citirao N1 tri puta. Uočavamo da matrica nije simetrična jer je riječ o usmjerenoj mreži. Index je citirao Jutarnji pet puta, dok je Jutarnji citirao Index tri puta. Ova asimetrija pruža uvid u tokove informacija i potencijalnu hijerarhiju izvora među medijima.
+
+Za neusmjerene mreže, matrica susjedstva je simetrična, što znači da je vrijednost u ćeliji (i, j) jednaka vrijednosti u ćeliji (j, i). Ova simetrija proizlazi iz činjenice da u neusmjerenoj mreži veza između A i B podrazumijeva i vezu između B i A. Nasuprot tome, u usmjerenim mrežama poput one prikazane u tablici, matrica općenito nije simetrična jer veza od A prema B ne implicira vezu od B prema A.
+
+Osim matrice susjedstva, mrežni podaci mogu se prikazati i u obliku **liste bridova**. Ovaj format jednostavno nabraja sve postojeće veze u mreži, navodeći za svaku vezu izvorni i ciljni čvor te eventualnu težinu. Lista bridova prostorno je učinkovitija od matrice susjedstva za rijetke mreže u kojima većina potencijalnih veza ne postoji. Primjerice, u velikoj mreži s milijun čvorova, matrica susjedstva imala bi bilijun ćelija od kojih bi većina sadržavala nule. Lista bridova bilježila bi samo postojeće veze, značajno smanjujući memorijske zahtjeve.
+
+Tablica 2 prikazuje usporedbu različitih formata mrežnih podataka i njihovih karakteristika.
+
+| Format podataka | Struktura | Prednosti | Nedostaci |
+|:----------------|:----------|:----------|:----------|
+| Matrica susjedstva | Kvadratna matrica n × n | Omogućuje matrične operacije, intuitivna | Neučinkovita za rijetke mreže |
+| Lista bridova | Parovi čvorova s težinama | Memorijski učinkovita, jednostavna | Manje pogodna za neke algoritme |
+| Lista susjedstva | Za svaki čvor popis susjeda | Brz pristup susjedima | Složenija struktura podataka |
+
+: Usporedba formata mrežnih podataka
+
+Razumijevanje ovih temeljnih koncepata i formata podataka preduvjet je za daljnje proučavanje mrežnih metrika i analitičkih postupaka. U sljedećim poglavljima razmatramo mjere centralnosti koje omogućuju identificiranje ključnih aktera u mreži, strukturne karakteristike poput gustoće i klasteriranja koje opisuju mrežu na agregatnoj razini, te metode za detekciju zajednica i analizu difuzijskih procesa.

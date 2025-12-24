@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analiza društvenih mreža u istraživanju masovne komunikacije</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Analiza mreza_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Analiza mreza_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Analiza mreza_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Analiza mreza_files/libs/quarto-html/popper.min.js"></script>
+<script src="Analiza mreza_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Analiza mreza_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Analiza mreza_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Analiza mreza_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Analiza mreza_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Analiza mreza_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Analiza mreza_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#uvod-relacijska-perspektiva" id="toc-uvod-relacijska-perspektiva" class="nav-link active" data-scroll-target="#uvod-relacijska-perspektiva"><span class="header-section-number">1</span> Uvod: Relacijska perspektiva</a>
+  <ul class="collapse">
+  <li><a href="#promjena-paradigme-od-atributa-prema-relacijama" id="toc-promjena-paradigme-od-atributa-prema-relacijama" class="nav-link" data-scroll-target="#promjena-paradigme-od-atributa-prema-relacijama"><span class="header-section-number">1.1</span> Promjena paradigme: od atributa prema relacijama</a></li>
+  <li><a href="#temeljni-koncepti-čvorovi-i-veze" id="toc-temeljni-koncepti-čvorovi-i-veze" class="nav-link" data-scroll-target="#temeljni-koncepti-čvorovi-i-veze"><span class="header-section-number">1.2</span> Temeljni koncepti: čvorovi i veze</a></li>
+  <li><a href="#povijesni-razvoj-od-sociometrije-do-mrežne-znanosti" id="toc-povijesni-razvoj-od-sociometrije-do-mrežne-znanosti" class="nav-link" data-scroll-target="#povijesni-razvoj-od-sociometrije-do-mrežne-znanosti"><span class="header-section-number">1.3</span> Povijesni razvoj: od sociometrije do mrežne znanosti</a></li>
+  </ul></li>
+  <li><a href="#osnovni-elementi-i-vrste-mreža" id="toc-osnovni-elementi-i-vrste-mreža" class="nav-link" data-scroll-target="#osnovni-elementi-i-vrste-mreža"><span class="header-section-number">2</span> Osnovni elementi i vrste mreža</a>
+  <ul class="collapse">
+  <li><a href="#usmjerenost-veza" id="toc-usmjerenost-veza" class="nav-link" data-scroll-target="#usmjerenost-veza"><span class="header-section-number">2.1</span> Usmjerenost veza</a></li>
+  <li><a href="#težina-veze" id="toc-težina-veze" class="nav-link" data-scroll-target="#težina-veze"><span class="header-section-number">2.2</span> Težina veze</a></li>
+  <li><a href="#matrični-prikaz-mreže" id="toc-matrični-prikaz-mreže" class="nav-link" data-scroll-target="#matrični-prikaz-mreže"><span class="header-section-number">2.3</span> Matrični prikaz mreže</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Analiza-mreza.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="Analiza mreza.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analiza društvenih mreža u istraživanju masovne komunikacije</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="uvod-relacijska-perspektiva" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Uvod: Relacijska perspektiva</h1>
+<p>Zamislimo da želimo razumjeti tko je najutjecajnija osoba na hrvatskom Twitteru. Je li to korisnik s najviše pratitelja ili možda osoba čije objave redovito dijele novinari vodećih medijskih kuća? Ova naizgled jednostavna pitanja otkrivaju fundamentalnu promjenu u načinu na koji suvremena društvena znanost pristupa istraživanju masovne komunikacije. Umjesto da analiziramo isključivo individualne karakteristike aktera, poput broja objava ili demografskih obilježja, fokus se premješta na proučavanje odnosa i veza među njima. Upravo taj pomak perspektive čini temelj analize društvenih mreža kao metodološkog pristupa.</p>
+<p>Ovaj pristup proizlazi iz spoznaje da društveni fenomeni nisu puki agregat individualnih atributa, već emergentna svojstva koja nastaju kroz interakciju. U kontekstu masovne komunikacije, to znači da razumijevanje širenja informacija, formiranja javnog mnijenja ili dinamike medijskog utjecaja zahtijeva mapiranje obrazaca povezanosti među akterima. Analiza društvenih mreža pruža teorijski okvir i metodološke alate za takvo istraživanje, omogućujući nam da vizualiziramo, kvantificiramo i interpretiramo strukturu komunikacijskih tokova.</p>
+<section id="promjena-paradigme-od-atributa-prema-relacijama" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="promjena-paradigme-od-atributa-prema-relacijama"><span class="header-section-number">1.1</span> Promjena paradigme: od atributa prema relacijama</h2>
+<p>Tradicionalni pristupi u društvenim znanostima počivali su na pretpostavci da se ponašanje pojedinaca može objasniti proučavanjem njihovih atributa. U istraživanjima masovne komunikacije to se očitovalo kroz ankete koje su mjerile demografske varijable, stavove ili navike konzumacije medija. Takav pristup tretira pojedince kao izolirane jedinice čije karakteristike određuju njihovo ponašanje neovisno o društvenom kontekstu. Međutim, ova perspektiva zanemaruje činjenicu da su ljudi ukorijenjeni u mrežama odnosa koje oblikuju njihove stavove, ponašanja i mogućnosti djelovanja.</p>
+<p><strong>Relacijska perspektiva</strong> predstavlja fundamentalni zaokret u znanstvenom mišljenju. Umjesto pitanja tko je netko, postavlja se pitanje s kim je povezan i na koji način. U kontekstu istraživanja medija, novinara ne definiraju samo njegove profesionalne kvalifikacije, već i mreža izvora, kolega i publike s kojima je povezan. Slično tome, viralnost sadržaja na društvenim mrežama ne ovisi isključivo o kvaliteti sadržaja, već o strukturnim pozicijama korisnika koji ga dijele. Upravo ta strukturna ukorijenjenost aktera čini središnji predmet analize društvenih mreža.</p>
+<p>Razliku između atributnog i relacijskog pristupa možemo ilustrirati jednostavnim primjerom iz prakse. Pretpostavimo da želimo identificirati ključne aktere u širenju dezinformacija na određenoj platformi. Atributni pristup fokusirao bi se na karakteristike pojedinih korisnika, poput učestalosti objavljivanja ili duljine članstva na platformi. S druge strane, relacijski pristup mapirao bi obrasce dijeljenja sadržaja među korisnicima, identificirajući čvorišta kroz koja informacije protječu i mostove koji povezuju različite zajednice. Ovaj drugi pristup omogućuje razumijevanje sistemske dinamike širenja informacija, otkrivajući strukturne ranjivosti informacijskog ekosustava.</p>
+</section>
+<section id="temeljni-koncepti-čvorovi-i-veze" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="temeljni-koncepti-čvorovi-i-veze"><span class="header-section-number">1.2</span> Temeljni koncepti: čvorovi i veze</h2>
+<p>Svaka mreža sastoji se od dva temeljna elementa. Prvi element jesu <strong>čvorovi</strong> koji predstavljaju entitete od interesa u istraživanju. U teoriji grafova koristi se i termin vrhovi, dok u sociološkoj tradiciji govorimo o akterima. U kontekstu istraživanja masovne komunikacije, čvorovi mogu predstavljati novinare, medijske kuće, političare, influencere ili obične korisnike društvenih mreža. Izbor entiteta koje ćemo modelirati kao čvorove ovisi o istraživačkom pitanju i teorijskom okviru studije.</p>
+<p>Drugi temeljni element mreže jesu <strong>veze</strong> koje povezuju čvorove. U literaturi se koriste i termini bridovi ili relacije. Veze predstavljaju odnose među akterima i mogu poprimiti različite oblike ovisno o fenomenu koji proučavamo. Primjerice, veza može predstavljati dijeljenje objave na društvenoj mreži, citiranje izvora u novinarskom članku, hiperlinkove između web stranica ili vlasničke strukture među medijskim kućama. Priroda veze određuje interpretaciju mrežne strukture, stoga je precizna definicija relacije od presudne važnosti za valjanost istraživanja.</p>
+<p>[Slika: Dijagram jednostavne mreže s označenim čvorovima i vezama, prikazujući osnovne elemente mrežne strukture]</p>
+<p>Formalno, mrežu možemo definirati kao uređeni par G = (V, E), gdje V predstavlja skup čvorova, a E skup veza među njima. Svaka veza e iz skupa E definirana je kao par čvorova (v₁, v₂) koje povezuje. Ova matematička formalizacija omogućuje precizno opisivanje strukture mreže i primjenu algoritama za njezinu analizu. Nadalje, čvorovi i veze mogu imati pridružene atribute koji obogaćuju analizu. Primjerice, čvorovima mogu biti pridruženi podaci o geografskoj lokaciji ili broju pratitelja, dok veze mogu nositi informaciju o vremenu nastanka ili učestalosti interakcije.</p>
+<p>U istraživanjima masovne komunikacije, akter može biti bilo koji entitet koji sudjeluje u komunikacijskom procesu. Medijska kuća poput HRT-a, portal Index.hr, novinar s imenom i prezimenom, ali i anonimni korisnik Twittera koji dijeli vijesti, svi oni mogu biti modelirani kao čvorovi u komunikacijskoj mreži. Ključno je razumjeti da mreža nije objektivna stvarnost, već analitička konstrukcija koju istraživač gradi prema svojim teorijskim pretpostavkama i istraživačkim ciljevima.</p>
+</section>
+<section id="povijesni-razvoj-od-sociometrije-do-mrežne-znanosti" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="povijesni-razvoj-od-sociometrije-do-mrežne-znanosti"><span class="header-section-number">1.3</span> Povijesni razvoj: od sociometrije do mrežne znanosti</h2>
+<p>Korijeni analize društvenih mreža sežu u tridesete godine dvadesetog stoljeća i rad rumunjsko-američkog psihijatra <strong>Jacoba Levy Morena</strong>. Moreno je razvio <strong>sociometriju</strong> kao metodu za proučavanje interpersonalnih odnosa unutar grupa. Njegova ključna inovacija bila je <strong>sociogram</strong>, grafički prikaz društvenih odnosa u kojem su pojedinci predstavljeni točkama, a njihovi odnosi linijama koje ih povezuju. U svojoj knjizi objavljenoj 1934. godine, Moreno je primijenio sociometrijske metode za analizu društvene strukture u institucijama poput škola i zatvora. Time je postavio temelje za sustavno empirijsko proučavanje mrežnih obrazaca.</p>
+<p>Morenov pristup donio je revolucionarnu spoznaju da prije bilo kakvog društvenog programa istraživač mora uzeti u obzir stvarnu konstituciju grupe. Sociometrija je omogućila otkrivanje skrivenih struktura koje oblikuju grupu, uključujući saveze, podgrupe, neizrečena uvjerenja i zabranjene agende. Moreno je identificirao konfiguraciju koju je nazvao sociometrijskom zvijezdom, odnosno pojedinca kojeg mnogi drugi biraju kao prijatelja. Ti rani uvidi anticipirali su suvremene koncepte poput čvorišta i utjecajnih korisnika u digitalnim mrežama.</p>
+<p>Sljedeći prijelomni trenutak u razvoju mrežnog pristupa predstavlja eksperiment <strong>Stanleyja Milgrama</strong> iz 1967. godine, poznat kao eksperiment malog svijeta. Milgram je postavio jednostavno pitanje koje je intrigiralo matematičare desetljećima: koliko posrednika treba da poveže dva nasumično odabrana čovjeka u Sjedinjenim Američkim Državama? Koristeći metodu lančanih pisama, Milgram je otkrio da je prosječna udaljenost između ispitanika iz Nebraske i ciljne osobe u Bostonu iznosila samo pet do šest koraka. Ovaj nalaz populariziran je pod nazivom <strong>šest stupnjeva odvojenosti</strong>, iako sam Milgram taj termin nikada nije upotrijebio.</p>
+<p>Milgramov eksperiment imao je duboke implikacije za razumijevanje društvene strukture. Otkrio je da bez obzira na ogromnu veličinu populacije, ljudsko društvo karakteriziraju iznenađujuće kratki lanci poznanstava. Nadalje, eksperiment je pokazao da se polovica svih pisama koja su stigla do cilja prošla kroz samo tri osobe, sugerirajući postojanje ključnih posrednika u društvenoj mreži. Ovi posrednici, koje suvremena mrežna znanost naziva mostovima ili povezivačima, igraju neproporcionalnu ulogu u širenju informacija kroz društvo.</p>
+<p>Suvremena era mrežne znanosti započinje krajem devedesetih godina dvadesetog stoljeća radom <strong>Alberta-Lászla Barabásija</strong> i njegove suradnice Réke Albert. Analizirajući topologiju dijela World Wide Weba, Barabási je otkrio da distribucija povezanosti stranica ne slijedi normalnu raspodjelu koja bi se očekivala u nasumičnim mrežama. Umjesto toga, distribucija je slijedila zakon potencije, što znači da mali broj stranica ima ogroman broj dolaznih veza dok velika većina stranica ima vrlo malo veza.</p>
+<p>Ovu strukturu Barabási je nazvao <strong>mrežom bez skale</strong>, a objasnio ju je mehanizmom <strong>preferencijskog prikapčanja</strong>. Prema ovom mehanizmu, novi čvorovi koji ulaze u mrežu imaju veću vjerojatnost povezivanja s već dobro povezanim čvorovima. Intuitivno, ovo možemo razumjeti kao fenomen bogatiji postaju bogatiji. Nova web stranica vjerojatnije će postaviti hiperveze prema Googleu nego prema nepoznatom blogu, baš kao što novi korisnik Twittera vjerojatnije slijedi poznatu javnu osobu nego anonimnog korisnika.</p>
+<p>Barabásijevo otkriće imalo je dalekosežne implikacije za razumijevanje komunikacijskih sustava. Mreže bez skale karakterizira postojanje <strong>čvorišta</strong> ili hubova, odnosno čvorova s disproporcionalno velikim brojem veza. U kontekstu masovne komunikacije, čvorišta mogu biti mainstream mediji čije sadržaje preuzimaju deseci manjih portala, ili influenceri čije objave dijele tisuće pratitelja. Razumijevanje uloge čvorišta ključno je za analizu procesa poput širenja vijesti, formiranja javnog mnijenja ili dinamike dezinformacijskih kampanja.</p>
+<p>[Slika: Usporedba nasumične mreže i mreže bez skale, ilustrirajući razliku u distribuciji povezanosti i postojanje čvorišta]</p>
+</section>
+</section>
+<section id="osnovni-elementi-i-vrste-mreža" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Osnovni elementi i vrste mreža</h1>
+<p>Razumijevanje različitih tipova mrežnih struktura preduvjet je za odabir odgovarajućih analitičkih metoda i ispravnu interpretaciju rezultata. Mreže se mogu klasificirati prema nekoliko ključnih dimenzija koje odražavaju prirodu odnosa koji se proučavaju. U ovom poglavlju razmatramo tri temeljne karakteristike mrežnih podataka: usmjerenost veza, njihovu težinu te načine formalnog prikaza mrežne strukture.</p>
+<section id="usmjerenost-veza" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="usmjerenost-veza"><span class="header-section-number">2.1</span> Usmjerenost veza</h2>
+<p>Jedna od temeljnih distinkcija u mrežnoj analizi jest razlika između <strong>usmjerenih</strong> i <strong>neusmjerenih mreža</strong>. U neusmjerenoj mreži veze nemaju smjer, što znači da ako postoji veza između čvora A i čvora B, ona je simetrična. Primjer neusmjerene mreže bio bi sustav komunikacije u kojem mjerimo jesu li dvije osobe međusobni prijatelji na Facebooku. U tom slučaju, prijateljstvo je po definiciji obostrano jer obje strane moraju prihvatiti zahtjev za prijateljstvom.</p>
+<p>S druge strane, <strong>usmjerene mreže</strong> karakterizira asimetričnost odnosa. Veza ima definiran smjer koji ide od izvornog čvora prema ciljnom čvoru. Klasičan primjer usmjerene mreže jest praćenje na Twitteru ili Instagramu, gdje korisnik A može pratiti korisnika B bez da korisnik B uzvraća praćenje. U kontekstu istraživanja medija, usmjerene mreže često modeliraju tokove informacija. Primjerice, mreža citiranja članaka usmjerena je jer članak A može citirati članak B, a da pritom članak B ne citira članak A.</p>
+<p>[Slika: Usporedni prikaz neusmjerene mreže bez strelica i usmjerene mreže sa strelicama koje pokazuju smjer veza]</p>
+<p>Razlikovanje usmjerenih i neusmjerenih mreža ima značajne analitičke implikacije. U usmjerenim mrežama razlikujemo <strong>ulazni stupanj</strong> koji mjeri broj veza koje dolaze u čvor, te <strong>izlazni stupanj</strong> koji mjeri broj veza koje izlaze iz čvora. U kontekstu Twittera, ulazni stupanj odgovara broju pratitelja, dok izlazni stupanj odgovara broju računa koje korisnik prati. Ova distinkcija omogućuje identificiranje različitih tipova aktera. Korisnik s visokim ulaznim stupnjem i niskim izlaznim stupnjem mogao bi biti influencer kojeg mnogi prate, ali on prati malo drugih. Obratno, korisnik s visokim izlaznim stupnjem i niskim ulaznim stupnjem mogao bi biti netko tko aktivno prati novosti, ali sam nije popularan.</p>
+<p>U istraživanjima masovne komunikacije, izbor između usmjerene i neusmjerene mreže ovisi o prirodi fenomena koji se proučava. Ako nas zanima tko utječe na koga, usmjerena mreža će pružiti bogatije informacije. Međutim, ako proučavamo suradnju ili zajedničku pripadnost grupama, neusmjerena mreža može biti primjereniji izbor. Primjerice, mreža koautorstva znanstvenih radova tipično se modelira kao neusmjerena jer koautorstvo podrazumijeva obostrani odnos.</p>
+</section>
+<section id="težina-veze" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="težina-veze"><span class="header-section-number">2.2</span> Težina veze</h2>
+<p>Druga važna dimenzija mrežne strukture jest razlika između <strong>binarnih</strong> i <strong>ponderiranih mreža</strong>. U binarnoj mreži veza između dva čvora može samo postojati ili ne postojati. Formalno, težina svake veze iznosi ili jedan ili nula. Ovakav prikaz pojednostavljuje strukturu mreže, ali gubi informaciju o intenzitetu odnosa. Primjerice, binarna mreža dijeljenja sadržaja bilježi samo činjenicu da je korisnik A podijelio objavu korisnika B, ne uzimajući u obzir koliko je puta to učinio.</p>
+<p>Nasuprot tome, <strong>ponderirane mreže</strong> svakoj vezi pridružuju numeričku vrijednost koja odražava snagu ili intenzitet odnosa. Ova težina može predstavljati učestalost interakcije, trajanje veze, količinu razmijenjenih resursa ili neku drugu mjeru jačine odnosa. U istraživanjima komunikacije, težina veze mogla bi predstavljati broj zajedničkih članaka koje su dva novinara napisala, učestalost međusobnih retvitova ili količinu prometa između dvije web stranice.</p>
+<p>Prednost ponderiranih mreža leži u njihovoj informativnosti. Veza između dva čvora koja se ostvaruje jednom tjedno kvalitativno je različita od veze koja se ostvaruje svakodnevno, premda obje postoje u binarnom smislu. Ponderirana mreža hvata tu razliku i omogućuje sofisticiranije analize. S druge strane, prikupljanje podataka o težini veza može biti zahtjevnije, a određene analitičke metode razvijene su primarno za binarne mreže. Istraživač mora pažljivo odvagnuti prednosti i nedostatke svakog pristupa s obzirom na istraživačka pitanja i dostupne podatke.</p>
+<p>U praksi se ponekad ponderirane mreže pretvaraju u binarne primjenom praga. Definiramo vrijednost ispod koje smatramo da veza ne postoji. Primjerice, možemo odlučiti da veza među korisnicima postoji samo ako su razmijenili najmanje pet poruka. Ovaj postupak <strong>binarizacije</strong> pojednostavljuje analizu, ali izbor praga utječe na rezultate i mora biti teorijski opravdan.</p>
+</section>
+<section id="matrični-prikaz-mreže" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="matrični-prikaz-mreže"><span class="header-section-number">2.3</span> Matrični prikaz mreže</h2>
+<p>Za analitičke svrhe, mrežne strukture mogu se prikazati u različitim formatima podataka. Najčešći i najsvestraniji format jest <strong>matrica susjedstva</strong>, poznata i kao adjacencijska matrica. Ova kvadratna matrica dimenzija n × n, gdje n predstavlja broj čvorova u mreži, bilježi postojanje i eventualnu težinu veza među svim parovima čvorova.</p>
+<p>U matrici susjedstva retci i stupci označeni su imenima ili identifikatorima čvorova. Vrijednost u ćeliji na presjeku retka i i stupca j označava vezu od čvora i prema čvoru j. U binarnoj mreži, vrijednost jedan označava postojanje veze, dok vrijednost nula označava njezinu odsutnost. U ponderiranoj mreži, vrijednost u ćeliji odgovara težini veze. Dijagonala matrice predstavlja potencijalne samopoveznice, odnosno veze čvora sa samim sobom, koje se u mnogim primjenama postavljaju na nulu.</p>
+<p>Tablica 1 prikazuje primjer ponderirane matrice susjedstva za mrežu citiranja među četiri hrvatske medijske kuće. Vrijednost u ćeliji označava broj puta koliko je medij u retku citirao medij u stupcu tijekom određenog razdoblja.</p>
+<table class="caption-top table">
+<caption>Primjer matrice susjedstva za hipotetsku mrežu citiranja među četiri medijske kuće</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">HRT</th>
+<th style="text-align: center;">N1</th>
+<th style="text-align: center;">Index</th>
+<th style="text-align: center;">Jutarnji</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">HRT</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Index</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Jutarnji</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Iz ove matrice možemo iščitati obrasce citiranja među medijima. Primjerice, vrijednost 3 u ćeliji HRT-N1 označava da je HRT citirao N1 tri puta. Uočavamo da matrica nije simetrična jer je riječ o usmjerenoj mreži. Index je citirao Jutarnji pet puta, dok je Jutarnji citirao Index tri puta. Ova asimetrija pruža uvid u tokove informacija i potencijalnu hijerarhiju izvora među medijima.</p>
+<p>Za neusmjerene mreže, matrica susjedstva je simetrična, što znači da je vrijednost u ćeliji (i, j) jednaka vrijednosti u ćeliji (j, i). Ova simetrija proizlazi iz činjenice da u neusmjerenoj mreži veza između A i B podrazumijeva i vezu između B i A. Nasuprot tome, u usmjerenim mrežama poput one prikazane u tablici, matrica općenito nije simetrična jer veza od A prema B ne implicira vezu od B prema A.</p>
+<p>Osim matrice susjedstva, mrežni podaci mogu se prikazati i u obliku <strong>liste bridova</strong>. Ovaj format jednostavno nabraja sve postojeće veze u mreži, navodeći za svaku vezu izvorni i ciljni čvor te eventualnu težinu. Lista bridova prostorno je učinkovitija od matrice susjedstva za rijetke mreže u kojima većina potencijalnih veza ne postoji. Primjerice, u velikoj mreži s milijun čvorova, matrica susjedstva imala bi bilijun ćelija od kojih bi većina sadržavala nule. Lista bridova bilježila bi samo postojeće veze, značajno smanjujući memorijske zahtjeve.</p>
+<p>Tablica 2 prikazuje usporedbu različitih formata mrežnih podataka i njihovih karakteristika.</p>
+<table class="caption-top table">
+<caption>Usporedba formata mrežnih podataka</caption>
+<colgroup>
+<col style="width: 34%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Format podataka</th>
+<th style="text-align: left;">Struktura</th>
+<th style="text-align: left;">Prednosti</th>
+<th style="text-align: left;">Nedostaci</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Matrica susjedstva</td>
+<td style="text-align: left;">Kvadratna matrica n × n</td>
+<td style="text-align: left;">Omogućuje matrične operacije, intuitivna</td>
+<td style="text-align: left;">Neučinkovita za rijetke mreže</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lista bridova</td>
+<td style="text-align: left;">Parovi čvorova s težinama</td>
+<td style="text-align: left;">Memorijski učinkovita, jednostavna</td>
+<td style="text-align: left;">Manje pogodna za neke algoritme</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lista susjedstva</td>
+<td style="text-align: left;">Za svaki čvor popis susjeda</td>
+<td style="text-align: left;">Brz pristup susjedima</td>
+<td style="text-align: left;">Složenija struktura podataka</td>
+</tr>
+</tbody>
+</table>
+<p>Razumijevanje ovih temeljnih koncepata i formata podataka preduvjet je za daljnje proučavanje mrežnih metrika i analitičkih postupaka. U sljedećim poglavljima razmatramo mjere centralnosti koje omogućuju identificiranje ključnih aktera u mreži, strukturne karakteristike poput gustoće i klasteriranja koje opisuju mrežu na agregatnoj razini, te metode za detekciju zajednica i analizu difuzijskih procesa.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

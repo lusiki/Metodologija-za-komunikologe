@@ -114,8 +114,44 @@ Sveobuhvatni pregled računalne analize teksta u istraživanju masovne komunikac
   - N-grami i kolokacije (PMI, t-score)
   - Analiza okvira (Entmanova definicija framinga)
   - Mreže riječi (betweenness centrality)
+  
+  
 ---
+### [📄 Poglavlje 6: Mrežna analiza](https://raw.githack.com/lusiki/Metodologija-za-komunikologe/main/Racunalna%20analiza%20teksta.html)
+**~XX,000 riječi**
 
+1. **Uvod: Relacijska perspektiva**
+   1.1 Promjena paradigme (atributi vs. relacije)
+   1.2 Temeljni koncepti (Čvorovi i Veze)
+   1.3 Povijesni razvoj (Moreno, Milgram, Barabási)
+2. **Osnovni elementi i vrste mreža**
+   2.1 Usmjerenost (Directed vs. Undirected)
+   2.2 Težina veze (Weighted vs. Binary)
+   2.3 Matrični prikaz (Adjacency Matrix)
+3. **Mjere centralnosti**
+   3.1 Stupanj centralnosti (Degree - In/Out)
+   3.2 Međuposredovanje (Betweenness - Gatekeepers)
+   3.3 Bliskost (Closeness - Efficiency)
+   3.4 Svojstvena vektorska centralnost (Eigenvector - PageRank logic)
+4. **Struktura mreže na makro razini**
+   4.1 Gustoća (Density)
+   4.2 Fenomen malog svijeta (Small World)
+   4.3 Mreže bez skale (Scale-Free / Power Law)
+5. **Grupe, klasteri i zajednice**
+   5.1 Klike
+   5.2 Homofilija (Birds of a feather)
+   5.3 Modularnost i detekcija zajednica (Louvain)
+   5.4 Strukturne rupe (Burt)
+6. **Vizualizacija mreža**
+   6.1 Algoritmi rasporeda (Force-directed)
+   6.2 Problem "dlakave lopte" (Hairball effect)
+   6.3 Alati (Gephi, UCINET)
+7. **Metodološki problemi i ograničenja**
+   7.1 Problem granica
+   7.2 Nedostajući podaci
+   7.3 Etički izazovi (Anonimizacija)
+
+---
 
 
 
