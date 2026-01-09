@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="hr" xml:lang="hr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Analiza društvenih mreža u istraživanju masovne komunikacije</title>
+<title>Analiza društvenih mreza u istrazivanju masovne komunikacije</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,14 +26,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="Analiza mreza_files/libs/clipboard/clipboard.min.js"></script>
 <script src="Analiza mreza_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="Analiza mreza_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Analiza mreza_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="Analiza mreza_files/libs/quarto-html/popper.min.js"></script>
 <script src="Analiza mreza_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Analiza mreza_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Analiza mreza_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Analiza mreza_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Analiza mreza_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Analiza mreza_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Analiza mreza_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Analiza mreza_files/libs/bootstrap/bootstrap-813c323200a87c37e262811031999de4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Analiza mreza_files/libs/bootstrap/bootstrap-4d7f0bce1131f3e5f9547cd857cfbfc8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="Analiza mreza_files/libs/kePrint-0.0.1/kePrint.js"></script>
 
 <link href="Analiza mreza_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
@@ -53,7 +54,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -130,7 +131,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Analiza društvenih mreža u istraživanju masovne komunikacije</h1>
+<h1 class="title">Analiza društvenih mreza u istrazivanju masovne komunikacije</h1>
 </div>
 
 
@@ -217,8 +218,7 @@ Figure&nbsp;3: Usporedba neusmjerene mreže (lijevo) gdje su veze simetrične i 
 </section>
 <section id="težina-veze" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="težina-veze"><span class="header-section-number">2.2</span> Težina veze</h2>
-<p>Druga važna dimenzija mrežne strukture jest razlika između <strong>binarnih</strong> i <strong>ponderiranih mreža</strong>. U binarnoj mreži veza između dva čvora može samo postojati ili ne postojati. Formalno, težina svake veze iznosi ili jedan ili nula. Ovakav prikaz pojednostavljuje strukturu mreže, ali gubi informaciju o intenzitetu odnosa. Primjerice, binarna mreža dijeljenja sadržaja bilježi samo činjenicu da je korisnik A podijelio objavu korisnika B, ne uzimajući u obzir koliko je puta to učinio.</p>
-<p>Nasuprot tome, <strong>ponderirane mreže</strong> svakoj vezi pridružuju numeričku vrijednost koja odražava snagu ili intenzitet odnosa. Ova težina može predstavljati učestalost interakcije, trajanje veze, količinu razmijenjenih resursa ili neku drugu mjeru jačine odnosa. U istraživanjima komunikacije, težina veze mogla bi predstavljati broj zajedničkih članaka koje su dva novinara napisala, učestalost međusobnih retvitova ili količinu prometa između dvije web stranice.</p>
+<p>Druga važna dimenzija mrežne strukture jest razlika između <strong>binarnih</strong> i <strong>ponderiranih mreža</strong>. U binarnoj mreži veza između dva čvora može samo postojati ili ne postojati. Formalno, težina svake veze iznosi ili jedan ili nula. Ovakav prikaz pojednostavljuje strukturu mreže, ali gubi informaciju o intenzitetu odnosa. Primjerice, binarna mreža dijeljenja sadržaja bilježi samo činjenicu da je korisnik A podijelio objavu korisnika B, ne uzimajući u obzir koliko je puta to učinio. Nasuprot tome, <strong>ponderirane mreže</strong> svakoj vezi pridružuju numeričku vrijednost koja odražava snagu ili intenzitet odnosa. Ova težina može predstavljati učestalost interakcije, trajanje veze, količinu razmijenjenih resursa ili neku drugu mjeru jačine odnosa. U istraživanjima komunikacije, težina veze mogla bi predstavljati broj zajedničkih članaka koje su dva novinara napisala, učestalost međusobnih retvitova ili količinu prometa između dvije web stranice.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-weighted" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -233,13 +233,11 @@ Figure&nbsp;4: Usporedba binarne mreže (lijevo) gdje sve veze imaju jednaku te�
 </div>
 </div>
 </div>
-<p>Prednost ponderiranih mreža leži u njihovoj informativnosti. Veza između dva čvora koja se ostvaruje jednom tjedno kvalitativno je različita od veze koja se ostvaruje svakodnevno, premda obje postoje u binarnom smislu. Ponderirana mreža hvata tu razliku i omogućuje sofisticiranije analize. S druge strane, prikupljanje podataka o težini veza može biti zahtjevnije, a određene analitičke metode razvijene su primarno za binarne mreže. Istraživač mora pažljivo odvagnuti prednosti i nedostatke svakog pristupa s obzirom na istraživačka pitanja i dostupne podatke.</p>
-<p>U praksi se ponekad ponderirane mreže pretvaraju u binarne primjenom praga. Definiramo vrijednost ispod koje smatramo da veza ne postoji. Primjerice, možemo odlučiti da veza među korisnicima postoji samo ako su razmijenili najmanje pet poruka. Ovaj postupak <strong>binarizacije</strong> pojednostavljuje analizu, ali izbor praga utječe na rezultate i mora biti teorijski opravdan.</p>
+<p>Prednost ponderiranih mreža leži u njihovoj informativnosti. Veza između dva čvora koja se ostvaruje jednom tjedno kvalitativno je različita od veze koja se ostvaruje svakodnevno, premda obje postoje u binarnom smislu. Ponderirana mreža hvata tu razliku i omogućuje sofisticiranije analize. S druge strane, prikupljanje podataka o težini veza može biti zahtjevnije, a određene analitičke metode razvijene su primarno za binarne mreže. Istraživač mora pažljivo odvagnuti prednosti i nedostatke svakog pristupa s obzirom na istraživačka pitanja i dostupne podatke. U praksi se ponekad ponderirane mreže pretvaraju u binarne primjenom praga. Definiramo vrijednost ispod koje smatramo da veza ne postoji. Primjerice, možemo odlučiti da veza među korisnicima postoji samo ako su razmijenili najmanje pet poruka. Ovaj postupak <strong>binarizacije</strong> pojednostavljuje analizu, ali izbor praga utječe na rezultate i mora biti teorijski opravdan.</p>
 </section>
 <section id="matrični-prikaz-mreže" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="matrični-prikaz-mreže"><span class="header-section-number">2.3</span> Matrični prikaz mreže</h2>
-<p>Za analitičke svrhe, mrežne strukture mogu se prikazati u različitim formatima podataka. Najčešći i najsvestraniji format jest <strong>matrica susjedstva</strong>, poznata i kao adjacencijska matrica. Ova kvadratna matrica dimenzija n × n, gdje n predstavlja broj čvorova u mreži, bilježi postojanje i eventualnu težinu veza među svim parovima čvorova.</p>
-<p>U matrici susjedstva retci i stupci označeni su imenima ili identifikatorima čvorova. Vrijednost u ćeliji na presjeku retka i i stupca j označava vezu od čvora i prema čvoru j. U binarnoj mreži, vrijednost jedan označava postojanje veze, dok vrijednost nula označava njezinu odsutnost. U ponderiranoj mreži, vrijednost u ćeliji odgovara težini veze. Dijagonala matrice predstavlja potencijalne samopoveznice, odnosno veze čvora sa samim sobom, koje se u mnogim primjenama postavljaju na nulu.</p>
+<p>Za analitičke svrhe, mrežne strukture mogu se prikazati u različitim formatima podataka. Najčešći i najsvestraniji format jest <strong>matrica susjedstva</strong> (<em>adjacency matrix</em>). Ova kvadratna matrica dimenzija n × n, gdje n predstavlja broj čvorova u mreži, bilježi postojanje i eventualnu težinu veza među svim parovima čvorova. U matrici susjedstva retci i stupci označeni su imenima ili identifikatorima čvorova. Vrijednost u ćeliji na presjeku retka i i stupca j označava vezu od čvora i prema čvoru j. U binarnoj mreži, vrijednost jedan označava postojanje veze, dok vrijednost nula označava njezinu odsutnost. U ponderiranoj mreži, vrijednost u ćeliji odgovara težini veze. Dijagonala matrice predstavlja potencijalne samopoveznice, odnosno veze čvora sa samim sobom, koje se u mnogim primjenama postavljaju na nulu.</p>
 <div class="cell">
 <div id="tbl-adjacency" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -248,7 +246,7 @@ Table&nbsp;1: Primjer matrice susjedstva za hipotetsku mrežu citiranja među č
 </figcaption>
 <div aria-describedby="tbl-adjacency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Medij</th>
@@ -305,7 +303,7 @@ Table&nbsp;2: Usporedba formata mrežnih podataka s njihovim prednostima i nedos
 </figcaption>
 <div aria-describedby="tbl-formats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Format</th>
@@ -378,7 +376,7 @@ Table&nbsp;3: Stupanj centralnosti za svaki čvor u mreži hrvatskih medija. Vi�
 </figcaption>
 <div aria-describedby="tbl-degree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Medij</th>
@@ -480,7 +478,7 @@ Table&nbsp;4: Međuposredovanje (betweenness centrality) za svaki čvor u mreži
 </figcaption>
 <div aria-describedby="tbl-betweenness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Medij</th>
@@ -582,7 +580,7 @@ Table&nbsp;5: Bliskost (closeness centrality) za svaki čvor u mreži. Viša vri
 </figcaption>
 <div aria-describedby="tbl-closeness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Medij</th>
@@ -686,7 +684,7 @@ Table&nbsp;6: Svojstvena vektorska centralnost za svaki čvor u mreži. Viša vr
 </figcaption>
 <div aria-describedby="tbl-eigenvector-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Medij</th>
@@ -774,7 +772,7 @@ Table&nbsp;7: Sažetak svih mjera centralnosti za mrežu hrvatskih medija. Svaka
 </figcaption>
 <div aria-describedby="tbl-all-centrality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Medij</th>
@@ -874,7 +872,7 @@ Table&nbsp;8: Interpretacija mjera centralnosti u kontekstu istraživanja masovn
 </figcaption>
 <div aria-describedby="tbl-interpretation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Mjera</th>
@@ -953,7 +951,7 @@ Table&nbsp;9: Tipične vrijednosti gustoće za različite tipove komunikacijskih
 </figcaption>
 <div aria-describedby="tbl-density-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Tip mreže</th>
@@ -1047,7 +1045,7 @@ Table&nbsp;10: Usporedba strukturnih svojstava različitih tipova mreža. Mreže
 </figcaption>
 <div aria-describedby="tbl-small-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Tip mreže</th>
@@ -1148,7 +1146,7 @@ Table&nbsp;11: Implikacije strukture mreže bez skale za masovnu komunikaciju. P
 </figcaption>
 <div aria-describedby="tbl-scale-free-implications-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Aspekt</th>
@@ -1213,7 +1211,7 @@ Table&nbsp;12: Sažetak mjera strukture mreže na makro razini s njihovim interp
 </figcaption>
 <div aria-describedby="tbl-macro-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Mjera</th>
@@ -1303,7 +1301,7 @@ Table&nbsp;13: Usporedba strogog koncepta klike s relaksiranim varijantama koje 
 </figcaption>
 <div aria-describedby="tbl-clique-variants-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Koncept</th>
@@ -1389,7 +1387,7 @@ Table&nbsp;14: Tipovi homofilije relevantni za istraživanja masovne komunikacij
 </figcaption>
 <div aria-describedby="tbl-homophily-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Dimenzija</th>
@@ -1494,7 +1492,7 @@ Table&nbsp;15: Pregled popularnih algoritama za detekciju zajednica s njihovim k
 </figcaption>
 <div aria-describedby="tbl-community-algorithms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Algoritam</th>
@@ -1586,7 +1584,7 @@ Table&nbsp;16: Primjeri aktera s niskim i visokim ograničenjem u kontekstu medi
 </figcaption>
 <div aria-describedby="tbl-constraint-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Karakteristika</th>
@@ -1687,7 +1685,7 @@ Table&nbsp;17: Pregled popularnih algoritama rasporeda s njihovim karakteristika
 </figcaption>
 <div aria-describedby="tbl-layout-algorithms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Algoritam</th>
@@ -1813,7 +1811,7 @@ Table&nbsp;18: Strategije za suočavanje s efektom dlakave lopte s njihovim pred
 </figcaption>
 <div aria-describedby="tbl-hairball-solutions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Strategija</th>
@@ -1912,7 +1910,7 @@ Table&nbsp;19: Usporedba popularnih alata za mrežnu analizu i vizualizaciju s p
 </figcaption>
 <div aria-describedby="tbl-tools-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Alat</th>
@@ -2036,7 +2034,7 @@ Table&nbsp;20: Strategije za definiranje granica mreže s primjerima iz istraži
 </figcaption>
 <div aria-describedby="tbl-boundary-strategies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Strategija</th>
@@ -2133,7 +2131,7 @@ Table&nbsp;21: Izvori nedostajućih podataka u istraživanjima komunikacijskih m
 </figcaption>
 <div aria-describedby="tbl-missing-data-sources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Izvor</th>
@@ -2230,7 +2228,7 @@ Table&nbsp;22: Tehnike zaštite privatnosti u mrežnim podacima s procjenom uči
 </figcaption>
 <div aria-describedby="tbl-privacy-techniques-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Tehnika</th>
@@ -2307,7 +2305,7 @@ Table&nbsp;23: Sažetak ključnih metodoloških izazova u analizi društvenih mr
 </figcaption>
 <div aria-describedby="tbl-methodology-summary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small" data-quarto-postprocess="true">
+<table class="table table-striped table-hover do-not-create-environment cell caption-top table-sm small">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Izazov</th>
@@ -2399,13 +2397,14 @@ Table&nbsp;23: Sažetak ključnih metodoloških izazova u analizi društvenih mr
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
